@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" 
+            prefHeight="900" prefWidth="1200" xmlns="http://javafx.com/javafx/17.0.2-ea" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.lebastudios.stexteditor.controllers.TabPaneController">
+    <top>
+        <MenuBar prefHeight="10">
+            <Menu mnemonicParsing="false" text="File">
+                <MenuItem mnemonicParsing="false" onAction="#newFile" text="New" />
+                <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open" />
+                <MenuItem mnemonicParsing="false" onAction="#saveActualFile" text="Save" />
+                <MenuItem mnemonicParsing="false" onAction="#saveActualFileAs" text="Save As" />
+                <MenuItem mnemonicParsing="false" text="Exit" />
+            </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+                <MenuItem mnemonicParsing="false" text="Cut" />
+                <MenuItem mnemonicParsing="false" text="Copy" />
+                <MenuItem mnemonicParsing="false" text="Paste" />
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+                <MenuItem mnemonicParsing="false" text="About" />
+            </Menu>
+        </MenuBar>
+    </top>
+    <center>
+        <SplitPane dividerPositions="0.1" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <TreeView prefHeight="200.0" prefWidth="174.0" />
+
+            <TabPane fx:id="tabPanne" tabClosingPolicy="ALL_TABS" />
+        </SplitPane>
+    </center>
+</BorderPane>
