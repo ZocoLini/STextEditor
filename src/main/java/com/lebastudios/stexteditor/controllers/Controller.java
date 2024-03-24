@@ -1,14 +1,21 @@
 package com.lebastudios.stexteditor.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.lebastudios.stexteditor.TextEditorApplication;
+import com.lebastudios.stexteditor.events.Events;
 
 public abstract class Controller
 {
-    private static final List<Controller> instanciatedControllers = new ArrayList<>();
-    
     public Controller()
     {
-        instanciatedControllers.add(this);
+        TextEditorApplication.instanciatedControllers.add(this);
+
+        awake();
+        start();
+        
+        Events.onUpdate.addListener(this::update);
     }
+    
+    protected void start() {}
+    protected void update() {}
+    protected void awake() {}
 }

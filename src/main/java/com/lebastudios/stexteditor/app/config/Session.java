@@ -91,4 +91,6 @@ public class Session
     {
         return session.getJSONArray("filesOpen");
     }
+
+    public void setFilesOpen(JSONArray auxLastFilesPaths) { session.put("filesOpen", auxLastFilesPaths); }
 }

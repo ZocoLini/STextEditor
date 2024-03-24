@@ -1,5 +1,6 @@
 package com.lebastudios.stexteditor.controllers;
 
+import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.app.FileOperation;
 import com.lebastudios.stexteditor.app.config.Session;
 import com.lebastudios.stexteditor.exceptions.IllegalNodeCastException;
@@ -7,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.json.JSONArray;
 
 import java.io.File;
@@ -15,15 +18,6 @@ import java.io.IOException;
 
 public class TabPaneController extends Controller
 {
-    private static TabPaneController instace;
-
-    public static TabPaneController getInstance() {return instace;}
-
-    public TabPaneController()
-    {
-        instace = this;
-    }
-
     @FXML
     private TabPane tabPanne;
 
@@ -42,7 +36,21 @@ public class TabPaneController extends Controller
             }
             else
             {
-                saveFile(tab, FileOperation.fileChooser().showSaveDialog(null).getAbsoluteFile());
+                if (!AlertsInstanciator.confirmationDialog("Save file",
+                        "Do you want to save the file " + tab.getText()
+                                + "?"))
+                {
+                    continue;
+                }
+
+                File file = FileOperation.fileChooser().showSaveDialog(null);
+                
+                if (file == null)
+                {
+                    continue;
+                }
+                
+                saveFile(tab, file.getAbsoluteFile());
             }
 
             i++;
@@ -107,7 +115,7 @@ public class TabPaneController extends Controller
         }
         catch (IOException e)
         {
-            throw new RuntimeException(e);
+            return false;
         }
 
         fileTab.setText(file.getName());
@@ -117,20 +125,27 @@ public class TabPaneController extends Controller
         return true;
     }
 
-    public void loadLastFiles()
+    public void openLastFiles()
     {
         JSONArray lastFilesPaths = Session.getInstance().getFilesOpen();
-
-        if (lastFilesPaths.isEmpty())
-        {
-            return;
-        }
-
+        
+        JSONArray auxLastFilesPaths = new JSONArray();
+        
         for (int i = 0; i < lastFilesPaths.length(); i++)
         {
-            File file = new File(lastFilesPaths.getString(i));
+            String filePath = lastFilesPaths.getString(i);
+            
+            if (filePath.isEmpty()) 
+            {
+                continue;
+            }
+            
+            File file = new File(filePath);
             tabPanne.getTabs().add(newWriteableTab(file));
+            auxLastFilesPaths.put(filePath);
         }
+        
+        Session.getInstance().setFilesOpen(auxLastFilesPaths);
     }
 
     @FXML
@@ -202,5 +217,14 @@ public class TabPaneController extends Controller
     private Tab newWriteableTab()
     {
         return newWriteableTab("New file", "");
+    }
+
+    @Override
+    protected void start()
+    {
+        Stage stage = TextEditorApplication.getStage();
+        
+        stage.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> openLastFiles());
+        stage.addEventHandler(WindowEvent.WINDOW_HIDING, event -> saveAllFiles());
     }
 }
