@@ -76,6 +76,10 @@ public class TextEditorApplication extends Application
         launch(args);
     }
 
+    /**
+     * Bucle de juego que se encarga de llamar a los eventos de actualización. Este metodo se ejecuta en un hilo 
+     * separado.
+     */
     private void bucleDeJuego()
     {
         while (hiloDeJuego)

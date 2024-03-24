@@ -14,8 +14,19 @@ public abstract class Controller
         
         Events.onUpdate.addListener(this::update);
     }
-    
-    protected void start() {}
-    protected void update() {}
+
+    /**
+     * Called when the controller is created. This is called before the start method. This is called once.
+     */
     protected void awake() {}
+
+    /**
+     * Called when the controller is created. This is called after the awake method. This is called once.
+     */
+    protected void start() {}
+
+    /**
+     * Called every "frame". This called after the start method.
+     */
+    protected void update() {}
 }

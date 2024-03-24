@@ -1,30 +1,21 @@
 package com.lebastudios.stexteditor.events;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public abstract class AppEvent
+/**
+ * Abstract class for the event system. This class is used to create events that can be invoked without parameters.
+ */
+public abstract class AppEvent extends EventHandler<AppEvent.IEventMethod> 
 {
-    public interface IEvent
+    /**
+     * Interface for the event method to be invoked without parameters.
+     */
+    public interface IEventMethod
     {
         void invoke();
     }
-    
-    protected final List<IEvent> listeners = new ArrayList<>();
-    
-    public void addListener(IEvent listener)
-    {
-        listeners.add(listener);
-    }
-    
-    public void removeListener(IEvent listener)
-    {
-        listeners.remove(listener);
-    }
-    
+
     public void invoke()
     {
-        for (IEvent listener : listeners)
+        for (IEventMethod listener : listeners)
         {
             try
             {
@@ -35,20 +26,5 @@ public abstract class AppEvent
                 e.printStackTrace();
             }
         }
-    }
-    
-    public void clearListeners()
-    {
-        listeners.clear();
-    }
-    
-    public List<IEvent> getListeners()
-    {
-        return listeners;
-    }
-    
-    public boolean hasListener(IEvent listener)
-    {
-        return listeners.contains(listener);
     }
 }
