@@ -23,7 +23,7 @@ public abstract class AppEvent extends EventHandler<AppEvent.IEventMethod>
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                System.err.println("Error invoking event: " + e.getMessage());
             }
         }
     }

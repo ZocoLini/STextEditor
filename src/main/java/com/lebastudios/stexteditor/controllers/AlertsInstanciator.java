@@ -11,7 +11,7 @@ public class AlertsInstanciator
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
-        
-        return alert.showAndWait().get() == ButtonType.OK;
+
+        return alert.showAndWait().filter(buttonType -> buttonType == ButtonType.OK).isPresent();
     }
 }

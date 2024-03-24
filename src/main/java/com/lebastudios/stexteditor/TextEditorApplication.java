@@ -88,11 +88,12 @@ public class TextEditorApplication extends Application
 
             try
             {
+                //noinspection BusyWait
                 Thread.sleep(1000 / 15);
             }
             catch (InterruptedException e)
             {
-                e.printStackTrace();
+                System.err.println("Error en el hilo de juego, debe haberse interrumpido.");
             }
         }
     }
