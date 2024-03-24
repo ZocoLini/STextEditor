@@ -7,25 +7,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
-import javafx.stage.FileChooser;
 import org.json.JSONArray;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
-public class TabPaneController
+public class TabPaneController extends Controller
 {
     private static TabPaneController instace;
 
     public static TabPaneController getInstance() {return instace;}
-
-    private static FileChooser getFileChooser()
-    {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open file");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All files", "*.*"));
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text files", "*.txt"));
-        return fileChooser;
-    }
 
     public TabPaneController()
     {
@@ -50,7 +42,7 @@ public class TabPaneController
             }
             else
             {
-                saveFile(tab, getFileChooser().showSaveDialog(null).getAbsoluteFile());
+                saveFile(tab, FileOperation.fileChooser().showSaveDialog(null).getAbsoluteFile());
             }
 
             i++;
@@ -74,7 +66,7 @@ public class TabPaneController
         }
         else
         {
-            File file = getFileChooser().showSaveDialog(null).getAbsoluteFile();
+            File file = FileOperation.fileChooser().showSaveDialog(null).getAbsoluteFile();
 
             if (file == null)
             {
@@ -90,7 +82,7 @@ public class TabPaneController
     {
         Tab actualTab = tabPanne.getSelectionModel().getSelectedItem();
 
-        saveFile(actualTab, getFileChooser().showSaveDialog(null).getAbsoluteFile());
+        saveFile(actualTab, FileOperation.fileChooser().showSaveDialog(null).getAbsoluteFile());
     }
 
     private boolean saveFile(Tab fileTab, File file)
@@ -144,9 +136,7 @@ public class TabPaneController
     @FXML
     private void openFile()
     {
-        FileChooser fileChooser = getFileChooser();
-
-        File file = fileChooser.showOpenDialog(null).getAbsoluteFile();
+        File file = FileOperation.fileChooser().showOpenDialog(null).getAbsoluteFile();
 
         if (file == null)
         {
@@ -183,13 +173,11 @@ public class TabPaneController
         tab.setContent(textArea);
 
         tab.setOnCloseRequest(event ->
-        {
-            Session.getInstance().getFilesOpen().remove(
-                    tabPanne.getTabs().indexOf(
-                            (Tab) event.getTarget()
-                    )
-            );
-        });
+                Session.getInstance().getFilesOpen().remove(
+                        tabPanne.getTabs().indexOf(
+                                (Tab) event.getTarget()
+                        )
+                ));
 
         return tab;
     }
@@ -197,7 +185,7 @@ public class TabPaneController
     private Tab newWriteableTab(File file)
     {
         String fileName = file.getName();
-        String content = "";
+        String content;
 
         try
         {

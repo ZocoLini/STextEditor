@@ -1,11 +1,21 @@
 package com.lebastudios.stexteditor.app;
 
+import javafx.stage.FileChooser;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 
 public class FileOperation
 {
+    public static FileChooser fileChooser()
+    {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open file");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All files", "*.*"));
+        return fileChooser;
+    }
+    
     public static String read(File file) throws Exception
     {
         if (!file.exists()) 
