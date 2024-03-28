@@ -64,4 +64,10 @@ public class Theme extends JSONSaveable<Theme>
     {
         return new Theme();
     }
+
+    @Override
+    public void save()
+    {
+        System.err.println("You can't save a theme");
+    }
 }
