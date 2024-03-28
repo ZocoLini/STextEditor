@@ -1,11 +1,5 @@
 package com.lebastudios.stexteditor.app.config;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.lebastudios.stexteditor.app.FileOperation;
-
-import java.io.File;
-
 public class Config extends JSONSaveable<Config>
 {
     public String lang = "es";
@@ -14,7 +8,7 @@ public class Config extends JSONSaveable<Config>
 
     public static class EditorConfig
     {
-        public String theme;
+        public String themeName;
         public String font;
         public int fontSize;
         public boolean lineNumbers;
