@@ -12,7 +12,16 @@ public class Config
     private static final JSONObject DEFAULT_CONFIG =
             new JSONObject()
                     .put("lang", "es")
-                    .put("version", "unknown");
+                    .put("version", "prototype")
+                    .put("editor", new JSONObject()
+                            .put("theme", "light")
+                            .put("font", "Arial")
+                            .put("fontSize", 13)
+                            .put("lineNumbers", true)
+                            .put("wrapText", false)
+                            .put("autoSave", true)
+                            .put("indentation", 4)
+                    );
 
     private static Config instance;
 
@@ -85,4 +94,24 @@ public class Config
     // ************************************************
     // Getters and setters for the configuration values
     // ************************************************
+    
+    public String getFont()
+    {
+        return configuration.getJSONObject("editor").getString("font");
+    }
+    
+    public void setFont(String font)
+    {
+        configuration.getJSONObject("editor").put("font", font);
+    }
+    
+    public int getFontSize()
+    {
+        return configuration.getJSONObject("editor").getInt("fontSize");
+    }
+    
+    public void setFontSize(int fontSize)
+    {
+        configuration.getJSONObject("editor").put("fontSize", fontSize);
+    }
 }

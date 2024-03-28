@@ -4,10 +4,12 @@ import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.app.FileOperation;
 import com.lebastudios.stexteditor.app.config.Session;
 import com.lebastudios.stexteditor.exceptions.IllegalNodeCastException;
+import com.lebastudios.stexteditor.nodes.formateableText.FormatteableText;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.json.JSONArray;
@@ -171,6 +173,16 @@ public class TabPaneController extends Controller
 
         Session.getInstance().getFilesOpen().put(file.getPath());
         tabPanne.getTabs().add(newWriteableTab(file.getName(), content));
+        
+        TextArea txtArea = (TextArea) tabPanne.getSelectionModel().getSelectedItem().getContent();
+        txtArea.setTextFormatter(new TextFormatter<>(change ->
+        {
+            if (change.isAdded())
+            {
+                change.setText(change.getText().replace("\t", " "));
+            }
+            return change;
+        }));
     }
 
     @FXML
@@ -183,17 +195,17 @@ public class TabPaneController extends Controller
     private Tab newWriteableTab(String name, String content)
     {
         Tab tab = new Tab(name);
-        TextArea textArea = new TextArea();
-        textArea.setText(content);
-        tab.setContent(textArea);
-
+        FormatteableText formatteableText = new FormatteableText(content);
+        tab.setContent(formatteableText);
+        
         tab.setOnCloseRequest(event ->
                 Session.getInstance().getFilesOpen().remove(
                         tabPanne.getTabs().indexOf(
                                 (Tab) event.getTarget()
                         )
-                ));
-
+                )
+        );
+        
         return tab;
     }
 
