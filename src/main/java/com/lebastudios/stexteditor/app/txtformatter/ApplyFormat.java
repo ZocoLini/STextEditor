@@ -13,8 +13,8 @@ public class ApplyFormat
 
     public static void defaultStyle(TextArea textArea)
     {
-        textArea.setStyle("-fx-font-family: " + Config.getInstance().getFont() + ";" +
-                " -fx-font-size: " + Config.getInstance().getFontSize() + ";");
+        textArea.setStyle("-fx-font-family: " + Config.getInstance().editorConfig.font + ";" +
+                " -fx-font-size: " + Config.getInstance().editorConfig.fontSize + ";");
     }
     
     public static TextFormatter<TextFormatter.Change> textFormatter()

@@ -8,15 +8,15 @@ import com.lebastudios.stexteditor.nodes.formateableText.FormatteableText;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextFormatter;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import org.json.JSONArray;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TabPaneController extends Controller
 {
@@ -27,14 +27,14 @@ public class TabPaneController extends Controller
     private void saveAllFiles()
     {
         int i = 0;
-        JSONArray filePaths = Session.getInstance().getFilesOpen();
+        List<String> filePaths = Session.getInstance().filesOpen;
 
         for (var tab : tabPanne.getTabs())
         {
-            if (i < filePaths.length() && filePaths.getString(i) != null
-                    && !filePaths.getString(i).isEmpty())
+            if (i < filePaths.size() && filePaths.get(i) != null
+                    && !filePaths.get(i).isEmpty())
             {
-                saveFile(tab, new File(filePaths.getString(i)));
+                saveFile(tab, new File(filePaths.get(i)));
             }
             else
             {
@@ -62,17 +62,17 @@ public class TabPaneController extends Controller
     }
 
     @FXML
-    private void saveActualFile()
+    private void saveActualTab()
     {
         Tab actualTab = tabPanne.getSelectionModel().getSelectedItem();
         int actualIndex = tabPanne.getSelectionModel().getSelectedIndex();
 
-        JSONArray filePaths = Session.getInstance().getFilesOpen();
+        List<String> filePaths = Session.getInstance().filesOpen;
 
-        if (actualIndex < filePaths.length() && filePaths.getString(actualIndex) != null
-                && !filePaths.getString(actualIndex).isEmpty())
+        if (actualIndex < filePaths.size() && filePaths.get(actualIndex) != null
+                && !filePaths.get(actualIndex).isEmpty())
         {
-            saveFile(actualTab, new File(filePaths.getString(actualIndex)));
+            saveFile(actualTab, new File(filePaths.get(actualIndex)));
         }
         else
         {
@@ -97,12 +97,12 @@ public class TabPaneController extends Controller
 
     private boolean saveFile(Tab fileTab, File file)
     {
-        if (fileTab.getContent().getClass() != TextArea.class)
+        if (fileTab.getContent().getClass() != FormatteableText.class)
         {
             throw new IllegalNodeCastException("Tried to save in a file: " + fileTab.getContent().getClass());
         }
 
-        TextArea txtArea = (TextArea) fileTab.getContent();
+        FormatteableText txtArea = (FormatteableText) fileTab.getContent();
 
         try
         {
@@ -122,32 +122,40 @@ public class TabPaneController extends Controller
 
         fileTab.setText(file.getName());
 
-        Session.getInstance().getFilesOpen().put(tabPanne.getTabs().indexOf(fileTab), file.getPath());
+        int index = tabPanne.getTabs().indexOf(fileTab);
+        final var filesOpen = Session.getInstance().filesOpen;
+        
+        if (index > filesOpen.size() - 1)
+        {
+            filesOpen.add(file.getPath());
+        }
+        else
+        {
+            filesOpen.set(index, file.getPath());
+        }
 
         return true;
     }
 
     public void openLastFiles()
     {
-        JSONArray lastFilesPaths = Session.getInstance().getFilesOpen();
+        List<String> lastFilesPaths = Session.getInstance().filesOpen;
         
-        JSONArray auxLastFilesPaths = new JSONArray();
-        
-        for (int i = 0; i < lastFilesPaths.length(); i++)
+        List<String> auxLastFilesPaths = new ArrayList<>();
+
+        for (String filePath : lastFilesPaths)
         {
-            String filePath = lastFilesPaths.getString(i);
-            
-            if (filePath.isEmpty()) 
+            if (filePath.isEmpty())
             {
                 continue;
             }
-            
+
             File file = new File(filePath);
             tabPanne.getTabs().add(newWriteableTab(file));
-            auxLastFilesPaths.put(filePath);
+            auxLastFilesPaths.add(filePath);
         }
         
-        Session.getInstance().setFilesOpen(auxLastFilesPaths);
+        Session.getInstance().filesOpen = auxLastFilesPaths;
     }
 
     @FXML
@@ -171,24 +179,14 @@ public class TabPaneController extends Controller
             throw new RuntimeException(e);
         }
 
-        Session.getInstance().getFilesOpen().put(file.getPath());
+        Session.getInstance().filesOpen.add(file.getPath());
         tabPanne.getTabs().add(newWriteableTab(file.getName(), content));
-        
-        TextArea txtArea = (TextArea) tabPanne.getSelectionModel().getSelectedItem().getContent();
-        txtArea.setTextFormatter(new TextFormatter<>(change ->
-        {
-            if (change.isAdded())
-            {
-                change.setText(change.getText().replace("\t", " "));
-            }
-            return change;
-        }));
     }
 
     @FXML
     private void newFile()
     {
-        Session.getInstance().getFilesOpen().put("");
+        Session.getInstance().filesOpen.add("");
         tabPanne.getTabs().add(newWriteableTab());
     }
 
@@ -199,7 +197,7 @@ public class TabPaneController extends Controller
         tab.setContent(formatteableText);
         
         tab.setOnCloseRequest(event ->
-                Session.getInstance().getFilesOpen().remove(
+                Session.getInstance().filesOpen.remove(
                         tabPanne.getTabs().indexOf(
                                 (Tab) event.getTarget()
                         )
@@ -238,5 +236,17 @@ public class TabPaneController extends Controller
         
         stage.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> openLastFiles());
         stage.addEventHandler(WindowEvent.WINDOW_HIDING, event -> saveAllFiles());
+    }
+    
+    private void addEventHandlers()
+    {
+        // Add an event in which, if Ctrl + S is pressed, the file is saved
+        tabPanne.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+            if (event.isControlDown() 
+                    && event.getCode().equals(javafx.scene.input.KeyCode.S)
+                    && !event.isShiftDown()) {
+                saveActualTab();
+            }
+        });
     }
 }

@@ -1,7 +1,8 @@
 package com.lebastudios.stexteditor.app.config;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.lebastudios.stexteditor.app.FileOperation;
-import org.json.JSONObject;
 
 import java.io.File;
 
@@ -9,19 +10,20 @@ public class Config
 {
     private static final String CONFIG_FILE = "config/config.json";
 
-    private static final JSONObject DEFAULT_CONFIG =
-            new JSONObject()
-                    .put("lang", "es")
-                    .put("version", "prototype")
-                    .put("editor", new JSONObject()
-                            .put("theme", "light")
-                            .put("font", "Arial")
-                            .put("fontSize", 13)
-                            .put("lineNumbers", true)
-                            .put("wrapText", false)
-                            .put("autoSave", true)
-                            .put("indentation", 4)
-                    );
+    public String lang = "es";
+    public String verion = "prototype";
+    public EditorConfig editorConfig = new EditorConfig();
+
+    public static class EditorConfig
+    {
+        public String theme;
+        public String font;
+        public int fontSize;
+        public boolean lineNumbers;
+        public boolean wrapText;
+        public boolean autoSave;
+        public int indentation;
+    }
 
     private static Config instance;
 
@@ -29,19 +31,17 @@ public class Config
     {
         if (instance == null)
         {
-            instance = new Config();
+            load();
         }
 
         return instance;
     }
 
-    private JSONObject configuration = DEFAULT_CONFIG;
-
     private Config() {}
 
     public static Thread preload()
     {
-        Thread hilo = new Thread(Config.getInstance()::load);
+        Thread hilo = new Thread(Config::load);
         hilo.start();
         return hilo;
     }
@@ -49,31 +49,23 @@ public class Config
     /**
      * Loads the configuration file.
      */
-    private void load()
+    private static void load()
     {
-        String config = DEFAULT_CONFIG.toString(2);
+        Config config;
 
         try
         {
             String content = FileOperation.read(new File(CONFIG_FILE));
-            config = new JSONObject(content).toString(2);
+            config = new Gson().fromJson(content, Config.class);
         }
         catch (Exception e)
         {
             System.err.println("Config file not found. Using default configuration.");
+            config = new Config();
         }
 
-        try
-        {
-            configuration = new JSONObject(config);
-        }
-        catch (Exception exception)
-        {
-            System.err.println("Config file has a invalid format.");
-            configuration = DEFAULT_CONFIG;
-        }
-
-        new Thread(this::save).start();
+        new Thread(config::save).start();
+        instance = config;
     }
 
     /**
@@ -83,35 +75,12 @@ public class Config
     {
         try
         {
-            FileOperation.write(new File(CONFIG_FILE), configuration.toString(2));
+            FileOperation.write(new File(CONFIG_FILE), 
+                    new GsonBuilder().setPrettyPrinting().create().toJson(this));
         }
         catch (Exception e)
         {
             System.err.println("Error saving configuration file.");
         }
-    }
-
-    // ************************************************
-    // Getters and setters for the configuration values
-    // ************************************************
-    
-    public String getFont()
-    {
-        return configuration.getJSONObject("editor").getString("font");
-    }
-    
-    public void setFont(String font)
-    {
-        configuration.getJSONObject("editor").put("font", font);
-    }
-    
-    public int getFontSize()
-    {
-        return configuration.getJSONObject("editor").getInt("fontSize");
-    }
-    
-    public void setFontSize(int fontSize)
-    {
-        configuration.getJSONObject("editor").put("fontSize", fontSize);
     }
 }

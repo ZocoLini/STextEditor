@@ -12,7 +12,7 @@
             <Menu mnemonicParsing="false" text="File">
                 <MenuItem mnemonicParsing="false" onAction="#newFile" text="New" />
                 <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open" />
-                <MenuItem mnemonicParsing="false" onAction="#saveActualFile" text="Save" />
+                <MenuItem mnemonicParsing="false" onAction="#saveActualTab" text="Save" />
                 <MenuItem mnemonicParsing="false" onAction="#saveActualFileAs" text="Save As" />
                 <MenuItem mnemonicParsing="false" text="Exit" />
             </Menu>

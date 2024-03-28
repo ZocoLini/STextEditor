@@ -1,13 +1,11 @@
 {
-  "editor": {
-    "lineNumbers": true,
-    "indentation": 4,
-    "theme": "light",
-    "fontSize": 13,
-    "autoSave": true,
-    "wrapText": false,
-    "font": "Arial"
-  },
   "lang": "es",
-  "version": "prototype"
+  "verion": "prototype",
+  "editorConfig": {
+    "fontSize": 0,
+    "lineNumbers": false,
+    "wrapText": false,
+    "autoSave": false,
+    "indentation": 0
+  }
 }
