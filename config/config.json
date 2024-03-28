@@ -1,4 +1,10 @@
 {
   "lang": "es",
-  "version": "unknown"
+  "verion": "prototype",
+  "editorConfig": {
+    "themeName": "LightTheme",
+    "font": "Arial",
+    "fontSize": 13,
+    "indentation": 4
+  }
 }

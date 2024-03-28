@@ -1,88 +1,48 @@
 package com.lebastudios.stexteditor.app.config;
 
-import com.lebastudios.stexteditor.app.FileOperation;
-import org.json.JSONObject;
-
-import java.io.File;
-
-public class Config
+public class Config extends JSONSaveable<Config>
 {
-    private static final String CONFIG_FILE = "config/config.json";
+    public String lang = "es";
+    public String verion = "prototype";
+    public EditorConfig editorConfig = new EditorConfig();
 
-    private static final JSONObject DEFAULT_CONFIG =
-            new JSONObject()
-                    .put("lang", "es")
-                    .put("version", "unknown");
+    public static class EditorConfig
+    {
+        public String themeName = "LightTheme";
+        public String font = "Arial";
+        public int fontSize = 13;
+        public int indentation = 4;
+    }
 
     private static Config instance;
 
-    public static Config getInstance()
+    public static Config getStaticInstance()
     {
         if (instance == null)
         {
-            instance = new Config();
+            instance = new Config().load();
         }
 
         return instance;
     }
 
-    private JSONObject configuration = DEFAULT_CONFIG;
-
     private Config() {}
-
-    public static Thread preload()
+    
+    @Override
+    public String getFilePath()
     {
-        Thread hilo = new Thread(Config.getInstance()::load);
-        hilo.start();
-        return hilo;
+        return "config/config.json";
     }
 
-    /**
-     * Loads the configuration file.
-     */
-    private void load()
+    @Override
+    public JSONSaveable<Config> getInstance()
     {
-        String config = DEFAULT_CONFIG.toString(2);
-
-        try
-        {
-            String content = FileOperation.read(new File(CONFIG_FILE));
-            config = new JSONObject(content).toString(2);
-        }
-        catch (Exception e)
-        {
-            System.err.println("Config file not found. Using default configuration.");
-        }
-
-        try
-        {
-            configuration = new JSONObject(config);
-        }
-        catch (Exception exception)
-        {
-            System.err.println("Config file has a invalid format.");
-            configuration = DEFAULT_CONFIG;
-        }
-
-        new Thread(this::save).start();
+        return Config.getStaticInstance();
     }
 
-    /**
-     * Saves the configuration file.
-     */
-    public void save()
+    @Override
+    public Config newInstance()
     {
-        try
-        {
-            FileOperation.write(new File(CONFIG_FILE), configuration.toString(2));
-        }
-        catch (Exception e)
-        {
-            System.err.println("Error saving configuration file.");
-        }
+        return new Config();
     }
-
-    // ************************************************
-    // Getters and setters for the configuration values
-    // ************************************************
 }

@@ -3,6 +3,7 @@ package com.lebastudios.stexteditor.app;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 
@@ -20,7 +21,7 @@ public class FileOperation
     {
         if (!file.exists()) 
         {
-            return "";
+            throw new FileNotFoundException();
         }
         
         FileReader reader = new FileReader(file);

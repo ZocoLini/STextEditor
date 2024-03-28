@@ -1,96 +1,42 @@
 package com.lebastudios.stexteditor.app.config;
 
-import com.lebastudios.stexteditor.app.FileOperation;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.io.File;
-
-public class Session
+public class Session extends JSONSaveable<Session>
 {
-    private static final String SESSION_FILE = "session/lastSession.json";
-
-    private static final JSONObject DEFAULT_SESSION =
-            new JSONObject()
-                    .put("filesOpen", new JSONArray())
-                    .put("fileFilter", "none");
+    public List<String> filesOpen = new ArrayList<>();
+    public String fileFilter = "none";
 
     private static Session instance;
 
-    public static Session getInstance()
+    public static Session getStaticInstance()
     {
         if (instance == null)
         {
-            instance = new Session();
+            instance = new Session().load();
         }
 
         return instance;
     }
 
-    private JSONObject session = DEFAULT_SESSION;
-
     private Session() {}
 
-    public static Thread preload()
+    @Override
+    public String getFilePath()
     {
-        Thread hilo = new Thread(Session.getInstance()::load);
-        hilo.start();
-        return hilo;
+        return "session/lastSession.json";
     }
 
-    /**
-     * Loads the configuration file.
-     */
-    private void load()
+    @Override
+    public JSONSaveable<Session> getInstance()
     {
-        String session = DEFAULT_SESSION.toString(2);
-
-        try
-        {
-            String content = FileOperation.read(new File(SESSION_FILE));
-            session = new JSONObject(content).toString(2);
-        }
-        catch (Exception e)
-        {
-            System.err.println("Session file not found. Using default session.");
-        }
-        
-        try
-        {
-            this.session = new JSONObject(session);
-        }
-        catch (Exception exception)
-        {
-            System.err.println("Config file has a invalid format.");
-            this.session = DEFAULT_SESSION;
-        }
-
-        new Thread(this::save).start();
+        return Session.getStaticInstance();
     }
 
-    /**
-     * Saves the configuration file.
-     */
-    public void save()
+    @Override
+    public Session newInstance()
     {
-        try
-        {
-            FileOperation.write(new File(SESSION_FILE), session.toString(2));
-        }
-        catch (Exception e)
-        {
-            System.err.println("Error saving session file.");
-        }
+        return new Session();
     }
-
-    // ************************************************
-    // Getters and setters for the configuration values
-    // ************************************************
-
-    public JSONArray getFilesOpen()
-    {
-        return session.getJSONArray("filesOpen");
-    }
-
-    public void setFilesOpen(JSONArray auxLastFilesPaths) { session.put("filesOpen", auxLastFilesPaths); }
 }
