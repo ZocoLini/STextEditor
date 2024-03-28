@@ -21,12 +21,6 @@ public abstract class JSONSaveable<T>
     public abstract JSONSaveable<T> getInstance();
 
     /**
-     * Sets the static instance defined in the final class.
-     * @param session The instance to set.
-     */
-    public abstract void setInstance(T session);
-
-    /**
      * Creates a new static instance of the final class.
      * @return The new static instance.
      */
@@ -42,24 +36,24 @@ public abstract class JSONSaveable<T>
     /**
      * Loads the configuration file.
      */
-    protected void load()
+    protected T load()
     {
         T instance;
 
         try
         {
             String content = FileOperation.read(new File(getFilePath()));
-            instance = (T) new Gson().fromJson(content, getInstance().getClass());
+            instance = (T) new Gson().fromJson(content, this.getClass());
         }
         catch (Exception e)
         {
             System.err.println(this.getClass().getName() +
                     " file not found. Using default configuration.");
             instance = newInstance();
+            new Thread(((JSONSaveable<T>) instance)::save).start();
         }
-
-        new Thread(getInstance()::save).start();
-        setInstance(instance);
+        
+        return instance;
     }
 
     /**

@@ -2,10 +2,9 @@
   "lang": "es",
   "verion": "prototype",
   "editorConfig": {
-    "fontSize": 0,
-    "lineNumbers": false,
-    "wrapText": false,
-    "autoSave": false,
-    "indentation": 0
+    "themeName": "LightTheme",
+    "font": "Arial",
+    "fontSize": 13,
+    "indentation": 4
   }
 }

@@ -14,8 +14,7 @@ public class Session extends JSONSaveable<Session>
     {
         if (instance == null)
         {
-            instance = new Session();
-            instance.load();
+            instance = new Session().load();
         }
 
         return instance;
@@ -33,12 +32,6 @@ public class Session extends JSONSaveable<Session>
     public JSONSaveable<Session> getInstance()
     {
         return Session.getStaticInstance();
-    }
-
-    @Override
-    public void setInstance(Session session)
-    {
-        instance = session;
     }
 
     @Override

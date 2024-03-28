@@ -5,25 +5,26 @@ import javafx.scene.paint.Color;
 public class Theme extends JSONSaveable<Theme>
 {
     public String themeName = "LightTheme";
-    public Color colorPrimario = Color.RED;
-    public Color colorSecundario = Color.BLUE;
-    public Color colorTerciario = Color.GREEN;
-    public Color colorTexto = Color.BLACK;
-    public Color colorFondo = Color.WHITE;
-    public Color colorSeleccion = Color.LIGHTBLUE;
-    public Color colorError = Color.RED;
-    public Color colorAdvertencia = Color.YELLOW;
-    public Color colorInformacion = Color.BLUE;
-    public Color colorKeywords = Color.DARKBLUE;
-    public Color colorStrings = Color.DARKGREEN;
-    public Color colorComments = Color.DARKGRAY;
-    public Color colorNumbers = Color.DARKRED;
-    public Color colorOperators = Color.DARKORANGE;
-    public Color colorPunctuation = Color.DARKVIOLET;
-    public Color colorFunctions = Color.DARKCYAN;
-    public Color colorVariables = Color.DARKMAGENTA;
-    public Color colorTypes = Color.DARKGOLDENROD;
-    public Color colorConstants = Color.DARKKHAKI;
+    public String colorPrimario = Color.RED.toString();
+    public String colorSecundario = Color.BLUE.toString();
+    public String colorTerciario = Color.GREEN.toString();
+    public String colorTexto = Color.BLACK.toString();
+    public String colorFondo = Color.WHITE.toString();
+    public String colorSeleccion = Color.LIGHTBLUE.toString();
+    public String colorError = Color.RED.toString();
+    public String colorAdvertencia = Color.YELLOW.toString();
+    public String colorInformacion = Color.BLUE.toString();
+    public String colorKeywords = Color.DARKBLUE.toString();
+    public String colorStrings = Color.DARKGREEN.toString();
+    public String colorComments = Color.DARKGRAY.toString();
+    public String colorNumbers = Color.DARKRED.toString();
+    public String colorOperators = Color.DARKORANGE.toString();
+    public String colorPunctuation = Color.DARKVIOLET.toString();
+    public String colorFunctions = Color.DARKCYAN.toString();
+    public String colorVariables = Color.DARKMAGENTA.toString();
+    public String colorTypes = Color.DARKGOLDENROD.toString();
+    public String colorConstants = Color.DARKKHAKI.toString();
+    public String colorLine = Color.LIGHTGRAY.toString();
 
     private static Theme instance;
 
@@ -31,8 +32,7 @@ public class Theme extends JSONSaveable<Theme>
     {
         if (instance == null)
         {
-            instance = new Theme();
-            instance.load();
+            instance = new Theme().load();
         }
 
         return instance;
@@ -54,20 +54,8 @@ public class Theme extends JSONSaveable<Theme>
     }
 
     @Override
-    public void setInstance(Theme session)
-    {
-        instance = session;
-    }
-
-    @Override
     public Theme newInstance()
     {
         return new Theme();
-    }
-
-    @Override
-    public void save()
-    {
-        System.err.println("You can't save a theme");
     }
 }

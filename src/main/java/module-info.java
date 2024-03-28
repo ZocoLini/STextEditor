@@ -14,7 +14,7 @@ module com.lebastudios.ud07javafx {
     
     exports com.lebastudios.stexteditor.app;
     opens com.lebastudios.stexteditor.app to javafx.fxml;
+    
     exports com.lebastudios.stexteditor.app.config;
     opens com.lebastudios.stexteditor.app.config to com.google.gson, javafx.fxml;
-
 }

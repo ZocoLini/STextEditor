@@ -20,8 +20,7 @@ public class Config extends JSONSaveable<Config>
     {
         if (instance == null)
         {
-            instance = new Config();
-            instance.load();
+            instance = new Config().load();
         }
 
         return instance;
@@ -39,12 +38,6 @@ public class Config extends JSONSaveable<Config>
     public JSONSaveable<Config> getInstance()
     {
         return Config.getStaticInstance();
-    }
-
-    @Override
-    public void setInstance(Config session)
-    {
-        instance = session;
     }
 
     @Override
