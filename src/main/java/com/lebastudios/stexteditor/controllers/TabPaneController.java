@@ -27,7 +27,7 @@ public class TabPaneController extends Controller
     private void saveAllFiles()
     {
         int i = 0;
-        List<String> filePaths = Session.getInstance().filesOpen;
+        List<String> filePaths = Session.getStaticInstance().filesOpen;
 
         for (var tab : tabPanne.getTabs())
         {
@@ -67,7 +67,7 @@ public class TabPaneController extends Controller
         Tab actualTab = tabPanne.getSelectionModel().getSelectedItem();
         int actualIndex = tabPanne.getSelectionModel().getSelectedIndex();
 
-        List<String> filePaths = Session.getInstance().filesOpen;
+        List<String> filePaths = Session.getStaticInstance().filesOpen;
 
         if (actualIndex < filePaths.size() && filePaths.get(actualIndex) != null
                 && !filePaths.get(actualIndex).isEmpty())
@@ -123,7 +123,7 @@ public class TabPaneController extends Controller
         fileTab.setText(file.getName());
 
         int index = tabPanne.getTabs().indexOf(fileTab);
-        final var filesOpen = Session.getInstance().filesOpen;
+        final var filesOpen = Session.getStaticInstance().filesOpen;
         
         if (index > filesOpen.size() - 1)
         {
@@ -139,7 +139,7 @@ public class TabPaneController extends Controller
 
     public void openLastFiles()
     {
-        List<String> lastFilesPaths = Session.getInstance().filesOpen;
+        List<String> lastFilesPaths = Session.getStaticInstance().filesOpen;
         
         List<String> auxLastFilesPaths = new ArrayList<>();
 
@@ -155,7 +155,7 @@ public class TabPaneController extends Controller
             auxLastFilesPaths.add(filePath);
         }
         
-        Session.getInstance().filesOpen = auxLastFilesPaths;
+        Session.getStaticInstance().filesOpen = auxLastFilesPaths;
     }
 
     @FXML
@@ -179,14 +179,14 @@ public class TabPaneController extends Controller
             throw new RuntimeException(e);
         }
 
-        Session.getInstance().filesOpen.add(file.getPath());
+        Session.getStaticInstance().filesOpen.add(file.getPath());
         tabPanne.getTabs().add(newWriteableTab(file.getName(), content));
     }
 
     @FXML
     private void newFile()
     {
-        Session.getInstance().filesOpen.add("");
+        Session.getStaticInstance().filesOpen.add("");
         tabPanne.getTabs().add(newWriteableTab());
     }
 
@@ -197,7 +197,7 @@ public class TabPaneController extends Controller
         tab.setContent(formatteableText);
         
         tab.setOnCloseRequest(event ->
-                Session.getInstance().filesOpen.remove(
+                Session.getStaticInstance().filesOpen.remove(
                         tabPanne.getTabs().indexOf(
                                 (Tab) event.getTarget()
                         )

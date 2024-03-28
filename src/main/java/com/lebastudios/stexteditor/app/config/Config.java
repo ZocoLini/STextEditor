@@ -6,10 +6,8 @@ import com.lebastudios.stexteditor.app.FileOperation;
 
 import java.io.File;
 
-public class Config
+public class Config extends JSONSaveable<Config>
 {
-    private static final String CONFIG_FILE = "config/config.json";
-
     public String lang = "es";
     public String verion = "prototype";
     public EditorConfig editorConfig = new EditorConfig();
@@ -27,60 +25,40 @@ public class Config
 
     private static Config instance;
 
-    public static Config getInstance()
+    public static Config getStaticInstance()
     {
         if (instance == null)
         {
-            load();
+            instance = new Config();
+            instance.load();
         }
 
         return instance;
     }
 
     private Config() {}
-
-    public static Thread preload()
+    
+    @Override
+    public String getFilePath()
     {
-        Thread hilo = new Thread(Config::load);
-        hilo.start();
-        return hilo;
+        return "config/config.json";
     }
 
-    /**
-     * Loads the configuration file.
-     */
-    private static void load()
+    @Override
+    public JSONSaveable<Config> getInstance()
     {
-        Config config;
-
-        try
-        {
-            String content = FileOperation.read(new File(CONFIG_FILE));
-            config = new Gson().fromJson(content, Config.class);
-        }
-        catch (Exception e)
-        {
-            System.err.println("Config file not found. Using default configuration.");
-            config = new Config();
-        }
-
-        new Thread(config::save).start();
-        instance = config;
+        return Config.getStaticInstance();
     }
 
-    /**
-     * Saves the configuration file.
-     */
-    public void save()
+    @Override
+    public void setInstance(Config session)
     {
-        try
-        {
-            FileOperation.write(new File(CONFIG_FILE), 
-                    new GsonBuilder().setPrettyPrinting().create().toJson(this));
-        }
-        catch (Exception e)
-        {
-            System.err.println("Error saving configuration file.");
-        }
+        instance = session;
+    }
+
+    @Override
+    public Config newInstance()
+    {
+        return new Config();
     }
 }

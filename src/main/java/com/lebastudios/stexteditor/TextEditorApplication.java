@@ -39,8 +39,8 @@ public class TextEditorApplication extends Application
     {
         this.stage = stage;
         
-        Thread hiloPrecargaConfig = Config.preload();
-        Thread hiloPrecargaSession = Session.preload();
+        Thread hiloPrecargaConfig = Config.getStaticInstance().preload();
+        Thread hiloPrecargaSession = Session.getStaticInstance().preload();
 
         FXMLLoader fxmlLoader =
                 new FXMLLoader(TextEditorApplication.class.getResource("hello-view.fxml"));
@@ -49,8 +49,8 @@ public class TextEditorApplication extends Application
 
         stage.setTitle("Text Editor!");
 
-        stage.addEventHandler(WindowEvent.WINDOW_HIDING, event -> Config.getInstance().save());
-        stage.addEventHandler(WindowEvent.WINDOW_HIDING, event -> Session.getInstance().save());
+        stage.addEventHandler(WindowEvent.WINDOW_HIDING, event -> Config.getStaticInstance().save());
+        stage.addEventHandler(WindowEvent.WINDOW_HIDING, event -> Session.getStaticInstance().save());
         stage.addEventHandler(WindowEvent.WINDOW_HIDING, event -> hiloDeJuego = false);
 
         stage.setScene(escenaActual);
