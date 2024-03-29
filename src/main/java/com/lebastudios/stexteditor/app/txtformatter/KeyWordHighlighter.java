@@ -24,32 +24,31 @@ import org.reactfx.Subscription;
 
 public class KeyWordHighlighter
 {
-    // TODO: Pendiente replantear, de forma que sea el json quien defina diferentes 
-    //  objetos donde cada uno contendra, el patorn de resaltado, el nombre de la clase de estilos
-    //  y ... lo que se me ocurra, está por determinar
+    // TODO: Solo pintar aquello que cumpla el patron de pintado
+    // TODO: Que tan prnto se abre el archivo, se formatee
+    // TODO: Ver si se puede hacer que no se desdibuje antes de dibujar
 
     private static final String PROG_LANG_PATH = "config/prog-lang/";
 
-    public PatternsFile patterns;
+    public JSONPatterns patterns;
 
-    public static class PatternsFile
+    public static class PatternInfo
     {
-        public String[] keywords;
-        public String methodPattern;
-        public String parenPattern;
-        public String bracePattern;
-        public String bracketPattern;
-        public String semicolonPattern;
-        public String stringPattern;
-        public String commentPattern;
-        public String tagPattern;
+        public String name;
+        public String pattern;
+        public String coloureablePattern;
     }
 
+    public static class JSONPatterns
+    {
+        public PatternInfo[] patternsInfo;
+    }
+    
     private Pattern pattern;
 
     private CodeArea codeArea;
     private ExecutorService executor;
-    private String extension;
+    private final String extension;
 
     public KeyWordHighlighter(CodeArea codeArea, String extension)
     {
@@ -57,7 +56,7 @@ public class KeyWordHighlighter
         String path = PROG_LANG_PATH + extension + ".json";
         try
         {
-            this.patterns = new Gson().fromJson(FileOperation.read(new File(path)), PatternsFile.class);
+            this.patterns = new Gson().fromJson(FileOperation.read(new File(path)), JSONPatterns.class);
         }
         catch (Exception e)
         {
@@ -80,36 +79,33 @@ public class KeyWordHighlighter
      */
     private void patternsCreator()
     {
-        String keywordPattern = "\\b(" + String.join("|", patterns.keywords) + ")\\b";
-
-        pattern = Pattern.compile(
-                "(?<KEYWORD>" + keywordPattern + ")"
-                        + "|(?<PAREN>" + patterns.parenPattern + ")"
-                        + "|(?<BRACE>" + patterns.bracePattern + ")"
-                        + "|(?<BRACKET>" + patterns.bracketPattern + ")"
-                        + "|(?<SEMICOLON>" + patterns.semicolonPattern + ")"
-                        + "|(?<STRING>" + patterns.stringPattern + ")"
-                        + "|(?<COMMENT>" + patterns.commentPattern + ")"
-                        + "|(?<METHOD>" + patterns.methodPattern + ")"
-                        + "|(?<TAG>" + patterns.tagPattern + ")"
-        );
+        StringBuilder patternString = new StringBuilder();
+        
+        for (var patternInfo : patterns.patternsInfo)
+        {
+            patternString.append("(?<").append(patternInfo.name).append(">").
+                    append(patternInfo.pattern).append(")").append("|");
+        }
+        
+        // Eliminar el último "|"
+        String keywordPattern = patternString.substring(0, patternString.length() - 1);
+        
+        pattern = Pattern.compile(keywordPattern);
     }
 
     private String getStyleClass(Matcher matcher)
     {
-        String styleClass =
-                matcher.group("KEYWORD") != null ? "keyword" :
-                matcher.group("PAREN") != null ? "paren" :
-                matcher.group("BRACE") != null ? "brace" :
-                matcher.group("BRACKET") != null ? "bracket" :
-                matcher.group("SEMICOLON") != null ? "semicolon" :
-                matcher.group("STRING") != null ? "string" :
-                matcher.group("COMMENT") != null ? "comment" :
-                matcher.group("METHOD") != null ? "method" :
-                matcher.group("TAG") != null ? "tag" :
-                null; /* never happens */
-        assert styleClass != null;
-        return concatExtensionWithStyleClass(styleClass);
+        for (var variable : patterns.patternsInfo)
+        {
+            final var patternName = variable.name;
+            
+            if (matcher.group(patternName) != null)
+            {
+                return concatExtensionWithStyleClass(patternName);
+            }
+        }
+        
+        return "default";
     }
 
     private String concatExtensionWithStyleClass(String styleClass)

@@ -1,21 +1,59 @@
 {
-  "keywords": [
-    "abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class",
-    "const", "continue", "default", "do", "double", "else", "enum", "extends", "final",
-    "finally", "float", "for", "goto", "if", "implements", "import", "instanceof", "int",
-    "interface", "long", "native", "new", "package", "private", "protected", "public",
-    "return", "short", "static", "strictfp", "super", "switch", "synchronized", "this",
-    "throw", "throws", "transient", "try", "void", "volatile", "while", "true", "false",
-    "module", "requires", "exports", "opens", "to", "transitive", "uses", "provides", "with",
-    "var", "record", "sealed", "yield"
-  ],
-  
-  "methodPattern": "\\b[a-zA-Z_$][a-zA-Z0-9_$]*s*\\(.*?\\)\\s*",
-  "parenPattern": "[()]",
-  "bracePattern":  "[{}]",
-  "bracketPattern": "[\\[\\]]",
-  "semicolonPattern": ";",
-  "stringPattern": "\"([^\"\\\\]|\\\\.)*\"",
-  "commentPattern":  "//[^\n]*|/\\*(.|\\R)*?\\*/",
-  "tagPattern": "@[a-zA-Z]+"
+  "patternsInfo": [
+    {
+      "name": "method",
+      "pattern": "[a-zA-Z_$][a-zA-Z0-9_$]*s*\\(.*?\\)\\s*",
+      "coloureablePattern": "[a-zA-Z_$][a-zA-Z0-9_$]"
+    },
+    {
+      "name": "paren",
+      "pattern": "\\(|\\)",
+      "coloureablePattern": "\\(|\\)"
+    },
+    {
+      "name": "curly",
+      "pattern": "\\{|\\}",
+      "coloureablePattern": "\\{|\\}"
+    },
+    {
+      "name": "bracket",
+      "pattern": "\\[|\\]",
+      "coloureablePattern": "\\[|\\]"
+    },
+    {
+      "name": "tag",
+      "pattern": "@[a-zA-Z0-9_$]+",
+      "coloureablePattern": "@[a-zA-Z0-9_$]+"
+    },
+    {
+      "name": "semicolon",
+      "pattern": ";",
+      "coloureablePattern": ";"
+    },
+    {
+      "name": "operator",
+      "pattern": "=|\\+|-|\\*|/|%|\\+=|-=|\\*=|/=|%=|==|!=|>|<|>=|<=|&&|\\|\\||!|&|\\||\\^|~|<<|>>|>>>|<<=|>>=|>>>=|&=|\\|=|\\^|\\?|:|\\+\\+|--|\\+\\+|\\-\\-|\\.|\\,|->|::|\\+=|-=|\\*=|/=|%=|&=|\\|=|\\^=|\\?|:|\\+\\+|--|\\+\\+|\\-\\-|\\.|\\,|->|::|\\+=|-=|\\*=|/=|%=|&=|\\|=|\\^=|<<=|>>=|>>>=|\\|\\||&&|\\?|:|\\||&|\\^|~|<<|>>|>>>",
+      "coloureablePattern": "\\+|-|\\*|/|%|\\+=|-=|\\*=|/=|%=|==|!=|>|<|>=|<=|&&|\\|\\||!|&|\\||\\^|~|<<|>>|>>>|<<=|>>=|>>>=|&=|\\|=|\\^|\\?|:|\\+\\+|--|\\+\\+|\\-\\-|\\.|\\,|->|::|\\+=|-=|\\*=|/=|%=|&=|\\|=|\\^=|\\?|:|\\+\\+|--|\\+\\+|\\-\\-|\\.|\\,|->|::|\\+=|-=|\\*=|/=|%=|&=|\\|=|\\^=|<<=|>>=|>>>=|\\|\\||&&|\\?|:|\\||&|\\^|~|<<|>>|>>>"
+    },
+    {
+      "name": "string",
+      "pattern": "\".*?\"",
+      "coloureablePattern": "\".*?\""
+    },
+    {
+      "name": "keyword",
+      "pattern": "\\b(?:abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|do|double|else|enum|extends|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|transient|try|void|volatile|while|true|false|module|requires|exports|opens|to|transitive|uses|provides|with|var|record|sealed|yield)\\b",
+      "coloureablePattern": "\\b(?:abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|do|double|else|enum|extends|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|transient|try|void|volatile|while|true|false|module|requires|exports|opens|to|transitive|uses|provides|with|var|record|sealed|yield)\\b"
+    },
+    {
+      "name": "number",
+      "pattern": "\\b[0-9]+\\b",
+      "coloureablePattern": "\\b[0-9]+\\b"
+    },
+    {
+      "name": "comment",
+      "pattern": "//[^\n]*|/\\*(.|\\R)*?\\*/",
+      "coloureablePattern": "//[^\n]*|/\\*(.|\\R)*?\\*/"
+    }
+  ]
 }
