@@ -16,7 +16,6 @@ import java.util.List;
 
 public class TextEditorApplication extends Application
 {
-
     public static final List<Controller> instanciatedControllers = new ArrayList<>();
 
     private static TextEditorApplication instance;

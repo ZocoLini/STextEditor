@@ -36,6 +36,6 @@
 /* Formato del code Area */
 .text {
     -fx-color: black;
-    -fx-font-size: 13;
+    -fx-font-size: 16;
     -fx-font-family: monospace;
 }
