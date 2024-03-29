@@ -21,7 +21,8 @@ import org.reactfx.Subscription;
 
 public class KeyWordHighlighter
 {
-
+    // TODO: Pendiente hacer que pueda reconocer multiple lenguajes
+    
     private static final String[] KEYWORDS = new String[]{
             "abstract", "assert", "boolean", "break", "byte",
             "case", "catch", "char", "class", "const",

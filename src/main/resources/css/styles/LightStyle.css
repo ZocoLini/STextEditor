@@ -1,3 +1,5 @@
+/* TODO: Deberia separar en diferentes carpetas los temas, y dentro de cada carpeta los css o algo similar */
+/* Java */
 .keyword {
     -fx-fill: purple;
     -fx-font-weight: bold;
@@ -29,6 +31,29 @@
     -fx-background-color: #f2f9fc;
 }
 
+/* XML */
+.tagmark {
+    -fx-fill: gray;
+}
+.anytag {
+    -fx-fill: blue;
+}
+.paren {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.attribute {
+    -fx-fill: darkviolet;
+}
+.avalue {
+    -fx-fill: black;
+}
+
+.comment {
+    -fx-fill: teal;
+}
+
+/* Bracket Highlighter */
 .match-bracket {
     -rtfx-background-color: lightgreen;
 }
