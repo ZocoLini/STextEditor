@@ -8,6 +8,7 @@ import com.lebastudios.stexteditor.nodes.formateableText.FormatteableText;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -91,8 +92,14 @@ public class TabPaneController extends Controller
     private void saveActualFileAs()
     {
         Tab actualTab = tabPanne.getSelectionModel().getSelectedItem();
-
-        saveFile(actualTab, FileOperation.fileChooser().showSaveDialog(null).getAbsoluteFile());
+        File file = FileOperation.fileChooser().showSaveDialog(null);
+        
+        if (file == null)
+        {
+            return;
+        }
+        
+        saveFile(actualTab, file.getAbsoluteFile());
     }
 
     private boolean saveFile(Tab fileTab, File file)
@@ -161,13 +168,14 @@ public class TabPaneController extends Controller
     @FXML
     private void openFile()
     {
-        File file = FileOperation.fileChooser().showOpenDialog(null).getAbsoluteFile();
+        File file = FileOperation.fileChooser().showOpenDialog(null);
 
         if (file == null)
         {
             return;
         }
 
+        file = file.getAbsoluteFile();
         String content;
 
         try
@@ -180,14 +188,18 @@ public class TabPaneController extends Controller
         }
 
         Session.getStaticInstance().filesOpen.add(file.getPath());
-        tabPanne.getTabs().add(newWriteableTab(file.getName(), content));
+        Tab newTab = newWriteableTab(file.getName(), content);
+        tabPanne.getTabs().add(newTab);
+        tabPanne.getSelectionModel().select(newTab);
     }
 
     @FXML
     private void newFile()
     {
         Session.getStaticInstance().filesOpen.add("");
-        tabPanne.getTabs().add(newWriteableTab());
+        Tab newTab = newWriteableTab();
+        tabPanne.getTabs().add(newTab);
+        tabPanne.getSelectionModel().select(newTab);
     }
 
     private Tab newWriteableTab(String name, String content)
@@ -218,7 +230,8 @@ public class TabPaneController extends Controller
         }
         catch (Exception e)
         {
-            throw new RuntimeException(e);
+            System.err.println("File not found, probably deleted");
+            content = "";
         }
 
         return newWriteableTab(fileName, content);
@@ -232,20 +245,47 @@ public class TabPaneController extends Controller
     @Override
     protected void start()
     {
-        Stage stage = TextEditorApplication.getStage();
-        
-        stage.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> openLastFiles());
-        stage.addEventHandler(WindowEvent.WINDOW_HIDING, event -> saveAllFiles());
+        addEventHandlers();
     }
     
     private void addEventHandlers()
     {
-        // Add an event in which, if Ctrl + S is pressed, the file is saved
-        tabPanne.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-            if (event.isControlDown() 
-                    && event.getCode().equals(javafx.scene.input.KeyCode.S)
-                    && !event.isShiftDown()) {
-                saveActualTab();
+        Stage stage = TextEditorApplication.getStage();
+
+        // Add an event in which, when the window is shown, the last files are opened
+        stage.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> openLastFiles());
+        // Add an event in which, when the window is hidden, all files are saved
+        stage.addEventHandler(WindowEvent.WINDOW_HIDING, event -> saveAllFiles());
+        
+        // Add an event in which, if Ctrl + ANYKEY is pressed
+        stage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+            if (event.isControlDown() && !event.isShiftDown()) {
+                switch (event.getCode()) 
+                {
+                    case KeyCode.S:
+                        saveActualTab();
+                        break;
+                    case KeyCode.N:
+                        newFile();
+                        break;
+                    case KeyCode.O:
+                        openFile();
+                        break;
+                    default:
+                }
+            }
+        });
+        
+        // Add an event in which, if Ctrl + Shift + ANYKEY is pressed
+        stage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+            if (event.isControlDown() && event.isShiftDown()) {
+                switch (event.getCode()) 
+                {
+                    case KeyCode.S:
+                        saveActualFileAs();
+                        break;
+                    default:
+                }
             }
         });
     }
