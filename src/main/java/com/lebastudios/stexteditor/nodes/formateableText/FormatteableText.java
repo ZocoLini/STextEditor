@@ -2,7 +2,6 @@ package com.lebastudios.stexteditor.nodes.formateableText;
 
 import com.lebastudios.stexteditor.events.TextInsertionListener;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 import org.fxmisc.richtext.*;
 import org.fxmisc.richtext.model.StyledDocument;
 

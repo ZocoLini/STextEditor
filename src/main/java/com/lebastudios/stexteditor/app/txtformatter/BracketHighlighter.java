@@ -169,17 +169,6 @@ class BracketHighlighter
     /**
      * Class representing a pair of matching bracket indices
      */
-    private static class BracketPair
-    {
-
-        private int start;
-        private int end;
-
-        BracketPair(int start, int end)
-        {
-            this.start = start;
-            this.end = end;
-        }
-    }
+    private record BracketPair(int start, int end) {}
 
 }

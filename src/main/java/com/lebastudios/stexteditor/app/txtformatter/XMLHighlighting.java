@@ -1,11 +1,6 @@
 package com.lebastudios.stexteditor.app.txtformatter;
 
-import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
-import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
@@ -32,9 +27,7 @@ public class XMLHighlighting
     public XMLHighlighting(CodeArea codeArea)
     {
         codeArea.textProperty().addListener((obs, oldText, newText) ->
-        {
-            codeArea.setStyleSpans(0, computeHighlighting(newText));
-        });
+                codeArea.setStyleSpans(0, computeHighlighting(newText)));
         
         // Realizar formateo de txto cuando se abre el archivo
         codeArea.setStyleSpans(0, computeHighlighting(codeArea.getText()));

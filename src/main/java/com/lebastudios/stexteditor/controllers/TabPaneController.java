@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class TabPaneController extends Controller
 {
     @FXML
@@ -103,7 +104,7 @@ public class TabPaneController extends Controller
         saveFile(actualTab, file.getAbsoluteFile());
     }
 
-    private boolean saveFile(Tab fileTab, File file)
+    private void saveFile(Tab fileTab, File file)
     {
         if (fileTab.getContent().getClass() != FormatteableText.class)
         {
@@ -125,7 +126,7 @@ public class TabPaneController extends Controller
         }
         catch (IOException e)
         {
-            return false;
+            return;
         }
 
         fileTab.setText(file.getName());
@@ -142,7 +143,6 @@ public class TabPaneController extends Controller
             filesOpen.set(index, file.getPath());
         }
 
-        return true;
     }
 
     public void openLastFiles()

@@ -22,7 +22,7 @@ import org.reactfx.Subscription;
 public class KeyWordHighlighter
 {
     // TODO: Pendiente hacer que pueda reconocer multiple lenguajes
-    
+
     private static final String[] KEYWORDS = new String[]{
             "abstract", "assert", "boolean", "break", "byte",
             "case", "catch", "char", "class", "const",
@@ -85,7 +85,7 @@ public class KeyWordHighlighter
 
         // Resaltado tan pronto se abre el archivo
         applyHighlighting(computeHighlighting(codeArea.getText()));
-        
+
         // Limpiar el executor cuando se cierre la ventana
         TextEditorApplication.getStage().addEventHandler(WindowEvent.WINDOW_HIDING, e -> cleanupWhenDone.unsubscribe());
         codeArea.addEventHandler(WindowEvent.WINDOW_HIDING, e -> cleanupWhenDone.unsubscribe());
@@ -94,7 +94,7 @@ public class KeyWordHighlighter
     private Task<StyleSpans<Collection<String>>> computeHighlightingAsync()
     {
         String text = codeArea.getText();
-        
+
         Task<StyleSpans<Collection<String>>> task = new Task<>()
         {
             @Override
@@ -120,22 +120,28 @@ public class KeyWordHighlighter
                 = new StyleSpansBuilder<>();
         while (matcher.find())
         {
-            String styleClass =
-                    matcher.group("KEYWORD") != null ? "keyword" :
-                            matcher.group("PAREN") != null ? "paren" :
-                                    matcher.group("BRACE") != null ? "brace" :
-                                            matcher.group("BRACKET") != null ? "bracket" :
-                                                    matcher.group("SEMICOLON") != null ? "semicolon" :
-                                                            matcher.group("STRING") != null ? "string" :
-                                                                    matcher.group("COMMENT") != null ? "comment" :
-                                                                            null; /* never happens */
-            assert styleClass != null;
-            
+            final var styleClass = getStyleClass(matcher);
+
             spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
             spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
             lastKwEnd = matcher.end();
         }
         spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
         return spansBuilder.create();
+    }
+
+    private static String getStyleClass(Matcher matcher)
+    {
+        String styleClass =
+                matcher.group("KEYWORD") != null ? "keyword" :
+                        matcher.group("PAREN") != null ? "paren" :
+                                matcher.group("BRACE") != null ? "brace" :
+                                        matcher.group("BRACKET") != null ? "bracket" :
+                                                matcher.group("SEMICOLON") != null ? "semicolon" :
+                                                        matcher.group("STRING") != null ? "string" :
+                                                                matcher.group("COMMENT") != null ? "comment" :
+                                                                        null; /* never happens */
+        assert styleClass != null;
+        return styleClass;
     }
 }
