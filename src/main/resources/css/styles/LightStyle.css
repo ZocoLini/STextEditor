@@ -1,51 +1,58 @@
 /* TODO: Deberia separar en diferentes carpetas los temas, y dentro de cada carpeta los css o algo similar */
 /* Java */
-.keyword {
+.java-keyword {
     -fx-fill: purple;
     -fx-font-weight: bold;
 }
-.semicolon {
+.java-semicolon {
     -fx-font-weight: bold;
 }
-.paren {
+.java-paren {
     -fx-fill: firebrick;
     -fx-font-weight: bold;
 }
-.bracket {
+.java-bracket {
     -fx-fill: darkgreen;
     -fx-font-weight: bold;
 }
-.brace {
+.java-brace {
     -fx-fill: teal;
     -fx-font-weight: bold;
 }
-.string {
+.java-string {
     -fx-fill: blue;
 }
+.java-tag{
+    -fx-fill: green;
+    -fx-font-weight: bold;
+}
+.java-method {
+    -fx-fill: darkblue;
+}
 
-.comment {
+.java-comment {
     -fx-fill: cadetblue;
 }
 
-.paragraph-box:has-caret {
+.java-paragraph-box:has-caret {
     -fx-background-color: #f2f9fc;
 }
 
 /* XML */
-.tagmark {
+.xml-tagmark {
     -fx-fill: gray;
 }
-.anytag {
+.xml-anytag {
     -fx-fill: blue;
 }
-.paren {
+.xml-paren {
     -fx-fill: blue;
     -fx-font-weight: bold;
 }
-.attribute {
+.xml-attribute {
     -fx-fill: darkviolet;
 }
-.avalue {
+.xml-avalue {
     -fx-fill: black;
 }
 

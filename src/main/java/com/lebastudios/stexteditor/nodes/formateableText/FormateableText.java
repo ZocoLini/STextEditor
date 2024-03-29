@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class FormatteableText extends CodeArea
+public class FormateableText extends CodeArea
 {
     private final List<TextInsertionListener> insertionListeners = new ArrayList<>();
 
-    public FormatteableText(String string)
+    public FormateableText(String string)
     {
         super(string);
 

@@ -1,11 +1,10 @@
-package com.lebastudios.stexteditor.controllers;
+package com.lebastudios.stexteditor.interfacecontrollers;
 
 import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.app.FileOperation;
 import com.lebastudios.stexteditor.app.config.Session;
-import com.lebastudios.stexteditor.app.txtformatter.ApplyFormat;
 import com.lebastudios.stexteditor.exceptions.IllegalNodeCastException;
-import com.lebastudios.stexteditor.nodes.formateableText.FormatteableText;
+import com.lebastudios.stexteditor.nodes.formateableText.FormateableText;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -24,7 +23,7 @@ import java.util.List;
 public class TabPaneController extends Controller
 {
     @FXML
-    private TabPane tabPanne;
+    private TabPane tabPane;
 
     @FXML
     private void saveAllFiles()
@@ -32,7 +31,7 @@ public class TabPaneController extends Controller
         int i = 0;
         List<String> filePaths = Session.getStaticInstance().filesOpen;
 
-        for (var tab : tabPanne.getTabs())
+        for (var tab : tabPane.getTabs())
         {
             if (i < filePaths.size() && filePaths.get(i) != null
                     && !filePaths.get(i).isEmpty())
@@ -67,8 +66,8 @@ public class TabPaneController extends Controller
     @FXML
     private void saveActualTab()
     {
-        Tab actualTab = tabPanne.getSelectionModel().getSelectedItem();
-        int actualIndex = tabPanne.getSelectionModel().getSelectedIndex();
+        Tab actualTab = tabPane.getSelectionModel().getSelectedItem();
+        int actualIndex = tabPane.getSelectionModel().getSelectedIndex();
 
         List<String> filePaths = Session.getStaticInstance().filesOpen;
 
@@ -93,7 +92,7 @@ public class TabPaneController extends Controller
     @FXML
     private void saveActualFileAs()
     {
-        Tab actualTab = tabPanne.getSelectionModel().getSelectedItem();
+        Tab actualTab = tabPane.getSelectionModel().getSelectedItem();
         File file = FileOperation.fileChooser().showSaveDialog(null);
         
         if (file == null)
@@ -106,12 +105,12 @@ public class TabPaneController extends Controller
 
     private void saveFile(Tab fileTab, File file)
     {
-        if (fileTab.getContent().getClass() != FormatteableText.class)
+        if (fileTab.getContent().getClass() != FormateableText.class)
         {
             throw new IllegalNodeCastException("Tried to save in a file: " + fileTab.getContent().getClass());
         }
 
-        FormatteableText txtArea = (FormatteableText) fileTab.getContent();
+        FormateableText txtArea = (FormateableText) fileTab.getContent();
 
         try
         {
@@ -131,7 +130,7 @@ public class TabPaneController extends Controller
 
         fileTab.setText(file.getName());
 
-        int index = tabPanne.getTabs().indexOf(fileTab);
+        int index = tabPane.getTabs().indexOf(fileTab);
         final var filesOpen = Session.getStaticInstance().filesOpen;
         
         if (index > filesOpen.size() - 1)
@@ -159,7 +158,7 @@ public class TabPaneController extends Controller
             }
 
             File file = new File(filePath);
-            tabPanne.getTabs().add(newWriteableTab(file));
+            tabPane.getTabs().add(newWriteableTab(file));
             auxLastFilesPaths.add(filePath);
         }
         
@@ -189,9 +188,9 @@ public class TabPaneController extends Controller
         }
 
         Session.getStaticInstance().filesOpen.add(file.getPath());
-        Tab newTab = newWriteableTab(file.getName(), content);
-        tabPanne.getTabs().add(newTab);
-        tabPanne.getSelectionModel().select(newTab);
+        Tab newTab = newWriteableTab(file.getName(), content, FileOperation.getFileExtension(file));
+        tabPane.getTabs().add(newTab);
+        tabPane.getSelectionModel().select(newTab);
     }
 
     @FXML
@@ -199,22 +198,22 @@ public class TabPaneController extends Controller
     {
         Session.getStaticInstance().filesOpen.add("");
         Tab newTab = newWriteableTab();
-        tabPanne.getTabs().add(newTab);
-        tabPanne.getSelectionModel().select(newTab);
+        tabPane.getTabs().add(newTab);
+        tabPane.getSelectionModel().select(newTab);
     }
 
-    private Tab newWriteableTab(String name, String content)
+    private Tab newWriteableTab(String name, String content, String fileExtension)
     {
         Tab tab = new Tab(name);
-        FormatteableText formatteableText = new FormatteableText(content);
+        FormateableText formateableText = new FormateableText(content);
 
-        ApplyFormat.defaultStyle(formatteableText);
+        StyleController.defaultStyle(formateableText, fileExtension);
         
-        tab.setContent(formatteableText);
+        tab.setContent(formateableText);
         
         tab.setOnCloseRequest(event ->
                 Session.getStaticInstance().filesOpen.remove(
-                        tabPanne.getTabs().indexOf(
+                        tabPane.getTabs().indexOf(
                                 (Tab) event.getTarget()
                         )
                 )
@@ -238,12 +237,12 @@ public class TabPaneController extends Controller
             content = "";
         }
 
-        return newWriteableTab(fileName, content);
+        return newWriteableTab(fileName, content, FileOperation.getFileExtension(file));
     }
 
     private Tab newWriteableTab()
     {
-        return newWriteableTab("New file", "");
+        return newWriteableTab("New file.txt", "", "txt");
     }
 
     @Override
