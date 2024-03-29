@@ -9,6 +9,7 @@ public class Config extends JSONSaveable<Config>
     public static class EditorConfig
     {
         public String themeName = "LightTheme";
+        public String styleName = "LightStyle";
         public String font = "Arial";
         public int fontSize = 13;
         public int indentation = 4;

@@ -3,6 +3,7 @@ package com.lebastudios.stexteditor.controllers;
 import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.app.FileOperation;
 import com.lebastudios.stexteditor.app.config.Session;
+import com.lebastudios.stexteditor.app.txtformatter.ApplyFormat;
 import com.lebastudios.stexteditor.exceptions.IllegalNodeCastException;
 import com.lebastudios.stexteditor.nodes.formateableText.FormatteableText;
 import javafx.fxml.FXML;
@@ -206,6 +207,9 @@ public class TabPaneController extends Controller
     {
         Tab tab = new Tab(name);
         FormatteableText formatteableText = new FormatteableText(content);
+
+        ApplyFormat.defaultStyle(formatteableText);
+        
         tab.setContent(formatteableText);
         
         tab.setOnCloseRequest(event ->

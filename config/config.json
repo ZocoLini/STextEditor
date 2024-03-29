@@ -3,6 +3,7 @@
   "verion": "prototype",
   "editorConfig": {
     "themeName": "LightTheme",
+    "styleName": "LightStyle",
     "font": "Arial",
     "fontSize": 13,
     "indentation": 4
