@@ -10,15 +10,11 @@ import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javafx.application.Application;
+import com.lebastudios.stexteditor.TextEditorApplication;
 import javafx.concurrent.Task;
-import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
-import org.fxmisc.flowless.VirtualizedScrollPane;
+import javafx.stage.WindowEvent;
 import org.fxmisc.richtext.CodeArea;
-import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.reactfx.Subscription;
@@ -40,10 +36,10 @@ public class KeyWordHighlighter
     };
 
     private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
-    private static final String PAREN_PATTERN = "\\(|\\)";
-    private static final String BRACE_PATTERN = "\\{|\\}";
-    private static final String BRACKET_PATTERN = "\\[|\\]";
-    private static final String SEMICOLON_PATTERN = "\\;";
+    private static final String PAREN_PATTERN = "[()]";
+    private static final String BRACE_PATTERN = "[{}]";
+    private static final String BRACKET_PATTERN = "[\\[\\]]";
+    private static final String SEMICOLON_PATTERN = ";";
     private static final String STRING_PATTERN = "\"([^\"\\\\]|\\\\.)*\"";
     private static final String COMMENT_PATTERN = "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/";
 
@@ -57,8 +53,8 @@ public class KeyWordHighlighter
                     + "|(?<COMMENT>" + COMMENT_PATTERN + ")"
     );
 
-    private CodeArea codeArea;
-    private ExecutorService executor;
+    private final CodeArea codeArea;
+    private final ExecutorService executor;
 
 
     public KeyWordHighlighter(CodeArea codeArea)
@@ -86,16 +82,22 @@ public class KeyWordHighlighter
                 })
                 .subscribe(this::applyHighlighting);
 
-        // call when no longer need it: `cleanupWhenFinished.unsubscribe();`
+        // Resaltado tan pronto se abre el archivo
+        applyHighlighting(computeHighlighting(codeArea.getText()));
+        
+        // Limpiar el executor cuando se cierre la ventana
+        TextEditorApplication.getStage().addEventHandler(WindowEvent.WINDOW_HIDING, e -> cleanupWhenDone.unsubscribe());
+        codeArea.addEventHandler(WindowEvent.WINDOW_HIDING, e -> cleanupWhenDone.unsubscribe());
     }
 
     private Task<StyleSpans<Collection<String>>> computeHighlightingAsync()
     {
         String text = codeArea.getText();
+        
         Task<StyleSpans<Collection<String>>> task = new Task<>()
         {
             @Override
-            protected StyleSpans<Collection<String>> call() throws Exception
+            protected StyleSpans<Collection<String>> call()
             {
                 return computeHighlighting(text);
             }
@@ -127,6 +129,7 @@ public class KeyWordHighlighter
                                                                     matcher.group("COMMENT") != null ? "comment" :
                                                                             null; /* never happens */
             assert styleClass != null;
+            
             spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
             spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
             lastKwEnd = matcher.end();
