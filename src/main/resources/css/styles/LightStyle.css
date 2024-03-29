@@ -1,0 +1,15 @@
+.keyword
+{
+    -fx-color: red;
+}
+
+.match-bracket {
+    -rtfx-background-color: lightgreen;
+}
+
+/* Formato del code Area */
+.text {
+    -fx-color: black;
+    -fx-font-size: 13;
+    -fx-font-family: monospace;
+}

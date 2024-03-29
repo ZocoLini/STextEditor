@@ -4,6 +4,8 @@ module com.lebastudios.ud07javafx {
     requires org.json;
     requires com.google.gson;
     requires org.fxmisc.richtext;
+    requires org.fxmisc.flowless;
+    requires reactfx;
 
 
     opens com.lebastudios.stexteditor to javafx.fxml;
