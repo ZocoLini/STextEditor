@@ -200,10 +200,9 @@ public class KeyWordHighlighter
     {
         String coloureablePattern = patterns.getPatternInfo(patterName).colourleablePattern;
         
-        if (coloureablePattern == null) 
+        if (coloureablePattern == null || coloureablePattern.isEmpty()) 
         {
-            System.err.println("No se ha asignado un patrón de resaltado de sintaxis para " + patterName + ". " +
-                    "No se resaltará.");
+            spansBuilder.add(Collections.singleton(getStyleClass(patterName)), text.length());
             return;
         }
         

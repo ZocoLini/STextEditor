@@ -1,9 +1,3 @@
-ajdkflasdlkf
+method(String java)
 
-import 
-
-asdfasdf
-
-adsfasdf
-
-impor
+a.voidd()

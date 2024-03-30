@@ -1,30 +1,11 @@
+.test-testing {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+
 /* TODO: Deberia separar en diferentes carpetas los temas, y dentro de cada carpeta los css o algo similar */
 /* Java */
 .java-keyword {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
-}
-.java-semicolon {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
-}
-.java-paren {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
-}
-.java-curly {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
-}
-.java-bracket {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
-}
-.java-brace {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
-}
-.java-opertor {
     -fx-fill: blue;
     -fx-font-weight: bold;
 }
@@ -57,23 +38,7 @@
 }
 
 /* XML */
-.xml-tagmark {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
-}
 .xml-tag {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
-}
-.xml-paren {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
-}
-.xml-cdata {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
-}
-.xml-doctype {
     -fx-fill: blue;
     -fx-font-weight: bold;
 }
