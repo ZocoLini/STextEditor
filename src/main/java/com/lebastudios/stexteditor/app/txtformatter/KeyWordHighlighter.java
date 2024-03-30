@@ -22,12 +22,10 @@ import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.reactfx.Subscription;
 
+// TODO: Ajustar patrones de pintado
+
 public class KeyWordHighlighter
 {
-    // TODO: Solo pintar aquello que cumpla el patron de pintado
-    // TODO: Que tan prnto se abre el archivo, se formatee
-    // TODO: Ver si se puede hacer que no se desdibuje antes de dibujar
-
     private static final String PROG_LANG_PATH = "config/prog-lang/";
 
     public JSONPatterns patterns;
@@ -36,12 +34,25 @@ public class KeyWordHighlighter
     {
         public String name;
         public String pattern;
-        public String coloureablePattern;
+        public String colourleablePattern;
     }
 
     public static class JSONPatterns
     {
         public PatternInfo[] patternsInfo;
+        
+        public PatternInfo getPatternInfo(String name)
+        {
+            for (var variable : patternsInfo)
+            {
+                if (variable.name.equals(name))
+                {
+                    return variable;
+                }
+            }
+            
+            return null;
+        }
     }
     
     private Pattern pattern;
@@ -54,6 +65,7 @@ public class KeyWordHighlighter
     {
         this.extension = extension;
         String path = PROG_LANG_PATH + extension + ".json";
+        
         try
         {
             this.patterns = new Gson().fromJson(FileOperation.read(new File(path)), JSONPatterns.class);
@@ -93,7 +105,7 @@ public class KeyWordHighlighter
         pattern = Pattern.compile(keywordPattern);
     }
 
-    private String getStyleClass(Matcher matcher)
+    private String getPatternName(Matcher matcher)
     {
         for (var variable : patterns.patternsInfo)
         {
@@ -101,16 +113,16 @@ public class KeyWordHighlighter
             
             if (matcher.group(patternName) != null)
             {
-                return concatExtensionWithStyleClass(patternName);
+                return patternName;
             }
         }
         
         return "default";
     }
 
-    private String concatExtensionWithStyleClass(String styleClass)
+    private String getStyleClass(String patternName)
     {
-        return extension + "-" + styleClass;
+        return extension + "-" + patternName;
     }
 
     private void startTask()
@@ -164,19 +176,49 @@ public class KeyWordHighlighter
     {
         Matcher matcher = pattern.matcher(text);
         int lastKwEnd = 0;
-        StyleSpansBuilder<Collection<String>> spansBuilder
-                = new StyleSpansBuilder<>();
+        
+        StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
+        
         while (matcher.find())
         {
-            final var styleClass = getStyleClass(matcher);
+            final var patternName = getPatternName(matcher);
 
-            spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
-            spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
+            spansBuilder.add(Collections.emptyList(),
+                    (matcher.start()) - (lastKwEnd));
+            
+            computeHighlightingOnColourleable(patternName, matcher.group(), spansBuilder);
+            
             lastKwEnd = matcher.end();
         }
+        
         spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
         return spansBuilder.create();
     }
-
-
+    
+    private void computeHighlightingOnColourleable(String patterName, String text,
+            StyleSpansBuilder<Collection<String>> spansBuilder)
+    {
+        String coloureablePattern = patterns.getPatternInfo(patterName).colourleablePattern;
+        
+        if (coloureablePattern == null) 
+        {
+            System.err.println("No se ha asignado un patrón de resaltado de sintaxis para " + patterName + ". " +
+                    "No se resaltará.");
+            return;
+        }
+        
+        Matcher matcher = Pattern.compile(coloureablePattern).matcher(text);
+        int innerLatsKwEnd = 0;
+        
+        while (matcher.find())
+        {
+            spansBuilder.add(Collections.emptyList(), matcher.start() - innerLatsKwEnd);
+            
+            spansBuilder.add(Collections.singleton(getStyleClass(patterName)), matcher.end() - matcher.start());
+            
+            innerLatsKwEnd = matcher.end();
+        }
+        
+        spansBuilder.add(Collections.emptyList(), text.length() - innerLatsKwEnd);
+    }
 }

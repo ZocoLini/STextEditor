@@ -3,18 +3,11 @@ package com.lebastudios.stexteditor.interfacecontrollers;
 import com.lebastudios.stexteditor.app.config.Config;
 import com.lebastudios.stexteditor.app.txtformatter.BracketHighlighter;
 import com.lebastudios.stexteditor.app.txtformatter.KeyWordHighlighter;
-import com.lebastudios.stexteditor.app.txtformatter.XMLHighlighting;
-import com.lebastudios.stexteditor.interfacecontrollers.TabPaneController;
 import com.lebastudios.stexteditor.nodes.formateableText.FormateableText;
-import javafx.fxml.FXML;
-import javafx.scene.control.TabPane;
 
 public class StyleController
 {
     private static final String STYLE_PATH = "/css/styles/";
-    
-    @FXML
-    private TabPane tabPane;
     
     public static void defaultStyle(FormateableText codeArea, String fileExtension)
     {
@@ -26,7 +19,6 @@ public class StyleController
 
         new BracketHighlighter(codeArea);
         new KeyWordHighlighter(codeArea, fileExtension);
-        new XMLHighlighting(codeArea);
     }
     
     public void setStyle(FormateableText codeArea, String styleName)
@@ -44,7 +36,7 @@ public class StyleController
 
         String stylePath = STYLE_PATH + styleName + ".css";
         
-        for (var variable : tabPane.getTabs())
+        for (var variable : TabPaneController.getInstance().tabPane.getTabs())
         {
             FormateableText codeArea = (FormateableText) variable.getContent();
             

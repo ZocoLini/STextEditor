@@ -22,8 +22,20 @@ import java.util.List;
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class TabPaneController extends Controller
 {
+    private static TabPaneController instance;
+    
+    public static TabPaneController getInstance()
+    {
+        return instance;
+    }
+    
+    public TabPaneController()
+    {
+        instance = this;
+    }
+    
     @FXML
-    private TabPane tabPane;
+    public TabPane tabPane;
 
     @FXML
     private void saveAllFiles()
@@ -207,9 +219,9 @@ public class TabPaneController extends Controller
         Tab tab = new Tab(name);
         FormateableText formateableText = new FormateableText(content);
 
-        StyleController.defaultStyle(formateableText, fileExtension);
-        
         tab.setContent(formateableText);
+        
+        StyleController.defaultStyle(formateableText, fileExtension);
         
         tab.setOnCloseRequest(event ->
                 Session.getStaticInstance().filesOpen.remove(

@@ -52,27 +52,45 @@
     -fx-fill: blue;
     -fx-font-weight: bold;
 }
+.java-default {
+    
+}
 
 /* XML */
 .xml-tagmark {
-    -fx-fill: gray;
-}
-.xml-anytag {
     -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.xml-tag {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
 }
 .xml-paren {
     -fx-fill: blue;
     -fx-font-weight: bold;
 }
+.xml-cdata {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.xml-doctype {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
 .xml-attribute {
-    -fx-fill: darkviolet;
+    -fx-fill: blue;
+    -fx-font-weight: bold;
 }
-.xml-avalue {
-    -fx-fill: black;
+.xml-attributevalue {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
 }
-
-.comment {
-    -fx-fill: teal;
+.xml-comment {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.xml-default {
+    
 }
 
 /* Bracket Highlighter */

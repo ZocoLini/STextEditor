@@ -3,57 +3,47 @@
     {
       "name": "method",
       "pattern": "[a-zA-Z_$][a-zA-Z0-9_$]*s*\\(.*?\\)\\s*",
-      "coloureablePattern": "[a-zA-Z_$][a-zA-Z0-9_$]"
+      "colourleablePattern": "[a-zA-Z_$][a-zA-Z0-9_$]"
     },
     {
       "name": "paren",
       "pattern": "\\(|\\)",
-      "coloureablePattern": "\\(|\\)"
+      "colourleablePattern": "\\(|\\)"
     },
     {
       "name": "curly",
       "pattern": "\\{|\\}",
-      "coloureablePattern": "\\{|\\}"
+      "colourleablePattern": "\\{|\\}"
     },
     {
       "name": "bracket",
       "pattern": "\\[|\\]",
-      "coloureablePattern": "\\[|\\]"
+      "colourleablePattern": "\\[|\\]"
     },
     {
       "name": "tag",
       "pattern": "@[a-zA-Z0-9_$]+",
-      "coloureablePattern": "@[a-zA-Z0-9_$]+"
+      "colourleablePattern": "@[a-zA-Z0-9_$]+"
     },
     {
       "name": "semicolon",
       "pattern": ";",
-      "coloureablePattern": ";"
-    },
-    {
-      "name": "operator",
-      "pattern": "=|\\+|-|\\*|/|%|\\+=|-=|\\*=|/=|%=|==|!=|>|<|>=|<=|&&|\\|\\||!|&|\\||\\^|~|<<|>>|>>>|<<=|>>=|>>>=|&=|\\|=|\\^|\\?|:|\\+\\+|--|\\+\\+|\\-\\-|\\.|\\,|->|::|\\+=|-=|\\*=|/=|%=|&=|\\|=|\\^=|\\?|:|\\+\\+|--|\\+\\+|\\-\\-|\\.|\\,|->|::|\\+=|-=|\\*=|/=|%=|&=|\\|=|\\^=|<<=|>>=|>>>=|\\|\\||&&|\\?|:|\\||&|\\^|~|<<|>>|>>>",
-      "coloureablePattern": "\\+|-|\\*|/|%|\\+=|-=|\\*=|/=|%=|==|!=|>|<|>=|<=|&&|\\|\\||!|&|\\||\\^|~|<<|>>|>>>|<<=|>>=|>>>=|&=|\\|=|\\^|\\?|:|\\+\\+|--|\\+\\+|\\-\\-|\\.|\\,|->|::|\\+=|-=|\\*=|/=|%=|&=|\\|=|\\^=|\\?|:|\\+\\+|--|\\+\\+|\\-\\-|\\.|\\,|->|::|\\+=|-=|\\*=|/=|%=|&=|\\|=|\\^=|<<=|>>=|>>>=|\\|\\||&&|\\?|:|\\||&|\\^|~|<<|>>|>>>"
+      "colourleablePattern": ";"
     },
     {
       "name": "string",
       "pattern": "\".*?\"",
-      "coloureablePattern": "\".*?\""
+      "colourleablePattern": "\".*?\""
     },
     {
       "name": "keyword",
       "pattern": "\\b(?:abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|do|double|else|enum|extends|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|transient|try|void|volatile|while|true|false|module|requires|exports|opens|to|transitive|uses|provides|with|var|record|sealed|yield)\\b",
-      "coloureablePattern": "\\b(?:abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|do|double|else|enum|extends|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|transient|try|void|volatile|while|true|false|module|requires|exports|opens|to|transitive|uses|provides|with|var|record|sealed|yield)\\b"
+      "colourleablePattern": "\\b(?:abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|do|double|else|enum|extends|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|transient|try|void|volatile|while|true|false|module|requires|exports|opens|to|transitive|uses|provides|with|var|record|sealed|yield)\\b"
     },
     {
       "name": "number",
       "pattern": "\\b[0-9]+\\b",
-      "coloureablePattern": "\\b[0-9]+\\b"
-    },
-    {
-      "name": "comment",
-      "pattern": "//[^\n]*|/\\*(.|\\R)*?\\*/",
-      "coloureablePattern": "//[^\n]*|/\\*(.|\\R)*?\\*/"
+      "colourleablePattern": "\\b[0-9]+\\b"
     }
   ]
 }

@@ -1,0 +1,39 @@
+{
+  "patternsInfo": [
+    {
+      "name": "attribute",
+      "pattern": "(\\w+\\h*)=",
+      "colourleablePattern": "(\\w+\\h*)="
+    },
+    {
+      "name": "attributevalue",
+      "pattern": "=(\\h*\"[^\"]+\")",
+      "colourleablePattern": "=(\\h*\"[^\"]+\")"
+    },
+    {
+      "name": "tag",
+      "pattern": "(</?\\h*)(\\w+)([^<>]*)(\\h*/?>)",
+      "colourleablePattern": "(</?\\h*)(\\w+)([^<>]*)(\\h*/?>)"
+    },
+    {
+      "name": "comment",
+      "pattern": "<!--(.|\\v)+?-->",
+      "colourleablePattern": "<!--(.|\\v)+?-->"
+    },
+    {
+      "name": "doctype",
+      "pattern": "<!DOCTYPE[^>]*>",
+      "colourleablePattern": "<!DOCTYPE[^>]*>"
+    },
+    {
+      "name": "cdata",
+      "pattern": "<!\\[CDATA\\[[^\\]]*\\]\\]>",
+      "colourleablePattern": "<!\\[CDATA\\[[^\\]]*\\]\\]>"
+    },
+    {
+      "name": "paren",
+      "pattern": "[(){}\\[\\]]",
+      "colourleablePattern": "[(){}\\[\\]]"
+    }
+  ]
+}
