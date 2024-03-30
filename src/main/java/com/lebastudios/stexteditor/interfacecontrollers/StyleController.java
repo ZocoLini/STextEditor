@@ -11,11 +11,19 @@ public class StyleController
     
     public static void defaultStyle(FormateableText codeArea, String fileExtension)
     {
-        String styleName = Config.getStaticInstance().editorConfig.styleName;
-        String stylePath = STYLE_PATH + styleName + ".css";
+        String style = Config.getStaticInstance().editorConfig.style;
+        String stylePath = STYLE_PATH + style + "/";
+        
+        String langStylePath = stylePath + fileExtension + ".css";
+        String codeAreaStylePath = stylePath + "codeArea.css";
+        
+        // TODO: Estamos cambiando como se leen los estilos
 
         codeArea.getStylesheets().add(FormateableText.class
-                .getResource(stylePath).toExternalForm());
+                .getResource(langStylePath).toExternalForm());
+        
+        codeArea.getStylesheets().add(FormateableText.class
+                .getResource(codeAreaStylePath).toExternalForm());
 
         new BracketHighlighter(codeArea);
         new KeyWordHighlighter(codeArea, fileExtension);
@@ -28,21 +36,5 @@ public class StyleController
         codeArea.getStylesheets().clear();
         codeArea.getStylesheets().add(FormateableText.class
                 .getResource(stylePath).toExternalForm());
-    }
-    
-    public void changueDefaultStyle(String styleName)
-    {
-        Config.getStaticInstance().editorConfig.styleName = styleName;
-
-        String stylePath = STYLE_PATH + styleName + ".css";
-        
-        for (var variable : TabPaneController.getInstance().tabPane.getTabs())
-        {
-            FormateableText codeArea = (FormateableText) variable.getContent();
-            
-            codeArea.getStylesheets().clear();
-            codeArea.getStylesheets().add(FormateableText.class
-                    .getResource(stylePath).toExternalForm());   
-        }
     }
 }

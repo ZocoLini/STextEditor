@@ -120,11 +120,6 @@ public class KeyWordHighlighter
         return "default";
     }
 
-    private String getStyleClass(String patternName)
-    {
-        return extension + "-" + patternName;
-    }
-
     private void startTask()
     {
         Subscription cleanupWhenDone = codeArea.multiPlainChanges()
@@ -202,7 +197,7 @@ public class KeyWordHighlighter
         
         if (coloureablePattern == null || coloureablePattern.isEmpty()) 
         {
-            spansBuilder.add(Collections.singleton(getStyleClass(patterName)), text.length());
+            spansBuilder.add(Collections.singleton(patterName), text.length());
             return;
         }
         
@@ -212,8 +207,7 @@ public class KeyWordHighlighter
         while (matcher.find())
         {
             spansBuilder.add(Collections.emptyList(), matcher.start() - innerLatsKwEnd);
-            
-            spansBuilder.add(Collections.singleton(getStyleClass(patterName)), matcher.end() - matcher.start());
+            spansBuilder.add(Collections.singleton(patterName), matcher.end() - matcher.start());
             
             innerLatsKwEnd = matcher.end();
         }

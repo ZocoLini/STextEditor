@@ -1,0 +1,11 @@
+/* Bracket Highlighter */
+.match-bracket {
+    -rtfx-background-color: lightgreen;
+}
+
+/* Formato del code Area */
+.text {
+    -fx-color: black;
+    -fx-font-size: 16;
+    -fx-font-family: monospace;
+}

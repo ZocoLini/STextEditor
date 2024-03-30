@@ -1,0 +1,19 @@
+.tag {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.attribute {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.attributevalue {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.comment {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.default {
+
+}

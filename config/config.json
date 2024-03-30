@@ -2,8 +2,7 @@
   "lang": "es",
   "verion": "prototype",
   "editorConfig": {
-    "themeName": "LightTheme",
-    "styleName": "LightStyle",
+    "style": "Light",
     "font": "Arial",
     "fontSize": 13,
     "indentation": 4
