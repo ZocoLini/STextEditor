@@ -1,6 +1,7 @@
 package com.lebastudios.stexteditor.app.txtformatter;
 
 
+import java.io.File;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
@@ -10,7 +11,9 @@ import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.gson.Gson;
 import com.lebastudios.stexteditor.TextEditorApplication;
+import com.lebastudios.stexteditor.app.FileOperation;
 import javafx.concurrent.Task;
 
 import javafx.stage.WindowEvent;
@@ -19,50 +22,111 @@ import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.reactfx.Subscription;
 
+// TODO: Ajustar patrones de pintado
+
 public class KeyWordHighlighter
 {
+    private static final String PROG_LANG_PATH = "config/prog-lang/";
 
-    private static final String[] KEYWORDS = new String[]{
-            "abstract", "assert", "boolean", "break", "byte",
-            "case", "catch", "char", "class", "const",
-            "continue", "default", "do", "double", "else",
-            "enum", "extends", "final", "finally", "float",
-            "for", "goto", "if", "implements", "import",
-            "instanceof", "int", "interface", "long", "native",
-            "new", "package", "private", "protected", "public",
-            "return", "short", "static", "strictfp", "super",
-            "switch", "synchronized", "this", "throw", "throws",
-            "transient", "try", "void", "volatile", "while"
-    };
+    public JSONPatterns patterns;
 
-    private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
-    private static final String PAREN_PATTERN = "[()]";
-    private static final String BRACE_PATTERN = "[{}]";
-    private static final String BRACKET_PATTERN = "[\\[\\]]";
-    private static final String SEMICOLON_PATTERN = ";";
-    private static final String STRING_PATTERN = "\"([^\"\\\\]|\\\\.)*\"";
-    private static final String COMMENT_PATTERN = "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/";
-
-    private static final Pattern PATTERN = Pattern.compile(
-            "(?<KEYWORD>" + KEYWORD_PATTERN + ")"
-                    + "|(?<PAREN>" + PAREN_PATTERN + ")"
-                    + "|(?<BRACE>" + BRACE_PATTERN + ")"
-                    + "|(?<BRACKET>" + BRACKET_PATTERN + ")"
-                    + "|(?<SEMICOLON>" + SEMICOLON_PATTERN + ")"
-                    + "|(?<STRING>" + STRING_PATTERN + ")"
-                    + "|(?<COMMENT>" + COMMENT_PATTERN + ")"
-    );
-
-    private final CodeArea codeArea;
-    private final ExecutorService executor;
-
-
-    public KeyWordHighlighter(CodeArea codeArea)
+    public static class PatternInfo
     {
+        public String name;
+        public String pattern;
+        public String colourleablePattern;
+    }
+
+    public static class JSONPatterns
+    {
+        public PatternInfo[] patternsInfo;
+        
+        public PatternInfo getPatternInfo(String name)
+        {
+            for (var variable : patternsInfo)
+            {
+                if (variable.name.equals(name))
+                {
+                    return variable;
+                }
+            }
+            
+            return null;
+        }
+    }
+    
+    private Pattern pattern;
+
+    private CodeArea codeArea;
+    private ExecutorService executor;
+    private final String extension;
+
+    public KeyWordHighlighter(CodeArea codeArea, String extension)
+    {
+        this.extension = extension;
+        String path = PROG_LANG_PATH + extension + ".json";
+        
+        try
+        {
+            this.patterns = new Gson().fromJson(FileOperation.read(new File(path)), JSONPatterns.class);
+        }
+        catch (Exception e)
+        {
+            System.err.println("Error al leer el archivo de patrones de resaltado de sintaxis " +
+                    "para la extensión " + extension + ". No se leaplicará resaltado de sintaxis.");
+            return;
+        }
+        patternsCreator();
+
         this.codeArea = codeArea;
-
         executor = Executors.newSingleThreadExecutor();
+        startTask();
 
+        // Resaltado tan pronto se abre el archivo
+        applyHighlighting(computeHighlighting(codeArea.getText()));
+    }
+
+    /**
+     * Crea los patrones de resaltado de sintaxis
+     */
+    private void patternsCreator()
+    {
+        StringBuilder patternString = new StringBuilder();
+        
+        for (var patternInfo : patterns.patternsInfo)
+        {
+            patternString.append("(?<").append(patternInfo.name).append(">").
+                    append(patternInfo.pattern).append(")").append("|");
+        }
+        
+        // Eliminar el último "|"
+        String keywordPattern = patternString.substring(0, patternString.length() - 1);
+        
+        pattern = Pattern.compile(keywordPattern);
+    }
+
+    private String getPatternName(Matcher matcher)
+    {
+        for (var variable : patterns.patternsInfo)
+        {
+            final var patternName = variable.name;
+            
+            if (matcher.group(patternName) != null)
+            {
+                return patternName;
+            }
+        }
+        
+        return "default";
+    }
+
+    private String getStyleClass(String patternName)
+    {
+        return extension + "-" + patternName;
+    }
+
+    private void startTask()
+    {
         Subscription cleanupWhenDone = codeArea.multiPlainChanges()
                 .successionEnds(Duration.ofMillis(500))
                 .retainLatestUntilLater(executor)
@@ -82,9 +146,6 @@ public class KeyWordHighlighter
                 })
                 .subscribe(this::applyHighlighting);
 
-        // Resaltado tan pronto se abre el archivo
-        applyHighlighting(computeHighlighting(codeArea.getText()));
-        
         // Limpiar el executor cuando se cierre la ventana
         TextEditorApplication.getStage().addEventHandler(WindowEvent.WINDOW_HIDING, e -> cleanupWhenDone.unsubscribe());
         codeArea.addEventHandler(WindowEvent.WINDOW_HIDING, e -> cleanupWhenDone.unsubscribe());
@@ -93,7 +154,7 @@ public class KeyWordHighlighter
     private Task<StyleSpans<Collection<String>>> computeHighlightingAsync()
     {
         String text = codeArea.getText();
-        
+
         Task<StyleSpans<Collection<String>>> task = new Task<>()
         {
             @Override
@@ -111,30 +172,52 @@ public class KeyWordHighlighter
         codeArea.setStyleSpans(0, highlighting);
     }
 
-    private static StyleSpans<Collection<String>> computeHighlighting(String text)
+    private StyleSpans<Collection<String>> computeHighlighting(String text)
     {
-        Matcher matcher = PATTERN.matcher(text);
+        Matcher matcher = pattern.matcher(text);
         int lastKwEnd = 0;
-        StyleSpansBuilder<Collection<String>> spansBuilder
-                = new StyleSpansBuilder<>();
+        
+        StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
+        
         while (matcher.find())
         {
-            String styleClass =
-                    matcher.group("KEYWORD") != null ? "keyword" :
-                            matcher.group("PAREN") != null ? "paren" :
-                                    matcher.group("BRACE") != null ? "brace" :
-                                            matcher.group("BRACKET") != null ? "bracket" :
-                                                    matcher.group("SEMICOLON") != null ? "semicolon" :
-                                                            matcher.group("STRING") != null ? "string" :
-                                                                    matcher.group("COMMENT") != null ? "comment" :
-                                                                            null; /* never happens */
-            assert styleClass != null;
+            final var patternName = getPatternName(matcher);
+
+            spansBuilder.add(Collections.emptyList(),
+                    (matcher.start()) - (lastKwEnd));
             
-            spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
-            spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
+            computeHighlightingOnColourleable(patternName, matcher.group(), spansBuilder);
+            
             lastKwEnd = matcher.end();
         }
+        
         spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
         return spansBuilder.create();
+    }
+    
+    private void computeHighlightingOnColourleable(String patterName, String text,
+            StyleSpansBuilder<Collection<String>> spansBuilder)
+    {
+        String coloureablePattern = patterns.getPatternInfo(patterName).colourleablePattern;
+        
+        if (coloureablePattern == null || coloureablePattern.isEmpty()) 
+        {
+            spansBuilder.add(Collections.singleton(getStyleClass(patterName)), text.length());
+            return;
+        }
+        
+        Matcher matcher = Pattern.compile(coloureablePattern).matcher(text);
+        int innerLatsKwEnd = 0;
+        
+        while (matcher.find())
+        {
+            spansBuilder.add(Collections.emptyList(), matcher.start() - innerLatsKwEnd);
+            
+            spansBuilder.add(Collections.singleton(getStyleClass(patterName)), matcher.end() - matcher.start());
+            
+            innerLatsKwEnd = matcher.end();
+        }
+        
+        spansBuilder.add(Collections.emptyList(), text.length() - innerLatsKwEnd);
     }
 }

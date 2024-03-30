@@ -1,6 +1,6 @@
 package com.lebastudios.stexteditor.app.txtformatter;
 
-import com.lebastudios.stexteditor.nodes.formateableText.FormatteableText;
+import com.lebastudios.stexteditor.nodes.formateableText.FormateableText;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
@@ -10,10 +10,10 @@ import java.util.List;
 
 // TODO: PEndiente d ehacer un rainbow bracket system
 
-class BracketHighlighter
+public class BracketHighlighter
 {
     // the code area
-    private final FormatteableText codeArea;
+    private final FormateableText codeArea;
 
     // the list of highlighted bracket pairs
     private final List<BracketPair> bracketPairs = new ArrayList<>();
@@ -28,7 +28,7 @@ class BracketHighlighter
      *
      * @param codeArea the code area
      */
-    BracketHighlighter(FormatteableText codeArea)
+    public BracketHighlighter(FormateableText codeArea)
     {
         this.codeArea = codeArea;
 
@@ -169,17 +169,6 @@ class BracketHighlighter
     /**
      * Class representing a pair of matching bracket indices
      */
-    private static class BracketPair
-    {
-
-        private int start;
-        private int end;
-
-        BracketPair(int start, int end)
-        {
-            this.start = start;
-            this.end = end;
-        }
-    }
+    private record BracketPair(int start, int end) {}
 
 }

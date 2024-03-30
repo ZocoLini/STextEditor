@@ -6,7 +6,7 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" 
             prefHeight="900" prefWidth="1200" xmlns="http://javafx.com/javafx/17.0.2-ea" 
             xmlns:fx="http://javafx.com/fxml/1" 
-            fx:controller="com.lebastudios.stexteditor.controllers.TabPaneController">
+            fx:controller="com.lebastudios.stexteditor.interfacecontrollers.TabPaneController">
     <top>
         <MenuBar prefHeight="10">
             <Menu mnemonicParsing="false" text="File">
@@ -30,7 +30,7 @@
         <SplitPane dividerPositions="0.1" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <TreeView prefHeight="200.0" prefWidth="174.0" />
 
-            <TabPane fx:id="tabPanne" tabClosingPolicy="ALL_TABS" />
+            <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS" />
         </SplitPane>
     </center>
 </BorderPane>

@@ -43,6 +43,7 @@ public abstract class JSONSaveable<T>
         try
         {
             String content = FileOperation.read(new File(getFilePath()));
+            //noinspection unchecked
             instance = (T) new Gson().fromJson(content, this.getClass());
         }
         catch (Exception e)
@@ -50,6 +51,7 @@ public abstract class JSONSaveable<T>
             System.err.println(this.getClass().getName() +
                     " file not found. Using default configuration.");
             instance = newInstance();
+            //noinspection unchecked
             new Thread(((JSONSaveable<T>) instance)::save).start();
         }
         

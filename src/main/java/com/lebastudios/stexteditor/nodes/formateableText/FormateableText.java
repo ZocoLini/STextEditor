@@ -1,9 +1,7 @@
 package com.lebastudios.stexteditor.nodes.formateableText;
 
-import com.lebastudios.stexteditor.app.config.Theme;
 import com.lebastudios.stexteditor.events.TextInsertionListener;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 import org.fxmisc.richtext.*;
 import org.fxmisc.richtext.model.StyledDocument;
 
@@ -11,11 +9,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class FormatteableText extends CodeArea
+public class FormateableText extends CodeArea
 {
     private final List<TextInsertionListener> insertionListeners = new ArrayList<>();
 
-    public FormatteableText(String string)
+    public FormateableText(String string)
     {
         super(string);
 
@@ -23,7 +21,6 @@ public class FormatteableText extends CodeArea
 
         this.setLineHighlighterOn(true);
         this.setParagraphGraphicFactory(LineNumberFactory.get(this));
-        this.setLineHighlighterFill(Color.valueOf(Theme.getStaticInstance().colorLine));
     }
 
 

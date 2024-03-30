@@ -1,34 +1,64 @@
-.keyword {
-    -fx-fill: purple;
-    -fx-font-weight: bold;
-}
-.semicolon {
-    -fx-font-weight: bold;
-}
-.paren {
-    -fx-fill: firebrick;
-    -fx-font-weight: bold;
-}
-.bracket {
-    -fx-fill: darkgreen;
-    -fx-font-weight: bold;
-}
-.brace {
-    -fx-fill: teal;
-    -fx-font-weight: bold;
-}
-.string {
+.test-testing {
     -fx-fill: blue;
+    -fx-font-weight: bold;
 }
 
-.comment {
-    -fx-fill: cadetblue;
+/* TODO: Deberia separar en diferentes carpetas los temas, y dentro de cada carpeta los css o algo similar */
+/* Java */
+.java-keyword {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.java-string {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.java-tag{
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.java-method {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.java-comment {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.java-paragraph-box:has-caret {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.java-number {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.java-default {
+    
 }
 
-.paragraph-box:has-caret {
-    -fx-background-color: #f2f9fc;
+/* XML */
+.xml-tag {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.xml-attribute {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.xml-attributevalue {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.xml-comment {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.xml-default {
+    
 }
 
+/* Bracket Highlighter */
 .match-bracket {
     -rtfx-background-color: lightgreen;
 }
@@ -36,6 +66,6 @@
 /* Formato del code Area */
 .text {
     -fx-color: black;
-    -fx-font-size: 13;
+    -fx-font-size: 16;
     -fx-font-family: monospace;
 }

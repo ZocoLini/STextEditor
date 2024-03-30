@@ -1,0 +1,24 @@
+{
+  "patternsInfo": [
+    {
+      "name": "attribute",
+      "pattern": "\\b[a-zA-Z_:]*=",
+      "colourleablePattern": "\\b[a-zA-Z_:]*"
+    },
+    {
+      "name": "attributevalue",
+      "pattern": "\"[^\"]*\"",
+      "colourleablePattern": ""
+    },
+    {
+      "name": "comment",
+      "pattern": "<!--(.|\\v)+?-->",
+      "colourleablePattern": "<!--(.|\\v)+?-->"
+    },
+    {
+      "name": "tag",
+      "pattern": "</?[^<>]*/?>",
+      "colourleablePattern": "(</?[a-zA-Z0-9_\\.]*)|(/?>)|(<\\?)|(\\?>)"
+    }
+  ]
+}

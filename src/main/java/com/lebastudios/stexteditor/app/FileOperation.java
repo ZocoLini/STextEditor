@@ -16,14 +16,14 @@ public class FileOperation
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All files", "*.*"));
         return fileChooser;
     }
-    
+
     public static String read(File file) throws Exception
     {
-        if (!file.exists()) 
+        if (!file.exists())
         {
             throw new FileNotFoundException();
         }
-        
+
         FileReader reader = new FileReader(file);
 
         int caracter = reader.read();
@@ -34,22 +34,49 @@ public class FileOperation
             content.append((char) caracter);
             caracter = reader.read();
         }
-        
+
         reader.close();
         return content.toString();
     }
-    
+
     public static boolean write(File file, String content) throws Exception
     {
-        if (file.getParentFile() != null) 
+        if (file.getParentFile() != null)
         {
             file.getParentFile().mkdirs();
         }
-        
+
         FileWriter writer = new FileWriter(file);
         writer.write(content);
         writer.close();
-        
+
         return true;
+    }
+
+    public static String getFileExtension(File file)
+    {
+
+        if (file == null)
+        {
+            throw new IllegalArgumentException("File is null");
+        }
+
+        if (!file.exists())
+        {
+            throw new IllegalArgumentException("File does not exist");
+        }
+
+        if (file.isDirectory())
+        {
+            throw new IllegalArgumentException("File is a directory");
+        }
+
+        String fileName = file.getName();
+        int index = fileName.lastIndexOf('.');
+        if (index == -1)
+        {
+            return "";
+        }
+        return fileName.substring(index + 1);
     }
 }

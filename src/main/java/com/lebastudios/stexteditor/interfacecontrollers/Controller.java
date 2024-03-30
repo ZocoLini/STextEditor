@@ -1,4 +1,4 @@
-package com.lebastudios.stexteditor.controllers;
+package com.lebastudios.stexteditor.interfacecontrollers;
 
 import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.events.Events;

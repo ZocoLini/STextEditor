@@ -2,7 +2,7 @@ package com.lebastudios.stexteditor;
 
 import com.lebastudios.stexteditor.app.config.Session;
 import com.lebastudios.stexteditor.app.config.Config;
-import com.lebastudios.stexteditor.controllers.Controller;
+import com.lebastudios.stexteditor.interfacecontrollers.Controller;
 import com.lebastudios.stexteditor.events.Events;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +16,6 @@ import java.util.List;
 
 public class TextEditorApplication extends Application
 {
-
     public static final List<Controller> instanciatedControllers = new ArrayList<>();
 
     private static TextEditorApplication instance;

@@ -1,7 +1,6 @@
 package com.lebastudios.stexteditor.events;
 
-public interface TextInsertionListener {
-
+public interface TextInsertionListener
+{
     void codeInserted(int start, int end, String text);
-
 }
