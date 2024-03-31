@@ -1,6 +1,6 @@
 package com.lebastudios.stexteditor.interfacecontrollers.proyecttreeview;
 
-import com.lebastudios.stexteditor.app.FileOperation;
+import com.lebastudios.stexteditor.app.Resources;
 import com.lebastudios.stexteditor.interfacecontrollers.TabPaneController;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -9,8 +9,6 @@ import java.io.File;
 
 public class TreeObjectController
 {
-    private static final String IMAGE_PATH = "/img/";
-
     private File representingFile;
     private Image image;
     
@@ -22,25 +20,7 @@ public class TreeObjectController
 
         representingFile = file;
 
-        if (file.isDirectory())
-        {
-            image = new Image(getClass().getResourceAsStream(IMAGE_PATH + "directory.png"));
-        }
-        else
-        {
-            String extension = FileOperation.getFileExtension(file);
-
-            String path = IMAGE_PATH + extension + ".png";
-
-            if (getClass().getResourceAsStream(path) != null)
-            {
-                image = new Image(getClass().getResourceAsStream(path));
-            }
-            else
-            {
-                image = new Image(getClass().getResourceAsStream(IMAGE_PATH + "notfoundtype.png"));
-            }
-        }
+        image = Resources.getImg(file, this);
     }
 
     public String getName()

@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 import com.google.gson.Gson;
 import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.app.FileOperation;
+import com.lebastudios.stexteditor.app.FilePaths;
 import javafx.concurrent.Task;
 
 import javafx.stage.WindowEvent;
@@ -24,8 +25,6 @@ import org.reactfx.Subscription;
 
 public class KeyWordHighlighter
 {
-    private static final String PROG_LANG_PATH = "config/prog-lang/";
-
     public JSONPatterns patterns;
 
     public static class PatternInfo
@@ -62,7 +61,7 @@ public class KeyWordHighlighter
     public KeyWordHighlighter(CodeArea codeArea, String extension)
     {
         this.extension = extension;
-        String path = PROG_LANG_PATH + extension + ".json";
+        String path = FilePaths.getProgLangSyntaxDirectory() + extension + ".json";
         
         try
         {
@@ -115,7 +114,7 @@ public class KeyWordHighlighter
             }
         }
         
-        return "default";
+        return "default.css";
     }
 
     private void startTask()

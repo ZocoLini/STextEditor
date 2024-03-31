@@ -1,5 +1,7 @@
 package com.lebastudios.stexteditor.app.config;
 
+import com.lebastudios.stexteditor.app.FilePaths;
+
 public class Config extends JSONSaveable<Config>
 {
     public String lang = "es";
@@ -8,7 +10,7 @@ public class Config extends JSONSaveable<Config>
 
     public static class EditorConfig
     {
-        public String style = "Light";
+        public String theme = "Light";
         public String font = "Arial";
         public int fontSize = 13;
         public int indentation = 4;
@@ -31,7 +33,7 @@ public class Config extends JSONSaveable<Config>
     @Override
     public String getFilePath()
     {
-        return "config/config.json";
+        return FilePaths.getConfigDirectory() + "config.json";
     }
 
     @Override
