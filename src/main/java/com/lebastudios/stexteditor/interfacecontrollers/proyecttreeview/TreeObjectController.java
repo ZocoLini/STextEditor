@@ -20,7 +20,7 @@ public class TreeObjectController
 
         representingFile = file;
 
-        image = Resources.getImg(file, this);
+        image = Resources.getImg(file);
     }
 
     public String getName()

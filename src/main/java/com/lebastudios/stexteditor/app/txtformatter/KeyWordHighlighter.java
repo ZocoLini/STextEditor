@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.app.FileOperation;
 import com.lebastudios.stexteditor.app.FilePaths;
+import com.lebastudios.stexteditor.app.Resources;
 import javafx.concurrent.Task;
 
 import javafx.stage.WindowEvent;
@@ -61,18 +62,9 @@ public class KeyWordHighlighter
     public KeyWordHighlighter(CodeArea codeArea, String extension)
     {
         this.extension = extension;
-        String path = FilePaths.getProgLangSyntaxDirectory() + extension + ".json";
         
-        try
-        {
-            this.patterns = new Gson().fromJson(FileOperation.read(new File(path)), JSONPatterns.class);
-        }
-        catch (Exception e)
-        {
-            System.err.println("Error al leer el archivo de patrones de resaltado de sintaxis " +
-                    "para la extensión " + extension + ". No se leaplicará resaltado de sintaxis.");
-            return;
-        }
+        this.patterns = new Gson().fromJson(Resources.getHighlightingRules(extension), JSONPatterns.class);
+        
         patternsCreator();
 
         this.codeArea = codeArea;
