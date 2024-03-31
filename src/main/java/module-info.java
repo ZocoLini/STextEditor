@@ -23,4 +23,6 @@ module com.lebastudios.stexteditor {
     opens com.lebastudios.stexteditor.nodes.formateableText to javafx.fxml;
     
     opens com.lebastudios.stexteditor.app.txtformatter to com.google.gson, javafx.fxml;
+    exports com.lebastudios.stexteditor.interfacecontrollers.proyecttreeview;
+    opens com.lebastudios.stexteditor.interfacecontrollers.proyecttreeview to javafx.fxml;
 }

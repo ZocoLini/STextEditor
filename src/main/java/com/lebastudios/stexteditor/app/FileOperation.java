@@ -1,5 +1,8 @@
 package com.lebastudios.stexteditor.app;
 
+import com.lebastudios.stexteditor.interfacecontrollers.proyecttreeview.TreeObjectController;
+import javafx.scene.control.TreeItem;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -15,6 +18,13 @@ public class FileOperation
         fileChooser.setTitle("Open file");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All files", "*.*"));
         return fileChooser;
+    }
+    
+    public static DirectoryChooser directoryChooser()
+    {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Open proyect");
+        return directoryChooser;
     }
 
     public static String read(File file) throws Exception
@@ -39,7 +49,7 @@ public class FileOperation
         return content.toString();
     }
 
-    public static boolean write(File file, String content) throws Exception
+    public static void write(File file, String content) throws Exception
     {
         if (file.getParentFile() != null)
         {
@@ -49,8 +59,6 @@ public class FileOperation
         FileWriter writer = new FileWriter(file);
         writer.write(content);
         writer.close();
-
-        return true;
     }
 
     public static String getFileExtension(File file)
@@ -78,5 +86,31 @@ public class FileOperation
             return "";
         }
         return fileName.substring(index + 1);
+    }
+
+    public static TreeItem<TreeObjectController> createTreeView(File file) 
+    {
+        if (file == null)
+        {
+            throw new IllegalArgumentException("File is null");
+        }
+
+        if (!file.exists())
+        {
+            throw new IllegalArgumentException("File does not exist");
+        }
+
+        TreeItem<TreeObjectController> root = new TreeItem<>(new TreeObjectController(file));
+        root.setExpanded(true);
+
+        if (file.isDirectory())
+        {
+            for (File child : file.listFiles())
+            {
+                root.getChildren().add(createTreeView(child));
+            }
+        }
+
+        return root;
     }
 }

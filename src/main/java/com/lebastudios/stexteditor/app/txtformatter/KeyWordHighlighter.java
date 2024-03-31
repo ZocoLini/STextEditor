@@ -22,8 +22,6 @@ import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.reactfx.Subscription;
 
-// TODO: Ajustar patrones de pintado
-
 public class KeyWordHighlighter
 {
     private static final String PROG_LANG_PATH = "config/prog-lang/";

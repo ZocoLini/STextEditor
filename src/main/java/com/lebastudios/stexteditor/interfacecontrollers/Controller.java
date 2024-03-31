@@ -12,6 +12,8 @@ public abstract class Controller
         awake();
         start();
         
+        addEventHandlers();
+        
         Events.onUpdate.addListener(this::update);
     }
 
@@ -29,4 +31,9 @@ public abstract class Controller
      * Called every "frame". This called after the start method.
      */
     protected void update() {}
+
+    /**
+     * Called since the object is being created. This is called after the start method.
+     */
+    protected void addEventHandlers() {}
 }

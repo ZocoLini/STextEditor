@@ -17,11 +17,18 @@ public class StyleController
         String langStylePath = stylePath + fileExtension + ".css";
         String codeAreaStylePath = stylePath + "codeArea.css";
         
-        // TODO: Estamos cambiando como se leen los estilos
-
-        codeArea.getStylesheets().add(FormateableText.class
-                .getResource(langStylePath).toExternalForm());
+        // Añadimos el css segun la extension del archivo
+        try
+        {
+            codeArea.getStylesheets().add(FormateableText.class
+                    .getResource(langStylePath).toExternalForm());
+        }
+        catch (Exception e)
+        {
+            System.err.println("This extension has no style");
+        }
         
+        // Añadimos el css del codeArea generico
         codeArea.getStylesheets().add(FormateableText.class
                 .getResource(codeAreaStylePath).toExternalForm());
 

@@ -7,6 +7,7 @@ public class Session extends JSONSaveable<Session>
 {
     public List<String> filesOpen = new ArrayList<>();
     public String fileFilter = "none";
+    public String proyectDirectory = "";
 
     private static Session instance;
 
@@ -22,6 +23,13 @@ public class Session extends JSONSaveable<Session>
 
     private Session() {}
 
+    public void reset()
+    {
+        filesOpen.clear();
+        fileFilter = "none";
+        proyectDirectory = "";
+    }
+    
     @Override
     public String getFilePath()
     {

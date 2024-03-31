@@ -4,10 +4,13 @@ import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.app.FileOperation;
 import com.lebastudios.stexteditor.app.config.Session;
 import com.lebastudios.stexteditor.exceptions.IllegalNodeCastException;
+import com.lebastudios.stexteditor.interfacecontrollers.proyecttreeview.CustomTreeCell;
+import com.lebastudios.stexteditor.interfacecontrollers.proyecttreeview.TreeObjectController;
 import com.lebastudios.stexteditor.nodes.formateableText.FormateableText;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TreeView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -31,12 +34,24 @@ public class TabPaneController extends Controller
     
     public TabPaneController()
     {
+        super();
         instance = this;
     }
     
     @FXML
     public TabPane tabPane;
+    
+    @FXML
+    public TreeView<TreeObjectController> treeView;
 
+    @FXML
+    private void exit()
+    {
+        Session.getStaticInstance().reset();
+        
+        TextEditorApplication.getStage().close();
+    }
+    
     @FXML
     private void saveAllFiles()
     {
@@ -177,6 +192,27 @@ public class TabPaneController extends Controller
         Session.getStaticInstance().filesOpen = auxLastFilesPaths;
     }
 
+    public void openFile(File file)
+    {
+        file = file.getAbsoluteFile();
+        String content;
+
+        try
+        {
+            content = FileOperation.read(file);
+        }
+        catch (Exception e)
+        {
+            System.out.println("File isnt readable");
+            return;
+        }
+
+        Session.getStaticInstance().filesOpen.add(file.getPath());
+        Tab newTab = newWriteableTab(file.getName(), content, FileOperation.getFileExtension(file));
+        tabPane.getTabs().add(newTab);
+        tabPane.getSelectionModel().select(newTab);
+    }
+    
     @FXML
     private void openFile()
     {
@@ -187,22 +223,47 @@ public class TabPaneController extends Controller
             return;
         }
 
+        openFile(file);
+    }
+    
+    private void openProyectDirectory(File file)
+    {
         file = file.getAbsoluteFile();
-        String content;
-
-        try
+        
+        if (file.getPath().isEmpty()) 
         {
-            content = FileOperation.read(file);
+            return;
         }
-        catch (Exception e)
-        {
-            throw new RuntimeException(e);
-        }
+        
+        Session.getStaticInstance().proyectDirectory = file.getPath();
 
-        Session.getStaticInstance().filesOpen.add(file.getPath());
-        Tab newTab = newWriteableTab(file.getName(), content, FileOperation.getFileExtension(file));
-        tabPane.getTabs().add(newTab);
-        tabPane.getSelectionModel().select(newTab);
+        treeView.setCellFactory(param -> new CustomTreeCell());
+        treeView.setRoot(FileOperation.createTreeView(file));
+    }
+    
+    private void openLastProjectDirectory()
+    {
+        File file = new File(Session.getStaticInstance().proyectDirectory);
+        
+        if (!file.exists() || !file.isDirectory())
+        {
+            return;
+        }
+        
+        openProyectDirectory(file);
+    }
+    
+    @FXML
+    private void openNewProjectDirectory()
+    {
+        File file = FileOperation.directoryChooser().showDialog(null);
+        
+        if (file == null)
+        {
+            return;
+        }
+        
+        openProyectDirectory(file);
     }
 
     @FXML
@@ -256,14 +317,9 @@ public class TabPaneController extends Controller
     {
         return newWriteableTab("New file.txt", "", "txt");
     }
-
-    @Override
-    protected void start()
-    {
-        addEventHandlers();
-    }
     
-    private void addEventHandlers()
+    @Override
+    protected void addEventHandlers()
     {
         Stage stage = TextEditorApplication.getStage();
 
@@ -290,7 +346,6 @@ public class TabPaneController extends Controller
                 }
             }
         });
-        
         // Add an event in which, if Ctrl + Shift + ANYKEY is pressed
         stage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             if (event.isControlDown() && event.isShiftDown()) {
@@ -303,5 +358,8 @@ public class TabPaneController extends Controller
                 }
             }
         });
+        
+        // Add an event in which, when the window is shown, the last project is opened
+        stage.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> openLastProjectDirectory());
     }
 }
