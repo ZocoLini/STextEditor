@@ -1,3 +1,3 @@
 method(String java)
 
-a.voidd()
+a.vod()

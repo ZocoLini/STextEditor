@@ -6,19 +6,7 @@
     -fx-fill: blue;
     -fx-font-weight: bold;
 }
-.tag{
-    -fx-fill: blue;
-    -fx-font-weight: bold;
-}
-.method {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
-}
 .comment {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
-}
-.paragraph-box:has-caret {
     -fx-fill: blue;
     -fx-font-weight: bold;
 }
@@ -27,5 +15,15 @@
     -fx-font-weight: bold;
 }
 .default {
-    
+
+}
+.method {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+
+/* Estilo del paragrafo que tiene el caret */
+.paragraph-box:has-caret {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
 }

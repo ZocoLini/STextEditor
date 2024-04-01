@@ -1,17 +1,16 @@
 package com.lebastudios.stexteditor.nodes.formateableText;
 
-import com.lebastudios.stexteditor.events.TextInsertionListener;
+import com.lebastudios.stexteditor.events.AppEvent;
 import javafx.scene.input.KeyEvent;
 import org.fxmisc.richtext.*;
 import org.fxmisc.richtext.model.StyledDocument;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class FormateableText extends CodeArea
 {
-    private final List<TextInsertionListener> insertionListeners = new ArrayList<>();
+    public static class OnTextInsertion extends AppEvent {}
+    public OnTextInsertion onTextInsertion = new OnTextInsertion();
 
     public FormateableText(String string)
     {
@@ -52,26 +51,12 @@ public class FormateableText extends CodeArea
         });
     }
 
-    public void addTextInsertionListener(TextInsertionListener listener)
-    {
-        insertionListeners.add(listener);
-    }
-
-    public void removeTextInsertionListener(TextInsertionListener listener)
-    {
-        insertionListeners.remove(listener);
-    }
-
     @Override
     public void replace(int start, int end, StyledDocument<Collection<String>, String, Collection<String>> replacement)
     {
-        // notify all listeners
-        if (insertionListeners != null)
+        if (onTextInsertion != null)
         {
-            for (TextInsertionListener listener : insertionListeners)
-            {
-                listener.codeInserted(start, end, replacement.getText());
-            }
+            onTextInsertion.invoke();
         }
 
         super.replace(start, end, replacement);

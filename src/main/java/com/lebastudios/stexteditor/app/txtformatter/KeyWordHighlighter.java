@@ -14,6 +14,8 @@ import java.util.regex.Pattern;
 import com.google.gson.Gson;
 import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.app.FileOperation;
+import com.lebastudios.stexteditor.app.FilePaths;
+import com.lebastudios.stexteditor.app.Resources;
 import javafx.concurrent.Task;
 
 import javafx.stage.WindowEvent;
@@ -24,8 +26,6 @@ import org.reactfx.Subscription;
 
 public class KeyWordHighlighter
 {
-    private static final String PROG_LANG_PATH = "config/prog-lang/";
-
     public JSONPatterns patterns;
 
     public static class PatternInfo
@@ -62,18 +62,9 @@ public class KeyWordHighlighter
     public KeyWordHighlighter(CodeArea codeArea, String extension)
     {
         this.extension = extension;
-        String path = PROG_LANG_PATH + extension + ".json";
         
-        try
-        {
-            this.patterns = new Gson().fromJson(FileOperation.read(new File(path)), JSONPatterns.class);
-        }
-        catch (Exception e)
-        {
-            System.err.println("Error al leer el archivo de patrones de resaltado de sintaxis " +
-                    "para la extensión " + extension + ". No se leaplicará resaltado de sintaxis.");
-            return;
-        }
+        this.patterns = new Gson().fromJson(Resources.getHighlightingRules(extension), JSONPatterns.class);
+        
         patternsCreator();
 
         this.codeArea = codeArea;
@@ -115,7 +106,7 @@ public class KeyWordHighlighter
             }
         }
         
-        return "default";
+        return "default.css";
     }
 
     private void startTask()

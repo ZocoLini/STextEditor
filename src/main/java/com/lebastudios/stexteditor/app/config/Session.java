@@ -1,5 +1,7 @@
 package com.lebastudios.stexteditor.app.config;
 
+import com.lebastudios.stexteditor.app.FilePaths;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,7 @@ public class Session extends JSONSaveable<Session>
     @Override
     public String getFilePath()
     {
-        return "session/lastSession.json";
+        return FilePaths.getSessionDirectory() + "lastSession.json";
     }
 
     @Override
