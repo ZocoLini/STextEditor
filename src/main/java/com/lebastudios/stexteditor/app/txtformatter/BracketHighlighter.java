@@ -33,7 +33,7 @@ public class BracketHighlighter
         this.codeArea = codeArea;
 
         // listen for changes in text or caret position
-        this.codeArea.addTextInsertionListener((start, end, text) -> clearBracket());
+        this.codeArea.onTextInsertion.addListener(this::clearBracket);
         this.codeArea.caretPositionProperty().addListener((obs, oldVal, newVal) ->
                 Platform.runLater(() -> highlightBracket(newVal)));
     }

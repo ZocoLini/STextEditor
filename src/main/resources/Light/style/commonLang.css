@@ -1,0 +1,29 @@
+.keyword {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.string {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.comment {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.number {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+.default {
+
+}
+.method {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
+
+/* Estilo del paragrafo que tiene el caret */
+.paragraph-box:has-caret {
+    -fx-fill: blue;
+    -fx-font-weight: bold;
+}
