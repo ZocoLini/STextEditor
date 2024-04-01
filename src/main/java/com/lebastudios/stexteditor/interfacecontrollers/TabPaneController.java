@@ -25,6 +25,9 @@ import java.util.List;
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class TabPaneController extends Controller
 {
+    // TODO: Crear un controlador principal qu instancie controlladores secndarios para cada objeto que necesite
+    //  ser controlado. Todos heredarán de Controller
+    
     private static TabPaneController instance;
     
     public static TabPaneController getInstance()
