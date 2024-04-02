@@ -4,7 +4,13 @@ import com.lebastudios.stexteditor.annotations.Linked2MC;
 import com.lebastudios.stexteditor.applogic.FileOperation;
 import com.lebastudios.stexteditor.applogic.config.Session;
 import com.lebastudios.stexteditor.iobjects.CustomTreeCell;
+import javafx.geometry.Insets;
 import javafx.scene.control.TreeView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 import java.io.File;
 
@@ -25,11 +31,9 @@ public class TreeViewController extends Controller
     private TreeViewController()
     {
         super();
-        
-        this.treeView = MainController.getInstance().treeView;
     }
     
-    private final TreeView<TreeObjectController> treeView;
+    private static final TreeView<TreeObjectController> treeView = MainController.getInstance().treeView;
 
     private void openProyectDirectory(File file)
     {
@@ -72,5 +76,12 @@ public class TreeViewController extends Controller
         }
 
         openProyectDirectory(file);
+    }
+
+    @Override
+    protected void onThemeChangue()
+    {
+        treeView.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+        treeView.setStyle("-fx-background-color: red");
     }
 }

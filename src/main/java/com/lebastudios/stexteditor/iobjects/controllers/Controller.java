@@ -15,9 +15,15 @@ public abstract class Controller
         awake();
         start();
         
+        // Añadimos los event handlers que necesitará cada Controller en específico
         addEventHandlers();
         
+        // Nos suscribimos a los eventos que _todo controller debe monitorear
         GlobalEvents.onUpdate.addListener(this::update);
+        GlobalEvents.onThemeChanged.addListener(this::onThemeChangue);
+        
+        // llamamos a aquellos métodos que necesiten una ejecución a la hora de crear el controller
+        onThemeChangue();
     }
 
     /**
@@ -39,4 +45,9 @@ public abstract class Controller
      * Called since the object is being created. This is called after the start method.
      */
     protected void addEventHandlers() {}
+
+    /**
+     * Called when the theme is changued.
+     */
+    protected void onThemeChangue() {}
 }

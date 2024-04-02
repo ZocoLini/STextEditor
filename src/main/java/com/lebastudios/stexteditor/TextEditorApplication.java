@@ -79,6 +79,8 @@ public class TextEditorApplication extends Application
      * Bucle de juego que se encarga de llamar a los eventos de actualización. Este metodo se ejecuta en un hilo 
      * separado.
      */
+    // TODO: Pensar en mover esto a Controller y que cada controller tenga su propio hilo. Aquí, igual lo más 
+    //  correcto, es un fixed update.
     private void bucleDeJuego()
     {
         while (hiloDeJuego)

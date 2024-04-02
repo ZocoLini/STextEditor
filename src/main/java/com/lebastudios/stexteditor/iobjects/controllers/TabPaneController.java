@@ -7,11 +7,15 @@ import com.lebastudios.stexteditor.exceptions.IllegalNodeCastException;
 import com.lebastudios.stexteditor.iobjects.AlertsInstanciator;
 import com.lebastudios.stexteditor.applogic.txtformatter.StyleSetter;
 import com.lebastudios.stexteditor.iobjects.nodes.FormateableText;
+import javafx.geometry.Insets;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.WindowEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -22,9 +26,6 @@ import java.util.List;
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class TabPaneController extends Controller
 {
-    // TODO: Crear un controlador principal qu instancie controlladores secndarios para cada objeto que necesite
-    //  ser controlado. Todos heredarán de Controller
-    
     private static TabPaneController instance;
     
     public static TabPaneController getInstance()
@@ -40,11 +41,9 @@ public class TabPaneController extends Controller
     private TabPaneController()
     {
         super();
-        
-        this.tabPane = MainController.getInstance().tabPane;
     }
     
-    private final TabPane tabPane;
+    private static final TabPane tabPane = MainController.getInstance().tabPane;
     
     @Linked2MC
     public void saveAllFiles()
@@ -305,5 +304,12 @@ public class TabPaneController extends Controller
                 }
             }
         });
+    }
+
+    @Override
+    protected void onThemeChangue()
+    {
+        tabPane.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+        tabPane.setStyle("-fx-background-color: green");
     }
 }

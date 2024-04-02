@@ -68,6 +68,18 @@ public final class Resources
         return TextEditorApplication.class.getResource(codeAreaStylePath).toExternalForm();
     }
     
+    public static String getThemeStyle()
+    {
+        String themeStylePath = FilePaths.getStyleDirectory() + "theme.css";
+        if (existsResource(themeStylePath)) 
+        {
+            return TextEditorApplication.class.getResource(themeStylePath).toExternalForm();
+        }
+        
+        themeStylePath = FilePaths.getDefaultStyleDirectory() + "codeArea.css";
+        return TextEditorApplication.class.getResource(themeStylePath).toExternalForm();
+    }
+    
     public static String getHighlightingRules(String extension)
     {
         String path = FilePaths.getProgLangSyntaxDirectory() + extension + ".json";
