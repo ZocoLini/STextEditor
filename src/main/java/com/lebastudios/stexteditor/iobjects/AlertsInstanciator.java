@@ -1,4 +1,4 @@
-package com.lebastudios.stexteditor.interfacecontrollers;
+package com.lebastudios.stexteditor.iobjects;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;

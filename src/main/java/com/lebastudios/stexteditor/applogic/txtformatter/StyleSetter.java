@@ -1,11 +1,9 @@
-package com.lebastudios.stexteditor.interfacecontrollers;
+package com.lebastudios.stexteditor.applogic.txtformatter;
 
-import com.lebastudios.stexteditor.app.Resources;
-import com.lebastudios.stexteditor.app.txtformatter.BracketHighlighter;
-import com.lebastudios.stexteditor.app.txtformatter.KeyWordHighlighter;
-import com.lebastudios.stexteditor.nodes.formateableText.FormateableText;
+import com.lebastudios.stexteditor.applogic.Resources;
+import com.lebastudios.stexteditor.iobjects.nodes.FormateableText;
 
-public class StyleController
+public class StyleSetter
 {
     public static void defaultStyle(FormateableText codeArea, String fileExtension)
     {

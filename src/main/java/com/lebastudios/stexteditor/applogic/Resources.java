@@ -1,11 +1,9 @@
-package com.lebastudios.stexteditor.app;
+package com.lebastudios.stexteditor.applogic;
 
 import com.lebastudios.stexteditor.TextEditorApplication;
-import com.lebastudios.stexteditor.nodes.formateableText.FormateableText;
 import javafx.scene.image.Image;
 
 import java.io.File;
-import java.io.IOException;
 
 public final class Resources
 {
@@ -20,16 +18,12 @@ public final class Resources
             return new Image(TextEditorApplication.class.getResourceAsStream(path));
         }
 
-        System.out.println("The " + extension + " has no icon defined. Using Light theme icon");
-
         // Check if the extension has an img defined in the default theme
         path = FilePaths.getDefaultImgDirectory() + extension + ".css";
         if (existsResource(path))
         {
             return new Image(TextEditorApplication.class.getResourceAsStream(path));
         }
-
-        System.out.println("The " + extension + " has no icon defined. Using default icon");
 
         // If the extension has no img defined, use the default img
         return new Image(TextEditorApplication.class.getResourceAsStream(FilePaths.getDefaultImgFile()));
@@ -44,16 +38,12 @@ public final class Resources
             return TextEditorApplication.class.getResource(langStyleFile).toExternalForm();
         }
 
-        System.out.println("The extension " + fileExtension + " has no theme style defined. Using Light theme style");
-
         // Check if the extension has a style defined in the default theme
         langStyleFile = FilePaths.getDefaultStyleDirectory() + fileExtension + ".css";
         if (existsResource(langStyleFile))
         {
             return TextEditorApplication.class.getResource(langStyleFile).toExternalForm();
         }
-
-        System.out.println("The extension " + fileExtension + " has no style defined. Using default style");
 
         // If the extension has no style defined, use the default style
         return TextEditorApplication.class.getResource(FilePaths.getDefaultLangStyleFile()).toExternalForm();
@@ -72,8 +62,6 @@ public final class Resources
         {
             return TextEditorApplication.class.getResource(codeAreaStylePath).toExternalForm();
         }
-
-        System.out.println("The code area has no theme style defined. Using Light theme style");
         
         // Using the default style defined in the default theme
         codeAreaStylePath = FilePaths.getDefaultStyleDirectory() + "codeArea.css";

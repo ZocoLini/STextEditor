@@ -8,7 +8,7 @@ import java.util.List;
  * @param <T> The type of the event method. This is the interface that the event method must implement and should be 
  * created in the AppEvent class.
  */
-public class EventHandler<T>
+public abstract class EventHandler<T>
 {
     protected final List<T> listeners = new ArrayList<>();
 

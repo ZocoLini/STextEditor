@@ -1,6 +1,6 @@
-package com.lebastudios.stexteditor.app;
+package com.lebastudios.stexteditor.applogic;
 
-import com.lebastudios.stexteditor.app.config.Config;
+import com.lebastudios.stexteditor.applogic.config.Config;
 
 public final class FilePaths
 {

@@ -1,10 +1,13 @@
-package com.lebastudios.stexteditor.interfacecontrollers;
+package com.lebastudios.stexteditor.iobjects.controllers;
 
 import com.lebastudios.stexteditor.TextEditorApplication;
-import com.lebastudios.stexteditor.events.Events;
+import com.lebastudios.stexteditor.events.GlobalEvents;
+import javafx.stage.Stage;
 
 public abstract class Controller
 {
+    protected static final Stage stage = TextEditorApplication.getStage();
+    
     public Controller()
     {
         TextEditorApplication.instanciatedControllers.add(this);
@@ -14,7 +17,7 @@ public abstract class Controller
         
         addEventHandlers();
         
-        Events.onUpdate.addListener(this::update);
+        GlobalEvents.onUpdate.addListener(this::update);
     }
 
     /**

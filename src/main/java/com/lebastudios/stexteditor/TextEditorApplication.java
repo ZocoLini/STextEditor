@@ -1,9 +1,9 @@
 package com.lebastudios.stexteditor;
 
-import com.lebastudios.stexteditor.app.config.Session;
-import com.lebastudios.stexteditor.app.config.Config;
-import com.lebastudios.stexteditor.interfacecontrollers.Controller;
-import com.lebastudios.stexteditor.events.Events;
+import com.lebastudios.stexteditor.applogic.config.Session;
+import com.lebastudios.stexteditor.applogic.config.Config;
+import com.lebastudios.stexteditor.iobjects.controllers.Controller;
+import com.lebastudios.stexteditor.events.GlobalEvents;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -83,7 +83,7 @@ public class TextEditorApplication extends Application
     {
         while (hiloDeJuego)
         {
-            Events.onUpdate.invoke();
+            GlobalEvents.onUpdate.invoke();
 
             try
             {

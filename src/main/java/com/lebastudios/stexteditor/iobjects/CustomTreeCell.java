@@ -1,7 +1,9 @@
-package com.lebastudios.stexteditor.interfacecontrollers.proyecttreeview;
+package com.lebastudios.stexteditor.iobjects;
 
+import com.lebastudios.stexteditor.iobjects.controllers.TreeObjectController;
 import javafx.scene.control.TreeCell;
 import javafx.scene.image.ImageView;
+
 public class CustomTreeCell extends TreeCell<TreeObjectController>
 {
     private ImageView imageView;

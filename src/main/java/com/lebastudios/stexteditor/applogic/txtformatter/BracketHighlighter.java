@@ -1,6 +1,6 @@
-package com.lebastudios.stexteditor.app.txtformatter;
+package com.lebastudios.stexteditor.applogic.txtformatter;
 
-import com.lebastudios.stexteditor.nodes.formateableText.FormateableText;
+import com.lebastudios.stexteditor.iobjects.nodes.FormateableText;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 
 // TODO: PEndiente d ehacer un rainbow bracket system
 
-public class BracketHighlighter
+class BracketHighlighter
 {
     // the code area
     private final FormateableText codeArea;

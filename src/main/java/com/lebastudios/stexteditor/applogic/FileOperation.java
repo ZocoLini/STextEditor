@@ -1,6 +1,6 @@
-package com.lebastudios.stexteditor.app;
+package com.lebastudios.stexteditor.applogic;
 
-import com.lebastudios.stexteditor.interfacecontrollers.proyecttreeview.TreeObjectController;
+import com.lebastudios.stexteditor.iobjects.controllers.TreeObjectController;
 import javafx.scene.control.TreeItem;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -101,12 +101,14 @@ public class FileOperation
         }
 
         TreeItem<TreeObjectController> root = new TreeItem<>(new TreeObjectController(file));
-        root.setExpanded(true);
+        root.setExpanded(false);
 
         if (file.isDirectory())
         {
             for (File child : file.listFiles())
             {
+                if (child.getName().charAt(0) == '.') continue;
+                
                 root.getChildren().add(createTreeView(child));
             }
         }

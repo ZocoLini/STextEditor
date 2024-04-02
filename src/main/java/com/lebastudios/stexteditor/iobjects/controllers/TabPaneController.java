@@ -1,19 +1,16 @@
-package com.lebastudios.stexteditor.interfacecontrollers;
+package com.lebastudios.stexteditor.iobjects.controllers;
 
-import com.lebastudios.stexteditor.TextEditorApplication;
-import com.lebastudios.stexteditor.app.FileOperation;
-import com.lebastudios.stexteditor.app.config.Session;
+import com.lebastudios.stexteditor.annotations.Linked2MC;
+import com.lebastudios.stexteditor.applogic.FileOperation;
+import com.lebastudios.stexteditor.applogic.config.Session;
 import com.lebastudios.stexteditor.exceptions.IllegalNodeCastException;
-import com.lebastudios.stexteditor.interfacecontrollers.proyecttreeview.CustomTreeCell;
-import com.lebastudios.stexteditor.interfacecontrollers.proyecttreeview.TreeObjectController;
-import com.lebastudios.stexteditor.nodes.formateableText.FormateableText;
-import javafx.fxml.FXML;
+import com.lebastudios.stexteditor.iobjects.AlertsInstanciator;
+import com.lebastudios.stexteditor.applogic.txtformatter.StyleSetter;
+import com.lebastudios.stexteditor.iobjects.nodes.FormateableText;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TreeView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.File;
@@ -32,31 +29,25 @@ public class TabPaneController extends Controller
     
     public static TabPaneController getInstance()
     {
+        if (instance == null) 
+        {
+            instance = new TabPaneController();
+        }
+        
         return instance;
     }
     
-    public TabPaneController()
+    private TabPaneController()
     {
         super();
-        instance = this;
-    }
-    
-    @FXML
-    public TabPane tabPane;
-    
-    @FXML
-    public TreeView<TreeObjectController> treeView;
-
-    @FXML
-    private void exit()
-    {
-        Session.getStaticInstance().reset();
         
-        TextEditorApplication.getStage().close();
+        this.tabPane = MainController.getInstance().tabPane;
     }
     
-    @FXML
-    private void saveAllFiles()
+    private final TabPane tabPane;
+    
+    @Linked2MC
+    public void saveAllFiles()
     {
         int i = 0;
         List<String> filePaths = Session.getStaticInstance().filesOpen;
@@ -93,8 +84,8 @@ public class TabPaneController extends Controller
         System.out.println("All files has been saved!!");
     }
 
-    @FXML
-    private void saveActualTab()
+    @Linked2MC
+    public void saveActualTab()
     {
         Tab actualTab = tabPane.getSelectionModel().getSelectedItem();
         int actualIndex = tabPane.getSelectionModel().getSelectedIndex();
@@ -119,8 +110,8 @@ public class TabPaneController extends Controller
         }
     }
 
-    @FXML
-    private void saveActualFileAs()
+    @Linked2MC
+    public void saveActualFileAs()
     {
         Tab actualTab = tabPane.getSelectionModel().getSelectedItem();
         File file = FileOperation.fileChooser().showSaveDialog(null);
@@ -216,8 +207,8 @@ public class TabPaneController extends Controller
         tabPane.getSelectionModel().select(newTab);
     }
     
-    @FXML
-    private void openFile()
+    @Linked2MC
+    public void openFile()
     {
         File file = FileOperation.fileChooser().showOpenDialog(null);
 
@@ -228,49 +219,9 @@ public class TabPaneController extends Controller
 
         openFile(file);
     }
-    
-    private void openProyectDirectory(File file)
-    {
-        file = file.getAbsoluteFile();
-        
-        if (file.getPath().isEmpty()) 
-        {
-            return;
-        }
-        
-        Session.getStaticInstance().proyectDirectory = file.getPath();
 
-        treeView.setCellFactory(param -> new CustomTreeCell());
-        treeView.setRoot(FileOperation.createTreeView(file));
-    }
-    
-    private void openLastProjectDirectory()
-    {
-        File file = new File(Session.getStaticInstance().proyectDirectory);
-        
-        if (!file.exists() || !file.isDirectory())
-        {
-            return;
-        }
-        
-        openProyectDirectory(file);
-    }
-    
-    @FXML
-    private void openNewProjectDirectory()
-    {
-        File file = FileOperation.directoryChooser().showDialog(null);
-        
-        if (file == null)
-        {
-            return;
-        }
-        
-        openProyectDirectory(file);
-    }
-
-    @FXML
-    private void newFile()
+    @Linked2MC
+    public void newFile()
     {
         Session.getStaticInstance().filesOpen.add("");
         Tab newTab = newWriteableTab();
@@ -285,7 +236,7 @@ public class TabPaneController extends Controller
 
         tab.setContent(formateableText);
         
-        StyleController.defaultStyle(formateableText, fileExtension);
+        StyleSetter.defaultStyle(formateableText, fileExtension);
         
         tab.setOnCloseRequest(event ->
                 Session.getStaticInstance().filesOpen.remove(
@@ -324,13 +275,6 @@ public class TabPaneController extends Controller
     @Override
     protected void addEventHandlers()
     {
-        Stage stage = TextEditorApplication.getStage();
-
-        // Add an event in which, when the window is shown, the last files are opened
-        stage.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> openLastFiles());
-        // Add an event in which, when the window is hidden, all files are saved
-        stage.addEventHandler(WindowEvent.WINDOW_HIDING, event -> saveAllFiles());
-        
         // Add an event in which, if Ctrl + ANYKEY is pressed
         stage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             if (event.isControlDown() && !event.isShiftDown()) {
@@ -361,8 +305,5 @@ public class TabPaneController extends Controller
                 }
             }
         });
-        
-        // Add an event in which, when the window is shown, the last project is opened
-        stage.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> openLastProjectDirectory());
     }
 }

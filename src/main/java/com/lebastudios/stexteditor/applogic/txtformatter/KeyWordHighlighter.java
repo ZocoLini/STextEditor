@@ -1,7 +1,6 @@
-package com.lebastudios.stexteditor.app.txtformatter;
+package com.lebastudios.stexteditor.applogic.txtformatter;
 
 
-import java.io.File;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,9 +12,7 @@ import java.util.regex.Pattern;
 
 import com.google.gson.Gson;
 import com.lebastudios.stexteditor.TextEditorApplication;
-import com.lebastudios.stexteditor.app.FileOperation;
-import com.lebastudios.stexteditor.app.FilePaths;
-import com.lebastudios.stexteditor.app.Resources;
+import com.lebastudios.stexteditor.applogic.Resources;
 import javafx.concurrent.Task;
 
 import javafx.stage.WindowEvent;
@@ -24,7 +21,7 @@ import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.reactfx.Subscription;
 
-public class KeyWordHighlighter
+class KeyWordHighlighter
 {
     public JSONPatterns patterns;
 

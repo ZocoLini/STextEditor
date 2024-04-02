@@ -1,13 +1,13 @@
-package com.lebastudios.stexteditor.interfacecontrollers.proyecttreeview;
+package com.lebastudios.stexteditor.iobjects.controllers;
 
-import com.lebastudios.stexteditor.app.Resources;
-import com.lebastudios.stexteditor.interfacecontrollers.TabPaneController;
+import com.lebastudios.stexteditor.applogic.Resources;
+import com.lebastudios.stexteditor.iobjects.controllers.TabPaneController;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 
 import java.io.File;
 
-public class TreeObjectController
+public class TreeObjectController extends Controller
 {
     private File representingFile;
     private Image image;

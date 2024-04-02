@@ -1,6 +1,6 @@
-package com.lebastudios.stexteditor.app.config;
+package com.lebastudios.stexteditor.applogic.config;
 
-import com.lebastudios.stexteditor.app.FilePaths;
+import com.lebastudios.stexteditor.applogic.FilePaths;
 
 import java.util.ArrayList;
 import java.util.List;

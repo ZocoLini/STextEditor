@@ -1,8 +1,8 @@
-package com.lebastudios.stexteditor.app.config;
+package com.lebastudios.stexteditor.applogic.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.lebastudios.stexteditor.app.FileOperation;
+import com.lebastudios.stexteditor.applogic.FileOperation;
 
 import java.io.File;
 

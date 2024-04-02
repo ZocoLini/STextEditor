@@ -1,6 +1,6 @@
 package com.lebastudios.stexteditor.events;
 
-public class Events
+public class GlobalEvents
 {
     public static class OnUpdate extends AppEvent{}
     

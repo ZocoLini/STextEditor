@@ -1,4 +1,4 @@
-package com.lebastudios.stexteditor.nodes.formateableText;
+package com.lebastudios.stexteditor.iobjects.nodes;
 
 import com.lebastudios.stexteditor.events.AppEvent;
 import javafx.scene.input.KeyEvent;
