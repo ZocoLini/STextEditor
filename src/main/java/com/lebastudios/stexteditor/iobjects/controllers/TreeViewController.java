@@ -3,14 +3,8 @@ package com.lebastudios.stexteditor.iobjects.controllers;
 import com.lebastudios.stexteditor.annotations.Linked2MC;
 import com.lebastudios.stexteditor.applogic.FileOperation;
 import com.lebastudios.stexteditor.applogic.config.Session;
-import com.lebastudios.stexteditor.iobjects.CustomTreeCell;
-import javafx.geometry.Insets;
+import com.lebastudios.stexteditor.iobjects.fxextends.CustomTreeCell;
 import javafx.scene.control.TreeView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 import java.io.File;
 
@@ -81,8 +75,5 @@ public class TreeViewController extends Controller
     @Override
     protected void onThemeChangue()
     {
-        // TODO: Hacer que funcione
-        treeView.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-        treeView.setStyle("-fx-background-color: red");
     }
 }

@@ -1,3 +1,5 @@
+/* Aplica a _todo el texto. $extension$.css puede sobrescribir propiedades 
+    coincidentes */
 .keyword {
     -fx-fill: blue;
     -fx-font-weight: bold;

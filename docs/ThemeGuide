@@ -17,6 +17,8 @@ Los archivos css recomendados son:
     - theme.css: Este archivo define colores de fondo y texto para el tema.
     - codeArea.css: Este archivo define el estilo de la caja de texto 
         donde se muestra el código.
+    - default.css: Este archivo define el estilo por defecto para extensiones que
+        no tengan css definido.
 
 ****************************************
 ** Estilo y clases para highlighting: **
@@ -53,9 +55,9 @@ lenguaje correspondiente.
 Nombre Archivo: codeArea.css
 
 Clases:
-.match-bracket {} -> 
-.text {} -> 
-.styled-text-area {} -> 
+.match-bracket {} -> Estilo para los corchetes que coinciden
+.text {} -> Estilo para el texto (?)
+.styled-text-area {} -> Estilo para el área de texto
 
 ********************************************************************
 ** Estilo y clases que definen colores de texto y fondo del tema: **

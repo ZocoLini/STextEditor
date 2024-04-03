@@ -5,17 +5,12 @@ import com.lebastudios.stexteditor.applogic.FileOperation;
 import com.lebastudios.stexteditor.applogic.config.Session;
 import com.lebastudios.stexteditor.exceptions.IllegalNodeCastException;
 import com.lebastudios.stexteditor.iobjects.AlertsInstanciator;
-import com.lebastudios.stexteditor.applogic.txtformatter.StyleSetter;
+import com.lebastudios.stexteditor.iobjects.fxextends.FormateableTextTab;
 import com.lebastudios.stexteditor.iobjects.nodes.FormateableText;
-import javafx.geometry.Insets;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -178,7 +173,7 @@ public class TabPaneController extends Controller
             }
 
             File file = new File(filePath);
-            tabPane.getTabs().add(newWriteableTab(file));
+            tabPane.getTabs().add(new FormateableTextTab(file));
             auxLastFilesPaths.add(filePath);
         }
         
@@ -201,7 +196,7 @@ public class TabPaneController extends Controller
         }
 
         Session.getStaticInstance().filesOpen.add(file.getPath());
-        Tab newTab = newWriteableTab(file.getName(), content, FileOperation.getFileExtension(file));
+        Tab newTab = new FormateableTextTab(file.getName(), content, FileOperation.getFileExtension(file));
         tabPane.getTabs().add(newTab);
         tabPane.getSelectionModel().select(newTab);
     }
@@ -223,52 +218,9 @@ public class TabPaneController extends Controller
     public void newFile()
     {
         Session.getStaticInstance().filesOpen.add("");
-        Tab newTab = newWriteableTab();
+        Tab newTab = new FormateableTextTab();
         tabPane.getTabs().add(newTab);
         tabPane.getSelectionModel().select(newTab);
-    }
-
-    private Tab newWriteableTab(String name, String content, String fileExtension)
-    {
-        Tab tab = new Tab(name);
-        FormateableText formateableText = new FormateableText(content);
-
-        tab.setContent(formateableText);
-        
-        StyleSetter.defaultStyle(formateableText, fileExtension);
-        
-        tab.setOnCloseRequest(event ->
-                Session.getStaticInstance().filesOpen.remove(
-                        tabPane.getTabs().indexOf(
-                                (Tab) event.getTarget()
-                        )
-                )
-        );
-        
-        return tab;
-    }
-
-    private Tab newWriteableTab(File file)
-    {
-        String fileName = file.getName();
-        String content;
-
-        try
-        {
-            content = FileOperation.read(file);
-        }
-        catch (Exception e)
-        {
-            System.err.println("File not found, probably deleted");
-            content = "";
-        }
-
-        return newWriteableTab(fileName, content, FileOperation.getFileExtension(file));
-    }
-
-    private Tab newWriteableTab()
-    {
-        return newWriteableTab("New file.txt", "", "txt");
     }
     
     @Override
@@ -304,13 +256,5 @@ public class TabPaneController extends Controller
                 }
             }
         });
-    }
-
-    @Override
-    protected void onThemeChangue()
-    {
-        // TODO: Hacer que funcione
-        tabPane.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-        tabPane.setStyle("-fx-background-color: green");
     }
 }

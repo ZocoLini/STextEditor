@@ -1,4 +1,4 @@
-package com.lebastudios.stexteditor.iobjects;
+package com.lebastudios.stexteditor.iobjects.fxextends;
 
 import com.lebastudios.stexteditor.iobjects.controllers.TreeObjectController;
 import javafx.scene.control.TreeCell;
