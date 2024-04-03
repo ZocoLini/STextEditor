@@ -41,6 +41,13 @@ public final class Resources
             return TextEditorApplication.class.getResource(langStyleFile).toExternalForm();
         }
 
+        // Check if the equivalent extension has a style defined in the actual theme
+        langStyleFile = FilePaths.getStyleDirectory() + FileOperation.toEquivalentFileExtension(fileExtension) + ".css";
+        if (existsResource(langStyleFile))
+        {
+            return TextEditorApplication.class.getResource(langStyleFile).toExternalForm();
+        }
+        
         // Check if the extension has a style defined in the default theme
         langStyleFile = FilePaths.getDefaultStyleDirectory() + fileExtension + ".css";
         if (existsResource(langStyleFile))
@@ -48,6 +55,13 @@ public final class Resources
             return TextEditorApplication.class.getResource(langStyleFile).toExternalForm();
         }
 
+        // Check if the equivalent extension has a style defined in the default theme
+        langStyleFile = FilePaths.getDefaultStyleDirectory() + FileOperation.toEquivalentFileExtension(fileExtension) + ".css";
+        if (existsResource(langStyleFile))
+        {
+            return TextEditorApplication.class.getResource(langStyleFile).toExternalForm();
+        }
+        
         // If the extension has no style defined, use the default style
         return TextEditorApplication.class.getResource(FilePaths.getDefaultLangStyleFile()).toExternalForm();
     }
@@ -118,7 +132,7 @@ public final class Resources
             return TextEditorApplication.class.getResource(themeStylePath).toExternalForm();
         }
         
-        themeStylePath = FilePaths.getDefaultStyleDirectory() + "codeArea.css";
+        themeStylePath = FilePaths.getDefaultStyleDirectory() + "theme.css";
         return TextEditorApplication.class.getResource(themeStylePath).toExternalForm();
     }
     
@@ -129,6 +143,11 @@ public final class Resources
         String rules = "{}";
         
         File file = new File(path);
+        
+        if (!file.exists()) 
+        {
+            path = FilePaths.getProgLangSyntaxDirectory() + FileOperation.toEquivalentFileExtension(extension) + ".json";
+        }
         
         if (!file.exists() && !extension.equals("default")) 
         {

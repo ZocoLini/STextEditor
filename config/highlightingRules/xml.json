@@ -6,7 +6,7 @@
       "colourleablePattern": "\\b[a-zA-Z_:]*"
     },
     {
-      "name": "attributevalue",
+      "name": "string",
       "pattern": "\"[^\"]*\"",
       "colourleablePattern": ""
     },

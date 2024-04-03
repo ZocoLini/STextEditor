@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class FileOperation
 {
@@ -85,10 +88,64 @@ public class FileOperation
 
         String fileName = file.getName();
         int index = fileName.lastIndexOf('.');
+        
         if (index == -1)
         {
             return "";
         }
-        return fileName.substring(index + 1);
+        
+        return toEquivalentFileExtension(fileName.substring(index + 1));
+    }
+
+    private static final Map<String, String> extensionMappings = new HashMap<>();
+
+    static {
+        // Definir los mapeos de extensiones
+        extensionMappings.put("xml", "xml");
+        extensionMappings.put("fxml", "xml");
+        extensionMappings.put("xsd", "xml");
+        extensionMappings.put("iml", "xml");
+        extensionMappings.put("xsl", "xml");
+        extensionMappings.put("dtd", "xml");
+
+        extensionMappings.put("json", "json");
+        extensionMappings.put("jsonc", "json");
+
+        extensionMappings.put("java", "java");
+        extensionMappings.put("class", "java");
+
+        extensionMappings.put("c", "c");
+        extensionMappings.put("h", "c");
+
+        extensionMappings.put("cpp", "cpp");
+        extensionMappings.put("hpp", "cpp");
+        extensionMappings.put("cc", "cpp");
+        extensionMappings.put("hh", "cpp");
+        extensionMappings.put("cxx", "cpp");
+        extensionMappings.put("hxx", "cpp");
+
+        extensionMappings.put("py", "py");
+        extensionMappings.put("pyc", "py");
+
+        extensionMappings.put("js", "js");
+        extensionMappings.put("mjs", "js");
+
+        extensionMappings.put("css", "css");
+        extensionMappings.put("scss", "css");
+        extensionMappings.put("sass", "css");
+        extensionMappings.put("less", "css");
+    }
+    
+    /**
+     * Se encarga de convertir una extensión de archivo a una más común ya definida con la que concuerda en sintaxis 
+     * para
+     * que así pueda ser afectado por el resaltado de sintaxis.
+     * Ej.: "xsd" -> "xml"; "iml" -> "xml";
+     * @param extension
+     * @return
+     */
+    public static String toEquivalentFileExtension(String extension)
+    {
+        return extensionMappings.getOrDefault(extension, extension);
     }
 }

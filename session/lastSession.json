@@ -2,7 +2,8 @@
   "filesOpen": [
     "/media/borja/MiPortfolio/Ciclo Marin/Programacion/STextEditor/src/main/java/module-info.java",
     "/media/borja/MiPortfolio/Ciclo Marin/Programacion/STextEditor/src/main/resources/com/lebastudios/stexteditor/hello-view.fxml",
-    "/media/borja/MiPortfolio/Ciclo Marin/Programacion/STextEditor/src/main/java/com/lebastudios/stexteditor/applogic/FileOperation.java"
+    "/media/borja/MiPortfolio/Ciclo Marin/Programacion/STextEditor/src/main/java/com/lebastudios/stexteditor/applogic/FileOperation.java",
+    "/media/borja/MiPortfolio/Ciclo Marin/Programacion/STextEditor/pom.xml"
   ],
   "fileFilter": "none",
   "proyectDirectory": "/media/borja/MiPortfolio/Ciclo Marin/Programacion/STextEditor/src"
