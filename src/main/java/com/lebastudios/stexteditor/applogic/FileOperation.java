@@ -1,5 +1,6 @@
 package com.lebastudios.stexteditor.applogic;
 
+import com.lebastudios.stexteditor.TextEditorApplication;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
@@ -47,6 +48,11 @@ public class FileOperation
         return content.toString();
     }
 
+    public static String readResource(String path) throws Exception
+    {
+        return read(new File(TextEditorApplication.class.getResource(path).toURI()));
+    }
+    
     public static void write(File file, String content) throws Exception
     {
         if (file.getParentFile() != null)

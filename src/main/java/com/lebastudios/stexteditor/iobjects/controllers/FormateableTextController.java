@@ -1,6 +1,5 @@
 package com.lebastudios.stexteditor.iobjects.controllers;
 
-import com.lebastudios.stexteditor.applogic.FilePaths;
 import com.lebastudios.stexteditor.applogic.Resources;
 import com.lebastudios.stexteditor.iobjects.fxextends.FormateableTextTab;
 
@@ -19,11 +18,8 @@ public class FormateableTextController extends Controller
     @Override
     protected void onThemeChangue()
     {
-        System.out.println(Resources.getClassStyleFromFile(FilePaths.getStyleDirectory() + "theme.css",
-                "hola"));
+        tab.setStyle(Resources.getThemeClassStyleFromFile("primary-bg"));
         
-        // estilo del tab: tab.setStyle("-fx-background-color: red");
-        
-        // estilo del contenido: tab.getContent().setStyle("-fx-background-color: red");
+        // tab.getContent().setStyle(Resources.getThemeClassStyleFromFile("primary-bg"));
     }
 }

@@ -1,7 +1,9 @@
 {
   "filesOpen": [
-    "I:\\Ciclo Marin\\Programacion\\Ejercicios\\UD06\\UD06.iml"
+    "/media/borja/MiPortfolio/Ciclo Marin/Programacion/STextEditor/src/main/java/module-info.java",
+    "/media/borja/MiPortfolio/Ciclo Marin/Programacion/STextEditor/src/main/resources/com/lebastudios/stexteditor/hello-view.fxml",
+    "/media/borja/MiPortfolio/Ciclo Marin/Programacion/STextEditor/src/main/java/com/lebastudios/stexteditor/applogic/FileOperation.java"
   ],
   "fileFilter": "none",
-  "proyectDirectory": "I:\\Ciclo Marin\\Programacion\\Ejercicios\\UD06"
+  "proyectDirectory": "/media/borja/MiPortfolio/Ciclo Marin/Programacion/STextEditor/src"
 }

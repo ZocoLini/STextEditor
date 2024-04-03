@@ -1,11 +1,11 @@
 .keyword {
-    -fx-fill: #1B1853;
+    -fx-fill: #109391;
 }
 .string {
-    -fx-fill: #F4F1DE;
+    -fx-fill: grey;
 }
 .comment {
-    -fx-fill: #109391;
+    -fx-fill: #DB3975;
 }
 .number {
     -fx-fill: #F4F1DE;
@@ -14,7 +14,7 @@
     -fx-fill: #F4F1DE;
 }
 .method {
-    -fx-fill: #1B1853;
+    -fx-fill: #6A428A;
 }
 .common {
     

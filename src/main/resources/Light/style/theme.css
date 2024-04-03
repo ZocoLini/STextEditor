@@ -2,40 +2,40 @@
 /* Estilo de los diferentes fondos */
 /***********************************/
 .primary-bg {
-    background-color: #f0f0f0;
+    -fx-background-color: #f0f0f0;
 }
 
 .secondary-bg {
-    background-color: #f0f0f0;
+    -fx-background-color: #f0f0f0;
 }
 
 .third-bg {
-    background-color: #f0f0f0;
+    -fx-background-color: #f0f0f0;
 }
 
 .fourth-bg {
-    background-color: #f0f0f0;
+    -fx-background-color: #f0f0f0;
 }
 
 /******************************************/
 /* Estilo de los diferents tipos de texto */
 /******************************************/
 .error-text {
-    color: #ff0000;
+    -fx-color: #ff0000;
 }
 
 .success-text {
-    color: #00ff00;
+    -fx-color: #00ff00;
 }
 
 .warning-text {
-    color: #ffcc00;
+    -fx-color: #ffcc00;
 }
 
 .info-text {
-    color: #0000ff;
+    -fx-color: #0000ff;
 }
 
 .normal-text {
-    color: #333;
+    -fx-color: #333;
 }

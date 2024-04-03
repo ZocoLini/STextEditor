@@ -5,12 +5,11 @@
 /* Aplica a _todo el texto. commongLang.css y $extension$.css puede sobrescribir propiedades 
     coincidentes */
 .text {
-    -fx-fill: white;
-    -fx-font-weight: bold;
+    -fx-text-fill: #F4F1DE;
     -fx-font-size: 16;
     -fx-font-family: monospace;
 }
 
 .styled-text-area {
-    -fx-background-color: #6A428A;
+    -fx-background-color: #14110F;
 }

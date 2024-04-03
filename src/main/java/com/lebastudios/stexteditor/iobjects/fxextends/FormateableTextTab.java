@@ -24,20 +24,19 @@ public final class FormateableTextTab extends Tab
     public FormateableTextTab(File file)
     {
         String fileName = file.getName();
-        String content;
 
         try
         {
-            content = FileOperation.read(file);
+            String content = FileOperation.read(file);
+            instanciador(fileName, content, FileOperation.getFileExtension(file));
         }
         catch (Exception e)
         {
             System.err.println("File not found, probably deleted");
-            content = "";
-        }
-       
-        instanciador(fileName, content, FileOperation.getFileExtension(file));
 
+            instanciador("new Text", "", "txt");
+        }
+        
         controller = new FormateableTextController(this);
     }
 

@@ -4,8 +4,7 @@ import com.lebastudios.stexteditor.TextEditorApplication;
 import javafx.scene.image.Image;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,23 +52,43 @@ public final class Resources
         return TextEditorApplication.class.getResource(FilePaths.getDefaultLangStyleFile()).toExternalForm();
     }
     
-    public static String getClassStyleFromFile(String resourcePath, String className)
+    private static String getClassStyleFromFile(String resourcePath, String className)
     {
-        String content = "";
-        InputStreamReader reader = new InputStreamReader(TextEditorApplication.class.getResourceAsStream(resourcePath));
-
-        Matcher matcher = Pattern.compile("\\." + className + "\\s*\\{([^}]*)\\}").matcher(content);
+        String content = null;
         
         try
         {
-            System.out.println((char) reader.read());
+            content = FileOperation.readResource(resourcePath);
         }
-        catch (IOException e)
+        catch (Exception e)
         {
-            throw new RuntimeException(e);
+            System.out.println("Error in Resources.java reading the file " + resourcePath + ". The class style will " +
+                    "not be applied.");
         }
-
-        return content;
+        
+        Matcher matcher = Pattern.compile("\\." + className + "\\s*\\{([^}]*)\\}").matcher(content);
+        
+        if (matcher.find())
+        {
+            String classFound = matcher.group();
+            
+            classFound = classFound.replace("." + className, "").replace("{", "")
+                    .replace("}", "").trim().replaceAll("\\s+", " ");
+            
+            return classFound;
+        }
+        
+        if (!Objects.equals(resourcePath, FilePaths.getDefaulThemeFile())) 
+        {
+            return getClassStyleFromFile(FilePaths.getDefaulThemeFile(), className);
+        }
+        
+        return "";
+    }
+    
+    public static String getThemeClassStyleFromFile(String className)
+    {
+        return getClassStyleFromFile(FilePaths.getStyleDirectory() + "theme.css", className);
     }
     
     public static String getLangCommonStyle()

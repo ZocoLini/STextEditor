@@ -1,10 +1,7 @@
 package com.lebastudios.stexteditor.iobjects.controllers;
 
-import com.lebastudios.stexteditor.applogic.FilePaths;
 import com.lebastudios.stexteditor.applogic.Resources;
 import com.lebastudios.stexteditor.iobjects.fxextends.CustomTreeCell;
-
-import java.io.File;
 
 public class CustomTreeCellController extends Controller
 {
@@ -22,7 +19,6 @@ public class CustomTreeCellController extends Controller
     @Override
     protected void onThemeChangue()
     {
-        System.out.println(Resources.getClassStyleFromFile(FilePaths.getStyleDirectory() + "theme.css",
-                "hola"));
+        treeCell.setStyle(Resources.getThemeClassStyleFromFile("secondary-bg"));
     }
 }
