@@ -6,14 +6,13 @@ import javafx.stage.Stage;
 
 public abstract class Controller
 {
-    protected static final Stage stage = TextEditorApplication.getStage();
+    protected volatile boolean instanciated = false;
     
     public Controller()
     {
         TextEditorApplication.instanciatedControllers.add(this);
 
         awake();
-        start();
         
         // Nos suscribimos a los eventos que _todo controller debe monitorear
         GlobalEvents.onUpdate.addListener(this::update);
@@ -24,15 +23,22 @@ public abstract class Controller
 
     private void ejecucionPostInicializacion()
     {
-        try
+        long maxSecsWaiting = 1000 * 60;
+        long actualSecond = System.currentTimeMillis();
+        
+        while (!instanciated) 
         {
-            Thread.sleep(100);
+            if (System.currentTimeMillis() - actualSecond > maxSecsWaiting) {
+                System.err.println("Controller not marked as instanciated. " + getClass().getSimpleName() + " should " +
+                        "add instanciated = true; in the constructor.");
+                return;
+            }
+            
+            Thread.onSpinWait();
         }
-        catch (InterruptedException e)
-        {
-            throw new RuntimeException(e);
-        }
-
+        
+        start();
+        
         // Añadimos los event handlers que necesitará cada Controller en específico
         addEventHandlers();
         
@@ -41,12 +47,12 @@ public abstract class Controller
     }
     
     /**
-     * Called when the controller is created. This is called before the start method. This is called once.
+     * Called while the object is beeing instanciated. This is called before the start method. This is called once.
      */
     protected void awake() {}
 
     /**
-     * Called when the controller is created. This is called after the awake method. This is called once.
+     * Called when the controller is instanciated. This is called after the awake method. This is called once.
      */
     protected void start() {}
 

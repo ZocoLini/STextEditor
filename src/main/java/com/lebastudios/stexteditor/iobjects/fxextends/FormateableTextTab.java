@@ -4,7 +4,7 @@ import com.lebastudios.stexteditor.applogic.FileOperation;
 import com.lebastudios.stexteditor.applogic.config.Session;
 import com.lebastudios.stexteditor.applogic.txtformatter.StyleSetter;
 import com.lebastudios.stexteditor.iobjects.controllers.FormateableTextController;
-import com.lebastudios.stexteditor.iobjects.controllers.MainController;
+import com.lebastudios.stexteditor.iobjects.managers.MainManager;
 import com.lebastudios.stexteditor.iobjects.nodes.FormateableText;
 import javafx.scene.control.Tab;
 
@@ -60,7 +60,7 @@ public final class FormateableTextTab extends Tab
 
         this.setOnCloseRequest(event ->
                 Session.getStaticInstance().filesOpen.remove(
-                        MainController.getInstance().tabPane.getTabs().indexOf(
+                        MainManager.getInstance().tabPane.getTabs().indexOf(
                                 (Tab) event.getTarget()
                         )
                 )

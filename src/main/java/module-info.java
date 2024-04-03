@@ -29,4 +29,6 @@ module com.lebastudios.stexteditor {
     exports com.lebastudios.stexteditor.applogic.txtformatter;
     exports com.lebastudios.stexteditor.iobjects.fxextends;
     opens com.lebastudios.stexteditor.iobjects.fxextends to javafx.fxml;
+    exports com.lebastudios.stexteditor.iobjects.managers;
+    opens com.lebastudios.stexteditor.iobjects.managers to javafx.fxml;
 }

@@ -1,32 +1,37 @@
-package com.lebastudios.stexteditor.iobjects.controllers;
+package com.lebastudios.stexteditor.iobjects.managers;
 
 import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.applogic.config.Session;
+import com.lebastudios.stexteditor.iobjects.controllers.Controller;
+import com.lebastudios.stexteditor.iobjects.fxextends.CustomTreeCellContent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TreeView;
 import javafx.stage.WindowEvent;
 
-public class MainController extends Controller
+public class MainManager extends Manager<Parent>
 {
-    private static MainController instance;
+    private static MainManager instance;
     
-    public static MainController getInstance()
+    public static MainManager getInstance()
     {
         return instance;
     }
 
-    public MainController()
+    public MainManager()
     {
-        super();
+        super(null);
         instance = this;
+
+        instanciated = true;
     }
 
     @FXML
     public TabPane tabPane;
 
     @FXML
-    public TreeView<TreeObjectController> treeView;
+    public TreeView<CustomTreeCellContent> treeView;
     
     @FXML
     private void exit()
@@ -38,27 +43,27 @@ public class MainController extends Controller
 
     @FXML
     private void saveActualTab() {
-        TabPaneController.getInstance().saveActualTab();
+        TabPaneManager.getInstance().saveActualTab();
     }
 
     @FXML
     private void saveActualFileAs() {
-        TabPaneController.getInstance().saveActualFileAs();
+        TabPaneManager.getInstance().saveActualFileAs();
     }
 
     @FXML
     private void openFile() {
-        TabPaneController.getInstance().openFile();
+        TabPaneManager.getInstance().openFile();
     }
     
     @FXML
     private void newFile() {
-        TabPaneController.getInstance().newFile();
+        TabPaneManager.getInstance().newFile();
     }
     
     @FXML
     private void openNewProjectDirectory() {
-        TreeViewController.getInstance().openNewProjectDirectory();
+        TreeViewManager.getInstance().openNewProjectDirectory();
     }
 
     @Override
@@ -66,12 +71,12 @@ public class MainController extends Controller
     {
         // Add an event in which, when the window is shown, the last files are opened
         stage.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> 
-                TabPaneController.getInstance().openLastFiles());
+                TabPaneManager.getInstance().openLastFiles());
         // Add an event in which, when the window is hidden, all files are saved
         stage.addEventHandler(WindowEvent.WINDOW_HIDING, event -> 
-                TabPaneController.getInstance().saveAllFiles());
+                TabPaneManager.getInstance().saveAllFiles());
         
         stage.addEventHandler(WindowEvent.WINDOW_SHOWN,
-                event -> TreeViewController.getInstance().openLastProjectDirectory());
+                event -> TreeViewManager.getInstance().openLastProjectDirectory());
     }
 }

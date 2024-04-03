@@ -1,6 +1,6 @@
-package com.lebastudios.stexteditor.iobjects.controllers;
+package com.lebastudios.stexteditor.iobjects.managers;
 
-import com.lebastudios.stexteditor.annotations.Linked2MC;
+import com.lebastudios.stexteditor.annotations.Linked2MM;
 import com.lebastudios.stexteditor.applogic.FileOperation;
 import com.lebastudios.stexteditor.applogic.config.Session;
 import com.lebastudios.stexteditor.exceptions.IllegalNodeCastException;
@@ -19,34 +19,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class TabPaneController extends Controller
+public class TabPaneManager extends Manager<TabPane>
 {
-    private static TabPaneController instance;
+    private static TabPaneManager instance;
     
-    public static TabPaneController getInstance()
+    public static TabPaneManager getInstance()
     {
         if (instance == null) 
         {
-            instance = new TabPaneController();
+            instance = new TabPaneManager();
         }
         
         return instance;
     }
     
-    private TabPaneController()
+    private TabPaneManager()
     {
-        super();
+        super(MainManager.getInstance().tabPane);
+
+        instanciated = true;
     }
     
-    private static final TabPane tabPane = MainController.getInstance().tabPane;
-    
-    @Linked2MC
+    @Linked2MM
     public void saveAllFiles()
     {
         int i = 0;
         List<String> filePaths = Session.getStaticInstance().filesOpen;
 
-        for (var tab : tabPane.getTabs())
+        for (var tab : representingNode.getTabs())
         {
             if (i < filePaths.size() && filePaths.get(i) != null
                     && !filePaths.get(i).isEmpty())
@@ -78,11 +78,11 @@ public class TabPaneController extends Controller
         System.out.println("All files has been saved!!");
     }
 
-    @Linked2MC
+    @Linked2MM
     public void saveActualTab()
     {
-        Tab actualTab = tabPane.getSelectionModel().getSelectedItem();
-        int actualIndex = tabPane.getSelectionModel().getSelectedIndex();
+        Tab actualTab = representingNode.getSelectionModel().getSelectedItem();
+        int actualIndex = representingNode.getSelectionModel().getSelectedIndex();
 
         List<String> filePaths = Session.getStaticInstance().filesOpen;
 
@@ -104,10 +104,10 @@ public class TabPaneController extends Controller
         }
     }
 
-    @Linked2MC
+    @Linked2MM
     public void saveActualFileAs()
     {
-        Tab actualTab = tabPane.getSelectionModel().getSelectedItem();
+        Tab actualTab = representingNode.getSelectionModel().getSelectedItem();
         File file = FileOperation.fileChooser().showSaveDialog(null);
         
         if (file == null)
@@ -145,7 +145,7 @@ public class TabPaneController extends Controller
 
         fileTab.setText(file.getName());
 
-        int index = tabPane.getTabs().indexOf(fileTab);
+        int index = representingNode.getTabs().indexOf(fileTab);
         final var filesOpen = Session.getStaticInstance().filesOpen;
         
         if (index > filesOpen.size() - 1)
@@ -173,7 +173,7 @@ public class TabPaneController extends Controller
             }
 
             File file = new File(filePath);
-            tabPane.getTabs().add(new FormateableTextTab(file));
+            representingNode.getTabs().add(new FormateableTextTab(file));
             auxLastFilesPaths.add(filePath);
         }
         
@@ -197,11 +197,11 @@ public class TabPaneController extends Controller
 
         Session.getStaticInstance().filesOpen.add(file.getPath());
         Tab newTab = new FormateableTextTab(file.getName(), content, FileOperation.getFileExtension(file));
-        tabPane.getTabs().add(newTab);
-        tabPane.getSelectionModel().select(newTab);
+        representingNode.getTabs().add(newTab);
+        representingNode.getSelectionModel().select(newTab);
     }
     
-    @Linked2MC
+    @Linked2MM
     public void openFile()
     {
         File file = FileOperation.fileChooser().showOpenDialog(null);
@@ -214,13 +214,13 @@ public class TabPaneController extends Controller
         openFile(file);
     }
 
-    @Linked2MC
+    @Linked2MM
     public void newFile()
     {
         Session.getStaticInstance().filesOpen.add("");
         Tab newTab = new FormateableTextTab();
-        tabPane.getTabs().add(newTab);
-        tabPane.getSelectionModel().select(newTab);
+        representingNode.getTabs().add(newTab);
+        representingNode.getSelectionModel().select(newTab);
     }
     
     @Override

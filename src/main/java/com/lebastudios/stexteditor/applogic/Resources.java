@@ -4,6 +4,10 @@ import com.lebastudios.stexteditor.TextEditorApplication;
 import javafx.scene.image.Image;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class Resources
 {
@@ -47,6 +51,25 @@ public final class Resources
 
         // If the extension has no style defined, use the default style
         return TextEditorApplication.class.getResource(FilePaths.getDefaultLangStyleFile()).toExternalForm();
+    }
+    
+    public static String getClassStyleFromFile(String resourcePath, String className)
+    {
+        String content = "";
+        InputStreamReader reader = new InputStreamReader(TextEditorApplication.class.getResourceAsStream(resourcePath));
+
+        Matcher matcher = Pattern.compile("\\." + className + "\\s*\\{([^}]*)\\}").matcher(content);
+        
+        try
+        {
+            System.out.println((char) reader.read());
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+
+        return content;
     }
     
     public static String getLangCommonStyle()

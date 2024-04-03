@@ -1,20 +1,20 @@
-package com.lebastudios.stexteditor.iobjects.controllers;
+package com.lebastudios.stexteditor.iobjects.fxextends;
 
 import com.lebastudios.stexteditor.applogic.Resources;
-import com.lebastudios.stexteditor.iobjects.controllers.TabPaneController;
+import com.lebastudios.stexteditor.iobjects.managers.TabPaneManager;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 
 import java.io.File;
 
-public class TreeObjectController extends Controller
+public class CustomTreeCellContent
 {
     private File representingFile;
     private Image image;
     
     private long lastClickTime = 0;
 
-    public TreeObjectController(File file)
+    public CustomTreeCellContent(File file)
     {
         super();
 
@@ -50,17 +50,11 @@ public class TreeObjectController extends Controller
         {
             lastClickTime = 0;
 
-            TabPaneController.getInstance().openFile(representingFile);
+            TabPaneManager.getInstance().openFile(representingFile);
             
             return;
         }
         
         lastClickTime = System.currentTimeMillis();
-    }
-
-    @Override
-    protected void onThemeChangue()
-    {
-        // TODO: Hacer que funcione
     }
 }
