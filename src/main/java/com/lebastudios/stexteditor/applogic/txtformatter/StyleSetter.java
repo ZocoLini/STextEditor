@@ -7,6 +7,8 @@ public class StyleSetter
 {
     public static void defaultStyle(FormateableText codeArea, String fileExtension)
     {
+        //TODO: ver si el orden puede afectara como se aplican
+        
         // Añadimos el css segun la extension del archivo
         codeArea.getStylesheets().add(Resources.getExtensionStyle(fileExtension));
         

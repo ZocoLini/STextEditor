@@ -54,12 +54,9 @@ class KeyWordHighlighter
 
     private CodeArea codeArea;
     private ExecutorService executor;
-    private final String extension;
 
     public KeyWordHighlighter(CodeArea codeArea, String extension)
     {
-        this.extension = extension;
-        
         this.patterns = new Gson().fromJson(Resources.getHighlightingRules(extension), JSONPatterns.class);
         
         patternsCreator();
@@ -164,7 +161,7 @@ class KeyWordHighlighter
         {
             final var patternName = getPatternName(matcher);
 
-            spansBuilder.add(Collections.emptyList(),
+            spansBuilder.add(Collections.singleton("default"),
                     (matcher.start()) - (lastKwEnd));
             
             computeHighlightingOnColourleable(patternName, matcher.group(), spansBuilder);
@@ -172,7 +169,7 @@ class KeyWordHighlighter
             lastKwEnd = matcher.end();
         }
         
-        spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
+        spansBuilder.add(Collections.singleton("default"), text.length() - lastKwEnd);
         return spansBuilder.create();
     }
     
@@ -192,12 +189,12 @@ class KeyWordHighlighter
         
         while (matcher.find())
         {
-            spansBuilder.add(Collections.emptyList(), matcher.start() - innerLatsKwEnd);
+            spansBuilder.add(Collections.singleton("default"), matcher.start() - innerLatsKwEnd);
             spansBuilder.add(Collections.singleton(patterName), matcher.end() - matcher.start());
             
             innerLatsKwEnd = matcher.end();
         }
         
-        spansBuilder.add(Collections.emptyList(), text.length() - innerLatsKwEnd);
+        spansBuilder.add(Collections.singleton("default"), text.length() - innerLatsKwEnd);
     }
 }

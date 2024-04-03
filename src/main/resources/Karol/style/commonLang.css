@@ -1,29 +1,24 @@
 .keyword {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
+    -fx-fill: #1B1853;
 }
 .string {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
+    -fx-fill: #F4F1DE;
 }
 .comment {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
+    -fx-fill: #109391;
 }
 .number {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
+    -fx-fill: #F4F1DE;
 }
 .default {
-
+    -fx-fill: #F4F1DE;
 }
 .method {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
+    -fx-fill: #1B1853;
 }
-
+.common {
+    
+}
 /* Estilo del paragrafo que tiene el caret */
 .paragraph-box:has-caret {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
 }

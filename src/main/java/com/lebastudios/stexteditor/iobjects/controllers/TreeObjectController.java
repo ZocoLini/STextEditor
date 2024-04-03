@@ -57,4 +57,10 @@ public class TreeObjectController extends Controller
         
         lastClickTime = System.currentTimeMillis();
     }
+
+    @Override
+    protected void onThemeChangue()
+    {
+        // TODO: Hacer que funcione
+    }
 }

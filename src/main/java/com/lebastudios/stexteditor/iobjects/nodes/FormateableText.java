@@ -1,6 +1,7 @@
 package com.lebastudios.stexteditor.iobjects.nodes;
 
 import com.lebastudios.stexteditor.events.AppEvent;
+import javafx.geometry.VPos;
 import javafx.scene.input.KeyEvent;
 import org.fxmisc.richtext.*;
 import org.fxmisc.richtext.model.StyledDocument;
@@ -17,8 +18,7 @@ public class FormateableText extends CodeArea
         super(string);
 
         this.addDefaultEventHandlers();
-
-        this.setLineHighlighterOn(true);
+        
         this.setParagraphGraphicFactory(LineNumberFactory.get(this));
     }
 
