@@ -1,0 +1,24 @@
+.keyword {
+    -fx-fill: #c1774d;
+}
+.string {
+    -fx-fill: #429172;
+}
+.comment {
+    -fx-fill: #797d83;
+}
+.number {
+    -fx-fill: #F4F1DE;
+}
+.default {
+    -fx-fill: #dee0c8;
+}
+.method {
+    -fx-fill: #56a8f5;
+}
+.common {
+    
+}
+/* Estilo del paragrafo que tiene el caret */
+.paragraph-box:has-caret {
+}

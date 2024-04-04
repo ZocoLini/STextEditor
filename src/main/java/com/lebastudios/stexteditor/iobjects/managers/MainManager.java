@@ -2,15 +2,20 @@ package com.lebastudios.stexteditor.iobjects.managers;
 
 import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.applogic.config.Session;
+import com.lebastudios.stexteditor.applogic.config.Theme;
 import com.lebastudios.stexteditor.iobjects.controllers.Controller;
 import com.lebastudios.stexteditor.iobjects.fxextends.CustomTreeCellContent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TreeView;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.WindowEvent;
 
-public class MainManager extends Manager<Parent>
+import java.lang.invoke.VolatileCallSite;
+
+public class MainManager extends Manager<BorderPane>
 {
     private static MainManager instance;
     
@@ -22,8 +27,9 @@ public class MainManager extends Manager<Parent>
     public MainManager()
     {
         super(null);
+        representingObject = mainPane;
         instance = this;
-
+        
         instanciated = true;
     }
 
@@ -32,6 +38,12 @@ public class MainManager extends Manager<Parent>
 
     @FXML
     public TreeView<CustomTreeCellContent> treeView;
+    
+    @FXML
+    private BorderPane mainPane;
+    
+    @FXML
+    public MenuBar menuBar;
     
     @FXML
     private void exit()
@@ -65,7 +77,7 @@ public class MainManager extends Manager<Parent>
     private void openNewProjectDirectory() {
         TreeViewManager.getInstance().openNewProjectDirectory();
     }
-
+    
     @Override
     protected void addEventHandlers()
     {

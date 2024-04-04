@@ -1,16 +1,13 @@
 package com.lebastudios.stexteditor.iobjects.controllers;
 
-import com.lebastudios.stexteditor.applogic.Resources;
+import com.lebastudios.stexteditor.applogic.config.Theme;
 import com.lebastudios.stexteditor.iobjects.fxextends.FormateableTextTab;
 
-public class FormateableTextController extends Controller
+public class FormateableTextController extends Controller<FormateableTextTab>
 {
-    private final FormateableTextTab tab;
-    
     public FormateableTextController(FormateableTextTab tab)
     {
-        super();
-        this.tab = tab;
+        super(tab);
 
         instanciated = true;
     }
@@ -18,7 +15,7 @@ public class FormateableTextController extends Controller
     @Override
     protected void onThemeChangue()
     {
-        tab.setStyle(Resources.getThemeClassStyleFromFile("primary-bg"));
+        representingObject.setStyle(Theme.getInstance().getPrimaryBgStyle());
         
         // tab.getContent().setStyle(Resources.getThemeClassStyleFromFile("primary-bg"));
     }

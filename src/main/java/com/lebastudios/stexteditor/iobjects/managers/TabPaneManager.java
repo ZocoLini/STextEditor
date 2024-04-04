@@ -3,6 +3,7 @@ package com.lebastudios.stexteditor.iobjects.managers;
 import com.lebastudios.stexteditor.annotations.Linked2MM;
 import com.lebastudios.stexteditor.applogic.FileOperation;
 import com.lebastudios.stexteditor.applogic.config.Session;
+import com.lebastudios.stexteditor.applogic.config.Theme;
 import com.lebastudios.stexteditor.exceptions.IllegalNodeCastException;
 import com.lebastudios.stexteditor.iobjects.AlertsInstanciator;
 import com.lebastudios.stexteditor.iobjects.fxextends.FormateableTextTab;
@@ -46,7 +47,7 @@ public class TabPaneManager extends Manager<TabPane>
         int i = 0;
         List<String> filePaths = Session.getStaticInstance().filesOpen;
 
-        for (var tab : representingNode.getTabs())
+        for (var tab : representingObject.getTabs())
         {
             if (i < filePaths.size() && filePaths.get(i) != null
                     && !filePaths.get(i).isEmpty())
@@ -81,8 +82,8 @@ public class TabPaneManager extends Manager<TabPane>
     @Linked2MM
     public void saveActualTab()
     {
-        Tab actualTab = representingNode.getSelectionModel().getSelectedItem();
-        int actualIndex = representingNode.getSelectionModel().getSelectedIndex();
+        Tab actualTab = representingObject.getSelectionModel().getSelectedItem();
+        int actualIndex = representingObject.getSelectionModel().getSelectedIndex();
 
         List<String> filePaths = Session.getStaticInstance().filesOpen;
 
@@ -107,7 +108,7 @@ public class TabPaneManager extends Manager<TabPane>
     @Linked2MM
     public void saveActualFileAs()
     {
-        Tab actualTab = representingNode.getSelectionModel().getSelectedItem();
+        Tab actualTab = representingObject.getSelectionModel().getSelectedItem();
         File file = FileOperation.fileChooser().showSaveDialog(null);
         
         if (file == null)
@@ -145,7 +146,7 @@ public class TabPaneManager extends Manager<TabPane>
 
         fileTab.setText(file.getName());
 
-        int index = representingNode.getTabs().indexOf(fileTab);
+        int index = representingObject.getTabs().indexOf(fileTab);
         final var filesOpen = Session.getStaticInstance().filesOpen;
         
         if (index > filesOpen.size() - 1)
@@ -173,7 +174,7 @@ public class TabPaneManager extends Manager<TabPane>
             }
 
             File file = new File(filePath);
-            representingNode.getTabs().add(new FormateableTextTab(file));
+            representingObject.getTabs().add(new FormateableTextTab(file));
             auxLastFilesPaths.add(filePath);
         }
         
@@ -197,8 +198,8 @@ public class TabPaneManager extends Manager<TabPane>
 
         Session.getStaticInstance().filesOpen.add(file.getPath());
         Tab newTab = new FormateableTextTab(file.getName(), content, FileOperation.getFileExtension(file));
-        representingNode.getTabs().add(newTab);
-        representingNode.getSelectionModel().select(newTab);
+        representingObject.getTabs().add(newTab);
+        representingObject.getSelectionModel().select(newTab);
     }
     
     @Linked2MM
@@ -219,8 +220,8 @@ public class TabPaneManager extends Manager<TabPane>
     {
         Session.getStaticInstance().filesOpen.add("");
         Tab newTab = new FormateableTextTab();
-        representingNode.getTabs().add(newTab);
-        representingNode.getSelectionModel().select(newTab);
+        representingObject.getTabs().add(newTab);
+        representingObject.getSelectionModel().select(newTab);
     }
     
     @Override

@@ -1,39 +1,45 @@
+/***********************************/
+/* Estilo de los diferentes elementos */
+/***********************************/
 .tab-pane {
-    -fx-background-color: #14110F;
-    -fx-text-fill: #F4F1DE;
-    -fx-border-color: #14110F;
+    -fx-background-color: #1e1f22;
+    -fx-text-fill: #dee0c8;
+    -fx-border-color: #2b2d30;
 }
 .tree-view {
-    -fx-background-color: #14110F;
-    -fx-text-fill: #F4F1DE;
-    -fx-border-color: #14110F;
+    -fx-background-color: #2b2d30;
+    -fx-text-fill: #dee0c8;
+    -fx-border-color: #1e1f22;
 }
 .tree-cell {
-    -fx-background-color: #1B1853;
-    -fx-text-fill: #F4F1DE;
-    -fx-border-color: #1B1853;
+    -fx-background-color: #2b2d30;
+    -fx-text-fill: #dee0c8;
 }
 .menu-bar {
-    -fx-background-color: #14110F;
-    -fx-text-fill: #F4F1DE;
+    -fx-background-color: #2b2d30;
+    -fx-text-fill: #dee0c8;
+    -fx-border-color: #1e1f22;
 }
 .menu-item {
-    -fx-background-color: #1B1853;
-    -fx-text-fill: #F4F1DE;
+    -fx-background-color: #2b2d30;
+    -fx-text-fill: #dee0c8;
+}
+.menu-bar {
+    -fx-background-color: #1e1f22;
 }
 .menu {
-    -fx-background-color: #1B1853;
-    -fx-text-fill: #F4F1DE;
+    -fx-background-color: #2b2d30;
+    -fx-text-fill: #dee0c8;
 }
 .tab {
-    -fx-background-color: #14110F;
-    -fx-text-fill: #F4F1DE;
-    -fx-border-color: #1B1853;
-    -fx-prompt-text-fill: yellow;
+    -fx-background-color: #1e1f22;
+    -fx-text-fill: #dee0c8;
+    -fx-border-color: #1e1f22;
 }
 .border-pane {
-    -fx-background-color: #14110F;
-    -fx-text-fill: #F4F1DE;
+    -fx-background-color: #2b2d30;
+    -fx-text-fill: #dee0c8;
+    -fx-border-color: #2b2d30;
 }
 /***********************************/
 /* Estilo de los diferentes fondos */

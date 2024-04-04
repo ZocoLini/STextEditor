@@ -1,7 +1,9 @@
 package com.lebastudios.stexteditor;
 
+import com.lebastudios.stexteditor.applogic.Resources;
 import com.lebastudios.stexteditor.applogic.config.Session;
 import com.lebastudios.stexteditor.applogic.config.Config;
+import com.lebastudios.stexteditor.applogic.config.Theme;
 import com.lebastudios.stexteditor.iobjects.controllers.Controller;
 import com.lebastudios.stexteditor.events.GlobalEvents;
 import javafx.application.Application;
@@ -16,7 +18,7 @@ import java.util.List;
 
 public class TextEditorApplication extends Application
 {
-    public static final List<Controller> instanciatedControllers = new ArrayList<>();
+    public static final List<Controller<?>> instanciatedControllers = new ArrayList<>();
 
     private static TextEditorApplication instance;
 
@@ -33,6 +35,8 @@ public class TextEditorApplication extends Application
     public Stage stage;
     boolean hiloDeJuego = true;
 
+    private String actualStyle = Resources.getThemeStyle();
+    
     @Override
     public void start(Stage stage) throws IOException
     {
@@ -45,13 +49,16 @@ public class TextEditorApplication extends Application
                 new FXMLLoader(TextEditorApplication.class.getResource("hello-view.fxml"));
 
         Scene escenaActual = new Scene(fxmlLoader.load());
-
+        
+        escenaActual.getStylesheets().add(actualStyle);
+        
         stage.setTitle("Text Editor!");
 
         stage.addEventHandler(WindowEvent.WINDOW_HIDING, event -> Config.getStaticInstance().save());
         stage.addEventHandler(WindowEvent.WINDOW_HIDING, event -> Session.getStaticInstance().save());
         stage.addEventHandler(WindowEvent.WINDOW_HIDING, event -> hiloDeJuego = false);
-
+        GlobalEvents.onThemeChanged.addListener(this::setActualStyle);
+        
         stage.setScene(escenaActual);
 
         try
@@ -69,12 +76,21 @@ public class TextEditorApplication extends Application
         
         new Thread(this::bucleDeJuego).start();
     }
+    
+    private void setActualStyle()
+    {
+        this.stage.getScene().getStylesheets().remove(actualStyle);
+        
+        actualStyle = Resources.getThemeStyle();
+        
+        this.stage.getScene().getStylesheets().add(actualStyle);
+    }
 
     public static void main(String[] args)
     {
         launch(args);
     }
-
+    
     /**
      * Bucle de juego que se encarga de llamar a los eventos de actualización. Este metodo se ejecuta en un hilo 
      * separado.

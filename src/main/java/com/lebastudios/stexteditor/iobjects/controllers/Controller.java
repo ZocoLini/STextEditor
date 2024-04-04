@@ -2,14 +2,17 @@ package com.lebastudios.stexteditor.iobjects.controllers;
 
 import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.events.GlobalEvents;
-import javafx.stage.Stage;
 
-public abstract class Controller
+public abstract class Controller<T>
 {
     protected volatile boolean instanciated = false;
+
+    protected T representingObject;
     
-    public Controller()
+    public Controller(T representingObject)
     {
+        this.representingObject = representingObject;
+        
         TextEditorApplication.instanciatedControllers.add(this);
 
         awake();

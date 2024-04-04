@@ -3,6 +3,7 @@ package com.lebastudios.stexteditor.iobjects.managers;
 import com.lebastudios.stexteditor.annotations.Linked2MM;
 import com.lebastudios.stexteditor.applogic.FileOperation;
 import com.lebastudios.stexteditor.applogic.config.Session;
+import com.lebastudios.stexteditor.applogic.config.Theme;
 import com.lebastudios.stexteditor.iobjects.fxextends.CustomTreeCell;
 import com.lebastudios.stexteditor.iobjects.fxextends.CustomTreeCellContent;
 import javafx.scene.control.TreeItem;
@@ -42,10 +43,10 @@ public class TreeViewManager extends Manager<TreeView<CustomTreeCellContent>>
 
         Session.getStaticInstance().proyectDirectory = file.getPath();
 
-        representingNode.setCellFactory(param -> new CustomTreeCell());
-        representingNode.setRoot(createTreeView(file));
+        representingObject.setCellFactory(param -> new CustomTreeCell());
+        representingObject.setRoot(createTreeView(file));
         
-        representingNode.getRoot().setExpanded(true);
+        representingObject.getRoot().setExpanded(true);
     }
 
     void openLastProjectDirectory()
