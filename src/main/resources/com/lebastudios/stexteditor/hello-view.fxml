@@ -3,7 +3,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.AmbientLight?>
 <BorderPane fx:id="mainPane"
             maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="900" prefWidth="1200" xmlns="http://javafx.com/javafx/17.0.2-ea"
@@ -46,15 +45,17 @@
     
     <!-- Gestor de Ventanas -->
     <left>
-        <VBox fx:id="leftVBox" prefWidth="25">
-            <Button prefWidth="25" prefHeight="25"/>
+        <VBox fx:id="leftVBox" prefWidth="30">
+            <Button prefWidth="30" prefHeight="30"/>
+            <Button prefWidth="30" prefHeight="30"/>
         </VBox>
     </left>
     
     <!-- Acciones sobre el codigo -->
     <right>
-        <VBox fx:id="rightVBox" prefWidth="25">
-            <Button prefWidth="25" prefHeight="25"/>
+        <VBox fx:id="rightVBox" prefWidth="30">
+            <Button fx:id="botonCompilar" onAction="#compile" prefWidth="30" prefHeight="30"/>
+            <Button fx:id="botonEjecutar" onAction="#execute" prefWidth="30" prefHeight="30"/>
         </VBox>
     </right>
 </BorderPane>
