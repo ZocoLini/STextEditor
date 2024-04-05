@@ -2,7 +2,7 @@
   "lang": "es",
   "verion": "prototype",
   "editorConfig": {
-    "theme": "Dark",
+    "theme": "JavaFX",
     "font": "Arial",
     "fontSize": 13,
     "indentation": 4

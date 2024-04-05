@@ -57,4 +57,8 @@ public class CustomTreeCellContent
         
         lastClickTime = System.currentTimeMillis();
     }
+
+    public File getRepresentingFile() {
+        return representingFile;
+    }
 }
