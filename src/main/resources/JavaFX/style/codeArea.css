@@ -1,0 +1,13 @@
+.match-bracket {
+    -rtfx-background-color: lightgreen;
+}
+
+/* Aplica a _todo el texto. commongLang.css y $extension$.css puede sobrescribir propiedades 
+    coincidentes */
+.text {
+    -fx-font-size: 16;
+    -fx-font-family: monospace;
+}
+
+.styled-text-area {
+}
