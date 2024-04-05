@@ -3,12 +3,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" 
-            prefHeight="900" prefWidth="1200" xmlns="http://javafx.com/javafx/17.0.2-ea" 
-            xmlns:fx="http://javafx.com/fxml/1" 
-            fx:controller="com.lebastudios.stexteditor.interfacecontrollers.TabPaneController">
+<?import javafx.scene.AmbientLight?>
+<BorderPane fx:id="mainPane"
+            maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="900" prefWidth="1200" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.lebastudios.stexteditor.iobjects.managers.MainManager">
     <top>
-        <MenuBar prefHeight="10">
+        <MenuBar fx:id="menuBar" prefHeight="10">
             <Menu mnemonicParsing="false" text="File">
                 <MenuItem mnemonicParsing="false" onAction="#newFile" text="New File" />
                 <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open File" />
@@ -29,6 +31,7 @@
             </Menu>
         </MenuBar>
     </top>
+    
     <center>
         <SplitPane dividerPositions="0.1" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <TreeView fx:id="treeView" prefHeight="200.0" prefWidth="174.0" />
@@ -36,4 +39,22 @@
             <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS" />
         </SplitPane>
     </center>
+    
+    <bottom>
+        
+    </bottom>
+    
+    <!-- Gestor de Ventanas -->
+    <left>
+        <VBox fx:id="leftVBox" prefWidth="25">
+            <Button prefWidth="25" prefHeight="25"/>
+        </VBox>
+    </left>
+    
+    <!-- Acciones sobre el codigo -->
+    <right>
+        <VBox fx:id="rightVBox" prefWidth="25">
+            <Button prefWidth="25" prefHeight="25"/>
+        </VBox>
+    </right>
 </BorderPane>

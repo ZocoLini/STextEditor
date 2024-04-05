@@ -1,0 +1,86 @@
+/***********************************/
+/* Estilo de los diferentes elementos */
+/***********************************/
+.tab-pane {
+    -fx-background-color: #1e1f22;
+    -fx-text-fill: #dee0c8;
+    -fx-border-color: #2b2d30;
+}
+.tree-view {
+    -fx-background-color: #2b2d30;
+    -fx-text-fill: #dee0c8;
+    -fx-border-color: #1e1f22;
+}
+.tree-cell {
+    -fx-background-color: #2b2d30;
+    -fx-text-fill: #dee0c8;
+}
+.menu-bar {
+    -fx-background-color: #2b2d30;
+    -fx-text-fill: #dee0c8;
+    -fx-border-color: #1e1f22;
+}
+.menu-item {
+    -fx-background-color: #2b2d30;
+    -fx-text-fill: #dee0c8;
+}
+.menu-bar {
+    -fx-background-color: #1e1f22;
+}
+.menu {
+    -fx-background-color: #2b2d30;
+    -fx-text-fill: #dee0c8;
+}
+.tab {
+    -fx-background-color: #1e1f22;
+    -fx-text-fill: #dee0c8;
+    -fx-border-color: #1e1f22;
+}
+.border-pane {
+    -fx-background-color: #2b2d30;
+    -fx-text-fill: #dee0c8;
+    -fx-border-color: #2b2d30;
+}
+/***********************************/
+/* Estilo de los diferentes fondos */
+/***********************************/
+.primary-bg {
+    -fx-background-color: #14110F;
+    -fx-text-fill: #F4F1DE;
+}
+
+.secondary-bg {
+    -fx-background-color: #1B1853;
+    -fx-text-fill: #F4F1DE;
+}
+
+.third-bg {
+    -fx-background-color: #F4F1DE;
+}
+
+.fourth-bg {
+    -fx-background-color: #F4F1DE;
+}
+
+/******************************************/
+/* Estilo de los diferents tipos de texto */
+/******************************************/
+.error-text {
+    -fx-text-fill: #DB3975;
+}
+
+.success-text {
+    -fx-fill: #109391;
+}
+
+.warning-text {
+    -fx-text-fill: #6A428A;
+}
+
+.info-text {
+    -fx-text-fill: #109391;
+}
+
+.normal-text {
+    -fx-text-fill: #F4F1DE;
+}

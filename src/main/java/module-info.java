@@ -1,7 +1,6 @@
 module com.lebastudios.stexteditor {
     requires javafx.controls;
     requires javafx.fxml;
-    requires org.json;
     requires com.google.gson;
     requires org.fxmisc.richtext;
     requires org.fxmisc.flowless;
@@ -10,19 +9,26 @@ module com.lebastudios.stexteditor {
     opens com.lebastudios.stexteditor to javafx.fxml;
     exports com.lebastudios.stexteditor;
 
-    exports com.lebastudios.stexteditor.interfacecontrollers;
-    opens com.lebastudios.stexteditor.interfacecontrollers to javafx.fxml;
+    exports com.lebastudios.stexteditor.iobjects;
+    opens com.lebastudios.stexteditor.iobjects to javafx.fxml;
 
-    exports com.lebastudios.stexteditor.app;
-    opens com.lebastudios.stexteditor.app to javafx.fxml;
+    exports com.lebastudios.stexteditor.applogic;
+    opens com.lebastudios.stexteditor.applogic to javafx.fxml;
 
-    exports com.lebastudios.stexteditor.app.config;
-    opens com.lebastudios.stexteditor.app.config to com.google.gson, javafx.fxml;
-
-    exports com.lebastudios.stexteditor.nodes.formateableText;
-    opens com.lebastudios.stexteditor.nodes.formateableText to javafx.fxml;
+    exports com.lebastudios.stexteditor.applogic.config;
+    opens com.lebastudios.stexteditor.applogic.config to com.google.gson, javafx.fxml;
     
-    opens com.lebastudios.stexteditor.app.txtformatter to com.google.gson, javafx.fxml;
-    exports com.lebastudios.stexteditor.interfacecontrollers.proyecttreeview;
-    opens com.lebastudios.stexteditor.interfacecontrollers.proyecttreeview to javafx.fxml;
+    opens com.lebastudios.stexteditor.applogic.txtformatter to com.google.gson, javafx.fxml;
+    
+    exports com.lebastudios.stexteditor.iobjects.nodes;
+    opens com.lebastudios.stexteditor.iobjects.nodes to javafx.fxml;
+    
+    exports com.lebastudios.stexteditor.iobjects.controllers;
+    opens com.lebastudios.stexteditor.iobjects.controllers to javafx.fxml;
+    
+    exports com.lebastudios.stexteditor.applogic.txtformatter;
+    exports com.lebastudios.stexteditor.iobjects.fxextends;
+    opens com.lebastudios.stexteditor.iobjects.fxextends to javafx.fxml;
+    exports com.lebastudios.stexteditor.iobjects.managers;
+    opens com.lebastudios.stexteditor.iobjects.managers to javafx.fxml;
 }

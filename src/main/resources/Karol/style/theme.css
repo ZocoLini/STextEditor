@@ -1,0 +1,80 @@
+.tab-pane {
+    -fx-background-color: #14110F;
+    -fx-text-fill: #F4F1DE;
+    -fx-border-color: #14110F;
+}
+.tree-view {
+    -fx-background-color: #14110F;
+    -fx-text-fill: #F4F1DE;
+    -fx-border-color: #14110F;
+}
+.tree-cell {
+    -fx-background-color: #1B1853;
+    -fx-text-fill: #F4F1DE;
+    -fx-border-color: #1B1853;
+}
+.menu-bar {
+    -fx-background-color: #14110F;
+    -fx-text-fill: #F4F1DE;
+}
+.menu-item {
+    -fx-background-color: #1B1853;
+    -fx-text-fill: #F4F1DE;
+}
+.menu {
+    -fx-background-color: #1B1853;
+    -fx-text-fill: #F4F1DE;
+}
+.tab {
+    -fx-background-color: #14110F;
+    -fx-text-fill: #F4F1DE;
+    -fx-border-color: #1B1853;
+    -fx-prompt-text-fill: yellow;
+}
+.border-pane {
+    -fx-background-color: #14110F;
+    -fx-text-fill: #F4F1DE;
+}
+/***********************************/
+/* Estilo de los diferentes fondos */
+/***********************************/
+.primary-bg {
+    -fx-background-color: #14110F;
+    -fx-text-fill: #F4F1DE;
+}
+
+.secondary-bg {
+    -fx-background-color: #1B1853;
+    -fx-text-fill: #F4F1DE;
+}
+
+.third-bg {
+    -fx-background-color: #F4F1DE;
+}
+
+.fourth-bg {
+    -fx-background-color: #F4F1DE;
+}
+
+/******************************************/
+/* Estilo de los diferents tipos de texto */
+/******************************************/
+.error-text {
+    -fx-text-fill: #DB3975;
+}
+
+.success-text {
+    -fx-fill: #109391;
+}
+
+.warning-text {
+    -fx-text-fill: #6A428A;
+}
+
+.info-text {
+    -fx-text-fill: #109391;
+}
+
+.normal-text {
+    -fx-text-fill: #F4F1DE;
+}

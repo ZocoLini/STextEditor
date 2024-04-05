@@ -1,0 +1,77 @@
+**************************************
+** Definición de archivos y clases: **
+**************************************
+
+Este proyecto permite añadir más de un tema, definiendo los estilos en diferentes css.
+En caso de que un tema no tenga un archivo css, se usará el archivo por defecto. El 
+archivo por defecto es el correspondiente al solicitado que se encuentra en el tema 
+Light.
+
+Los archivos css deben colocarse en la carpeta $nombreTema$/css, donde $nombreTema$ es
+el nombre del tema.
+
+Los archivos css recomendados son:
+    - commonLang.css: Este archivo se aplicará a todos los archivos.
+    - $nombreExtension$.css: Este archivo se aplicará a los archivos con 
+        extensión $nombreExtension$.
+    - theme.css: Este archivo define colores de fondo y texto para el tema.
+    - codeArea.css: Este archivo define el estilo de la caja de texto 
+        donde se muestra el código.
+    - default.css: Este archivo define el estilo por defecto para extensiones que
+        no tengan css definido.
+
+****************************************
+** Estilo y clases para highlighting: **
+****************************************
+
+Nombre Archivo: commonLang.css
+
+Clases:
+.keyword {} -> Palabras reservadas
+.string {} -> Cadenas de texto
+.comment {} -> Comentarios
+.number {} -> Números
+.default {} -> Texto por defecto
+.method {} -> Métodos
+.paragraph-box:has-caret { } -> Párrafo que contiene el caret (??)
+
+*****************************************
+
+Para resaltar configuraciones específicas de un tipo de archivo, se creará un 
+archivo css con el nombre de la extensión del archivo al que se le quiere
+aplicar highlighting. Este archivo css se colocará en la carpeta $nombreTema$/css.
+
+Ej.: Para resaltar los archivos con extensión .c, se creará un archivo c.css en 
+la carpeta.
+
+Las clases que se definan en este archivo deben tener el mismo nombre que las
+reglas de estilo definidas en config/highlightingRules.json definidas para el
+lenguaje correspondiente.
+
+****************************************
+** Estilo y clases para el Code Area: **
+****************************************
+
+Nombre Archivo: codeArea.css
+
+Clases:
+.match-bracket {} -> Estilo para los corchetes que coinciden
+.text {} -> Estilo para el texto (?)
+.styled-text-area {} -> Estilo para el área de texto
+
+********************************************************************
+** Estilo y clases que definen colores de texto y fondo del tema: **
+********************************************************************
+
+Nombre Archivo: theme.css
+
+Clases:
+.primary-bg {} -> 
+.secondary-bg {} ->
+.third-bg {} ->
+.fourth-bg {} ->
+.error-text {} ->
+.success-text {} ->
+.warning-text {} ->
+.info-text {} ->
+.normal-text {} ->

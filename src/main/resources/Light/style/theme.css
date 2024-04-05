@@ -1,0 +1,41 @@
+/***********************************/
+/* Estilo de los diferentes fondos */
+/***********************************/
+.primary-bg {
+    -fx-background-color: #f0f0f0;
+}
+
+.secondary-bg {
+    -fx-background-color: #f0f0f0;
+}
+
+.third-bg {
+    -fx-background-color: #f0f0f0;
+}
+
+.fourth-bg {
+    -fx-background-color: #f0f0f0;
+}
+
+/******************************************/
+/* Estilo de los diferents tipos de texto */
+/******************************************/
+.error-text {
+    -fx-color: #ff0000;
+}
+
+.success-text {
+    -fx-color: #00ff00;
+}
+
+.warning-text {
+    -fx-color: #ffcc00;
+}
+
+.info-text {
+    -fx-color: #0000ff;
+}
+
+.normal-text {
+    -fx-color: #333;
+}
