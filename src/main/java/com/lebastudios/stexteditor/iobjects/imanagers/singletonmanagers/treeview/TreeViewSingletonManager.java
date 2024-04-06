@@ -1,33 +1,34 @@
-package com.lebastudios.stexteditor.iobjects.managers;
+package com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.treeview;
 
 import com.lebastudios.stexteditor.annotations.Linked2MM;
 import com.lebastudios.stexteditor.applogic.FileOperation;
 import com.lebastudios.stexteditor.applogic.config.Session;
-import com.lebastudios.stexteditor.applogic.config.Theme;
 import com.lebastudios.stexteditor.iobjects.fxextends.CustomTreeCell;
 import com.lebastudios.stexteditor.iobjects.fxextends.CustomTreeCellContent;
+import com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.MainSingletonManager;
+import com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.SingletonManager;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
 import java.io.File;
 
-public class TreeViewManager extends Manager<TreeView<CustomTreeCellContent>>
+public class TreeViewSingletonManager extends SingletonManager<TreeView<CustomTreeCellContent>>
 {
-    private static TreeViewManager instance;
+    private static TreeViewSingletonManager instance;
 
-    public static TreeViewManager getInstance()
+    public static TreeViewSingletonManager getInstance()
     {
         if (instance == null)
         {
-            instance = new TreeViewManager();
+            instance = new TreeViewSingletonManager();
         }
 
         return instance;
     }
 
-    private TreeViewManager()
+    private TreeViewSingletonManager()
     {
-        super(MainManager.getInstance().treeView);
+        super(MainSingletonManager.getInstance().treeView);
         
         instanciated = true;
     }
@@ -49,7 +50,7 @@ public class TreeViewManager extends Manager<TreeView<CustomTreeCellContent>>
         representingObject.getRoot().setExpanded(true);
     }
 
-    void openLastProjectDirectory()
+    public void openLastProjectDirectory()
     {
         File file = new File(Session.getStaticInstance().proyectDirectory);
 
@@ -100,5 +101,11 @@ public class TreeViewManager extends Manager<TreeView<CustomTreeCellContent>>
         }
 
         openProyectDirectory(file);
+    }
+
+    @Override
+    public void loadChilds()
+    {
+        
     }
 }

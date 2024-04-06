@@ -22,7 +22,7 @@ public final class Resources
         }
 
         // Check if the extension has an img defined in the default theme
-        path = FilePaths.getDefaultImgDirectory() + extension + ".css";
+        path = FilePaths.getDefaultImgDirectory() + extension + ".png";
         if (existsResource(path))
         {
             return new Image(TextEditorApplication.class.getResourceAsStream(path));
@@ -31,7 +31,24 @@ public final class Resources
         // If the extension has no img defined, use the default img
         return new Image(TextEditorApplication.class.getResourceAsStream(FilePaths.getDefaultImgFile()));
     }
-    
+
+    public static Image getIcon(String iconName)
+    {
+        String path = FilePaths.getIconDirectory() + iconName;
+        if (existsResource(path))
+        {
+            return new Image(TextEditorApplication.class.getResourceAsStream(path));
+        }
+
+        path = FilePaths.getDefaultIconDirectory() + iconName;
+        if (existsResource(path))
+        {
+            return new Image(TextEditorApplication.class.getResourceAsStream(path));
+        }
+
+        return new Image(TextEditorApplication.class.getResourceAsStream(FilePaths.getDefaultIconFile()));
+    }
+
     public static String getExtensionStyle(String fileExtension)
     {
         // Check if the extension has a style defined in the actual theme
@@ -47,7 +64,7 @@ public final class Resources
         {
             return TextEditorApplication.class.getResource(langStyleFile).toExternalForm();
         }
-        
+
         // Check if the extension has a style defined in the default theme
         langStyleFile = FilePaths.getDefaultStyleDirectory() + fileExtension + ".css";
         if (existsResource(langStyleFile))
@@ -56,20 +73,21 @@ public final class Resources
         }
 
         // Check if the equivalent extension has a style defined in the default theme
-        langStyleFile = FilePaths.getDefaultStyleDirectory() + FileOperation.toEquivalentFileExtension(fileExtension) + ".css";
+        langStyleFile =
+                FilePaths.getDefaultStyleDirectory() + FileOperation.toEquivalentFileExtension(fileExtension) + ".css";
         if (existsResource(langStyleFile))
         {
             return TextEditorApplication.class.getResource(langStyleFile).toExternalForm();
         }
-        
+
         // If the extension has no style defined, use the default style
         return TextEditorApplication.class.getResource(FilePaths.getDefaultLangStyleFile()).toExternalForm();
     }
-    
+
     private static String getClassStyleFromFile(String resourcePath, String className)
     {
         String content = null;
-        
+
         try
         {
             content = FileOperation.readResource(resourcePath);
@@ -79,37 +97,37 @@ public final class Resources
             System.out.println("Error in Resources.java reading the file " + resourcePath + ". The class style will " +
                     "not be applied.");
         }
-        
+
         Matcher matcher = Pattern.compile("\\." + className + "\\s*\\{([^}]*)\\}").matcher(content);
-        
+
         if (matcher.find())
         {
             String classFound = matcher.group();
-            
+
             classFound = classFound.replace("." + className, "").replace("{", "")
                     .replace("}", "").trim().replaceAll("\\s+", " ");
-            
+
             return classFound;
         }
-        
-        if (!Objects.equals(resourcePath, FilePaths.getDefaulThemeFile())) 
+
+        if (!Objects.equals(resourcePath, FilePaths.getDefaulThemeFile()))
         {
             return getClassStyleFromFile(FilePaths.getDefaulThemeFile(), className);
         }
-        
+
         return "";
     }
-    
+
     public static String getThemeClassStyleFromFile(String className)
     {
         return getClassStyleFromFile(FilePaths.getStyleDirectory() + "theme.css", className);
     }
-    
+
     public static String getLangCommonStyle()
     {
         return getExtensionStyle("commonLang");
     }
-    
+
     public static String getCodeAreaStyle()
     {
         // Check if the code area has a style defined in the actual theme
@@ -118,44 +136,45 @@ public final class Resources
         {
             return TextEditorApplication.class.getResource(codeAreaStylePath).toExternalForm();
         }
-        
+
         // Using the default style defined in the default theme
         codeAreaStylePath = FilePaths.getDefaultStyleDirectory() + "codeArea.css";
         return TextEditorApplication.class.getResource(codeAreaStylePath).toExternalForm();
     }
-    
+
     public static String getThemeStyle()
     {
         String themeStylePath = FilePaths.getStyleDirectory() + "theme.css";
-        if (existsResource(themeStylePath)) 
+        if (existsResource(themeStylePath))
         {
             return TextEditorApplication.class.getResource(themeStylePath).toExternalForm();
         }
-        
+
         themeStylePath = FilePaths.getDefaultStyleDirectory() + "theme.css";
         return TextEditorApplication.class.getResource(themeStylePath).toExternalForm();
     }
-    
+
     public static String getHighlightingRules(String extension)
     {
         String path = FilePaths.getProgLangSyntaxDirectory() + extension + ".json";
-        
+
         String rules = "{}";
-        
+
         File file = new File(path);
-        
-        if (!file.exists()) 
+
+        if (!file.exists())
         {
-            path = FilePaths.getProgLangSyntaxDirectory() + FileOperation.toEquivalentFileExtension(extension) + ".json";
+            path = FilePaths.getProgLangSyntaxDirectory() + FileOperation.toEquivalentFileExtension(extension) +
+                    ".json";
         }
-        
-        if (!file.exists() && !extension.equals("default")) 
+
+        if (!file.exists() && !extension.equals("default"))
         {
-            System.err.println("Error reading the syntax highlighting pattern file for the extension " + 
+            System.err.println("Error reading the syntax highlighting pattern file for the extension " +
                     extension + ". Default syntax highlighting will not be applied.");
             return getHighlightingRules("default");
         }
-        
+
         try
         {
             rules = FileOperation.read(new File(path));
@@ -166,10 +185,10 @@ public final class Resources
                     "The syntax highlighting will not be applied.");
 
         }
-        
+
         return rules;
     }
-    
+
     private static boolean existsResource(String path)
     {
         return TextEditorApplication.class.getResource(path) != null;

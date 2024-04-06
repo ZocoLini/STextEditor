@@ -1,19 +1,19 @@
-package com.lebastudios.stexteditor.iobjects.controllers;
+package com.lebastudios.stexteditor.iobjects.imanagers;
 
 import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.events.GlobalEvents;
 
-public abstract class Controller<T>
+public abstract class Manager<T>
 {
     protected volatile boolean instanciated = false;
 
     protected T representingObject;
     
-    public Controller(T representingObject)
+    public Manager(T representingObject)
     {
         this.representingObject = representingObject;
         
-        TextEditorApplication.instanciatedControllers.add(this);
+        TextEditorApplication.INSTANCIATED_MANAGERS.add(this);
 
         awake();
         

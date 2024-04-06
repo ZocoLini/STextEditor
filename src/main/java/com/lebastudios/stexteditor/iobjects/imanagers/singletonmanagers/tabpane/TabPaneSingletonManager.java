@@ -1,4 +1,4 @@
-package com.lebastudios.stexteditor.iobjects.managers;
+package com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.tabpane;
 
 import com.lebastudios.stexteditor.annotations.Linked2MM;
 import com.lebastudios.stexteditor.applogic.FileOperation;
@@ -6,6 +6,8 @@ import com.lebastudios.stexteditor.applogic.config.Session;
 import com.lebastudios.stexteditor.exceptions.IllegalNodeCastException;
 import com.lebastudios.stexteditor.iobjects.AlertsInstanciator;
 import com.lebastudios.stexteditor.iobjects.fxextends.FormateableTextTab;
+import com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.MainSingletonManager;
+import com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.SingletonManager;
 import com.lebastudios.stexteditor.iobjects.nodes.FormateableText;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -19,23 +21,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class TabPaneManager extends Manager<TabPane>
+public class TabPaneSingletonManager extends SingletonManager<TabPane>
 {
-    private static TabPaneManager instance;
+    private static TabPaneSingletonManager instance;
     
-    public static TabPaneManager getInstance()
+    public static TabPaneSingletonManager getInstance()
     {
         if (instance == null) 
         {
-            instance = new TabPaneManager();
+            instance = new TabPaneSingletonManager();
         }
         
         return instance;
     }
     
-    private TabPaneManager()
+    private TabPaneSingletonManager()
     {
-        super(MainManager.getInstance().tabPane);
+        super(MainSingletonManager.getInstance().tabPane);
 
         instanciated = true;
     }
@@ -256,5 +258,11 @@ public class TabPaneManager extends Manager<TabPane>
                 }
             }
         });
+    }
+
+    @Override
+    public void loadChilds()
+    {
+        
     }
 }

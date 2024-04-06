@@ -3,11 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="mainPane"
-            maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="900" prefWidth="1200" xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.lebastudios.stexteditor.iobjects.managers.MainManager">
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900" prefWidth="1200" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.MainSingletonManager">
     <top>
         <MenuBar fx:id="menuBar" prefHeight="10">
             <Menu mnemonicParsing="false" text="File">
@@ -46,16 +42,17 @@
     <!-- Gestor de Ventanas -->
     <left>
         <VBox fx:id="leftVBox" prefWidth="30">
-            <Button prefWidth="30" prefHeight="30"/>
-            <Button prefWidth="30" prefHeight="30"/>
+            <Button prefHeight="30" prefWidth="30" />
+            <Button prefHeight="30" prefWidth="30" />
         </VBox>
     </left>
     
     <!-- Acciones sobre el codigo -->
     <right>
         <VBox fx:id="rightVBox" prefWidth="30">
-            <Button fx:id="botonCompilar" onAction="#compile" prefWidth="30" prefHeight="30"/>
-            <Button fx:id="botonEjecutar" onAction="#execute" prefWidth="30" prefHeight="30"/>
+            <Button fx:id="botonCompilar" onAction="#compile" prefHeight="30" prefWidth="30" />
+            <Button fx:id="botonEjecutar" onAction="#execute" prefHeight="30" prefWidth="30" />
+            <Button fx:id="botonTerminal" prefHeight="30" prefWidth="30" />
         </VBox>
     </right>
 </BorderPane>

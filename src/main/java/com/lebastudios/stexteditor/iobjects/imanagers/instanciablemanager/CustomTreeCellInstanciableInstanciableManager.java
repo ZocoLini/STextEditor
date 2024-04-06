@@ -1,12 +1,13 @@
-package com.lebastudios.stexteditor.iobjects.controllers;
+package com.lebastudios.stexteditor.iobjects.imanagers.instanciablemanager;
 
+import com.lebastudios.stexteditor.exceptions.NotImplementedException;
 import com.lebastudios.stexteditor.iobjects.fxextends.CustomTreeCell;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
-public class CustomTreeCellController extends Controller<CustomTreeCell>
+public class CustomTreeCellInstanciableInstanciableManager extends InstanciableInstanciableManager<CustomTreeCell>
 {
-    public CustomTreeCellController(CustomTreeCell treeCell)
+    public CustomTreeCellInstanciableInstanciableManager(CustomTreeCell treeCell)
     {
         super(treeCell);
         
@@ -37,11 +38,11 @@ public class CustomTreeCellController extends Controller<CustomTreeCell>
     
     private void showFileContextActions()
     {
-        // TODO
+        throw new NotImplementedException();
     }
     
     private void showDirectoryContextActions()
     {
-        // TODO
+        throw new NotImplementedException();
     }
 }

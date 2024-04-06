@@ -23,12 +23,24 @@ module com.lebastudios.stexteditor {
     exports com.lebastudios.stexteditor.iobjects.nodes;
     opens com.lebastudios.stexteditor.iobjects.nodes to javafx.fxml;
     
-    exports com.lebastudios.stexteditor.iobjects.controllers;
-    opens com.lebastudios.stexteditor.iobjects.controllers to javafx.fxml;
+    exports com.lebastudios.stexteditor.iobjects.imanagers;
+    opens com.lebastudios.stexteditor.iobjects.imanagers to javafx.fxml;
     
     exports com.lebastudios.stexteditor.applogic.txtformatter;
     exports com.lebastudios.stexteditor.iobjects.fxextends;
     opens com.lebastudios.stexteditor.iobjects.fxextends to javafx.fxml;
-    exports com.lebastudios.stexteditor.iobjects.managers;
-    opens com.lebastudios.stexteditor.iobjects.managers to javafx.fxml;
+    exports com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers;
+    opens com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers to javafx.fxml;
+    exports com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.leftvbox;
+    opens com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.leftvbox to javafx.fxml;
+    exports com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.rightvbox;
+    opens com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.rightvbox to javafx.fxml;
+    exports com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.tabpane;
+    opens com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.tabpane to javafx.fxml;
+    exports com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.treeview;
+    opens com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.treeview to javafx.fxml;
+    exports com.lebastudios.stexteditor.iobjects.imanagers.instanciablemanager;
+    opens com.lebastudios.stexteditor.iobjects.imanagers.instanciablemanager to javafx.fxml;
+    exports com.lebastudios.stexteditor.iobjects.icontrollers;
+    opens com.lebastudios.stexteditor.iobjects.icontrollers to javafx.fxml;
 }

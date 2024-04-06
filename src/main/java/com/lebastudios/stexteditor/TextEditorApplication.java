@@ -3,9 +3,9 @@ package com.lebastudios.stexteditor;
 import com.lebastudios.stexteditor.applogic.Resources;
 import com.lebastudios.stexteditor.applogic.config.Session;
 import com.lebastudios.stexteditor.applogic.config.Config;
-import com.lebastudios.stexteditor.applogic.config.Theme;
-import com.lebastudios.stexteditor.iobjects.controllers.Controller;
+import com.lebastudios.stexteditor.iobjects.imanagers.Manager;
 import com.lebastudios.stexteditor.events.GlobalEvents;
+import com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.MainSingletonManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class TextEditorApplication extends Application
 {
-    public static final List<Controller<?>> instanciatedControllers = new ArrayList<>();
+    public static final List<Manager<?>> INSTANCIATED_MANAGERS = new ArrayList<>();
 
     private static TextEditorApplication instance;
 
@@ -73,6 +73,8 @@ public class TextEditorApplication extends Application
         }
 
         stage.show();
+
+        MainSingletonManager.getInstance().load();
         
         new Thread(this::bucleDeJuego).start();
     }
@@ -80,9 +82,7 @@ public class TextEditorApplication extends Application
     private void setActualStyle()
     {
         this.stage.getScene().getStylesheets().remove(actualStyle);
-        
         actualStyle = Resources.getThemeStyle();
-        
         this.stage.getScene().getStylesheets().add(actualStyle);
     }
 
