@@ -1,6 +1,7 @@
-package com.lebastudios.stexteditor.applogic.config;
+package com.lebastudios.stexteditor.applogic.config.global;
 
 import com.lebastudios.stexteditor.applogic.FilePaths;
+import com.lebastudios.stexteditor.applogic.config.JSONSaveable;
 
 public class GlobalConfig extends JSONSaveable<GlobalConfig>
 {

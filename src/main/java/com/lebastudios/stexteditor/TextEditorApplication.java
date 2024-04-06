@@ -1,9 +1,9 @@
 package com.lebastudios.stexteditor;
 
 import com.lebastudios.stexteditor.applogic.Resources;
-import com.lebastudios.stexteditor.applogic.config.ProyectConfig;
-import com.lebastudios.stexteditor.applogic.config.Session;
-import com.lebastudios.stexteditor.applogic.config.GlobalConfig;
+import com.lebastudios.stexteditor.applogic.config.proyect.ProyectConfig;
+import com.lebastudios.stexteditor.applogic.config.global.Session;
+import com.lebastudios.stexteditor.applogic.config.global.GlobalConfig;
 import com.lebastudios.stexteditor.iobjects.managers.Manager;
 import com.lebastudios.stexteditor.events.GlobalEvents;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainSingletonManager;

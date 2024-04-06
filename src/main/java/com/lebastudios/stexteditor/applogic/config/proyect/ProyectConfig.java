@@ -1,6 +1,7 @@
-package com.lebastudios.stexteditor.applogic.config;
+package com.lebastudios.stexteditor.applogic.config.proyect;
 
 import com.lebastudios.stexteditor.applogic.FilePaths;
+import com.lebastudios.stexteditor.applogic.config.JSONSaveable;
 
 public class ProyectConfig extends JSONSaveable<ProyectConfig>
 {
@@ -12,6 +13,8 @@ public class ProyectConfig extends JSONSaveable<ProyectConfig>
         
         return instance;
     }
+    
+    public String proyectDirectory = "";
     
     private ProyectConfig() {}
     

@@ -1,8 +1,8 @@
 package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers;
 
 import com.lebastudios.stexteditor.TextEditorApplication;
-import com.lebastudios.stexteditor.applogic.config.Session;
-import com.lebastudios.stexteditor.iobjects.fxextends.CustomTreeCellContent;
+import com.lebastudios.stexteditor.applogic.config.global.Session;
+import com.lebastudios.stexteditor.iobjects.fxextends.ProyectFileTreeCellContent;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.leftvbox.LeftVBoxManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.rightvbox.CompileButtonManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.rightvbox.ExecuteButtonManager;
@@ -40,22 +40,16 @@ public class MainSingletonManager extends SingletonManager<BorderPane>
     /**************************************************/
     @FXML
     public TabPane codeTabPane;
-
     @FXML
-    public TreeView<CustomTreeCellContent> proyectFileTreeView;
-    
+    public TreeView<ProyectFileTreeCellContent> proyectFileTreeView;
     @FXML
     private BorderPane mainPane;
-    
     @FXML
     public MenuBar menuBar;
-    
     @FXML
     public VBox leftVBox;
-    
     @FXML
     public VBox rightVBox;
-    
     @FXML
     public Button botonCompilar;
     @FXML

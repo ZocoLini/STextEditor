@@ -2,7 +2,7 @@ package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmana
 
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.Linked2MM;
 import com.lebastudios.stexteditor.applogic.FileOperation;
-import com.lebastudios.stexteditor.applogic.config.Session;
+import com.lebastudios.stexteditor.applogic.config.global.Session;
 import com.lebastudios.stexteditor.exceptions.IllegalNodeCastException;
 import com.lebastudios.stexteditor.iobjects.AlertsInstanciator;
 import com.lebastudios.stexteditor.iobjects.fxextends.FormateableTextTab;

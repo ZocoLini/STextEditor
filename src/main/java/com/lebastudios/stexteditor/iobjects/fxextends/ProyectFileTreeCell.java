@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 
 import java.io.File;
 
-public class ProyectFileTreeCell extends TreeCell<CustomTreeCellContent>
+public class ProyectFileTreeCell extends TreeCell<ProyectFileTreeCellContent>
 {
     private ImageView imageView;
     private final ProyectFileTreeCellManager controller;
@@ -42,7 +42,7 @@ public class ProyectFileTreeCell extends TreeCell<CustomTreeCellContent>
     }
     
     @Override
-    protected void updateItem(CustomTreeCellContent item, boolean empty) {
+    protected void updateItem(ProyectFileTreeCellContent item, boolean empty) {
         super.updateItem(item, empty);
 
         if (empty || item == null) {

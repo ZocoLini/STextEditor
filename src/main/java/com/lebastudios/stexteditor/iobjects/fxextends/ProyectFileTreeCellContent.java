@@ -7,14 +7,14 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.File;
 
-public class CustomTreeCellContent
+public class ProyectFileTreeCellContent
 {
     private File representingFile;
     private Image image;
     
     private long lastClickTime = 0;
 
-    public CustomTreeCellContent(File file)
+    public ProyectFileTreeCellContent(File file)
     {
         super();
 

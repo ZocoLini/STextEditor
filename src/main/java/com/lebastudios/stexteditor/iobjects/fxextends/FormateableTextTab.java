@@ -1,7 +1,7 @@
 package com.lebastudios.stexteditor.iobjects.fxextends;
 
 import com.lebastudios.stexteditor.applogic.FileOperation;
-import com.lebastudios.stexteditor.applogic.config.Session;
+import com.lebastudios.stexteditor.applogic.config.global.Session;
 import com.lebastudios.stexteditor.applogic.txtformatter.StyleSetter;
 import com.lebastudios.stexteditor.iobjects.managers.objectmanagers.FormateableTextManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainSingletonManager;

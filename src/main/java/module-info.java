@@ -45,4 +45,8 @@ module com.lebastudios.stexteditor {
     opens com.lebastudios.stexteditor.iobjects.managers.nodemanagers to javafx.fxml;
     exports com.lebastudios.stexteditor.iobjects.managers.objectmanagers;
     opens com.lebastudios.stexteditor.iobjects.managers.objectmanagers to javafx.fxml;
+    exports com.lebastudios.stexteditor.applogic.config.proyect;
+    opens com.lebastudios.stexteditor.applogic.config.proyect to com.google.gson, javafx.fxml;
+    exports com.lebastudios.stexteditor.applogic.config.global;
+    opens com.lebastudios.stexteditor.applogic.config.global to com.google.gson, javafx.fxml;
 }

@@ -1,4 +1,4 @@
-package com.lebastudios.stexteditor.applogic.config;
+package com.lebastudios.stexteditor.applogic.config.global;
 
 import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.applogic.Resources;

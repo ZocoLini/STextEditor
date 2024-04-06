@@ -1,6 +1,5 @@
 package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers;
 
-import com.lebastudios.stexteditor.iobjects.managers.Manager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.NodeManager;
 import javafx.scene.Node;
 

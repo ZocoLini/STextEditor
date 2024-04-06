@@ -1,7 +1,7 @@
 package com.lebastudios.stexteditor.applogic;
 
-import com.lebastudios.stexteditor.applogic.config.GlobalConfig;
-import com.lebastudios.stexteditor.applogic.config.Session;
+import com.lebastudios.stexteditor.applogic.config.global.GlobalConfig;
+import com.lebastudios.stexteditor.applogic.config.global.Session;
 
 public final class FilePaths
 {

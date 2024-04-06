@@ -2,9 +2,9 @@ package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmana
 
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.Linked2MM;
 import com.lebastudios.stexteditor.applogic.FileOperation;
-import com.lebastudios.stexteditor.applogic.config.Session;
+import com.lebastudios.stexteditor.applogic.config.global.Session;
 import com.lebastudios.stexteditor.iobjects.fxextends.ProyectFileTreeCell;
-import com.lebastudios.stexteditor.iobjects.fxextends.CustomTreeCellContent;
+import com.lebastudios.stexteditor.iobjects.fxextends.ProyectFileTreeCellContent;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainSingletonManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.SingletonManager;
 import javafx.scene.control.TreeItem;
@@ -12,7 +12,7 @@ import javafx.scene.control.TreeView;
 
 import java.io.File;
 
-public class ProyectFilesTreeViewManager extends SingletonManager<TreeView<CustomTreeCellContent>>
+public class ProyectFilesTreeViewManager extends SingletonManager<TreeView<ProyectFileTreeCellContent>>
 {
     private static ProyectFilesTreeViewManager instance;
 
@@ -64,7 +64,7 @@ public class ProyectFilesTreeViewManager extends SingletonManager<TreeView<Custo
         openProyectDirectory(file);
     }
 
-    private static TreeItem<CustomTreeCellContent> createTreeView(File file)
+    private static TreeItem<ProyectFileTreeCellContent> createTreeView(File file)
     {
         if (file == null)
         {
@@ -76,7 +76,7 @@ public class ProyectFilesTreeViewManager extends SingletonManager<TreeView<Custo
             throw new IllegalArgumentException("File does not exist");
         }
 
-        TreeItem<CustomTreeCellContent> root = new TreeItem<>(new CustomTreeCellContent(file));
+        TreeItem<ProyectFileTreeCellContent> root = new TreeItem<>(new ProyectFileTreeCellContent(file));
         root.setExpanded(false);
 
         if (file.isDirectory())
