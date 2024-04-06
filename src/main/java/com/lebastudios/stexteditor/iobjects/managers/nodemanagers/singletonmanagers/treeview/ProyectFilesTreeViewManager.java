@@ -1,34 +1,36 @@
-package com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.treeview;
+package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.treeview;
 
-import com.lebastudios.stexteditor.annotations.Linked2MM;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.Linked2MM;
 import com.lebastudios.stexteditor.applogic.FileOperation;
 import com.lebastudios.stexteditor.applogic.config.Session;
-import com.lebastudios.stexteditor.iobjects.fxextends.CustomTreeCell;
+import com.lebastudios.stexteditor.iobjects.fxextends.ProyectFileTreeCell;
 import com.lebastudios.stexteditor.iobjects.fxextends.CustomTreeCellContent;
-import com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.MainSingletonManager;
-import com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.SingletonManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainSingletonManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.SingletonManager;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
 import java.io.File;
 
-public class TreeViewSingletonManager extends SingletonManager<TreeView<CustomTreeCellContent>>
+public class ProyectFilesTreeViewManager extends SingletonManager<TreeView<CustomTreeCellContent>>
 {
-    private static TreeViewSingletonManager instance;
+    private static ProyectFilesTreeViewManager instance;
 
-    public static TreeViewSingletonManager getInstance()
+    public static ProyectFilesTreeViewManager getInstance()
     {
         if (instance == null)
         {
-            instance = new TreeViewSingletonManager();
+            instance = new ProyectFilesTreeViewManager();
         }
 
         return instance;
     }
 
-    private TreeViewSingletonManager()
+    private ProyectFilesTreeViewManager()
     {
-        super(MainSingletonManager.getInstance().treeView);
+        super(MainSingletonManager.getInstance().proyectFileTreeView);
+
+        openLastProjectDirectory();
         
         instanciated = true;
     }
@@ -44,13 +46,13 @@ public class TreeViewSingletonManager extends SingletonManager<TreeView<CustomTr
 
         Session.getStaticInstance().proyectDirectory = file.getPath();
 
-        representingObject.setCellFactory(param -> new CustomTreeCell());
-        representingObject.setRoot(createTreeView(file));
+        managedObject.setCellFactory(param -> new ProyectFileTreeCell());
+        managedObject.setRoot(createTreeView(file));
         
-        representingObject.getRoot().setExpanded(true);
+        managedObject.getRoot().setExpanded(true);
     }
 
-    public void openLastProjectDirectory()
+    private void openLastProjectDirectory()
     {
         File file = new File(Session.getStaticInstance().proyectDirectory);
 

@@ -1,12 +1,14 @@
-package com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers;
+package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers;
 
 import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.applogic.config.Session;
 import com.lebastudios.stexteditor.iobjects.fxextends.CustomTreeCellContent;
-import com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.leftvbox.LeftVBoxSingletonManager;
-import com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.rightvbox.RightVBoxSingletonManager;
-import com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.tabpane.TabPaneSingletonManager;
-import com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.treeview.TreeViewSingletonManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.leftvbox.LeftVBoxManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.rightvbox.CompileButtonManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.rightvbox.ExecuteButtonManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.rightvbox.RightVBoxManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.tabpane.CodeTabPaneManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.treeview.ProyectFilesTreeViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
@@ -28,7 +30,7 @@ public class MainSingletonManager extends SingletonManager<BorderPane>
     public MainSingletonManager()
     {
         super(null);
-        representingObject = mainPane;
+        managedObject = mainPane;
         instance = this;
         
         instanciated = true;
@@ -37,10 +39,10 @@ public class MainSingletonManager extends SingletonManager<BorderPane>
     /*          Objetos de la interfaz fijos          */
     /**************************************************/
     @FXML
-    public TabPane tabPane;
+    public TabPane codeTabPane;
 
     @FXML
-    public TreeView<CustomTreeCellContent> treeView;
+    public TreeView<CustomTreeCellContent> proyectFileTreeView;
     
     @FXML
     private BorderPane mainPane;
@@ -76,43 +78,43 @@ public class MainSingletonManager extends SingletonManager<BorderPane>
     
     @FXML
     private void saveActualTab() {
-        TabPaneSingletonManager.getInstance().saveActualTab();
+        CodeTabPaneManager.getInstance().saveActualTab();
     }
 
     @FXML
     private void saveActualFileAs() {
-        TabPaneSingletonManager.getInstance().saveActualFileAs();
+        CodeTabPaneManager.getInstance().saveActualFileAs();
     }
 
     @FXML
     private void openFile() {
-        TabPaneSingletonManager.getInstance().openFile();
+        CodeTabPaneManager.getInstance().openFile();
     }
     
     @FXML
     private void newFile() {
-        TabPaneSingletonManager.getInstance().newFile();
+        CodeTabPaneManager.getInstance().newFile();
     }
 
     /*                Tree View Methods               */
     /**************************************************/
     @FXML
     private void openNewProjectDirectory() {
-        TreeViewSingletonManager.getInstance().openNewProjectDirectory();
+        ProyectFilesTreeViewManager.getInstance().openNewProjectDirectory();
     }
 
-    /*                Left VBox Methods               */
+    /*                Right VBox Methods               */
     /**************************************************/
     @FXML
     private void compile()
     {
-        RightVBoxSingletonManager.getInstance().compile();
+        CompileButtonManager.getInstance().onAction();
     }
     
     @FXML
     private void execute()
     {
-        RightVBoxSingletonManager.getInstance().execute();
+        ExecuteButtonManager.getInstance().onAction();
     }
     
     /*                Override Methods                */
@@ -120,23 +122,17 @@ public class MainSingletonManager extends SingletonManager<BorderPane>
     @Override
     protected void addEventHandlers()
     {
-        // Add an event in which, when the window is shown, the last files are opened
-        stage.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> 
-                TabPaneSingletonManager.getInstance().openLastFiles());
         // Add an event in which, when the window is hidden, all files are saved
         stage.addEventHandler(WindowEvent.WINDOW_HIDING, event -> 
-                TabPaneSingletonManager.getInstance().saveAllFiles());
-        
-        stage.addEventHandler(WindowEvent.WINDOW_SHOWN,
-                event -> TreeViewSingletonManager.getInstance().openLastProjectDirectory());
+                CodeTabPaneManager.getInstance().saveAllFiles());
     }
 
     @Override
     public void loadChilds()
     {
-        TabPaneSingletonManager.getInstance().load();
-        TreeViewSingletonManager.getInstance().load();
-        LeftVBoxSingletonManager.getInstance().load();
-        RightVBoxSingletonManager.getInstance().load();
+        CodeTabPaneManager.getInstance().load();
+        ProyectFilesTreeViewManager.getInstance().load();
+        LeftVBoxManager.getInstance().load();
+        RightVBoxManager.getInstance().load();
     }
 }

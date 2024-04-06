@@ -1,7 +1,7 @@
 package com.lebastudios.stexteditor.iobjects.fxextends;
 
 import com.lebastudios.stexteditor.applogic.Resources;
-import com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.tabpane.TabPaneSingletonManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.tabpane.CodeTabPaneManager;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 
@@ -50,7 +50,7 @@ public class CustomTreeCellContent
         {
             lastClickTime = 0;
 
-            TabPaneSingletonManager.getInstance().openFile(representingFile);
+            CodeTabPaneManager.getInstance().openFile(representingFile);
             
             return;
         }

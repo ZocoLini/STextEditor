@@ -49,7 +49,7 @@ public abstract class JSONSaveable<T>
         catch (Exception e)
         {
             System.err.println(this.getClass().getName() +
-                    " file not found. Using default.css configuration.");
+                    " file not found");
             instance = newInstance();
             //noinspection unchecked
             new Thread(((JSONSaveable<T>) instance)::save).start();

@@ -103,7 +103,7 @@ public class Theme
             return false;
         }
         
-        Config.getStaticInstance().editorConfig.theme = themeName;
+        GlobalConfig.getStaticInstance().editorConfig.theme = themeName;
         
         loadThemeStyles();
 

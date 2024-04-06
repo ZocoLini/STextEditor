@@ -1,21 +1,21 @@
 package com.lebastudios.stexteditor.iobjects.fxextends;
 
-import com.lebastudios.stexteditor.iobjects.imanagers.instanciablemanager.CustomTreeCellInstanciableInstanciableManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.instanciablemanager.ProyectFileTreeCellManager;
 import javafx.scene.control.TreeCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.File;
 
-public class CustomTreeCell extends TreeCell<CustomTreeCellContent>
+public class ProyectFileTreeCell extends TreeCell<CustomTreeCellContent>
 {
     private ImageView imageView;
-    private final CustomTreeCellInstanciableInstanciableManager controller;
+    private final ProyectFileTreeCellManager controller;
     
     private Image image;
     private File representingFile;
 
-    public CustomTreeCell() {
+    public ProyectFileTreeCell() {
         imageView = new ImageView();
         imageView.setFitHeight(16);
         imageView.setFitWidth(16);
@@ -28,7 +28,7 @@ public class CustomTreeCell extends TreeCell<CustomTreeCellContent>
             }
         });
         
-        this.controller = new CustomTreeCellInstanciableInstanciableManager(this);
+        this.controller = new ProyectFileTreeCellManager(this);
     }
     
     public File getRepresentingFile()

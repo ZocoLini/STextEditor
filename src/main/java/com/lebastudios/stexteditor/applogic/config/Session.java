@@ -8,10 +8,6 @@ import java.util.List;
 
 public class Session extends JSONSaveable<Session>
 {
-    public List<String> filesOpen = new ArrayList<>();
-    public String fileFilter = "none";
-    public String proyectDirectory = "";
-
     private static Session instance;
 
     public static Session getStaticInstance()
@@ -24,6 +20,10 @@ public class Session extends JSONSaveable<Session>
         return instance;
     }
 
+    public List<String> filesOpen = new ArrayList<>();
+    public String fileFilter = "none";
+    public String proyectDirectory = "";
+    
     private Session() {}
 
     public void reset()
@@ -42,7 +42,7 @@ public class Session extends JSONSaveable<Session>
     @Override
     public JSONSaveable<Session> getInstance()
     {
-        return Session.getStaticInstance();
+        return getStaticInstance();
     }
 
     @Override

@@ -1,13 +1,13 @@
-package com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.tabpane;
+package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.tabpane;
 
-import com.lebastudios.stexteditor.annotations.Linked2MM;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.Linked2MM;
 import com.lebastudios.stexteditor.applogic.FileOperation;
 import com.lebastudios.stexteditor.applogic.config.Session;
 import com.lebastudios.stexteditor.exceptions.IllegalNodeCastException;
 import com.lebastudios.stexteditor.iobjects.AlertsInstanciator;
 import com.lebastudios.stexteditor.iobjects.fxextends.FormateableTextTab;
-import com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.MainSingletonManager;
-import com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.SingletonManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainSingletonManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.SingletonManager;
 import com.lebastudios.stexteditor.iobjects.nodes.FormateableText;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -21,24 +21,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class TabPaneSingletonManager extends SingletonManager<TabPane>
+public class CodeTabPaneManager extends SingletonManager<TabPane>
 {
-    private static TabPaneSingletonManager instance;
+    private static CodeTabPaneManager instance;
     
-    public static TabPaneSingletonManager getInstance()
+    public static CodeTabPaneManager getInstance()
     {
         if (instance == null) 
         {
-            instance = new TabPaneSingletonManager();
+            instance = new CodeTabPaneManager();
         }
         
         return instance;
     }
     
-    private TabPaneSingletonManager()
+    private CodeTabPaneManager()
     {
-        super(MainSingletonManager.getInstance().tabPane);
+        super(MainSingletonManager.getInstance().codeTabPane);
 
+        openLastFiles();
+        
         instanciated = true;
     }
     
@@ -48,7 +50,7 @@ public class TabPaneSingletonManager extends SingletonManager<TabPane>
         int i = 0;
         List<String> filePaths = Session.getStaticInstance().filesOpen;
 
-        for (var tab : representingObject.getTabs())
+        for (var tab : managedObject.getTabs())
         {
             if (i < filePaths.size() && filePaths.get(i) != null
                     && !filePaths.get(i).isEmpty())
@@ -83,8 +85,8 @@ public class TabPaneSingletonManager extends SingletonManager<TabPane>
     @Linked2MM
     public void saveActualTab()
     {
-        Tab actualTab = representingObject.getSelectionModel().getSelectedItem();
-        int actualIndex = representingObject.getSelectionModel().getSelectedIndex();
+        Tab actualTab = managedObject.getSelectionModel().getSelectedItem();
+        int actualIndex = managedObject.getSelectionModel().getSelectedIndex();
 
         List<String> filePaths = Session.getStaticInstance().filesOpen;
 
@@ -109,7 +111,7 @@ public class TabPaneSingletonManager extends SingletonManager<TabPane>
     @Linked2MM
     public void saveActualFileAs()
     {
-        Tab actualTab = representingObject.getSelectionModel().getSelectedItem();
+        Tab actualTab = managedObject.getSelectionModel().getSelectedItem();
         File file = FileOperation.fileChooser().showSaveDialog(null);
         
         if (file == null)
@@ -147,7 +149,7 @@ public class TabPaneSingletonManager extends SingletonManager<TabPane>
 
         fileTab.setText(file.getName());
 
-        int index = representingObject.getTabs().indexOf(fileTab);
+        int index = managedObject.getTabs().indexOf(fileTab);
         final var filesOpen = Session.getStaticInstance().filesOpen;
         
         if (index > filesOpen.size() - 1)
@@ -161,7 +163,7 @@ public class TabPaneSingletonManager extends SingletonManager<TabPane>
 
     }
 
-    public void openLastFiles()
+    private void openLastFiles()
     {
         List<String> lastFilesPaths = Session.getStaticInstance().filesOpen;
         
@@ -175,7 +177,7 @@ public class TabPaneSingletonManager extends SingletonManager<TabPane>
             }
 
             File file = new File(filePath);
-            representingObject.getTabs().add(new FormateableTextTab(file));
+            managedObject.getTabs().add(new FormateableTextTab(file));
             auxLastFilesPaths.add(filePath);
         }
         
@@ -199,8 +201,8 @@ public class TabPaneSingletonManager extends SingletonManager<TabPane>
 
         Session.getStaticInstance().filesOpen.add(file.getPath());
         Tab newTab = new FormateableTextTab(file.getName(), content, FileOperation.getFileExtension(file));
-        representingObject.getTabs().add(newTab);
-        representingObject.getSelectionModel().select(newTab);
+        managedObject.getTabs().add(newTab);
+        managedObject.getSelectionModel().select(newTab);
     }
     
     @Linked2MM
@@ -221,8 +223,8 @@ public class TabPaneSingletonManager extends SingletonManager<TabPane>
     {
         Session.getStaticInstance().filesOpen.add("");
         Tab newTab = new FormateableTextTab();
-        representingObject.getTabs().add(newTab);
-        representingObject.getSelectionModel().select(newTab);
+        managedObject.getTabs().add(newTab);
+        managedObject.getSelectionModel().select(newTab);
     }
     
     @Override

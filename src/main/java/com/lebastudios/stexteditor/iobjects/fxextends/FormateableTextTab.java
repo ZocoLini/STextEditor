@@ -3,8 +3,8 @@ package com.lebastudios.stexteditor.iobjects.fxextends;
 import com.lebastudios.stexteditor.applogic.FileOperation;
 import com.lebastudios.stexteditor.applogic.config.Session;
 import com.lebastudios.stexteditor.applogic.txtformatter.StyleSetter;
-import com.lebastudios.stexteditor.iobjects.icontrollers.FormateableTextController;
-import com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.MainSingletonManager;
+import com.lebastudios.stexteditor.iobjects.managers.objectmanagers.FormateableTextManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainSingletonManager;
 import com.lebastudios.stexteditor.iobjects.nodes.FormateableText;
 import javafx.scene.control.Tab;
 
@@ -12,13 +12,13 @@ import java.io.File;
 
 public final class FormateableTextTab extends Tab
 {
-    private final FormateableTextController controller;
+    private final FormateableTextManager controller;
     
     public FormateableTextTab(String name, String content, String fileExtension)
     {
         instanciador(name, content, fileExtension);
 
-        controller = new FormateableTextController(this);
+        controller = new FormateableTextManager(this);
     }
 
     public FormateableTextTab(File file)
@@ -37,14 +37,14 @@ public final class FormateableTextTab extends Tab
             instanciador("new Text", "", "txt");
         }
         
-        controller = new FormateableTextController(this);
+        controller = new FormateableTextManager(this);
     }
 
     public FormateableTextTab()
     {
         instanciador("new Text", "", "txt");
 
-        controller = new FormateableTextController(this);
+        controller = new FormateableTextManager(this);
     }
     
     private void instanciador(String name, String content, String fileExtension)
@@ -59,7 +59,7 @@ public final class FormateableTextTab extends Tab
 
         this.setOnCloseRequest(event ->
                 Session.getStaticInstance().filesOpen.remove(
-                        MainSingletonManager.getInstance().tabPane.getTabs().indexOf(
+                        MainSingletonManager.getInstance().codeTabPane.getTabs().indexOf(
                                 (Tab) event.getTarget()
                         )
                 )

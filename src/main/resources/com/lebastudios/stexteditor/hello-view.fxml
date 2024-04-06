@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900" prefWidth="1200" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lebastudios.stexteditor.iobjects.imanagers.singletonmanagers.MainSingletonManager">
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900" prefWidth="1200" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainSingletonManager">
     <top>
         <MenuBar fx:id="menuBar" prefHeight="10">
             <Menu mnemonicParsing="false" text="File">
@@ -29,9 +29,9 @@
     
     <center>
         <SplitPane dividerPositions="0.1" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <TreeView fx:id="treeView" prefHeight="200.0" prefWidth="174.0" />
+            <TreeView fx:id="proyectFileTreeView" prefHeight="200.0" prefWidth="174.0" />
 
-            <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS" />
+            <TabPane fx:id="codeTabPane" tabClosingPolicy="ALL_TABS" />
         </SplitPane>
     </center>
     
