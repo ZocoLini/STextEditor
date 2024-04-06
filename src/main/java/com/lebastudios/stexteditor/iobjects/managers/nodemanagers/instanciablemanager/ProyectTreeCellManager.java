@@ -1,9 +1,7 @@
 package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.instanciablemanager;
 
 import com.lebastudios.stexteditor.iobjects.fxextends.ProyectTreeCell;
-import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.tabpane.CodeTabPaneManager;
-import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.treeview.ProyectTreeViewManager;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.ContextMenuEvent;
@@ -73,26 +71,5 @@ public class ProyectTreeCellManager extends InstanciableManager<ProyectTreeCell>
         contextMenu.getItems().addAll(renameItem, deleteItem);
 
         contextMenu.show(managedObject, event.getScreenX(), event.getScreenY());
-    }
-
-    private void checkForContentUpdates() throws InterruptedException
-    {
-        Thread.sleep(1000);
-
-        File representingFile = getRepresentingFile();
-        
-        if (!representingFile.isDirectory())
-        {
-            System.out.println("No se monitorea: " + getRepresentingFile().getPath());
-            return;
-        }
-        
-        while (true)
-        {
-            Thread.sleep(1000 / 15);
-
-            System.out.println("Monitoreando: " + getRepresentingFile().getPath());
-        }
-            
     }
 }

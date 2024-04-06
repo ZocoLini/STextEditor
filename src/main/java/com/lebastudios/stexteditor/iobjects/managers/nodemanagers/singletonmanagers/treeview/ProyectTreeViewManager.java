@@ -1,20 +1,18 @@
 package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.treeview;
 
+import com.lebastudios.stexteditor.iobjects.fxextends.ProyectTreeCell;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.Linked2MM;
 import com.lebastudios.stexteditor.applogic.FileOperation;
 import com.lebastudios.stexteditor.applogic.config.global.Session;
-import com.lebastudios.stexteditor.iobjects.fxextends.ProyectTreeCell;
 import com.lebastudios.stexteditor.iobjects.fxextends.ProyectTreeCellContent;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.instanciablemanager.ProyectTreeCellManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.SingletonManager;
-import javafx.application.Platform;
+import com.lebastudios.stexteditor.iobjects.managers.objectmanagers.ProyectTreeItemManager;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.*;
-import java.util.concurrent.Executors;
 
 public class ProyectTreeViewManager extends SingletonManager<TreeView<ProyectTreeCellContent>>
 {
@@ -29,8 +27,6 @@ public class ProyectTreeViewManager extends SingletonManager<TreeView<ProyectTre
 
         return instance;
     }
-
-    private WatchService watchService;
 
     private ProyectTreeViewManager()
     {
@@ -50,12 +46,19 @@ public class ProyectTreeViewManager extends SingletonManager<TreeView<ProyectTre
 
         Session.getStaticInstance().proyectDirectory = file.getPath();
 
-        managedObject.setCellFactory(param -> new ProyectTreeCell());
+        managedObject.setCellFactory(param -> {
+            ProyectTreeCell cell = new ProyectTreeCell();
+            
+            new ProyectTreeCellManager(cell);
+            
+            return cell;
+        });
+        
         managedObject.setRoot(createTreeView(file));
-
+        
         managedObject.getRoot().setExpanded(true);
     }
-
+    
     private void openLastProjectDirectory()
     {
         File file = new File(Session.getStaticInstance().proyectDirectory);
@@ -81,7 +84,7 @@ public class ProyectTreeViewManager extends SingletonManager<TreeView<ProyectTre
         openProyectDirectory(file);
     }
 
-    private static TreeItem<ProyectTreeCellContent> createTreeView(File file)
+    public static TreeItem<ProyectTreeCellContent> createTreeView(File file)
     {
         if (file == null)
         {
@@ -94,6 +97,7 @@ public class ProyectTreeViewManager extends SingletonManager<TreeView<ProyectTre
         }
 
         TreeItem<ProyectTreeCellContent> root = new TreeItem<>(new ProyectTreeCellContent(file));
+        new ProyectTreeItemManager(root);
         root.setExpanded(false);
 
         if (file.isDirectory())
@@ -102,11 +106,10 @@ public class ProyectTreeViewManager extends SingletonManager<TreeView<ProyectTre
             {
                 if (!child.getName().equals(".seal") && child.getName().charAt(0) == '.') continue;
 
-                System.out.println(child.getName());
                 root.getChildren().add(createTreeView(child));
             }
         }
-
+        
         return root;
     }
 
