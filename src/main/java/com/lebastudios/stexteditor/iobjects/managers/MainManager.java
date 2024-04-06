@@ -2,18 +2,15 @@ package com.lebastudios.stexteditor.iobjects.managers;
 
 import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.applogic.config.Session;
-import com.lebastudios.stexteditor.applogic.config.Theme;
-import com.lebastudios.stexteditor.iobjects.controllers.Controller;
 import com.lebastudios.stexteditor.iobjects.fxextends.CustomTreeCellContent;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.WindowEvent;
-
-import java.lang.invoke.VolatileCallSite;
 
 public class MainManager extends Manager<BorderPane>
 {
@@ -33,6 +30,8 @@ public class MainManager extends Manager<BorderPane>
         instanciated = true;
     }
 
+    /*          Objetos de la interfaz fijos          */
+    /**************************************************/
     @FXML
     public TabPane tabPane;
 
@@ -46,13 +45,29 @@ public class MainManager extends Manager<BorderPane>
     public MenuBar menuBar;
     
     @FXML
+    public VBox leftVBox;
+    
+    @FXML
+    public VBox rightVBox;
+    
+    @FXML
+    public Button botonCompilar;
+    @FXML
+    public Button botonEjecutar;
+
+    /*            Main Manager own methods            */
+    /**************************************************/
+    @FXML
     private void exit()
     {
         Session.getStaticInstance().reset();
-
+        
         TextEditorApplication.getStage().close();
     }
 
+    /*                Tab Pane Methods                */
+    /**************************************************/
+    
     @FXML
     private void saveActualTab() {
         TabPaneManager.getInstance().saveActualTab();
@@ -72,12 +87,30 @@ public class MainManager extends Manager<BorderPane>
     private void newFile() {
         TabPaneManager.getInstance().newFile();
     }
-    
+
+    /*                Tree View Methods               */
+    /**************************************************/
     @FXML
     private void openNewProjectDirectory() {
         TreeViewManager.getInstance().openNewProjectDirectory();
     }
+
+    /*                Left VBox Methods               */
+    /**************************************************/
+    @FXML
+    private void compile()
+    {
+        RightVBoxManager.getInstance().compile();
+    }
     
+    @FXML
+    private void execute()
+    {
+        RightVBoxManager.getInstance().execute();
+    }
+    
+    /*                Override Methods                */
+    /**************************************************/
     @Override
     protected void addEventHandlers()
     {

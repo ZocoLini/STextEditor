@@ -3,7 +3,6 @@ package com.lebastudios.stexteditor.iobjects.managers;
 import com.lebastudios.stexteditor.annotations.Linked2MM;
 import com.lebastudios.stexteditor.applogic.FileOperation;
 import com.lebastudios.stexteditor.applogic.config.Session;
-import com.lebastudios.stexteditor.applogic.config.Theme;
 import com.lebastudios.stexteditor.exceptions.IllegalNodeCastException;
 import com.lebastudios.stexteditor.iobjects.AlertsInstanciator;
 import com.lebastudios.stexteditor.iobjects.fxextends.FormateableTextTab;
