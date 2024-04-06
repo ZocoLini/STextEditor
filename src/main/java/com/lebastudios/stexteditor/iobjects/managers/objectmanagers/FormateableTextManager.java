@@ -7,7 +7,6 @@ public class FormateableTextManager extends ObjectManager<FormateableTextTab>
     public FormateableTextManager(FormateableTextTab formateableTextTab)
     {
         super(formateableTextTab);
-        
-        instanciated = true;
+
     }
 }

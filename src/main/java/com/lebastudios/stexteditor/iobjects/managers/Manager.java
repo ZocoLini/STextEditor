@@ -4,9 +4,7 @@ import com.lebastudios.stexteditor.TextEditorApplication;
 import javafx.stage.Stage;
 
 public abstract class Manager<T>
-{                                                         
-    protected volatile boolean instanciated = false;
-
+{
     protected static final Stage stage = TextEditorApplication.getStage();
     protected T managedObject;
     

@@ -2,13 +2,13 @@ package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmana
 
 import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.applogic.config.global.Session;
-import com.lebastudios.stexteditor.iobjects.fxextends.ProyectFileTreeCellContent;
+import com.lebastudios.stexteditor.iobjects.fxextends.ProyectTreeCellContent;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.leftvbox.LeftVBoxManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.rightvbox.CompileButtonManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.rightvbox.ExecuteButtonManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.rightvbox.RightVBoxManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.tabpane.CodeTabPaneManager;
-import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.treeview.ProyectFilesTreeViewManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.treeview.ProyectTreeViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
@@ -18,22 +18,21 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.WindowEvent;
 
-public class MainSingletonManager extends SingletonManager<BorderPane>
+public class MainManager extends SingletonManager<BorderPane>
 {
-    private static MainSingletonManager instance;
+    private static MainManager instance;
     
-    public static MainSingletonManager getInstance()
+    public static MainManager getInstance()
     {
         return instance;
     }
 
-    public MainSingletonManager()
+    public MainManager()
     {
         super(null);
         managedObject = mainPane;
         instance = this;
-        
-        instanciated = true;
+
     }
 
     /*          Objetos de la interfaz fijos          */
@@ -41,7 +40,7 @@ public class MainSingletonManager extends SingletonManager<BorderPane>
     @FXML
     public TabPane codeTabPane;
     @FXML
-    public TreeView<ProyectFileTreeCellContent> proyectFileTreeView;
+    public TreeView<ProyectTreeCellContent> proyectFileTreeView;
     @FXML
     private BorderPane mainPane;
     @FXML
@@ -94,7 +93,7 @@ public class MainSingletonManager extends SingletonManager<BorderPane>
     /**************************************************/
     @FXML
     private void openNewProjectDirectory() {
-        ProyectFilesTreeViewManager.getInstance().openNewProjectDirectory();
+        ProyectTreeViewManager.getInstance().openNewProjectDirectory();
     }
 
     /*                Right VBox Methods               */
@@ -125,7 +124,7 @@ public class MainSingletonManager extends SingletonManager<BorderPane>
     public void loadChilds()
     {
         CodeTabPaneManager.getInstance().load();
-        ProyectFilesTreeViewManager.getInstance().load();
+        ProyectTreeViewManager.getInstance().load();
         LeftVBoxManager.getInstance().load();
         RightVBoxManager.getInstance().load();
     }

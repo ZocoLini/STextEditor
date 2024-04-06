@@ -1,7 +1,7 @@
 package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.rightvbox;
 
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.ButtonManager;
-import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainSingletonManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
 
 public class TerminalButtonManager extends ButtonManager
 {
@@ -16,9 +16,8 @@ public class TerminalButtonManager extends ButtonManager
 
     private TerminalButtonManager()
     {
-        super(MainSingletonManager.getInstance().botonTerminal);
+        super(MainManager.getInstance().botonTerminal);
 
-        instanciated = true;
     }
 
     @Override

@@ -4,7 +4,7 @@ import com.lebastudios.stexteditor.applogic.FileOperation;
 import com.lebastudios.stexteditor.applogic.config.global.Session;
 import com.lebastudios.stexteditor.applogic.txtformatter.StyleSetter;
 import com.lebastudios.stexteditor.iobjects.managers.objectmanagers.FormateableTextManager;
-import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainSingletonManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
 import com.lebastudios.stexteditor.iobjects.nodes.FormateableText;
 import javafx.scene.control.Tab;
 
@@ -27,7 +27,7 @@ public final class FormateableTextTab extends Tab
 
         try
         {
-            String content = FileOperation.read(file);
+            String content = FileOperation.readFile(file);
             instanciador(fileName, content, FileOperation.getFileExtension(file));
         }
         catch (Exception e)
@@ -59,7 +59,7 @@ public final class FormateableTextTab extends Tab
 
         this.setOnCloseRequest(event ->
                 Session.getStaticInstance().filesOpen.remove(
-                        MainSingletonManager.getInstance().codeTabPane.getTabs().indexOf(
+                        MainManager.getInstance().codeTabPane.getTabs().indexOf(
                                 (Tab) event.getTarget()
                         )
                 )

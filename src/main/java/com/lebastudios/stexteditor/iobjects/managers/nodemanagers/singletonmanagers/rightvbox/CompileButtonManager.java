@@ -2,7 +2,7 @@ package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmana
 
 import com.lebastudios.stexteditor.exceptions.NotImplementedException;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.ButtonManager;
-import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainSingletonManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
 
 public class CompileButtonManager extends ButtonManager
 {
@@ -17,9 +17,8 @@ public class CompileButtonManager extends ButtonManager
 
     private CompileButtonManager()
     {
-        super(MainSingletonManager.getInstance().botonCompilar);
-        
-        instanciated = true;
+        super(MainManager.getInstance().botonCompilar);
+
     }
 
     @Override

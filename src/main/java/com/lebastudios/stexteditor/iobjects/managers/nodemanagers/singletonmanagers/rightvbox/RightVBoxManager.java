@@ -1,6 +1,6 @@
 package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.rightvbox;
 
-import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainSingletonManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.SingletonManager;
 import javafx.scene.layout.VBox;
 
@@ -20,9 +20,8 @@ public class RightVBoxManager extends SingletonManager<VBox>
     
     private RightVBoxManager()
     {
-        super(MainSingletonManager.getInstance().rightVBox);
-        
-        instanciated = true;
+        super(MainManager.getInstance().rightVBox);
+
     }
 
     @Override

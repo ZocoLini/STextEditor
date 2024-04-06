@@ -3,38 +3,42 @@ package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmana
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.Linked2MM;
 import com.lebastudios.stexteditor.applogic.FileOperation;
 import com.lebastudios.stexteditor.applogic.config.global.Session;
-import com.lebastudios.stexteditor.iobjects.fxextends.ProyectFileTreeCell;
-import com.lebastudios.stexteditor.iobjects.fxextends.ProyectFileTreeCellContent;
-import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainSingletonManager;
+import com.lebastudios.stexteditor.iobjects.fxextends.ProyectTreeCell;
+import com.lebastudios.stexteditor.iobjects.fxextends.ProyectTreeCellContent;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.SingletonManager;
+import javafx.application.Platform;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.*;
+import java.util.concurrent.Executors;
 
-public class ProyectFilesTreeViewManager extends SingletonManager<TreeView<ProyectFileTreeCellContent>>
+public class ProyectTreeViewManager extends SingletonManager<TreeView<ProyectTreeCellContent>>
 {
-    private static ProyectFilesTreeViewManager instance;
+    private static ProyectTreeViewManager instance;
 
-    public static ProyectFilesTreeViewManager getInstance()
+    public static ProyectTreeViewManager getInstance()
     {
         if (instance == null)
         {
-            instance = new ProyectFilesTreeViewManager();
+            instance = new ProyectTreeViewManager();
         }
 
         return instance;
     }
 
-    private ProyectFilesTreeViewManager()
+    private WatchService watchService;
+
+    private ProyectTreeViewManager()
     {
-        super(MainSingletonManager.getInstance().proyectFileTreeView);
+        super(MainManager.getInstance().proyectFileTreeView);
 
         openLastProjectDirectory();
-        
-        instanciated = true;
     }
-    
+
     private void openProyectDirectory(File file)
     {
         file = file.getAbsoluteFile();
@@ -46,9 +50,9 @@ public class ProyectFilesTreeViewManager extends SingletonManager<TreeView<Proye
 
         Session.getStaticInstance().proyectDirectory = file.getPath();
 
-        managedObject.setCellFactory(param -> new ProyectFileTreeCell());
+        managedObject.setCellFactory(param -> new ProyectTreeCell());
         managedObject.setRoot(createTreeView(file));
-        
+
         managedObject.getRoot().setExpanded(true);
     }
 
@@ -64,34 +68,6 @@ public class ProyectFilesTreeViewManager extends SingletonManager<TreeView<Proye
         openProyectDirectory(file);
     }
 
-    private static TreeItem<ProyectFileTreeCellContent> createTreeView(File file)
-    {
-        if (file == null)
-        {
-            throw new IllegalArgumentException("File is null");
-        }
-
-        if (!file.exists())
-        {
-            throw new IllegalArgumentException("File does not exist");
-        }
-
-        TreeItem<ProyectFileTreeCellContent> root = new TreeItem<>(new ProyectFileTreeCellContent(file));
-        root.setExpanded(false);
-
-        if (file.isDirectory())
-        {
-            for (File child : file.listFiles())
-            {
-                if (child.getName().charAt(0) == '.') continue;
-
-                root.getChildren().add(createTreeView(child));
-            }
-        }
-
-        return root;
-    }
-
     @Linked2MM
     public void openNewProjectDirectory()
     {
@@ -105,9 +81,38 @@ public class ProyectFilesTreeViewManager extends SingletonManager<TreeView<Proye
         openProyectDirectory(file);
     }
 
+    private static TreeItem<ProyectTreeCellContent> createTreeView(File file)
+    {
+        if (file == null)
+        {
+            throw new IllegalArgumentException("File is null");
+        }
+
+        if (!file.exists())
+        {
+            throw new IllegalArgumentException("File does not exist");
+        }
+
+        TreeItem<ProyectTreeCellContent> root = new TreeItem<>(new ProyectTreeCellContent(file));
+        root.setExpanded(false);
+
+        if (file.isDirectory())
+        {
+            for (File child : file.listFiles())
+            {
+                if (!child.getName().equals(".seal") && child.getName().charAt(0) == '.') continue;
+
+                System.out.println(child.getName());
+                root.getChildren().add(createTreeView(child));
+            }
+        }
+
+        return root;
+    }
+
     @Override
     public void loadChilds()
     {
-        
+
     }
 }

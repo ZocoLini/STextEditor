@@ -6,7 +6,7 @@ import com.lebastudios.stexteditor.applogic.config.global.Session;
 import com.lebastudios.stexteditor.applogic.config.global.GlobalConfig;
 import com.lebastudios.stexteditor.iobjects.managers.Manager;
 import com.lebastudios.stexteditor.events.GlobalEvents;
-import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainSingletonManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -77,7 +77,7 @@ public class TextEditorApplication extends Application
 
         System.out.println("Aplicación iniciada.");
         
-        MainSingletonManager.getInstance().load();
+        MainManager.getInstance().load();
     }
     
     private void setActualStyle()

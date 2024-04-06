@@ -6,7 +6,7 @@ import com.lebastudios.stexteditor.applogic.config.global.Session;
 import com.lebastudios.stexteditor.exceptions.IllegalNodeCastException;
 import com.lebastudios.stexteditor.iobjects.AlertsInstanciator;
 import com.lebastudios.stexteditor.iobjects.fxextends.FormateableTextTab;
-import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainSingletonManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.SingletonManager;
 import com.lebastudios.stexteditor.iobjects.nodes.FormateableText;
 import javafx.scene.control.Tab;
@@ -37,11 +37,10 @@ public class CodeTabPaneManager extends SingletonManager<TabPane>
     
     private CodeTabPaneManager()
     {
-        super(MainSingletonManager.getInstance().codeTabPane);
+        super(MainManager.getInstance().codeTabPane);
 
         openLastFiles();
-        
-        instanciated = true;
+
     }
     
     @Linked2MM
@@ -191,7 +190,7 @@ public class CodeTabPaneManager extends SingletonManager<TabPane>
 
         try
         {
-            content = FileOperation.read(file);
+            content = FileOperation.readFile(file);
         }
         catch (Exception e)
         {

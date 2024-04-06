@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class FileOperation
@@ -29,7 +28,7 @@ public class FileOperation
         return directoryChooser;
     }
 
-    public static String read(File file) throws Exception
+    public static String readFile(File file) throws Exception
     {
         if (!file.exists())
         {
@@ -53,10 +52,10 @@ public class FileOperation
 
     public static String readResource(String path) throws Exception
     {
-        return read(new File(TextEditorApplication.class.getResource(path).toURI()));
+        return readFile(new File(TextEditorApplication.class.getResource(path).toURI()));
     }
     
-    public static void write(File file, String content) throws Exception
+    public static void writeFile(File file, String content) throws Exception
     {
         if (file.getParentFile() != null)
         {

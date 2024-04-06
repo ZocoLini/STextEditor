@@ -177,7 +177,7 @@ public final class Resources
 
         try
         {
-            rules = FileOperation.read(new File(path));
+            rules = FileOperation.readFile(new File(path));
         }
         catch (Exception e)
         {
