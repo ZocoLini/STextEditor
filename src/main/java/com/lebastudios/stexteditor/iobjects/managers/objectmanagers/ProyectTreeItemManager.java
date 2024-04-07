@@ -2,9 +2,11 @@ package com.lebastudios.stexteditor.iobjects.managers.objectmanagers;
 
 import com.lebastudios.stexteditor.iobjects.fxextends.ProyectTreeCellContent;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.treeview.ProyectTreeViewManager;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 
 import java.io.File;
+import java.util.List;
 
 public class ProyectTreeItemManager extends ObjectManager<TreeItem<ProyectTreeCellContent>>
 {
@@ -29,24 +31,49 @@ public class ProyectTreeItemManager extends ObjectManager<TreeItem<ProyectTreeCe
     
     private void monitorearHijos() throws InterruptedException
     {
-        // TODO: Monitorea correctamente pero lanza una excepciń al borrar un directorio
-        // TODO: Queda el monitoreo de ciertas carpetas aunque estas se eliminen
-        
-        if (!managedObject.getValue().getRepresentingFile().isDirectory()) return;
+        final var representingFile = managedObject.getValue().getRepresentingFile();
         
         while (monitorear)
         {
-            Thread.sleep(1000 / 15);
+            Thread.sleep(5000);
             
-            if (managedObject.getChildren().size() != managedObject.getValue().getRepresentingFile().listFiles().length)
+            if (!representingFile.exists()) 
             {
-                managedObject.getChildren().clear();
+                System.out.println("Se ha eliminado " + representingFile);
                 
-                for (File file : managedObject.getValue().getRepresentingFile().listFiles())
+                managedObject.getParent().getChildren().remove(managedObject);
+                
+                monitorear = false;
+                continue;
+            }
+
+            if (!representingFile.isDirectory()) continue;
+            
+            final var children = managedObject.getChildren();
+            
+            if (children.size() == representingFile.listFiles().length) continue;
+
+            for (File file : representingFile.listFiles())
+            {
+                if (!isRepresented(file))
                 {
-                    managedObject.getChildren().add(ProyectTreeViewManager.createTreeView(file));
+                    System.out.println("Se ha añadido " + file);
+                    children.add(ProyectTreeViewManager.createTreeView(file));
                 }
             }
         }
+    }
+    
+    private boolean isRepresented(File file)
+    {
+        for (var variable : managedObject.getChildren())
+        {
+            if (variable.getValue().getRepresentingFile().equals(file)) 
+            {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

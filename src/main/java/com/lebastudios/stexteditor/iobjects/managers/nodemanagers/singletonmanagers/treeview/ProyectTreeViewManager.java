@@ -31,7 +31,15 @@ public class ProyectTreeViewManager extends SingletonManager<TreeView<ProyectTre
     private ProyectTreeViewManager()
     {
         super(MainManager.getInstance().proyectFileTreeView);
+        
+        managedObject.setCellFactory(param -> {
+            ProyectTreeCell cell = new ProyectTreeCell();
 
+            new ProyectTreeCellManager(cell);
+
+            return cell;
+        });
+        
         openLastProjectDirectory();
     }
 
@@ -45,14 +53,6 @@ public class ProyectTreeViewManager extends SingletonManager<TreeView<ProyectTre
         }
 
         Session.getStaticInstance().proyectDirectory = file.getPath();
-
-        managedObject.setCellFactory(param -> {
-            ProyectTreeCell cell = new ProyectTreeCell();
-            
-            new ProyectTreeCellManager(cell);
-            
-            return cell;
-        });
         
         managedObject.setRoot(createTreeView(file));
         
