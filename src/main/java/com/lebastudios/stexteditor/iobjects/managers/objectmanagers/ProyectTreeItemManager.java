@@ -4,9 +4,11 @@ import com.lebastudios.stexteditor.iobjects.fxextends.ProyectTreeCellContent;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.treeview.ProyectTreeViewManager;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class ProyectTreeItemManager extends ObjectManager<TreeItem<ProyectTreeCellContent>>
 {
@@ -15,8 +17,8 @@ public class ProyectTreeItemManager extends ObjectManager<TreeItem<ProyectTreeCe
     public ProyectTreeItemManager(TreeItem<ProyectTreeCellContent> managedObject)
     {
         super(managedObject);
-        
-        new Thread(() -> 
+
+        Executors.newSingleThreadExecutor().submit(() -> 
         {
             try
             {
@@ -26,7 +28,9 @@ public class ProyectTreeItemManager extends ObjectManager<TreeItem<ProyectTreeCe
             {
                 e.printStackTrace();
             }
-        }).start();
+        });
+        
+        stage.addEventHandler(WindowEvent.WINDOW_HIDING, (event) -> monitorear = false);
     }
     
     private void monitorearHijos() throws InterruptedException
