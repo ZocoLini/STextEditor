@@ -12,8 +12,8 @@ public abstract class ButtonManager extends SingletonManager<Button>
         super(managedObject);
 
         ImageView compileIcon = new ImageView(Resources.getIcon(iconID()));
-        compileIcon.setFitHeight(30);
-        compileIcon.setFitWidth(30);
+        compileIcon.setFitHeight(20);
+        compileIcon.setFitWidth(20);
         this.managedObject.setGraphic(compileIcon);
 
         managedObject.setOnAction(this::onAction);

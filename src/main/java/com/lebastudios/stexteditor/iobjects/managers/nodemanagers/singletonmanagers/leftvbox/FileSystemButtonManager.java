@@ -1,8 +1,13 @@
 package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.leftvbox;
 
+import com.lebastudios.stexteditor.applogic.config.global.Session;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.ButtonManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
 import javafx.event.ActionEvent;
+import javafx.scene.control.SplitPane;
+import javafx.scene.layout.BorderPane;
+
+import java.io.File;
 
 public class FileSystemButtonManager extends ButtonManager
 {
@@ -29,6 +34,15 @@ public class FileSystemButtonManager extends ButtonManager
     @Override
     public void onAction(ActionEvent event)
     {
-        LeftVBoxManager.getInstance().alternarVisibilidadNode();
+        final var proyectFileTreeView = MainManager.getInstance().proyectFileTreeView;
+        SplitPane proyectTreeViewContainer = MainManager.getInstance().proyectTreeViewContainer;
+
+        if (!proyectTreeViewContainer.getItems().remove(proyectFileTreeView))
+        {
+            proyectTreeViewContainer.getItems().addFirst(proyectFileTreeView);
+            proyectTreeViewContainer.setDividerPositions(
+                    0.01 * new File(Session.getStaticInstance().proyectDirectory).getName().length()
+            );
+        }
     }
 }

@@ -95,13 +95,18 @@ public class ConsoleTextAreaManager extends SingletonManager<TextArea>
         String line;
         try
         {
-            while ((line = reader.readLine()) != null)
+            while (process.isAlive())
             {
-                appendTextToConsole(line + "\n");
-                primerCaracter = managedObject.getText().length();
+                if ((line = reader.readLine()) != null)
+                {
+                    appendTextToConsole(line + "\n");
+                    primerCaracter = managedObject.getText().length();
+                }
+                
+                Thread.sleep(20);
             }
         }
-        catch (IOException e)
+        catch (Exception e)
         {
             System.err.println("Error en el hilo que imprime en el cuadro de consola la salida del proceso " +
                     "Consola");

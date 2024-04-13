@@ -96,14 +96,14 @@ public class CodeTabPaneManager extends SingletonManager<TabPane>
         }
         else
         {
-            File file = FileOperation.fileChooser().showSaveDialog(null).getAbsoluteFile();
+            File file = FileOperation.fileChooser().showSaveDialog(null);
 
             if (file == null)
             {
                 return;
             }
 
-            saveFile(actualTab, file);
+            saveFile(actualTab, file.getAbsoluteFile());
         }
     }
 

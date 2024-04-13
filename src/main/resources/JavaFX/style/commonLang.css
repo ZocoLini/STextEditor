@@ -1,27 +1,22 @@
 /* Aplica a _todo el texto. $extension$.css puede sobrescribir propiedades 
     coincidentes */
 .keyword {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
+    -fx-fill: #005cda;
 }
 .string {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
+    -fx-fill: #a7a216;
 }
 .comment {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
+    -fx-fill: #9397bf;
 }
 .number {
     -fx-fill: blue;
-    -fx-font-weight: bold;
 }
 .default {
-
+    -fx-fill: #040013;
 }
 .method {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
+    -fx-fill: #13667d;
 }
 
 /* Estilo del paragrafo que tiene el caret */

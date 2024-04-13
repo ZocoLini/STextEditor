@@ -9,26 +9,24 @@ public class AppLoop
     private static class OnUpdate extends AppEvent {}
 
     private static final OnUpdate onUpdate = new OnUpdate();
-
-    private static boolean looping;
+    private static Thread loopThread;
 
     static void startLoop()
     {
-        if (looping)
+        if (loopThread != null && loopThread.isAlive())
         {
             System.err.println("AppLoop is already running");
             return;
         }
 
-        looping = true;
-        new Thread(AppLoop::loop).start();
+        loopThread = new Thread(AppLoop::loop);
+        loopThread.setDaemon(true);
+        loopThread.start();
     }
 
     private static void loop()
     {
-        TextEditorApplication.getStage().addEventHandler(WindowEvent.WINDOW_HIDING, (event) -> looping = false);
-
-        while (looping)
+        while (true)
         {
             onUpdate.invoke();
 

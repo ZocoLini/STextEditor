@@ -31,22 +31,15 @@
     </top>
 
     <center>
-        <SplitPane orientation="VERTICAL">
-            <SplitPane dividerPositions="0.1" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <SplitPane fx:id="terminalContainer" orientation="VERTICAL">
+            <SplitPane fx:id="proyectTreeViewContainer" dividerPositions="0.1" 
+                       prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                 <TreeView fx:id="proyectFileTreeView" prefHeight="200.0" prefWidth="174.0"/>
 
                 <TabPane fx:id="codeTabPane" tabClosingPolicy="ALL_TABS"/>
             </SplitPane>
-            
-            <BorderPane>
-                <left/>
-                <top/>
-                <center>
-                    <TextArea fx:id="consoleTextArea"/>
-                </center>
-                <right/>
-                <bottom/>
-            </BorderPane>
+
+            <TextArea fx:id="consoleTextArea"/>
         </SplitPane>
     </center>
 
@@ -58,16 +51,13 @@
     <left>
         <VBox fx:id="leftVBox" prefWidth="30">
             <Button fx:id="fileSystemButtonManager" prefHeight="30" prefWidth="30"/>
-            <Button prefHeight="30" prefWidth="30"/>
+            <Button fx:id="botonTerminal" prefHeight="30" prefWidth="30"/>
+            <Button fx:id="botonCompilar" prefHeight="30" prefWidth="30"/>
+            <Button fx:id="botonEjecutar" prefHeight="30" prefWidth="30"/>
         </VBox>
     </left>
 
     <!-- Acciones sobre el codigo -->
     <right>
-        <VBox fx:id="rightVBox" prefWidth="30">
-            <Button fx:id="botonCompilar" prefHeight="30" prefWidth="30"/>
-            <Button fx:id="botonEjecutar" prefHeight="30" prefWidth="30"/>
-            <Button fx:id="botonTerminal" prefHeight="30" prefWidth="30"/>
-        </VBox>
     </right>
 </BorderPane>

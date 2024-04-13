@@ -1,6 +1,7 @@
 package com.lebastudios.stexteditor.applogic;
 
 import com.lebastudios.stexteditor.TextEditorApplication;
+import com.lebastudios.stexteditor.applogic.config.global.Session;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
@@ -16,6 +17,7 @@ public class FileOperation
     public static FileChooser fileChooser()
     {
         FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File(Session.getStaticInstance().proyectDirectory));
         fileChooser.setTitle("Open file");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All files", "*.*"));
         return fileChooser;

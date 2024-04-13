@@ -1,31 +1,30 @@
-package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.rightvbox;
+package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.leftvbox;
 
 import com.lebastudios.stexteditor.exceptions.NotImplementedException;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.ButtonManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
 import javafx.event.ActionEvent;
 
-public class ExecuteButtonManager extends ButtonManager
+public class CompileButtonManager extends ButtonManager
 {
-    private static ExecuteButtonManager instance;
+    private static CompileButtonManager instance;
 
-    public static ExecuteButtonManager getInstance()
+    public static CompileButtonManager getInstance()
     {
-        if (instance == null) instance = new ExecuteButtonManager();
-
+        if (instance == null) instance = new CompileButtonManager();
+        
         return instance;
     }
 
-    private ExecuteButtonManager()
+    private CompileButtonManager()
     {
-        super(MainManager.getInstance().botonEjecutar);
-
+        super(MainManager.getInstance().botonCompilar);
     }
 
     @Override
     protected String iconID()
     {
-        return "play.jpg";
+        return "compile.png";
     }
 
     @Override

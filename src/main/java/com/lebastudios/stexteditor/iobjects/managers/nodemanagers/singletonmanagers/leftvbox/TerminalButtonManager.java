@@ -1,9 +1,13 @@
-package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.rightvbox;
+package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.leftvbox;
 
 import com.lebastudios.stexteditor.exceptions.NotImplementedException;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.ButtonManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.treeview.ProyectTreeViewManager;
 import javafx.event.ActionEvent;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.BorderPane;
 
 public class TerminalButtonManager extends ButtonManager
 {
@@ -19,7 +23,6 @@ public class TerminalButtonManager extends ButtonManager
     private TerminalButtonManager()
     {
         super(MainManager.getInstance().botonTerminal);
-
     }
 
     @Override
@@ -31,6 +34,13 @@ public class TerminalButtonManager extends ButtonManager
     @Override
     public void onAction(ActionEvent event)
     {
-        throw new NotImplementedException();
+        final var consoleTextArea = MainManager.getInstance().consoleTextArea;
+        SplitPane terminalContainer = MainManager.getInstance().terminalContainer;
+        
+        if (!terminalContainer.getItems().remove(consoleTextArea)) 
+        {
+            terminalContainer.getItems().add(consoleTextArea);
+            terminalContainer.setDividerPositions(0.7);
+        }
     }
 }

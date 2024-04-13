@@ -4,9 +4,6 @@ import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.applogic.config.global.Session;
 import com.lebastudios.stexteditor.iobjects.fxextends.ProyectTreeCellContent;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.leftvbox.LeftVBoxManager;
-import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.rightvbox.CompileButtonManager;
-import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.rightvbox.ExecuteButtonManager;
-import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.rightvbox.RightVBoxManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.tabpane.CodeTabPaneManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.treeview.ProyectTreeViewManager;
 import javafx.fxml.FXML;
@@ -18,6 +15,8 @@ import javafx.stage.WindowEvent;
 public class MainManager extends SingletonManager<BorderPane>
 {
     private static MainManager instance;
+    public SplitPane proyectTreeViewContainer;
+    public SplitPane terminalContainer;
 
     public static MainManager getInstance()
     {
@@ -43,8 +42,6 @@ public class MainManager extends SingletonManager<BorderPane>
     public MenuBar menuBar;
     @FXML
     public VBox leftVBox;
-    @FXML
-    public VBox rightVBox;
     @FXML
     public Button botonCompilar;
     @FXML
@@ -112,7 +109,6 @@ public class MainManager extends SingletonManager<BorderPane>
         CodeTabPaneManager.getInstance().load();
         ProyectTreeViewManager.getInstance().load();
         LeftVBoxManager.getInstance().load();
-        RightVBoxManager.getInstance().load();
         ConsoleTextAreaManager.getInstance().load();
     }
 }
