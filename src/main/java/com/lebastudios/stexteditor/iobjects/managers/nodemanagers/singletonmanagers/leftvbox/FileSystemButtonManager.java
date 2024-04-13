@@ -3,9 +3,12 @@ package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmana
 import com.lebastudios.stexteditor.applogic.config.global.Session;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.ButtonManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.NotificationsContainerManager;
+import com.lebastudios.stexteditor.iobjects.nodes.Notification;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
-import javafx.scene.layout.BorderPane;
 
 import java.io.File;
 
@@ -22,7 +25,7 @@ public class FileSystemButtonManager extends ButtonManager
     
     public FileSystemButtonManager()
     {
-        super(MainManager.getInstance().fileSystemButtonManager);
+        super(MainManager.getInstance().botonProyectFileSystem);
     }
 
     @Override
@@ -34,13 +37,17 @@ public class FileSystemButtonManager extends ButtonManager
     @Override
     public void onAction(ActionEvent event)
     {
+        NotificationsContainerManager.getInstance().addNotification(new Notification("File System Button Pressed"));
+        
         final var proyectFileTreeView = MainManager.getInstance().proyectFileTreeView;
-        SplitPane proyectTreeViewContainer = MainManager.getInstance().proyectTreeViewContainer;
-
-        if (!proyectTreeViewContainer.getItems().remove(proyectFileTreeView))
+        SplitPane proyectTreeViewContainer = MainManager.getInstance().codeTabPaneContainer;
+        final var items = proyectTreeViewContainer.getItems();
+        
+        if (!items.remove(proyectFileTreeView))
         {
-            proyectTreeViewContainer.getItems().addFirst(proyectFileTreeView);
-            proyectTreeViewContainer.setDividerPositions(
+            items.addFirst(proyectFileTreeView);
+            proyectTreeViewContainer.setDividerPosition(
+                    items.indexOf(proyectFileTreeView),
                     0.01 * new File(Session.getStaticInstance().proyectDirectory).getName().length()
             );
         }

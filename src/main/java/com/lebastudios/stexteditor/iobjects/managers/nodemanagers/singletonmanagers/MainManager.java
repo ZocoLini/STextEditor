@@ -15,8 +15,7 @@ import javafx.stage.WindowEvent;
 public class MainManager extends SingletonManager<BorderPane>
 {
     private static MainManager instance;
-    public SplitPane proyectTreeViewContainer;
-    public SplitPane terminalContainer;
+    public BorderPane notifications;
 
     public static MainManager getInstance()
     {
@@ -49,9 +48,15 @@ public class MainManager extends SingletonManager<BorderPane>
     @FXML
     public Button botonTerminal;
     @FXML
-    public Button fileSystemButtonManager;
+    public Button botonProyectFileSystem;
     @FXML
     public TextArea consoleTextArea;
+    @FXML
+    public SplitPane codeTabPaneContainer;
+    @FXML
+    public SplitPane terminalContainer;
+    @FXML
+    public Button botonNotificaciones;
 
     /*            Main Manager own methods            */
     /**************************************************/
@@ -109,6 +114,7 @@ public class MainManager extends SingletonManager<BorderPane>
         CodeTabPaneManager.getInstance().load();
         ProyectTreeViewManager.getInstance().load();
         LeftVBoxManager.getInstance().load();
+        NotificationsContainerManager.getInstance().load();
         ConsoleTextAreaManager.getInstance().load();
     }
 }

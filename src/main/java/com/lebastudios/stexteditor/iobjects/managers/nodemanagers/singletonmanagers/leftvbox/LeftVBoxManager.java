@@ -27,6 +27,7 @@ public class LeftVBoxManager extends SingletonManager<VBox>
     public void loadChilds()
     {
         FileSystemButtonManager.getInstance().load();
+        NotificationsButtonManager.getInstance().load();
         CompileButtonManager.getInstance().load();
         ExecuteButtonManager.getInstance().load();
         TerminalButtonManager.getInstance().load();
