@@ -8,6 +8,10 @@ module com.lebastudios.stexteditor {
     exports com.lebastudios.stexteditor;
     opens com.lebastudios.stexteditor to javafx.fxml;
     
+    exports com.lebastudios.stexteditor.iobjects.nodes;
+    
+    exports com.lebastudios.stexteditor.applogic;
+    
     opens com.lebastudios.stexteditor.applogic.txtformatter to com.google.gson, javafx.fxml;
     
     exports com.lebastudios.stexteditor.iobjects.fxextends;

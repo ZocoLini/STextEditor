@@ -4,7 +4,7 @@ import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.Linked2MM;
 import com.lebastudios.stexteditor.applogic.FileOperation;
 import com.lebastudios.stexteditor.applogic.config.global.Session;
 import com.lebastudios.stexteditor.exceptions.IllegalNodeCastException;
-import com.lebastudios.stexteditor.iobjects.AlertsInstanciator;
+import com.lebastudios.stexteditor.iobjects.Dialogs;
 import com.lebastudios.stexteditor.iobjects.fxextends.FormateableTextTab;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.SingletonManager;
@@ -58,7 +58,7 @@ public class CodeTabPaneManager extends SingletonManager<TabPane>
             }
             else
             {
-                if (!AlertsInstanciator.confirmationDialog("Save file",
+                if (!Dialogs.confirmationDialog("Save file",
                         "Do you want to save the file " + tab.getText()
                                 + "?"))
                 {

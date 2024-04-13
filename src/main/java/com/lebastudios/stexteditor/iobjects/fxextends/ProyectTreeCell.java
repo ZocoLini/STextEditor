@@ -1,7 +1,6 @@
 package com.lebastudios.stexteditor.iobjects.fxextends;
 
-import com.lebastudios.stexteditor.exceptions.NotImplementedException;
-import com.lebastudios.stexteditor.iobjects.AlertsInstanciator;
+import com.lebastudios.stexteditor.iobjects.Dialogs;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.tabpane.CodeTabPaneManager;
 
 import javafx.event.ActionEvent;
@@ -58,17 +57,14 @@ public class ProyectTreeCell extends TreeCell<ProyectTreeCellContent>
         return this.getItem().getRepresentingFile();
     }
 
+    //TODO: When a file renames his name, his childs doesnt update their path
     private void renameRepresentingFile(ActionEvent event)
     {
-        if (true) 
-        {
-            throw new NotImplementedException("When a file renames his name, his childs doesnt. Thining to implement " +
-                    "Paths");
-        }
-        
         System.out.println("Se intentará renombrar " + getRepresentingFile().getAbsolutePath());
-        String nuevoNombre = AlertsInstanciator.insertTextDialog("Insert new name", "something");
+        String nuevoNombre = Dialogs.insertTextDialog("Insert new name");
 
+        if (nuevoNombre.isEmpty()) return;
+        
         File parent = getRepresentingFile().getParentFile();
         File newFilePath = new File(parent.toString() + "/" + nuevoNombre);
 
@@ -85,7 +81,7 @@ public class ProyectTreeCell extends TreeCell<ProyectTreeCellContent>
     
     private void createFile(ActionEvent event)
     {
-        String name = "new File.txt";
+        String name = Dialogs.insertTextDialog("Insert new file name");
         
         File newFile = new File(getRepresentingFile().getAbsoluteFile() + "/" + name);
 
@@ -101,7 +97,7 @@ public class ProyectTreeCell extends TreeCell<ProyectTreeCellContent>
     
     private void createDirectory(ActionEvent event)
     {
-        String name = "new directory";
+        String name = Dialogs.insertTextDialog("Insert new directory name");
 
         File newFile = new File(getRepresentingFile().getAbsoluteFile() + "/" + name);
 
