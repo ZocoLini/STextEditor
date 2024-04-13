@@ -1,35 +1,65 @@
 package com.lebastudios.stexteditor.applogic;
 
 import com.lebastudios.stexteditor.TextEditorApplication;
+import com.lebastudios.stexteditor.exceptions.ResourceNotLoadedException;
 import javafx.scene.image.Image;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class Resources
 {
+    private static final Map<String, Image> loadedImages = new HashMap<>();
     public static Image getImg(File file)
     {
         String extension = file.isDirectory() ? "directory" : FileOperation.getFileExtension(file);
-
+        
+        Image image = loadedImages.get(extension);
+        
+        if (image == null) 
+        {
+            return loadImg(extension);
+        }
+        
+        return image;
+    }
+    
+    private static Image loadImg(String extension)
+    {
+        Image image = null;
+        
         // Check if the extension has an img defined in the actual theme
         String path = FilePaths.getImgDirectory() + extension + ".png";
         if (existsResource(path))
         {
-            return new Image(TextEditorApplication.class.getResourceAsStream(path));
+            image = new Image(TextEditorApplication.class.getResourceAsStream(path));
         }
 
         // Check if the extension has an img defined in the default theme
         path = FilePaths.getDefaultImgDirectory() + extension + ".png";
-        if (existsResource(path))
+        if (image == null && existsResource(path))
         {
             return new Image(TextEditorApplication.class.getResourceAsStream(path));
         }
 
+        if (image == null) 
+        {
+            image = new Image(TextEditorApplication.class.getResourceAsStream(FilePaths.getDefaultImgFile()));
+        }
+        
+        if (image == null) 
+        {
+            throw new ResourceNotLoadedException();
+        }
+        
+        loadedImages.put(extension, image);
+        
         // If the extension has no img defined, use the default img
-        return new Image(TextEditorApplication.class.getResourceAsStream(FilePaths.getDefaultImgFile()));
+        return image;
     }
 
     public static Image getIcon(String iconName)

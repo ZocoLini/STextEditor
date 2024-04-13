@@ -13,8 +13,6 @@ public abstract class Manager<T>
         System.out.println("Inicializacion de " + getClass().getSimpleName() + "...");
         this.managedObject = managedObject;
         
-        TextEditorApplication.INSTANCIATED_MANAGERS.add(this);
-
         // Añadimos los event handlers que necesitará cada Mnager en específico
         addEventHandlers();
     }

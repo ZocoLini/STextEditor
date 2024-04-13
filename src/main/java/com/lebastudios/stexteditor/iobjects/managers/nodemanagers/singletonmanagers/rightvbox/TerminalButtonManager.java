@@ -1,7 +1,9 @@
 package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.rightvbox;
 
+import com.lebastudios.stexteditor.exceptions.NotImplementedException;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.ButtonManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
+import javafx.event.ActionEvent;
 
 public class TerminalButtonManager extends ButtonManager
 {
@@ -21,20 +23,14 @@ public class TerminalButtonManager extends ButtonManager
     }
 
     @Override
-    protected String iconPath()
+    protected String iconID()
     {
         return "terminal.png";
     }
 
     @Override
-    public void onAction()
+    public void onAction(ActionEvent event)
     {
-
-    }
-
-    @Override
-    public void loadChilds()
-    {
-        
+        throw new NotImplementedException();
     }
 }

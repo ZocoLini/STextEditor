@@ -1,14 +1,13 @@
 package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.treeview;
 
 import com.lebastudios.stexteditor.iobjects.fxextends.ProyectTreeCell;
+import com.lebastudios.stexteditor.iobjects.fxextends.ProyectTreeItem;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.Linked2MM;
 import com.lebastudios.stexteditor.applogic.FileOperation;
 import com.lebastudios.stexteditor.applogic.config.global.Session;
 import com.lebastudios.stexteditor.iobjects.fxextends.ProyectTreeCellContent;
-import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.instanciablemanager.ProyectTreeCellManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.SingletonManager;
-import com.lebastudios.stexteditor.iobjects.managers.objectmanagers.ProyectTreeItemManager;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
@@ -32,13 +31,7 @@ public class ProyectTreeViewManager extends SingletonManager<TreeView<ProyectTre
     {
         super(MainManager.getInstance().proyectFileTreeView);
         
-        managedObject.setCellFactory(param -> {
-            ProyectTreeCell cell = new ProyectTreeCell();
-
-            new ProyectTreeCellManager(cell);
-
-            return cell;
-        });
+        managedObject.setCellFactory(param -> new ProyectTreeCell());
         
         openLastProjectDirectory();
     }
@@ -55,8 +48,6 @@ public class ProyectTreeViewManager extends SingletonManager<TreeView<ProyectTre
         Session.getStaticInstance().proyectDirectory = file.getPath();
         
         managedObject.setRoot(createTreeView(file));
-        
-        managedObject.getRoot().setExpanded(true);
     }
     
     private void openLastProjectDirectory()
@@ -96,8 +87,8 @@ public class ProyectTreeViewManager extends SingletonManager<TreeView<ProyectTre
             throw new IllegalArgumentException("File does not exist");
         }
 
-        TreeItem<ProyectTreeCellContent> root = new TreeItem<>(new ProyectTreeCellContent(file));
-        new ProyectTreeItemManager(root);
+        TreeItem<ProyectTreeCellContent> root = new ProyectTreeItem(new ProyectTreeCellContent(file));
+        
         root.setExpanded(false);
 
         if (file.isDirectory())

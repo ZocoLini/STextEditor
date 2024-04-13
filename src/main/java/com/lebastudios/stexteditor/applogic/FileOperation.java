@@ -140,8 +140,6 @@ public class FileOperation
      * para
      * que así pueda ser afectado por el resaltado de sintaxis.
      * Ej.: "xsd" -> "xml"; "iml" -> "xml";
-     * @param extension
-     * @return
      */
     public static String toEquivalentFileExtension(String extension)
     {

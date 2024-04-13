@@ -1,10 +1,8 @@
 package com.lebastudios.stexteditor;
 
 import com.lebastudios.stexteditor.applogic.Resources;
-import com.lebastudios.stexteditor.applogic.config.proyect.ProyectConfig;
 import com.lebastudios.stexteditor.applogic.config.global.Session;
 import com.lebastudios.stexteditor.applogic.config.global.GlobalConfig;
-import com.lebastudios.stexteditor.iobjects.managers.Manager;
 import com.lebastudios.stexteditor.events.GlobalEvents;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
 import javafx.application.Application;
@@ -14,13 +12,9 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TextEditorApplication extends Application
 {
-    public static final List<Manager<?>> INSTANCIATED_MANAGERS = new ArrayList<>();
-
     private static TextEditorApplication instance;
 
     public static Stage getStage()
@@ -44,7 +38,6 @@ public class TextEditorApplication extends Application
         
         Thread hiloPrecargaGlobalConfig = GlobalConfig.getStaticInstance().preload();
         Thread hiloPrecargaSession = Session.getStaticInstance().preload();
-        Thread hiloPrecargaProyectConfig = ProyectConfig.getStaticInstance().preload();
 
         FXMLLoader fxmlLoader =
                 new FXMLLoader(TextEditorApplication.class.getResource("hello-view.fxml"));
@@ -65,7 +58,6 @@ public class TextEditorApplication extends Application
         {
             hiloPrecargaGlobalConfig.join();
             hiloPrecargaSession.join();
-            hiloPrecargaProyectConfig.join();
         }
         catch (InterruptedException e)
         {
@@ -76,6 +68,8 @@ public class TextEditorApplication extends Application
         stage.show();
 
         System.out.println("Aplicación iniciada.");
+        
+        AppLoop.startLoop();
         
         MainManager.getInstance().load();
     }
@@ -91,5 +85,4 @@ public class TextEditorApplication extends Application
     {
         launch(args);
     }
-    
 }

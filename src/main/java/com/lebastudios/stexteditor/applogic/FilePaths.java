@@ -3,6 +3,7 @@ package com.lebastudios.stexteditor.applogic;
 import com.lebastudios.stexteditor.applogic.config.global.GlobalConfig;
 import com.lebastudios.stexteditor.applogic.config.global.Session;
 
+@SuppressWarnings("SameReturnValue")
 public final class FilePaths
 {
     public static String getActualProyectDirectory() { return Session.getStaticInstance().proyectDirectory + "/"; }

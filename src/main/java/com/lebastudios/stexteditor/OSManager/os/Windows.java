@@ -5,12 +5,18 @@ import java.io.IOException;
 class Windows implements IOperativeSystem
 {
     @Override
-    public void executeCommand(String commando)
+    public String fileSeparatorBar()
+    {
+        return "\\";
+    }
+
+    @Override
+    public Process executeCommand(String commando)
     {
         ProcessBuilder builder = new ProcessBuilder();
         builder.command("cmd.exe", "/c", commando);
         builder.inheritIO();
-        Process proceso = null;
+        Process proceso;
         
         try
         {
@@ -21,13 +27,6 @@ class Windows implements IOperativeSystem
             throw new RuntimeException(e);
         }
         
-        try
-        {
-            proceso.waitFor();
-        }
-        catch (InterruptedException e)
-        {
-            throw new RuntimeException(e);
-        }
+        return proceso;
     }
 }

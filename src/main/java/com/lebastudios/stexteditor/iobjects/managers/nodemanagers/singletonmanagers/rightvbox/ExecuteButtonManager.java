@@ -3,6 +3,7 @@ package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmana
 import com.lebastudios.stexteditor.exceptions.NotImplementedException;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.ButtonManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
+import javafx.event.ActionEvent;
 
 public class ExecuteButtonManager extends ButtonManager
 {
@@ -22,20 +23,14 @@ public class ExecuteButtonManager extends ButtonManager
     }
 
     @Override
-    protected String iconPath()
+    protected String iconID()
     {
         return "play.jpg";
     }
 
     @Override
-    public void onAction()
+    public void onAction(ActionEvent event)
     {
         throw new NotImplementedException();
-    }
-
-    @Override
-    public void loadChilds()
-    {
-        
     }
 }

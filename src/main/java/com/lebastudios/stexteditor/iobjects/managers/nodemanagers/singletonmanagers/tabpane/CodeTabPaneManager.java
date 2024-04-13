@@ -250,6 +250,7 @@ public class CodeTabPaneManager extends SingletonManager<TabPane>
         // Add an event in which, if Ctrl + Shift + ANYKEY is pressed
         stage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             if (event.isControlDown() && event.isShiftDown()) {
+                //noinspection SwitchStatementWithTooFewBranches
                 switch (event.getCode()) 
                 {
                     case KeyCode.S:

@@ -21,12 +21,16 @@ public class LeftVBoxManager extends SingletonManager<VBox>
     private LeftVBoxManager()
     {
         super(MainManager.getInstance().leftVBox);
-
     }
 
+    void alternarVisibilidadNode()
+    {
+        
+    }
+    
     @Override
     public void loadChilds()
     {
-        
+        FileSystemButtonManager.getInstance().load();
     }
 }

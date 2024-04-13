@@ -10,10 +10,7 @@ import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanag
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.tabpane.CodeTabPaneManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.treeview.ProyectTreeViewManager;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.WindowEvent;
@@ -21,7 +18,7 @@ import javafx.stage.WindowEvent;
 public class MainManager extends SingletonManager<BorderPane>
 {
     private static MainManager instance;
-    
+
     public static MainManager getInstance()
     {
         return instance;
@@ -32,7 +29,6 @@ public class MainManager extends SingletonManager<BorderPane>
         super(null);
         managedObject = mainPane;
         instance = this;
-
     }
 
     /*          Objetos de la interfaz fijos          */
@@ -55,6 +51,10 @@ public class MainManager extends SingletonManager<BorderPane>
     public Button botonEjecutar;
     @FXML
     public Button botonTerminal;
+    @FXML
+    public Button fileSystemButtonManager;
+    @FXML
+    public TextArea consoleTextArea;
 
     /*            Main Manager own methods            */
     /**************************************************/
@@ -95,20 +95,6 @@ public class MainManager extends SingletonManager<BorderPane>
     private void openNewProjectDirectory() {
         ProyectTreeViewManager.getInstance().openNewProjectDirectory();
     }
-
-    /*                Right VBox Methods               */
-    /**************************************************/
-    @FXML
-    private void compile()
-    {
-        CompileButtonManager.getInstance().onAction();
-    }
-    
-    @FXML
-    private void execute()
-    {
-        ExecuteButtonManager.getInstance().onAction();
-    }
     
     /*                Override Methods                */
     /**************************************************/
@@ -127,5 +113,6 @@ public class MainManager extends SingletonManager<BorderPane>
         ProyectTreeViewManager.getInstance().load();
         LeftVBoxManager.getInstance().load();
         RightVBoxManager.getInstance().load();
+        ConsoleTextAreaManager.getInstance().load();
     }
 }

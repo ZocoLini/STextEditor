@@ -23,7 +23,7 @@ import org.reactfx.Subscription;
 
 class KeyWordHighlighter
 {
-    public JSONPatterns patterns;
+    public final JSONPatterns patterns;
 
     public static class PatternInfo
     {
@@ -52,8 +52,8 @@ class KeyWordHighlighter
     
     private Pattern pattern;
 
-    private CodeArea codeArea;
-    private ExecutorService executor;
+    private final CodeArea codeArea;
+    private final ExecutorService executor;
 
     public KeyWordHighlighter(CodeArea codeArea, String extension)
     {
