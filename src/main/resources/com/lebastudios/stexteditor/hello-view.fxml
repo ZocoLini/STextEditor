@@ -17,6 +17,8 @@
                 <SeparatorMenuItem/>
                 <MenuItem mnemonicParsing="false" onAction="#openNewProjectDirectory" text="Open Project"/>
                 <SeparatorMenuItem/>
+                <MenuItem mnemonicParsing="false" text="Settings"/>
+                <SeparatorMenuItem/>
                 <MenuItem mnemonicParsing="false" onAction="#exit" text="Exit"/>
             </Menu>
             <Menu mnemonicParsing="false" text="Edit">
