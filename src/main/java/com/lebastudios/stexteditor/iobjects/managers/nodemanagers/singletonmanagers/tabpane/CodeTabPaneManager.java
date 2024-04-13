@@ -1,11 +1,13 @@
-package com.lebastudios.stexteditor.iobjects.managers;
+package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.tabpane;
 
-import com.lebastudios.stexteditor.annotations.Linked2MM;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.Linked2MM;
 import com.lebastudios.stexteditor.applogic.FileOperation;
-import com.lebastudios.stexteditor.applogic.config.Session;
+import com.lebastudios.stexteditor.applogic.config.global.Session;
 import com.lebastudios.stexteditor.exceptions.IllegalNodeCastException;
 import com.lebastudios.stexteditor.iobjects.AlertsInstanciator;
 import com.lebastudios.stexteditor.iobjects.fxextends.FormateableTextTab;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
+import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.SingletonManager;
 import com.lebastudios.stexteditor.iobjects.nodes.FormateableText;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -19,25 +21,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class TabPaneManager extends Manager<TabPane>
+public class CodeTabPaneManager extends SingletonManager<TabPane>
 {
-    private static TabPaneManager instance;
+    private static CodeTabPaneManager instance;
     
-    public static TabPaneManager getInstance()
+    public static CodeTabPaneManager getInstance()
     {
         if (instance == null) 
         {
-            instance = new TabPaneManager();
+            instance = new CodeTabPaneManager();
         }
         
         return instance;
     }
     
-    private TabPaneManager()
+    private CodeTabPaneManager()
     {
-        super(MainManager.getInstance().tabPane);
+        super(MainManager.getInstance().codeTabPane);
 
-        instanciated = true;
+        openLastFiles();
+
     }
     
     @Linked2MM
@@ -46,7 +49,7 @@ public class TabPaneManager extends Manager<TabPane>
         int i = 0;
         List<String> filePaths = Session.getStaticInstance().filesOpen;
 
-        for (var tab : representingObject.getTabs())
+        for (var tab : managedObject.getTabs())
         {
             if (i < filePaths.size() && filePaths.get(i) != null
                     && !filePaths.get(i).isEmpty())
@@ -81,8 +84,8 @@ public class TabPaneManager extends Manager<TabPane>
     @Linked2MM
     public void saveActualTab()
     {
-        Tab actualTab = representingObject.getSelectionModel().getSelectedItem();
-        int actualIndex = representingObject.getSelectionModel().getSelectedIndex();
+        Tab actualTab = managedObject.getSelectionModel().getSelectedItem();
+        int actualIndex = managedObject.getSelectionModel().getSelectedIndex();
 
         List<String> filePaths = Session.getStaticInstance().filesOpen;
 
@@ -93,21 +96,21 @@ public class TabPaneManager extends Manager<TabPane>
         }
         else
         {
-            File file = FileOperation.fileChooser().showSaveDialog(null).getAbsoluteFile();
+            File file = FileOperation.fileChooser().showSaveDialog(null);
 
             if (file == null)
             {
                 return;
             }
 
-            saveFile(actualTab, file);
+            saveFile(actualTab, file.getAbsoluteFile());
         }
     }
 
     @Linked2MM
     public void saveActualFileAs()
     {
-        Tab actualTab = representingObject.getSelectionModel().getSelectedItem();
+        Tab actualTab = managedObject.getSelectionModel().getSelectedItem();
         File file = FileOperation.fileChooser().showSaveDialog(null);
         
         if (file == null)
@@ -145,7 +148,7 @@ public class TabPaneManager extends Manager<TabPane>
 
         fileTab.setText(file.getName());
 
-        int index = representingObject.getTabs().indexOf(fileTab);
+        int index = managedObject.getTabs().indexOf(fileTab);
         final var filesOpen = Session.getStaticInstance().filesOpen;
         
         if (index > filesOpen.size() - 1)
@@ -159,7 +162,7 @@ public class TabPaneManager extends Manager<TabPane>
 
     }
 
-    public void openLastFiles()
+    private void openLastFiles()
     {
         List<String> lastFilesPaths = Session.getStaticInstance().filesOpen;
         
@@ -173,7 +176,7 @@ public class TabPaneManager extends Manager<TabPane>
             }
 
             File file = new File(filePath);
-            representingObject.getTabs().add(new FormateableTextTab(file));
+            managedObject.getTabs().add(new FormateableTextTab(file));
             auxLastFilesPaths.add(filePath);
         }
         
@@ -187,7 +190,7 @@ public class TabPaneManager extends Manager<TabPane>
 
         try
         {
-            content = FileOperation.read(file);
+            content = FileOperation.readFile(file);
         }
         catch (Exception e)
         {
@@ -197,8 +200,8 @@ public class TabPaneManager extends Manager<TabPane>
 
         Session.getStaticInstance().filesOpen.add(file.getPath());
         Tab newTab = new FormateableTextTab(file.getName(), content, FileOperation.getFileExtension(file));
-        representingObject.getTabs().add(newTab);
-        representingObject.getSelectionModel().select(newTab);
+        managedObject.getTabs().add(newTab);
+        managedObject.getSelectionModel().select(newTab);
     }
     
     @Linked2MM
@@ -219,8 +222,8 @@ public class TabPaneManager extends Manager<TabPane>
     {
         Session.getStaticInstance().filesOpen.add("");
         Tab newTab = new FormateableTextTab();
-        representingObject.getTabs().add(newTab);
-        representingObject.getSelectionModel().select(newTab);
+        managedObject.getTabs().add(newTab);
+        managedObject.getSelectionModel().select(newTab);
     }
     
     @Override
@@ -247,6 +250,7 @@ public class TabPaneManager extends Manager<TabPane>
         // Add an event in which, if Ctrl + Shift + ANYKEY is pressed
         stage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             if (event.isControlDown() && event.isShiftDown()) {
+                //noinspection SwitchStatementWithTooFewBranches
                 switch (event.getCode()) 
                 {
                     case KeyCode.S:
@@ -256,5 +260,11 @@ public class TabPaneManager extends Manager<TabPane>
                 }
             }
         });
+    }
+
+    @Override
+    public void loadChilds()
+    {
+        
     }
 }

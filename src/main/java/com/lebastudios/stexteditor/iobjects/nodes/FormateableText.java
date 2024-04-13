@@ -1,7 +1,6 @@
 package com.lebastudios.stexteditor.iobjects.nodes;
 
 import com.lebastudios.stexteditor.events.AppEvent;
-import javafx.geometry.VPos;
 import javafx.scene.input.KeyEvent;
 import org.fxmisc.richtext.*;
 import org.fxmisc.richtext.model.StyledDocument;
@@ -11,7 +10,7 @@ import java.util.Collection;
 public class FormateableText extends CodeArea
 {
     public static class OnTextInsertion extends AppEvent {}
-    public OnTextInsertion onTextInsertion = new OnTextInsertion();
+    public final OnTextInsertion onTextInsertion = new OnTextInsertion();
 
     public FormateableText(String string)
     {

@@ -42,14 +42,14 @@ public abstract class JSONSaveable<T>
 
         try
         {
-            String content = FileOperation.read(new File(getFilePath()));
+            String content = FileOperation.readFile(new File(getFilePath()));
             //noinspection unchecked
             instance = (T) new Gson().fromJson(content, this.getClass());
         }
         catch (Exception e)
         {
             System.err.println(this.getClass().getName() +
-                    " file not found. Using default.css configuration.");
+                    " file not found");
             instance = newInstance();
             //noinspection unchecked
             new Thread(((JSONSaveable<T>) instance)::save).start();
@@ -65,7 +65,7 @@ public abstract class JSONSaveable<T>
     {
         try
         {
-            FileOperation.write(new File(getFilePath()),
+            FileOperation.writeFile(new File(getFilePath()),
                     new GsonBuilder().setPrettyPrinting().create().toJson(this));
         }
         catch (Exception e)

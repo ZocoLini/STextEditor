@@ -1,4 +1,4 @@
-package com.lebastudios.stexteditor.annotations;
+package com.lebastudios.stexteditor.iobjects.managers.nodemanagers;
 
 /**
  * An annotation to link a method to the MainController class.

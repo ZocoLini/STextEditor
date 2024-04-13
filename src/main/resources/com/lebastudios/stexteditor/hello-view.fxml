@@ -3,59 +3,61 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="mainPane"
-            maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="900" prefWidth="1200" xmlns="http://javafx.com/javafx/17.0.2-ea"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.lebastudios.stexteditor.iobjects.managers.MainManager">
+            fx:controller="com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager">
     <top>
         <MenuBar fx:id="menuBar" prefHeight="10">
             <Menu mnemonicParsing="false" text="File">
-                <MenuItem mnemonicParsing="false" onAction="#newFile" text="New File" />
-                <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open File" />
-                <MenuItem mnemonicParsing="false" onAction="#saveActualTab" text="Save File" />
-                <MenuItem mnemonicParsing="false" onAction="#saveActualFileAs" text="Save File As" />
-                <SeparatorMenuItem />
-                <MenuItem mnemonicParsing="false" onAction="#openNewProjectDirectory" text="Open Project" />
-                <SeparatorMenuItem />
-                <MenuItem mnemonicParsing="false" onAction="#exit" text="Exit" />
+                <MenuItem mnemonicParsing="false" onAction="#newFile" text="New File"/>
+                <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open File"/>
+                <MenuItem mnemonicParsing="false" onAction="#saveActualTab" text="Save File"/>
+                <MenuItem mnemonicParsing="false" onAction="#saveActualFileAs" text="Save File As"/>
+                <SeparatorMenuItem/>
+                <MenuItem mnemonicParsing="false" onAction="#openNewProjectDirectory" text="Open Project"/>
+                <SeparatorMenuItem/>
+                <MenuItem mnemonicParsing="false" onAction="#exit" text="Exit"/>
             </Menu>
             <Menu mnemonicParsing="false" text="Edit">
-                <MenuItem mnemonicParsing="false" text="Cut" />
-                <MenuItem mnemonicParsing="false" text="Copy" />
-                <MenuItem mnemonicParsing="false" text="Paste" />
+                <MenuItem mnemonicParsing="false" text="Cut"/>
+                <MenuItem mnemonicParsing="false" text="Copy"/>
+                <MenuItem mnemonicParsing="false" text="Paste"/>
             </Menu>
             <Menu mnemonicParsing="false" text="Help">
-                <MenuItem mnemonicParsing="false" text="About" />
+                <MenuItem mnemonicParsing="false" text="About"/>
             </Menu>
         </MenuBar>
     </top>
-    
-    <center>
-        <SplitPane dividerPositions="0.1" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <TreeView fx:id="treeView" prefHeight="200.0" prefWidth="174.0" />
 
-            <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS" />
+    <center>
+        <SplitPane fx:id="terminalContainer" orientation="VERTICAL">
+            <SplitPane fx:id="proyectTreeViewContainer" dividerPositions="0.1" 
+                       prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                <TreeView fx:id="proyectFileTreeView" prefHeight="200.0" prefWidth="174.0"/>
+
+                <TabPane fx:id="codeTabPane" tabClosingPolicy="ALL_TABS"/>
+            </SplitPane>
+
+            <TextArea fx:id="consoleTextArea"/>
         </SplitPane>
     </center>
-    
+
     <bottom>
-        
+
     </bottom>
-    
+
     <!-- Gestor de Ventanas -->
     <left>
         <VBox fx:id="leftVBox" prefWidth="30">
-            <Button prefWidth="30" prefHeight="30"/>
-            <Button prefWidth="30" prefHeight="30"/>
+            <Button fx:id="fileSystemButtonManager" prefHeight="30" prefWidth="30"/>
+            <Button fx:id="botonTerminal" prefHeight="30" prefWidth="30"/>
+            <Button fx:id="botonCompilar" prefHeight="30" prefWidth="30"/>
+            <Button fx:id="botonEjecutar" prefHeight="30" prefWidth="30"/>
         </VBox>
     </left>
-    
+
     <!-- Acciones sobre el codigo -->
     <right>
-        <VBox fx:id="rightVBox" prefWidth="30">
-            <Button fx:id="botonCompilar" onAction="#compile" prefWidth="30" prefHeight="30"/>
-            <Button fx:id="botonEjecutar" onAction="#execute" prefWidth="30" prefHeight="30"/>
-        </VBox>
     </right>
 </BorderPane>

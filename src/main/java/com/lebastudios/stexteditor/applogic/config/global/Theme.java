@@ -1,4 +1,4 @@
-package com.lebastudios.stexteditor.applogic.config;
+package com.lebastudios.stexteditor.applogic.config.global;
 
 import com.lebastudios.stexteditor.TextEditorApplication;
 import com.lebastudios.stexteditor.applogic.Resources;
@@ -103,7 +103,7 @@ public class Theme
             return false;
         }
         
-        Config.getStaticInstance().editorConfig.theme = themeName;
+        GlobalConfig.getStaticInstance().editorConfig.theme = themeName;
         
         loadThemeStyles();
 

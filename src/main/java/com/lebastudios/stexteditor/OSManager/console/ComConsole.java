@@ -4,8 +4,8 @@ import com.lebastudios.stexteditor.OSManager.os.OperativeSystem;
 
 public class ComConsole
 {
-    public static void executeCommand(String commando)
+    public static Process executeCommand(String commando)
     {
-        OperativeSystem.getActualOS().executeCommand(commando);
+        return OperativeSystem.getActualOS().executeCommand(commando);
     }
 }

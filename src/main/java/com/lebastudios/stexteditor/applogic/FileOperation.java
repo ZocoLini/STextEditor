@@ -1,6 +1,7 @@
 package com.lebastudios.stexteditor.applogic;
 
 import com.lebastudios.stexteditor.TextEditorApplication;
+import com.lebastudios.stexteditor.applogic.config.global.Session;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
@@ -9,7 +10,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class FileOperation
@@ -17,6 +17,7 @@ public class FileOperation
     public static FileChooser fileChooser()
     {
         FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File(Session.getStaticInstance().proyectDirectory));
         fileChooser.setTitle("Open file");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All files", "*.*"));
         return fileChooser;
@@ -29,7 +30,7 @@ public class FileOperation
         return directoryChooser;
     }
 
-    public static String read(File file) throws Exception
+    public static String readFile(File file) throws Exception
     {
         if (!file.exists())
         {
@@ -53,10 +54,10 @@ public class FileOperation
 
     public static String readResource(String path) throws Exception
     {
-        return read(new File(TextEditorApplication.class.getResource(path).toURI()));
+        return readFile(new File(TextEditorApplication.class.getResource(path).toURI()));
     }
     
-    public static void write(File file, String content) throws Exception
+    public static void writeFile(File file, String content) throws Exception
     {
         if (file.getParentFile() != null)
         {
@@ -141,8 +142,6 @@ public class FileOperation
      * para
      * que así pueda ser afectado por el resaltado de sintaxis.
      * Ej.: "xsd" -> "xml"; "iml" -> "xml";
-     * @param extension
-     * @return
      */
     public static String toEquivalentFileExtension(String extension)
     {

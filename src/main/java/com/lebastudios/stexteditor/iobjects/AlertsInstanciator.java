@@ -14,4 +14,9 @@ public class AlertsInstanciator
 
         return alert.showAndWait().filter(buttonType -> buttonType == ButtonType.OK).isPresent();
     }
+    
+    public static String insertTextDialog(String title, String message)
+    {
+        return "renamed";
+    }
 }
