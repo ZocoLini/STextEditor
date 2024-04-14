@@ -20,7 +20,6 @@ public class Notification extends VBox
 
         // Establecer el estilo del cuadro de notificación
         setPadding(new Insets(10));
-        setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), Insets.EMPTY)));
 
         // Agregar un icono
         Circle icon = new Circle(5, switch (msgType) 

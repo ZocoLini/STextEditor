@@ -1,41 +1,48 @@
-/***********************************/
-/* Estilo de los diferentes fondos */
-/***********************************/
-.primary-bg {
-    -fx-background-color: #f0f0f0;
+/*******************************************************************************
+ *                                                                             *
+ * CSS for the LIGHT theme                                                     *
+ *                                                                             *
+ ******************************************************************************/
+
+@import "/themeBase.css";
+
+/*******************************************************************************
+ *                                                                             *
+ * Global constants                                                            *
+ *                                                                             *
+ ******************************************************************************/
+.root {
+    -fx-text-base-color: black;
 }
 
-.secondary-bg {
-    -fx-background-color: #f0f0f0;
+/*******************************************************************************
+ *                                                                             *
+ * Tiles                                                                       *
+ *                                                                             *
+ ******************************************************************************/
+.tile:selected {
+    -fx-background-color: derive(-swatch-100, +75%);
 }
 
-.third-bg {
-    -fx-background-color: #f0f0f0;
+.tile-title-label * {
+    -fx-text-fill: #222;
 }
 
-.fourth-bg {
-    -fx-background-color: #f0f0f0;
+.tile .slider .axis {
+    -fx-tick-label-fill: #222;
 }
 
-/******************************************/
-/* Estilo de los diferents tipos de texto */
-/******************************************/
-.error-text {
-    -fx-color: #ff0000;
+/*******************************************************************************
+ *                                                                             *
+ * Text field, text area                                                       *
+ *                                                                             *
+ ******************************************************************************/
+.text-area, .text-field {
+    -underline-color: #eee;
 }
 
-.success-text {
-    -fx-color: #00ff00;
-}
-
-.warning-text {
-    -fx-color: #ffcc00;
-}
-
-.info-text {
-    -fx-color: #0000ff;
-}
-
-.normal-text {
-    -fx-color: #333;
+.jfx-slider .slider-value {
+    -fx-fill: #222;
+    -fx-stroke: #222;
+    -fx-stroke-width: 1;
 }

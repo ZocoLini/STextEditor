@@ -4,12 +4,21 @@
 
 /* Aplica a _todo el texto. commongLang.css y $extension$.css puede sobrescribir propiedades 
     coincidentes */
-.text {
-    -fx-color: #F4F1DE;
-    -fx-font-size: 16;
-    -fx-font-family: monospace;
+.code-area {
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+    -fx-background-color: #ffffff;
 }
 
-.styled-text-area {
-    -fx-background-color: #14110F;
+.code-area .line-number {
+    -fx-fill: #808080;
+}
+
+.code-area .caret {
+    -fx-background-color: #007bff;
+}
+
+.code-area .selection {
+    -fx-background-color: rgba(0, 123, 255, 0.3);
 }

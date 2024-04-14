@@ -4,7 +4,8 @@ module com.lebastudios.stexteditor {
     requires com.google.gson;
     requires org.fxmisc.richtext;
     requires reactfx;
-    
+    requires java.desktop;
+
     exports com.lebastudios.stexteditor;
     opens com.lebastudios.stexteditor to javafx.fxml;
     
