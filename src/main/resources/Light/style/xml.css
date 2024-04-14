@@ -1,12 +1,10 @@
 .tag {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
+    -fx-fill: #005cda;
 }
 .attribute {
     -fx-fill: blue;
     -fx-font-weight: bold;
 }
 .attributevalue {
-    -fx-fill: blue;
-    -fx-font-weight: bold;
+    -fx-fill: #a7a216;
 }

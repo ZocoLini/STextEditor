@@ -47,6 +47,11 @@ public class AppLoop
     {
         onUpdate.removeListener(eventMethod);
     }
+    
+    public static boolean contains(IEventMethod eventMethod)
+    {
+        return onUpdate.hasListener(eventMethod);
+    }
 
     public static void waitAndExecute(IEventMethod eventMethod, long timeToWaitInMiliSecs)
     {

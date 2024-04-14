@@ -1,6 +1,6 @@
 package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.leftvbox;
 
-import com.lebastudios.stexteditor.exceptions.NotImplementedException;
+import com.lebastudios.stexteditor.exceptions.IdeVersionMethodNotImplemented;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.ButtonManager;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
 import javafx.event.ActionEvent;
@@ -25,12 +25,12 @@ public class ExecuteButtonManager extends ButtonManager
     @Override
     protected String iconID()
     {
-        return "play.jpg";
+        return "play.png";
     }
 
     @Override
     public void onAction(ActionEvent event)
     {
-        throw new NotImplementedException();
+        throw new IdeVersionMethodNotImplemented();
     }
 }

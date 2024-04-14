@@ -11,6 +11,7 @@ public class GlobalConfig extends JSONSaveable<GlobalConfig>
         public String font = "Arial";
         public int fontSize = 13;
         public int indentation = 4;
+        public int tabSize = 4;
     }
 
     private static GlobalConfig instance;

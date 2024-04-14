@@ -82,7 +82,7 @@ public class ProyectTreeItem extends TreeItem<ProyectTreeCellContent>
         monitorear = true;
         AppLoop.subscribe(monitorearHijos);
     }
-
+    
     private final IEventMethod monitorearHijos = new IEventMethod()
     {
         final ProyectTreeItem treeItem = ProyectTreeItem.this;
@@ -102,37 +102,50 @@ public class ProyectTreeItem extends TreeItem<ProyectTreeCellContent>
             // Si no es direcotrio no continua monitoreando los hijos porque no tiene
             if (!representingFile.isDirectory()) return;
 
-            final var children = treeItem.getChildren();
-
-            // Solo comprobamos cambios si se ha modificado el número de hijos. Posibles problemas por parte de esto
-            //  si se borrasen y creasen la misma cantidad entre comprobaciones
-            if (children.size() == representingFile.listFiles().length) return;
-
-            // Añadimos los archivos o directorios que no esten representados
-            for (File file : representingFile.listFiles())
-            {
-                if (!file.getName().equals(".seal") && file.getName().charAt(0) == '.') continue;
-
-                if (!isRepresented(file))
-                {
-                    // Retraso de la adicción porque no detecta los hijos tan rápido como se detecta el cambio
-                    try
-                    {
-                        Thread.sleep(1000);
-                    }
-                    catch (InterruptedException e)
-                    {
-                        throw new RuntimeException(e);
-                    }
-
-                    children.add(ProyectTreeViewManager.createTreeView(file));
-                }
-            }
-
-            // Eliminamos los archivos o direcotrios que ya no existan
-            children.removeIf(childrenTreeItem -> !childrenTreeItem.getValue().getRepresentingFile().exists());
+            actualizar();
         }
     };
+
+    private void actualizar()
+    {
+        final var representingFile = getRepresentingFile();
+        final var children = this.getChildren();
+
+        // Solo comprobamos cambios si se ha modificado el número de hijos. Posibles problemas por parte de esto
+        //  si se borrasen y creasen la misma cantidad entre comprobaciones
+        if (children.size() == representingFile.listFiles().length) return;
+
+        // Añadimos los archivos o directorios que no esten representados
+        for (File file : representingFile.listFiles())
+        {
+            if (!file.getName().equals(".seal") && file.getName().charAt(0) == '.') continue;
+
+            if (!isRepresented(file))
+            {
+                // Retraso de la adicción porque no detecta los hijos tan rápido como se detecta el cambio
+                try
+                {
+                    Thread.sleep(1000);
+                }
+                catch (InterruptedException e)
+                {
+                    throw new RuntimeException(e);
+                }
+
+                children.add(ProyectTreeViewManager.createTreeView(file));
+            }
+        }
+
+        // Eliminamos los archivos o direcotrios que ya no existan
+        children.removeIf(childrenTreeItem -> !childrenTreeItem.getValue().getRepresentingFile().exists());
+    }
+    
+    public void actualizarHijos()
+    {
+        if (monitorear) return;
+        
+        actualizar();
+    }
 
     private boolean isRepresented(File file)
     {

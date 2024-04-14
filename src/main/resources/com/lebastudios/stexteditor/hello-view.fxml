@@ -5,28 +5,7 @@
 
 <BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900" prefWidth="1200" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.MainManager">
     <top>
-        <MenuBar fx:id="menuBar" prefHeight="10">
-            <Menu mnemonicParsing="false" text="File">
-                <MenuItem mnemonicParsing="false" onAction="#newFile" text="New File" />
-                <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open File" />
-                <MenuItem mnemonicParsing="false" onAction="#saveActualTab" text="Save File" />
-                <MenuItem mnemonicParsing="false" onAction="#saveActualFileAs" text="Save File As" />
-                <SeparatorMenuItem />
-                <MenuItem mnemonicParsing="false" onAction="#openNewProjectDirectory" text="Open Project" />
-                <SeparatorMenuItem />
-                <MenuItem mnemonicParsing="false" text="Settings" />
-                <SeparatorMenuItem />
-                <MenuItem mnemonicParsing="false" onAction="#exit" text="Exit" />
-            </Menu>
-            <Menu mnemonicParsing="false" text="Edit">
-                <MenuItem mnemonicParsing="false" text="Cut" />
-                <MenuItem mnemonicParsing="false" text="Copy" />
-                <MenuItem mnemonicParsing="false" text="Paste" />
-            </Menu>
-            <Menu mnemonicParsing="false" text="Help">
-                <MenuItem mnemonicParsing="false" text="About" />
-            </Menu>
-        </MenuBar>
+        <MenuBar fx:id="menuBar" prefHeight="10"/>
     </top>
 
     <center>

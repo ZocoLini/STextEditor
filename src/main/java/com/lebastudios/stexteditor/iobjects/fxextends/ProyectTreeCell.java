@@ -40,9 +40,9 @@ public class ProyectTreeCell extends TreeCell<ProyectTreeCellContent>
     
     public ProyectTreeCell() {
         imageView = new ImageView();
-        imageView.setFitHeight(16);
-        imageView.setFitWidth(16);
-
+        imageView.setFitHeight(20);
+        imageView.setFitWidth(20);
+        
         addEventHandlers();
     }
 
@@ -93,6 +93,8 @@ public class ProyectTreeCell extends TreeCell<ProyectTreeCellContent>
         {
             throw new RuntimeException(e);
         }
+        
+        updateThisItemChildren();
     }
     
     private void createDirectory(ActionEvent event)
@@ -102,12 +104,15 @@ public class ProyectTreeCell extends TreeCell<ProyectTreeCellContent>
         File newFile = new File(getRepresentingFile().getAbsoluteFile() + "/" + name);
 
         newFile.mkdirs();
+        updateThisItemChildren();
     }
     
     private void removeRepresentingFile(ActionEvent event)
     {
         System.out.println("Se intentará eliminar " + getRepresentingFile().getAbsolutePath());
         removeFile(getRepresentingFile());
+
+        updateParentItemChildren();
     }
 
     private void removeFile(File fileToRemove)
@@ -132,6 +137,16 @@ public class ProyectTreeCell extends TreeCell<ProyectTreeCellContent>
         fileToRemove.delete();
     }
 
+    private void updateParentItemChildren()
+    {
+        ((ProyectTreeItem) this.getTreeItem().getParent()).actualizarHijos();
+    }
+    
+    private void updateThisItemChildren()
+    {
+        ((ProyectTreeItem) this.getTreeItem()).actualizarHijos();
+    }
+    
     private void openRepresentingFile(MouseEvent event)
     {
         if (event.getClickCount() < 2) return;
@@ -166,16 +181,20 @@ public class ProyectTreeCell extends TreeCell<ProyectTreeCellContent>
 
     private void makeFileContextActions()
     {
-        MenuItem renameItem = new MenuItem("Es una file");
-
         contextMenu = new ContextMenu(defaultMenuItems());
-        
-        contextMenu.getItems().add(renameItem);
     }
 
     private void makeRootContextActions()
     {
-        
+        contextMenu = new ContextMenu();
+
+        MenuItem menuItem = new MenuItem("New File");
+        menuItem.setOnAction(this::createFile);
+        contextMenu.getItems().add(menuItem);
+
+        menuItem = new MenuItem("New Directory");
+        menuItem.setOnAction(this::createDirectory);
+        contextMenu.getItems().add(menuItem);
     }
     
     private void makeDirectoryContextActions()

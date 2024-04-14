@@ -2,8 +2,13 @@ package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmana
 
 import com.lebastudios.stexteditor.applogic.Resources;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 public abstract class ButtonManager extends SingletonManager<Button>
 {
@@ -15,6 +20,9 @@ public abstract class ButtonManager extends SingletonManager<Button>
         compileIcon.setFitHeight(20);
         compileIcon.setFitWidth(20);
         this.managedObject.setGraphic(compileIcon);
+
+        managedObject.setBackground(
+                new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(0), Insets.EMPTY)));
 
         managedObject.setOnAction(this::onAction);
     }

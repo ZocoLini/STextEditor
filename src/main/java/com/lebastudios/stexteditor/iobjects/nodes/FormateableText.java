@@ -10,6 +10,7 @@ import java.util.Collection;
 public class FormateableText extends CodeArea
 {
     public static class OnTextInsertion extends AppEvent {}
+
     public final OnTextInsertion onTextInsertion = new OnTextInsertion();
 
     public FormateableText(String string)
@@ -17,7 +18,7 @@ public class FormateableText extends CodeArea
         super(string);
 
         this.addDefaultEventHandlers();
-        
+
         this.setParagraphGraphicFactory(LineNumberFactory.get(this));
     }
 

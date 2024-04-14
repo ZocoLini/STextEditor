@@ -1,6 +1,7 @@
 package com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers;
 
 import com.lebastudios.stexteditor.TextEditorApplication;
+import com.lebastudios.stexteditor.applogic.Resources;
 import com.lebastudios.stexteditor.applogic.config.global.Session;
 import com.lebastudios.stexteditor.iobjects.fxextends.ProyectTreeCellContent;
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.leftvbox.LeftVBoxManager;
@@ -8,6 +9,7 @@ import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanag
 import com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers.treeview.ProyectTreeViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.WindowEvent;
@@ -58,46 +60,6 @@ public class MainManager extends SingletonManager<BorderPane>
     @FXML
     public Button botonNotificaciones;
 
-    /*            Main Manager own methods            */
-    /**************************************************/
-    @FXML
-    private void exit()
-    {
-        Session.getStaticInstance().reset();
-        
-        TextEditorApplication.getStage().close();
-    }
-
-    /*                Tab Pane Methods                */
-    /**************************************************/
-    
-    @FXML
-    private void saveActualTab() {
-        CodeTabPaneManager.getInstance().saveActualTab();
-    }
-
-    @FXML
-    private void saveActualFileAs() {
-        CodeTabPaneManager.getInstance().saveActualFileAs();
-    }
-
-    @FXML
-    private void openFile() {
-        CodeTabPaneManager.getInstance().openFile();
-    }
-    
-    @FXML
-    private void newFile() {
-        CodeTabPaneManager.getInstance().newFile();
-    }
-
-    /*                Tree View Methods               */
-    /**************************************************/
-    @FXML
-    private void openNewProjectDirectory() {
-        ProyectTreeViewManager.getInstance().openNewProjectDirectory();
-    }
-    
     /*                Override Methods                */
     /**************************************************/
     @Override
@@ -111,6 +73,7 @@ public class MainManager extends SingletonManager<BorderPane>
     @Override
     public void loadChilds()
     {
+        MenuBarManager.getInstance().load();
         CodeTabPaneManager.getInstance().load();
         ProyectTreeViewManager.getInstance().load();
         LeftVBoxManager.getInstance().load();

@@ -1,16 +1,10 @@
 .match-bracket {
-    -rtfx-background-color: #1B1853;
+    -rtfx-background-color: #76492E;
 }
-
-/* Aplica a _todo el texto. commongLang.css y $extension$.css puede sobrescribir propiedades 
-    coincidentes */
-.text {
-    -fx-text-fill: #dee0c8;
-    -fx-font-size: 16;
-    -fx-font-family: "Consolas";
+.text{
+    -fx-fill: white;
 }
-
 .styled-text-area {
-    -fx-background-color: #1e1f22;
+    -fx-background-color: #222;
     -fx-border-color: #2b2d30;
 }

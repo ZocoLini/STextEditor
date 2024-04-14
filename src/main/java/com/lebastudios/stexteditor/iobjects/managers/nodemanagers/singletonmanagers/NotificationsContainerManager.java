@@ -4,6 +4,8 @@ import com.lebastudios.stexteditor.iobjects.nodes.Notification;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class NotificationsContainerManager extends SingletonManager<BorderPane>
@@ -26,7 +28,10 @@ public class NotificationsContainerManager extends SingletonManager<BorderPane>
         notiContainer = new VBox(5);
         notiContainer.setPadding(new Insets(20));
         
-        managedObject.setCenter(new ScrollPane(notiContainer));
+        ScrollPane scrollPane = new ScrollPane(notiContainer);
+        scrollPane.setFitToWidth(true);
+        
+        managedObject.setCenter(scrollPane);
     }
     
     public void addNotification(Notification notification)
