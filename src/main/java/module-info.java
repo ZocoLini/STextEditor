@@ -1,29 +1,25 @@
-module com.lebastudios.stexteditor {
+module com.lebastudios.sealcode {
     requires javafx.controls;
     requires javafx.fxml;
     requires com.google.gson;
     requires org.fxmisc.richtext;
     requires reactfx;
     requires java.desktop;
+    
+    exports com.lebastudios.sealcode;
+    opens com.lebastudios.sealcode to javafx.fxml;
 
-    exports com.lebastudios.stexteditor;
-    opens com.lebastudios.stexteditor to javafx.fxml;
+    exports com.lebastudios.sealcode.applogic;
     
-    exports com.lebastudios.stexteditor.iobjects.nodes;
+    opens com.lebastudios.sealcode.applogic.txtformatter to com.google.gson, javafx.fxml;
     
-    exports com.lebastudios.stexteditor.applogic;
+    exports com.lebastudios.sealcode.iobjects.fxextends;
+    opens com.lebastudios.sealcode.iobjects.fxextends to javafx.fxml;
     
-    opens com.lebastudios.stexteditor.applogic.txtformatter to com.google.gson, javafx.fxml;
-    
-    exports com.lebastudios.stexteditor.iobjects.fxextends;
-    opens com.lebastudios.stexteditor.iobjects.fxextends to javafx.fxml;
-    
-    exports com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers;
-    opens com.lebastudios.stexteditor.iobjects.managers.nodemanagers.singletonmanagers to javafx.fxml;
-    
-    exports com.lebastudios.stexteditor.applogic.config.proyect;
-    opens com.lebastudios.stexteditor.applogic.config.proyect to com.google.gson, javafx.fxml;
-    
-    exports com.lebastudios.stexteditor.applogic.config.global;
-    opens com.lebastudios.stexteditor.applogic.config.global to com.google.gson, javafx.fxml;
+    exports com.lebastudios.sealcode.iobjects.managers.nodemanagers.singletonmanagers;
+    opens com.lebastudios.sealcode.iobjects.managers.nodemanagers.singletonmanagers to javafx.fxml;
+
+    exports com.lebastudios.sealcode.applogic.config;
+    opens com.lebastudios.sealcode.applogic.config to com.google.gson, javafx.fxml;
+    opens com.lebastudios.sealcode.applogic to javafx.fxml;
 }
