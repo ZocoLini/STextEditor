@@ -1,13 +1,10 @@
-package com.lebastudios.sealcode.iobjects.managers.nodemanagers.singletonmanagers.tabpane;
+package com.lebastudios.sealcode.iobjects.fxextends;
 
-import com.lebastudios.sealcode.iobjects.Dialogs;
-import com.lebastudios.sealcode.iobjects.fxextends.FormateableText;
 import com.lebastudios.sealcode.applogic.FileOperation;
 import com.lebastudios.sealcode.applogic.config.Session;
+import com.lebastudios.sealcode.applogic.events.AppEvents;
 import com.lebastudios.sealcode.exceptions.IllegalNodeCastException;
-import com.lebastudios.sealcode.iobjects.fxextends.FormateableTextTab;
-import com.lebastudios.sealcode.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
-import com.lebastudios.sealcode.iobjects.managers.nodemanagers.singletonmanagers.SingletonManager;
+import com.lebastudios.sealcode.iobjects.Dialogs;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyCode;
@@ -19,36 +16,24 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
-public class CodeTabPaneManager extends SingletonManager<TabPane>
+public final class CodeTabPane extends TabPane
 {
-    private static CodeTabPaneManager instance;
-
-    public static CodeTabPaneManager getInstance()
+    public CodeTabPane()
     {
-        if (instance == null)
-        {
-            instance = new CodeTabPaneManager();
-        }
+        super();
 
-        return instance;
-    }
-
-    private CodeTabPaneManager()
-    {
-        super(MainManager.getInstance().codeTabPane);
-
+        addEventHandlers();
+        
         openLastFiles();
-
     }
 
-    
+
     public void saveAllFiles()
     {
         int i = 0;
         List<String> filePaths = Session.getStaticInstance().filesOpen;
 
-        for (var tab : managedObject.getTabs())
+        for (var tab : this.getTabs())
         {
             if (i < filePaths.size() && filePaths.get(i) != null
                     && !filePaths.get(i).isEmpty())
@@ -80,11 +65,11 @@ public class CodeTabPaneManager extends SingletonManager<TabPane>
         System.out.println("All files has been saved!!");
     }
 
-    
+
     public void saveActualTab()
     {
-        Tab actualTab = managedObject.getSelectionModel().getSelectedItem();
-        int actualIndex = managedObject.getSelectionModel().getSelectedIndex();
+        Tab actualTab = this.getSelectionModel().getSelectedItem();
+        int actualIndex = this.getSelectionModel().getSelectedIndex();
 
         List<String> filePaths = Session.getStaticInstance().filesOpen;
 
@@ -106,10 +91,10 @@ public class CodeTabPaneManager extends SingletonManager<TabPane>
         }
     }
 
-    
+
     public void saveActualFileAs()
     {
-        Tab actualTab = managedObject.getSelectionModel().getSelectedItem();
+        Tab actualTab = this.getSelectionModel().getSelectedItem();
         File file = FileOperation.fileChooser().showSaveDialog(null);
 
         if (file == null)
@@ -147,7 +132,7 @@ public class CodeTabPaneManager extends SingletonManager<TabPane>
 
         fileTab.setText(file.getName());
 
-        int index = managedObject.getTabs().indexOf(fileTab);
+        int index = this.getTabs().indexOf(fileTab);
         final var filesOpen = Session.getStaticInstance().filesOpen;
 
         if (index > filesOpen.size() - 1)
@@ -175,7 +160,7 @@ public class CodeTabPaneManager extends SingletonManager<TabPane>
             }
 
             File file = new File(filePath);
-            managedObject.getTabs().add(new FormateableTextTab(file));
+            this.getTabs().add(new FormateableTextTab(file));
             auxLastFilesPaths.add(filePath);
         }
 
@@ -199,11 +184,11 @@ public class CodeTabPaneManager extends SingletonManager<TabPane>
 
         Session.getStaticInstance().filesOpen.add(file.getPath());
         Tab newTab = new FormateableTextTab(file.getName(), content, FileOperation.getFileExtension(file));
-        managedObject.getTabs().add(newTab);
-        managedObject.getSelectionModel().select(newTab);
+        this.getTabs().add(newTab);
+        this.getSelectionModel().select(newTab);
     }
 
-    
+
     public void openFile()
     {
         File file = FileOperation.fileChooser().showOpenDialog(null);
@@ -216,20 +201,21 @@ public class CodeTabPaneManager extends SingletonManager<TabPane>
         openFile(file);
     }
 
-    
+
     public void newFile()
     {
         Session.getStaticInstance().filesOpen.add("");
         Tab newTab = new FormateableTextTab();
-        managedObject.getTabs().add(newTab);
-        managedObject.getSelectionModel().select(newTab);
+        this.getTabs().add(newTab);
+        this.getSelectionModel().select(newTab);
     }
 
-    @Override
-    protected void addEventHandlers()
+    private void addEventHandlers()
     {
+        AppEvents.ON_APP_EXIT.addListener(this::saveAllFiles);
+        
         // Add an event in which, if Ctrl + ANYKEY is pressed
-        stage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+        this.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             if (event.isControlDown() && !event.isShiftDown()) {
                 switch (event.getCode())
                 {
@@ -244,10 +230,13 @@ public class CodeTabPaneManager extends SingletonManager<TabPane>
                         break;
                     default:
                 }
+                
+                event.consume();
             }
         });
+        
         // Add an event in which, if Ctrl + Shift + ANYKEY is pressed
-        stage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+        this.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             if (event.isControlDown() && event.isShiftDown()) {
                 //noinspection SwitchStatementWithTooFewBranches
                 switch (event.getCode())
@@ -257,13 +246,9 @@ public class CodeTabPaneManager extends SingletonManager<TabPane>
                         break;
                     default:
                 }
+
+                event.consume();
             }
         });
-    }
-
-    @Override
-    public void loadChilds()
-    {
-
     }
 }

@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.applogic;
 
-import com.lebastudios.sealcode.TextEditorApplication;
+import com.lebastudios.sealcode.SealCodeApplication;
 import com.lebastudios.sealcode.applogic.config.Session;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -54,7 +54,7 @@ public class FileOperation
 
     public static String readResource(String path) throws Exception
     {
-        return readFile(new File(TextEditorApplication.class.getResource(path).toURI()));
+        return readFile(new File(SealCodeApplication.class.getResource(path).toURI()));
     }
 
     public static void writeFile(File file, String content) throws Exception

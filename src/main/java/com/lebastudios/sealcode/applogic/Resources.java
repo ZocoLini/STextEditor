@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.applogic;
 
-import com.lebastudios.sealcode.TextEditorApplication;
+import com.lebastudios.sealcode.SealCodeApplication;
 import com.lebastudios.sealcode.exceptions.ResourceNotLoadedException;
 import javafx.scene.image.Image;
 
@@ -36,19 +36,19 @@ public final class Resources
         String path = FilePaths.getImgDirectory() + extension + ".png";
         if (existsResource(path))
         {
-            image = new Image(TextEditorApplication.class.getResourceAsStream(path));
+            image = new Image(SealCodeApplication.class.getResourceAsStream(path));
         }
 
         // Check if the extension has an img defined in the default theme
         path = FilePaths.getDefaultImgDirectory() + extension + ".png";
         if (image == null && existsResource(path))
         {
-            return new Image(TextEditorApplication.class.getResourceAsStream(path));
+            return new Image(SealCodeApplication.class.getResourceAsStream(path));
         }
 
         if (image == null) 
         {
-            image = new Image(TextEditorApplication.class.getResourceAsStream(FilePaths.getDefaultImgFile()));
+            image = new Image(SealCodeApplication.class.getResourceAsStream(FilePaths.getDefaultImgFile()));
         }
         
         if (image == null) 
@@ -67,16 +67,16 @@ public final class Resources
         String path = FilePaths.getIconDirectory() + iconName;
         if (existsResource(path))
         {
-            return new Image(TextEditorApplication.class.getResourceAsStream(path));
+            return new Image(SealCodeApplication.class.getResourceAsStream(path));
         }
 
         path = FilePaths.getDefaultIconDirectory() + iconName;
         if (existsResource(path))
         {
-            return new Image(TextEditorApplication.class.getResourceAsStream(path));
+            return new Image(SealCodeApplication.class.getResourceAsStream(path));
         }
 
-        return new Image(TextEditorApplication.class.getResourceAsStream(FilePaths.getDefaultIconFile()));
+        return new Image(SealCodeApplication.class.getResourceAsStream(FilePaths.getDefaultIconFile()));
     }
 
     public static String getExtensionStyle(String fileExtension)
@@ -85,21 +85,21 @@ public final class Resources
         String langStyleFile = FilePaths.getStyleDirectory() + fileExtension + ".css";
         if (existsResource(langStyleFile))
         {
-            return TextEditorApplication.class.getResource(langStyleFile).toExternalForm();
+            return SealCodeApplication.class.getResource(langStyleFile).toExternalForm();
         }
 
         // Check if the equivalent extension has a style defined in the actual theme
         langStyleFile = FilePaths.getStyleDirectory() + FileOperation.toEquivalentFileExtension(fileExtension) + ".css";
         if (existsResource(langStyleFile))
         {
-            return TextEditorApplication.class.getResource(langStyleFile).toExternalForm();
+            return SealCodeApplication.class.getResource(langStyleFile).toExternalForm();
         }
 
         // Check if the extension has a style defined in the default theme
         langStyleFile = FilePaths.getDefaultStyleDirectory() + fileExtension + ".css";
         if (existsResource(langStyleFile))
         {
-            return TextEditorApplication.class.getResource(langStyleFile).toExternalForm();
+            return SealCodeApplication.class.getResource(langStyleFile).toExternalForm();
         }
 
         // Check if the equivalent extension has a style defined in the default theme
@@ -107,11 +107,11 @@ public final class Resources
                 FilePaths.getDefaultStyleDirectory() + FileOperation.toEquivalentFileExtension(fileExtension) + ".css";
         if (existsResource(langStyleFile))
         {
-            return TextEditorApplication.class.getResource(langStyleFile).toExternalForm();
+            return SealCodeApplication.class.getResource(langStyleFile).toExternalForm();
         }
 
         // If the extension has no style defined, use the default style
-        return TextEditorApplication.class.getResource(FilePaths.getDefaultLangStyleFile()).toExternalForm();
+        return SealCodeApplication.class.getResource(FilePaths.getDefaultLangStyleFile()).toExternalForm();
     }
 
     private static String getClassStyleFromFile(String resourcePath, String className)
@@ -164,12 +164,12 @@ public final class Resources
         String codeAreaStylePath = FilePaths.getStyleDirectory() + "codeArea.css";
         if (existsResource(codeAreaStylePath))
         {
-            return TextEditorApplication.class.getResource(codeAreaStylePath).toExternalForm();
+            return SealCodeApplication.class.getResource(codeAreaStylePath).toExternalForm();
         }
 
         // Using the default style defined in the default theme
         codeAreaStylePath = FilePaths.getDefaultStyleDirectory() + "codeArea.css";
-        return TextEditorApplication.class.getResource(codeAreaStylePath).toExternalForm();
+        return SealCodeApplication.class.getResource(codeAreaStylePath).toExternalForm();
     }
 
     public static String getThemeStyle()
@@ -177,11 +177,11 @@ public final class Resources
         String themeStylePath = FilePaths.getStyleDirectory() + "theme.css";
         if (existsResource(themeStylePath))
         {
-            return TextEditorApplication.class.getResource(themeStylePath).toExternalForm();
+            return SealCodeApplication.class.getResource(themeStylePath).toExternalForm();
         }
 
         themeStylePath = FilePaths.getDefaultStyleDirectory() + "theme.css";
-        return TextEditorApplication.class.getResource(themeStylePath).toExternalForm();
+        return SealCodeApplication.class.getResource(themeStylePath).toExternalForm();
     }
 
     public static String getHighlightingRules(String extension)
@@ -221,6 +221,6 @@ public final class Resources
 
     private static boolean existsResource(String path)
     {
-        return TextEditorApplication.class.getResource(path) != null;
+        return SealCodeApplication.class.getResource(path) != null;
     }
 }

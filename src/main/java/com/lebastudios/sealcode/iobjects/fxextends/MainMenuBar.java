@@ -1,31 +1,21 @@
-package com.lebastudios.sealcode.iobjects.managers.nodemanagers.singletonmanagers;
+package com.lebastudios.sealcode.iobjects.fxextends;
 
-import com.lebastudios.sealcode.TextEditorApplication;
+import com.lebastudios.sealcode.SealCodeApplication;
 import com.lebastudios.sealcode.applogic.Resources;
 import com.lebastudios.sealcode.applogic.config.Session;
-import com.lebastudios.sealcode.iobjects.fxextends.Notification;
-import com.lebastudios.sealcode.iobjects.managers.nodemanagers.singletonmanagers.tabpane.CodeTabPaneManager;
-import com.lebastudios.sealcode.iobjects.managers.nodemanagers.singletonmanagers.treeview.ProyectTreeViewManager;
+import com.lebastudios.sealcode.iobjects.stages.main.MainStage;
+import com.lebastudios.sealcode.iobjects.stages.main.MainStageController;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.image.ImageView;
 
-public class MenuBarManager extends SingletonManager<MenuBar>
+public class MainMenuBar extends MenuBar
 {
-    private static MenuBarManager instance;
-
-    public static MenuBarManager getInstance()
+    public MainMenuBar()
     {
-        if (instance == null) instance = new MenuBarManager();
-
-        return instance;
-    }
-
-    private MenuBarManager()
-    {
-        super(MainManager.getInstance().menuBar);
+        super();
 
         createMenuBar();
     }
@@ -83,60 +73,54 @@ public class MenuBarManager extends SingletonManager<MenuBar>
         menuHelp.getItems().add(aboutMenuItem);
 
         // Agregar los menús al menú principal
-        managedObject.getMenus().addAll(menuFile, menuHelp);
+        this.getMenus().addAll(menuFile, menuHelp);
     }
 
     private static ImageView getGraphic(String image)
     {
         ImageView imageView = new ImageView(Resources.getIcon(image));
-        
+
         imageView.setFitHeight(20);
         imageView.setFitWidth(20);
-        
+
         return imageView;
     }
 
 
     void saveActualTab()
     {
-        CodeTabPaneManager.getInstance().saveActualTab();
+        MainStageController.getInstance().codeTabPane.saveActualTab();
     }
-    
+
     void saveActualFileAs()
     {
-        CodeTabPaneManager.getInstance().saveActualFileAs();
+        MainStageController.getInstance().codeTabPane.saveActualFileAs();
     }
-    
+
     void openFile()
     {
-        CodeTabPaneManager.getInstance().openFile();
+        MainStageController.getInstance().codeTabPane.openFile();
     }
-    
+
     void newFile()
     {
-        CodeTabPaneManager.getInstance().newFile();
+        MainStageController.getInstance().codeTabPane.newFile();
     }
 
     void exit()
     {
         Session.getStaticInstance().reset();
 
-        TextEditorApplication.getStage().close();
+        MainStage.getInstance().close();
     }
 
     void openNewProjectDirectory()
     {
-        ProyectTreeViewManager.getInstance().openNewProjectDirectory();
+        MainStageController.getInstance().fileSystemTreeView.openNewProjectDirectory();
     }
 
     void openSettings()
     {
-        NotificationsContainerManager.getInstance().addNotification(new Notification("No existe la Stage settings."));
-    }
-    
-    @Override
-    protected void loadChilds()
-    {
-
+        MainStageController.getInstance().notificationsContainer.addNotification(new Notification("No existe la Stage settings."));
     }
 }

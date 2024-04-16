@@ -1,29 +1,21 @@
-package com.lebastudios.sealcode.iobjects.managers.nodemanagers.singletonmanagers;
+package com.lebastudios.sealcode.iobjects.fxextends;
 
 import com.lebastudios.sealcode.applogic.config.Session;
-import com.lebastudios.sealcode.iobjects.managers.nodemanagers.singletonmanagers.treeview.ProyectTreeViewManager;
+import com.lebastudios.sealcode.iobjects.stages.main.MainStageController;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 
 import java.io.*;
 
-public class ConsoleTextAreaManager extends SingletonManager<TextArea>
+public class ConsoleTextArea extends TextArea
 {
-    private static ConsoleTextAreaManager instance;
-
-    public static ConsoleTextAreaManager getInstance()
-    {
-        if (instance == null) instance = new ConsoleTextAreaManager();
-        return instance;
-    }
-
     private Process process;
     private BufferedReader reader;
     private OutputStreamWriter writer;
 
-    public ConsoleTextAreaManager()
+    public ConsoleTextArea()
     {
-        super(MainManager.getInstance().consoleTextArea);
+        super();
 
         initializeProcess();
         initializeTextArea();
@@ -39,7 +31,7 @@ public class ConsoleTextAreaManager extends SingletonManager<TextArea>
         }
         catch (IOException exception)
         {
-            ProyectTreeViewManager.getInstance().openNewProjectDirectory();
+            MainStageController.getInstance().fileSystemTreeView.openNewProjectDirectory();
 
             try
             {
@@ -63,11 +55,11 @@ public class ConsoleTextAreaManager extends SingletonManager<TextArea>
 
     private void initializeTextArea()
     {
-        managedObject.setOnKeyPressed(event ->
+        this.setOnKeyPressed(event ->
         {
             if (event.getCode() == KeyCode.ENTER)
             {
-                String command = managedObject.getText(primerCaracter, managedObject.getText().length() - 1);
+                String command = this.getText(primerCaracter, this.getText().length() - 1);
                 executeCommand(command + "\n");
                 event.consume();
             }
@@ -100,7 +92,7 @@ public class ConsoleTextAreaManager extends SingletonManager<TextArea>
                 if ((line = reader.readLine()) != null)
                 {
                     appendTextToConsole(line + "\n");
-                    primerCaracter = managedObject.getText().length();
+                    primerCaracter = this.getText().length();
                 }
 
                 Thread.sleep(20);
@@ -115,9 +107,6 @@ public class ConsoleTextAreaManager extends SingletonManager<TextArea>
 
     private void appendTextToConsole(String text)
     {
-        managedObject.appendText(text);
+        this.appendText(text);
     }
-
-    @Override
-    protected void loadChilds() {}
 }

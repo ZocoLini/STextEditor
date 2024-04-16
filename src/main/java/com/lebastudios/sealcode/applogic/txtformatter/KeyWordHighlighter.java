@@ -11,8 +11,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.google.gson.Gson;
-import com.lebastudios.sealcode.TextEditorApplication;
+import com.lebastudios.sealcode.SealCodeApplication;
 import com.lebastudios.sealcode.applogic.Resources;
+import com.lebastudios.sealcode.iobjects.stages.main.MainStage;
 import javafx.concurrent.Task;
 
 import javafx.stage.WindowEvent;
@@ -123,10 +124,9 @@ class KeyWordHighlighter
                     }
                 })
                 .subscribe(this::applyHighlighting);
-
-        // Limpiar el executor cuando se cierre la ventana
-        TextEditorApplication.getStage().addEventHandler(WindowEvent.WINDOW_HIDING, e -> cleanupWhenDone.unsubscribe());
+        
         codeArea.addEventHandler(WindowEvent.WINDOW_HIDING, e -> cleanupWhenDone.unsubscribe());
+        codeArea.addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> cleanupWhenDone.unsubscribe());
     }
 
     private Task<StyleSpans<Collection<String>>> computeHighlightingAsync()

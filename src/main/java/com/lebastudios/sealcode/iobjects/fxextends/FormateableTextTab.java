@@ -3,7 +3,7 @@ package com.lebastudios.sealcode.iobjects.fxextends;
 import com.lebastudios.sealcode.applogic.FileOperation;
 import com.lebastudios.sealcode.applogic.config.Session;
 import com.lebastudios.sealcode.applogic.txtformatter.StyleSetter;
-import com.lebastudios.sealcode.iobjects.managers.nodemanagers.singletonmanagers.MainManager;
+import com.lebastudios.sealcode.iobjects.stages.main.MainStageController;
 import javafx.scene.control.Tab;
 
 import java.io.File;
@@ -49,7 +49,7 @@ public final class FormateableTextTab extends Tab
 
         this.setOnCloseRequest(event ->
                 Session.getStaticInstance().filesOpen.remove(
-                        MainManager.getInstance().codeTabPane.getTabs().indexOf(
+                        MainStageController.getInstance().codeTabPane.getTabs().indexOf(
                                 (Tab) event.getTarget()
                         )
                 )

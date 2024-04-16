@@ -3,23 +3,34 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900" prefWidth="1200" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lebastudios.sealcode.iobjects.managers.nodemanagers.singletonmanagers.MainManager">
+<?import com.lebastudios.sealcode.iobjects.fxextends.FileSystemTreeView?>
+<?import com.lebastudios.sealcode.iobjects.fxextends.CodeTabPane?>
+<?import com.lebastudios.sealcode.iobjects.fxextends.ConsoleTextArea?>
+<?import com.lebastudios.sealcode.iobjects.fxextends.MainMenuBar?>
+<?import com.lebastudios.sealcode.iobjects.fxextends.buttons.FileSystemButton?>
+<?import com.lebastudios.sealcode.iobjects.fxextends.buttons.NotificationsButton?>
+<?import com.lebastudios.sealcode.iobjects.fxextends.buttons.TerminalButton?>
+<?import com.lebastudios.sealcode.iobjects.fxextends.buttons.CompileButton?>
+<?import com.lebastudios.sealcode.iobjects.fxextends.buttons.ExecuteButton?>
+<?import com.lebastudios.sealcode.iobjects.fxextends.NotificationsContainer?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900" prefWidth="1200" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lebastudios.sealcode.iobjects.stages.main.MainStageController">
     <top>
-        <MenuBar fx:id="menuBar" prefHeight="10"/>
+        <MainMenuBar prefHeight="10"/>
     </top>
 
     <center>
         <SplitPane fx:id="terminalContainer" dividerPositions="0.5" orientation="VERTICAL">
             <SplitPane fx:id="codeTabPaneContainer" dividerPositions="0.1, 0.9" prefHeight="160.0" prefWidth="200.0" 
                        BorderPane.alignment="CENTER">
-                <TreeView fx:id="proyectFileTreeView" prefHeight="200.0" prefWidth="174.0" />
+                <FileSystemTreeView fx:id="fileSystemTreeView" prefHeight="200.0" prefWidth="174.0" />
 
-                <TabPane fx:id="codeTabPane" tabClosingPolicy="ALL_TABS" />
+                <CodeTabPane fx:id="codeTabPane" tabClosingPolicy="ALL_TABS" />
                 
-                <BorderPane fx:id="notifications" prefHeight="200.0" prefWidth="200.0"/>
+                <NotificationsContainer fx:id="notificationsContainer" prefHeight="200.0" prefWidth="200.0"/>
             </SplitPane>
 
-            <TextArea fx:id="consoleTextArea" />
+            <ConsoleTextArea fx:id="consoleTextArea" />
         </SplitPane>
     </center>
 
@@ -29,12 +40,12 @@
 
     <!-- Gestor de Ventanas -->
     <left>
-        <VBox fx:id="leftVBox" prefWidth="30">
-            <Button fx:id="botonProyectFileSystem" prefHeight="30" prefWidth="30" />
-            <Button fx:id="botonNotificaciones" prefHeight="30" prefWidth="30" />
-            <Button fx:id="botonTerminal" prefHeight="30" prefWidth="30" />
-            <Button fx:id="botonCompilar" prefHeight="30" prefWidth="30" />
-            <Button fx:id="botonEjecutar" prefHeight="30" prefWidth="30" />
+        <VBox prefWidth="30">
+            <FileSystemButton prefHeight="30" prefWidth="30" />
+            <NotificationsButton prefHeight="30" prefWidth="30" />
+            <TerminalButton prefHeight="30" prefWidth="30" />
+            <CompileButton prefHeight="30" prefWidth="30" />
+            <ExecuteButton prefHeight="30" prefWidth="30" />
         </VBox>
     </left>
 

@@ -1,8 +1,8 @@
 package com.lebastudios.sealcode.iobjects.fxextends;
 
 import com.lebastudios.sealcode.iobjects.Dialogs;
-import com.lebastudios.sealcode.iobjects.managers.nodemanagers.singletonmanagers.tabpane.CodeTabPaneManager;
 
+import com.lebastudios.sealcode.iobjects.stages.main.MainStageController;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -153,7 +153,7 @@ public class ProyectTreeCell extends TreeCell<ProyectTreeCellContent>
 
         if (getRepresentingFile().isDirectory()) return;
 
-        CodeTabPaneManager.getInstance().openFile(getRepresentingFile());
+        MainStageController.getInstance().codeTabPane.openFile(getRepresentingFile());
     }
 
     private void showContextActions(ContextMenuEvent event)
