@@ -1,9 +1,8 @@
 package com.lebastudios.sealcode.frontend.fxextends;
 
-import com.lebastudios.sealcode.applogic.Resources;
 import com.lebastudios.sealcode.applogic.config.Session;
-import com.lebastudios.sealcode.frontend.stages.main.MainStage;
-import com.lebastudios.sealcode.frontend.stages.main.MainStageController;
+import com.lebastudios.sealcode.frontend.stages.MainStage;
+import com.lebastudios.sealcode.controllers.MainStageController;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;

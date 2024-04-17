@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.frontend.fxextends;
+package com.lebastudios.sealcode.frontend.fxextends.treeviews;
 
 import com.lebastudios.sealcode.applogic.FileOperation;
 import com.lebastudios.sealcode.applogic.config.GlobalConfig;
@@ -8,18 +8,18 @@ import javafx.scene.control.TreeView;
 
 import java.io.File;
 
-public final class FileSystemTreeView extends TreeView<ProyectTreeCellContent>
+public final class FileSystemTreeView extends TreeView<FileSystemTreeCellContent>
 {
     public FileSystemTreeView()
     {
         super();
 
-        this.setCellFactory(param -> new ProyectTreeCell());
+        this.setCellFactory(param -> new FileSystemTreeCell());
 
         openLastProjectDirectory();
     }
 
-    public static TreeItem<ProyectTreeCellContent> createTreeView(File file)
+    public static TreeItem<FileSystemTreeCellContent> createTreeView(File file)
     {
         if (file == null)
         {
@@ -31,7 +31,7 @@ public final class FileSystemTreeView extends TreeView<ProyectTreeCellContent>
             throw new IllegalArgumentException("File does not exist");
         }
 
-        TreeItem<ProyectTreeCellContent> root = new ProyectTreeItem(new ProyectTreeCellContent(file));
+        TreeItem<FileSystemTreeCellContent> root = new FileSystemTreeItem(new FileSystemTreeCellContent(file));
 
         root.setExpanded(false);
 

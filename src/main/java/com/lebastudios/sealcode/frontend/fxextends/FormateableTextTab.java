@@ -3,7 +3,6 @@ package com.lebastudios.sealcode.frontend.fxextends;
 import com.lebastudios.sealcode.applogic.FileOperation;
 import com.lebastudios.sealcode.applogic.config.Session;
 import com.lebastudios.sealcode.applogic.txtformatter.StyleSetter;
-import com.lebastudios.sealcode.frontend.stages.main.MainStageController;
 import javafx.scene.control.Tab;
 
 import java.io.File;

@@ -1,8 +1,9 @@
-package com.lebastudios.sealcode.frontend.stages.main;
+package com.lebastudios.sealcode.controllers;
 
 import com.lebastudios.sealcode.applogic.config.Session;
 import com.lebastudios.sealcode.frontend.fxextends.*;
-import com.lebastudios.sealcode.frontend.stages.settings.SettingsStage;
+import com.lebastudios.sealcode.frontend.fxextends.treeviews.FileSystemTreeView;
+import com.lebastudios.sealcode.frontend.stages.SettingsStage;
 import javafx.fxml.FXML;
 import javafx.scene.control.SplitPane;
 

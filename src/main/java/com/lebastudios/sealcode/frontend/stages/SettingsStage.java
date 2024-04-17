@@ -1,6 +1,6 @@
-package com.lebastudios.sealcode.frontend.stages.settings;
+package com.lebastudios.sealcode.frontend.stages;
 
-import com.lebastudios.sealcode.frontend.stages.StageBuilder;
+import com.lebastudios.sealcode.controllers.SettingsStageController;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
@@ -25,11 +25,6 @@ public class SettingsStage extends StageBuilder
             {
                 this.close();
             }
-        });
-
-        this.addEventHandler(KeyEvent.KEY_PRESSED, event ->
-        {
-            SettingsStageController.getInstance().loadNewSettingsPane("themeAnchorPane.fxml");
         });
     }
 

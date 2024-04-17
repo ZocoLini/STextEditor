@@ -1,7 +1,7 @@
-package com.lebastudios.sealcode.frontend.stages.settings;
+package com.lebastudios.sealcode.controllers;
 
 import com.lebastudios.sealcode.SealCodeApplication;
-import com.lebastudios.sealcode.frontend.fxextends.SettingsTreeView;
+import com.lebastudios.sealcode.frontend.fxextends.treeviews.SettingsTreeView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.SplitPane;
@@ -22,12 +22,20 @@ public class SettingsStageController
         instance = this;
     }
 
-    public void loadNewSettingsPane(String PaneName)
+    public void loadNewSettingsPane(String paneName)
     {
         try
         {
+            double dividerPosition = mainSplitPane.getDividerPositions()[0];
+            
+            FXMLLoader loader = new FXMLLoader(SealCodeApplication.class.getResource("settingsPanels/" + paneName));
+            
             mainSplitPane.getItems().remove(1);
-            mainSplitPane.getItems().add(new FXMLLoader(SealCodeApplication.class.getResource(PaneName)).load());
+            mainSplitPane.getItems().add(loader.load());
+
+            ((Controller) loader.getController()).initialize();
+            
+            mainSplitPane.setDividerPositions(dividerPosition);
         } catch (IOException e)
         {
             throw new RuntimeException(e);

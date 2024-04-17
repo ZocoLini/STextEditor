@@ -11,10 +11,12 @@ module com.lebastudios.sealcode {
     opens com.lebastudios.sealcode.frontend.fxextends to javafx.fxml;
     
     opens com.lebastudios.sealcode.frontend.fxextends.buttons to javafx.fxml;
+    opens com.lebastudios.sealcode.frontend.fxextends.treeviews to javafx.fxml;
     
-    opens com.lebastudios.sealcode.frontend.stages.main to javafx.fxml;
-    opens com.lebastudios.sealcode.frontend.stages.settings to javafx.fxml;
-    
+    opens com.lebastudios.sealcode.frontend.stages to javafx.fxml;
+
+    opens com.lebastudios.sealcode.controllers to javafx.fxml;
+
     opens com.lebastudios.sealcode.applogic.txtformatter to com.google.gson;
 
     opens com.lebastudios.sealcode.applogic.config to com.google.gson;

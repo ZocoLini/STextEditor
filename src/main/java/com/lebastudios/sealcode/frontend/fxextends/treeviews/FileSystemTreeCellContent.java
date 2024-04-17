@@ -1,16 +1,16 @@
-package com.lebastudios.sealcode.frontend.fxextends;
+package com.lebastudios.sealcode.frontend.fxextends.treeviews;
 
 import com.lebastudios.sealcode.applogic.Resources;
 import javafx.scene.image.Image;
 
 import java.io.File;
 
-public final class ProyectTreeCellContent
+public final class FileSystemTreeCellContent
 {
     private final File representingFile;
     private final Image image;
 
-    public ProyectTreeCellContent(File file)
+    public FileSystemTreeCellContent(File file)
     {
         super();
 

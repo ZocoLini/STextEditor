@@ -1,7 +1,7 @@
 package com.lebastudios.sealcode.frontend.fxextends;
 
 import com.lebastudios.sealcode.applogic.config.Session;
-import com.lebastudios.sealcode.frontend.stages.main.MainStageController;
+import com.lebastudios.sealcode.controllers.MainStageController;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 

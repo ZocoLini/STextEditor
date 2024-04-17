@@ -1,7 +1,8 @@
-package com.lebastudios.sealcode.frontend.fxextends;
+package com.lebastudios.sealcode.frontend.fxextends.treeviews;
 
 import com.lebastudios.sealcode.frontend.Dialogs;
-import com.lebastudios.sealcode.frontend.stages.main.MainStageController;
+import com.lebastudios.sealcode.controllers.MainStageController;
+import com.lebastudios.sealcode.frontend.fxextends.IconView;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -14,12 +15,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ProyectTreeCell extends TreeCell<ProyectTreeCellContent>
+public final class FileSystemTreeCell extends TreeCell<FileSystemTreeCellContent>
 {
     private final IconView iconView;
     private ContextMenu contextMenu = new ContextMenu(defaultMenuItems());
 
-    public ProyectTreeCell()
+    public FileSystemTreeCell()
     {
         iconView = new IconView();
 
@@ -34,11 +35,15 @@ public final class ProyectTreeCell extends TreeCell<ProyectTreeCellContent>
 
     private void showContextActions(ContextMenuEvent event)
     {
+        if (this.getTreeItem() == null) return;
+        
         contextMenu.show(this, event.getScreenX(), event.getScreenY());
     }
 
     private void openRepresentingFile(MouseEvent event)
     {
+        if (this.getTreeItem() == null) return;
+        
         if (event.getClickCount() < 2) return;
 
         if (getRepresentingFile().isDirectory()) return;
@@ -80,7 +85,7 @@ public final class ProyectTreeCell extends TreeCell<ProyectTreeCellContent>
 
         if (getRepresentingFile().renameTo(newFilePath))
         {
-            this.setItem(new ProyectTreeCellContent(newFilePath));
+            this.setItem(new FileSystemTreeCellContent(newFilePath));
             this.getTreeItem().setValue(this.getItem());
         }
         else
@@ -149,12 +154,12 @@ public final class ProyectTreeCell extends TreeCell<ProyectTreeCellContent>
 
     private void updateParentItemChildren()
     {
-        ((ProyectTreeItem) this.getTreeItem().getParent()).actualizarHijos();
+        ((FileSystemTreeItem) this.getTreeItem().getParent()).actualizarHijos();
     }
 
     private void updateThisItemChildren()
     {
-        ((ProyectTreeItem) this.getTreeItem()).actualizarHijos();
+        ((FileSystemTreeItem) this.getTreeItem()).actualizarHijos();
     }
 
     private void customizeContextMenu()
@@ -207,7 +212,7 @@ public final class ProyectTreeCell extends TreeCell<ProyectTreeCellContent>
     }
 
     @Override
-    protected void updateItem(ProyectTreeCellContent item, boolean empty)
+    protected void updateItem(FileSystemTreeCellContent item, boolean empty)
     {
         super.updateItem(item, empty);
 

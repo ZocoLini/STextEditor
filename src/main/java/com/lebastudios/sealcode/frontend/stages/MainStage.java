@@ -1,9 +1,8 @@
-package com.lebastudios.sealcode.frontend.stages.main;
+package com.lebastudios.sealcode.frontend.stages;
 
 import com.lebastudios.sealcode.applogic.config.GlobalConfig;
 import com.lebastudios.sealcode.applogic.config.Session;
 import com.lebastudios.sealcode.applogic.events.AppEvents;
-import com.lebastudios.sealcode.frontend.stages.StageBuilder;
 import javafx.stage.WindowEvent;
 
 public class MainStage extends StageBuilder

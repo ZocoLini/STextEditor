@@ -6,9 +6,10 @@
 <?import com.lebastudios.sealcode.frontend.fxextends.*?>
 <?import com.lebastudios.sealcode.frontend.fxextends.buttons.*?>
 
+<?import com.lebastudios.sealcode.frontend.fxextends.treeviews.FileSystemTreeView?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900"
             prefWidth="1200" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.lebastudios.sealcode.frontend.stages.main.MainStageController">
+            fx:controller="com.lebastudios.sealcode.controllers.MainStageController">
     <top>
         <MainMenuBar prefHeight="10"/>
     </top>

@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.frontend.fxextends;
+package com.lebastudios.sealcode.frontend.fxextends.treeviews;
 
 import com.lebastudios.sealcode.applogic.AppLoop;
 import com.lebastudios.sealcode.applogic.events.IEventMethod;
@@ -7,11 +7,11 @@ import javafx.stage.WindowEvent;
 
 import java.io.File;
 
-public final class ProyectTreeItem extends TreeItem<ProyectTreeCellContent>
+public final class FileSystemTreeItem extends TreeItem<FileSystemTreeCellContent>
 {
     private boolean monitorear = false;
 
-    public ProyectTreeItem(ProyectTreeCellContent content)
+    public FileSystemTreeItem(FileSystemTreeCellContent content)
     {
         super(content);
 
@@ -103,8 +103,7 @@ public final class ProyectTreeItem extends TreeItem<ProyectTreeCellContent>
                 try
                 {
                     Thread.sleep(1000);
-                }
-                catch (InterruptedException e)
+                } catch (InterruptedException e)
                 {
                     throw new RuntimeException(e);
                 }
@@ -115,9 +114,11 @@ public final class ProyectTreeItem extends TreeItem<ProyectTreeCellContent>
 
         // Eliminamos los archivos o direcotrios que ya no existan
         children.removeIf(childrenTreeItem -> !childrenTreeItem.getValue().getRepresentingFile().exists());
-    }    private final IEventMethod monitorearHijos = new IEventMethod()
+    }
+
+    private final IEventMethod monitorearHijos = new IEventMethod()
     {
-        final ProyectTreeItem treeItem = ProyectTreeItem.this;
+        final FileSystemTreeItem treeItem = FileSystemTreeItem.this;
 
         @Override
         public void invoke()
