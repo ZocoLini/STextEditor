@@ -12,8 +12,48 @@ import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FileOperation
+public final class FileOperation
 {
+    private static final Map<String, String> extensionMappings = new HashMap<>();
+
+    static
+    {
+        // Definir los mapeos de extensiones
+        extensionMappings.put("xml", "xml");
+        extensionMappings.put("fxml", "xml");
+        extensionMappings.put("xsd", "xml");
+        extensionMappings.put("iml", "xml");
+        extensionMappings.put("xsl", "xml");
+        extensionMappings.put("dtd", "xml");
+
+        extensionMappings.put("json", "json");
+        extensionMappings.put("jsonc", "json");
+
+        extensionMappings.put("java", "java");
+        extensionMappings.put("class", "java");
+
+        extensionMappings.put("c", "c");
+        extensionMappings.put("h", "c");
+
+        extensionMappings.put("cpp", "cpp");
+        extensionMappings.put("hpp", "cpp");
+        extensionMappings.put("cc", "cpp");
+        extensionMappings.put("hh", "cpp");
+        extensionMappings.put("cxx", "cpp");
+        extensionMappings.put("hxx", "cpp");
+
+        extensionMappings.put("py", "py");
+        extensionMappings.put("pyc", "py");
+
+        extensionMappings.put("js", "js");
+        extensionMappings.put("mjs", "js");
+
+        extensionMappings.put("css", "css");
+        extensionMappings.put("scss", "css");
+        extensionMappings.put("sass", "css");
+        extensionMappings.put("less", "css");
+    }
+
     public static FileChooser fileChooser()
     {
         FileChooser fileChooser = new FileChooser();
@@ -28,6 +68,11 @@ public class FileOperation
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Open proyect");
         return directoryChooser;
+    }
+
+    public static String readResource(String path) throws Exception
+    {
+        return readFile(new File(SealCodeApplication.class.getResource(path).toURI()));
     }
 
     public static String readFile(File file) throws Exception
@@ -50,11 +95,6 @@ public class FileOperation
 
         reader.close();
         return content.toString();
-    }
-
-    public static String readResource(String path) throws Exception
-    {
-        return readFile(new File(SealCodeApplication.class.getResource(path).toURI()));
     }
 
     public static void writeFile(File file, String content) throws Exception
@@ -98,50 +138,9 @@ public class FileOperation
         return toEquivalentFileExtension(fileName.substring(index + 1));
     }
 
-    private static final Map<String, String> extensionMappings = new HashMap<>();
-
-    static {
-        // Definir los mapeos de extensiones
-        extensionMappings.put("xml", "xml");
-        extensionMappings.put("fxml", "xml");
-        extensionMappings.put("xsd", "xml");
-        extensionMappings.put("iml", "xml");
-        extensionMappings.put("xsl", "xml");
-        extensionMappings.put("dtd", "xml");
-
-        extensionMappings.put("json", "json");
-        extensionMappings.put("jsonc", "json");
-
-        extensionMappings.put("java", "java");
-        extensionMappings.put("class", "java");
-
-        extensionMappings.put("c", "c");
-        extensionMappings.put("h", "c");
-
-        extensionMappings.put("cpp", "cpp");
-        extensionMappings.put("hpp", "cpp");
-        extensionMappings.put("cc", "cpp");
-        extensionMappings.put("hh", "cpp");
-        extensionMappings.put("cxx", "cpp");
-        extensionMappings.put("hxx", "cpp");
-
-        extensionMappings.put("py", "py");
-        extensionMappings.put("pyc", "py");
-
-        extensionMappings.put("js", "js");
-        extensionMappings.put("mjs", "js");
-
-        extensionMappings.put("css", "css");
-        extensionMappings.put("scss", "css");
-        extensionMappings.put("sass", "css");
-        extensionMappings.put("less", "css");
-    }
-
     /**
-     * Se encarga de convertir una extensión de archivo a una más común ya definida con la que concuerda en sintaxis 
-     * para
-     * que así pueda ser afectado por el resaltado de sintaxis.
-     * Ej.: "xsd" -> "xml"; "iml" -> "xml";
+     * Se encarga de convertir una extensión de archivo a una más común ya definida con la que concuerda en sintaxis
+     * para que así pueda ser afectado por el resaltado de sintaxis. Ej.: "xsd" -> "xml"; "iml" -> "xml";
      */
     public static String toEquivalentFileExtension(String extension)
     {

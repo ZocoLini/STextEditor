@@ -7,21 +7,21 @@ import java.util.List;
  */
 public abstract class AppEvent extends EventHandler<IEventMethod>
 {
-  public void invoke()
-  {
-    // Esta copia permite llamar a todos los listeners aunque se modifique la lista durante una llamada
-    List<IEventMethod> listaAuxiliar = listeners.stream().toList();
-
-    for (IEventMethod listener : listaAuxiliar)
+    public void invoke()
     {
-      try
-      {
-        listener.invoke();
-      }
-      catch (Exception e)
-      {
-        System.err.println("Error invoking event: " + e.getMessage());
-      }
+        // Esta copia permite llamar a todos los listeners aunque se modifique la lista durante una llamada
+        List<IEventMethod> listaAuxiliar = listeners.stream().toList();
+
+        for (IEventMethod listener : listaAuxiliar)
+        {
+            try
+            {
+                listener.invoke();
+            }
+            catch (Exception e)
+            {
+                System.err.println("Error invoking event: " + e.getMessage());
+            }
+        }
     }
-  }
 }

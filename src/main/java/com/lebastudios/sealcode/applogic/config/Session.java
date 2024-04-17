@@ -7,46 +7,44 @@ import java.util.List;
 
 public class Session extends JSONSaveable<Session>
 {
-  private static Session instance;
+    private static Session instance;
+    public List<String> filesOpen = new ArrayList<>();
+    public String fileFilter = "none";
+    public String proyectDirectory = "";
+    private Session() {}
 
-  public static Session getStaticInstance()
-  {
-    if (instance == null)
+    public void reset()
     {
-      instance = new Session().load();
+        filesOpen.clear();
+        fileFilter = "none";
+        proyectDirectory = "";
     }
 
-    return instance;
-  }
+    @Override
+    public String getFilePath()
+    {
+        return FilePaths.getSessionDirectory() + "lastSession.json";
+    }
 
-  public List<String> filesOpen = new ArrayList<>();
-  public String fileFilter = "none";
-  public String proyectDirectory = "";
+    @Override
+    public JSONSaveable<Session> getInstance()
+    {
+        return getStaticInstance();
+    }
 
-  private Session() {}
+    public static Session getStaticInstance()
+    {
+        if (instance == null)
+        {
+            instance = new Session().load();
+        }
 
-  public void reset()
-  {
-    filesOpen.clear();
-    fileFilter = "none";
-    proyectDirectory = "";
-  }
+        return instance;
+    }
 
-  @Override
-  public String getFilePath()
-  {
-    return FilePaths.getSessionDirectory() + "lastSession.json";
-  }
-
-  @Override
-  public JSONSaveable<Session> getInstance()
-  {
-    return getStaticInstance();
-  }
-
-  @Override
-  public Session newInstance()
-  {
-    return new Session();
-  }
+    @Override
+    public Session newInstance()
+    {
+        return new Session();
+    }
 }

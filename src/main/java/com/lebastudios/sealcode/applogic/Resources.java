@@ -4,7 +4,7 @@ import com.lebastudios.sealcode.SealCodeApplication;
 import com.lebastudios.sealcode.exceptions.ResourceNotLoadedException;
 import javafx.scene.image.Image;
 
-import java.io.File;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -14,24 +14,25 @@ import java.util.regex.Pattern;
 public final class Resources
 {
     private static final Map<String, Image> loadedImages = new HashMap<>();
+    
     public static Image getImg(File file)
     {
         String extension = file.isDirectory() ? "directory" : FileOperation.getFileExtension(file);
-        
+
         Image image = loadedImages.get(extension);
-        
-        if (image == null) 
+
+        if (image == null)
         {
             return loadImg(extension);
         }
         
         return image;
     }
-    
+
     private static Image loadImg(String extension)
     {
         Image image = null;
-        
+
         // Check if the extension has an img defined in the actual theme
         String path = FilePaths.getImgDirectory() + extension + ".png";
         if (existsResource(path))
@@ -46,20 +47,25 @@ public final class Resources
             return new Image(SealCodeApplication.class.getResourceAsStream(path));
         }
 
-        if (image == null) 
+        if (image == null)
         {
             image = new Image(SealCodeApplication.class.getResourceAsStream(FilePaths.getDefaultImgFile()));
         }
-        
-        if (image == null) 
+
+        if (image == null)
         {
             throw new ResourceNotLoadedException();
         }
-        
+
         loadedImages.put(extension, image);
-        
+
         // If the extension has no img defined, use the default img
         return image;
+    }
+
+    private static boolean existsResource(String path)
+    {
+        return SealCodeApplication.class.getResource(path) != null;
     }
 
     public static Image getIcon(String iconName)
@@ -77,41 +83,6 @@ public final class Resources
         }
 
         return new Image(SealCodeApplication.class.getResourceAsStream(FilePaths.getDefaultIconFile()));
-    }
-
-    public static String getExtensionStyle(String fileExtension)
-    {
-        // Check if the extension has a style defined in the actual theme
-        String langStyleFile = FilePaths.getStyleDirectory() + fileExtension + ".css";
-        if (existsResource(langStyleFile))
-        {
-            return SealCodeApplication.class.getResource(langStyleFile).toExternalForm();
-        }
-
-        // Check if the equivalent extension has a style defined in the actual theme
-        langStyleFile = FilePaths.getStyleDirectory() + FileOperation.toEquivalentFileExtension(fileExtension) + ".css";
-        if (existsResource(langStyleFile))
-        {
-            return SealCodeApplication.class.getResource(langStyleFile).toExternalForm();
-        }
-
-        // Check if the extension has a style defined in the default theme
-        langStyleFile = FilePaths.getDefaultStyleDirectory() + fileExtension + ".css";
-        if (existsResource(langStyleFile))
-        {
-            return SealCodeApplication.class.getResource(langStyleFile).toExternalForm();
-        }
-
-        // Check if the equivalent extension has a style defined in the default theme
-        langStyleFile =
-                FilePaths.getDefaultStyleDirectory() + FileOperation.toEquivalentFileExtension(fileExtension) + ".css";
-        if (existsResource(langStyleFile))
-        {
-            return SealCodeApplication.class.getResource(langStyleFile).toExternalForm();
-        }
-
-        // If the extension has no style defined, use the default style
-        return SealCodeApplication.class.getResource(FilePaths.getDefaultLangStyleFile()).toExternalForm();
     }
 
     private static String getClassStyleFromFile(String resourcePath, String className)
@@ -156,6 +127,41 @@ public final class Resources
     public static String getLangCommonStyle()
     {
         return getExtensionStyle("commonLang");
+    }
+
+    public static String getExtensionStyle(String fileExtension)
+    {
+        // Check if the extension has a style defined in the actual theme
+        String langStyleFile = FilePaths.getStyleDirectory() + fileExtension + ".css";
+        if (existsResource(langStyleFile))
+        {
+            return SealCodeApplication.class.getResource(langStyleFile).toExternalForm();
+        }
+
+        // Check if the equivalent extension has a style defined in the actual theme
+        langStyleFile = FilePaths.getStyleDirectory() + FileOperation.toEquivalentFileExtension(fileExtension) + ".css";
+        if (existsResource(langStyleFile))
+        {
+            return SealCodeApplication.class.getResource(langStyleFile).toExternalForm();
+        }
+
+        // Check if the extension has a style defined in the default theme
+        langStyleFile = FilePaths.getDefaultStyleDirectory() + fileExtension + ".css";
+        if (existsResource(langStyleFile))
+        {
+            return SealCodeApplication.class.getResource(langStyleFile).toExternalForm();
+        }
+
+        // Check if the equivalent extension has a style defined in the default theme
+        langStyleFile =
+                FilePaths.getDefaultStyleDirectory() + FileOperation.toEquivalentFileExtension(fileExtension) + ".css";
+        if (existsResource(langStyleFile))
+        {
+            return SealCodeApplication.class.getResource(langStyleFile).toExternalForm();
+        }
+
+        // If the extension has no style defined, use the default style
+        return SealCodeApplication.class.getResource(FilePaths.getDefaultLangStyleFile()).toExternalForm();
     }
 
     public static String getCodeAreaStyle()
@@ -217,10 +223,5 @@ public final class Resources
         }
 
         return rules;
-    }
-
-    private static boolean existsResource(String path)
-    {
-        return SealCodeApplication.class.getResource(path) != null;
     }
 }

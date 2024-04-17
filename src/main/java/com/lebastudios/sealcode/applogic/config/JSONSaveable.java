@@ -9,23 +9,12 @@ import java.io.File;
 public abstract class JSONSaveable<T>
 {
     /**
-     * Returns the file path of the JSON where the data is saved.
-     * @return The file path.
-     */
-    public abstract String getFilePath();
-
-    /**
      * Returns the static instance defined in the final class.
+     *
      * @return The static instance.
      */
     public abstract JSONSaveable<T> getInstance();
 
-    /**
-     * Creates a new static instance of the final class.
-     * @return The new static instance.
-     */
-    public abstract T newInstance();
-    
     public Thread preload()
     {
         Thread hilo = new Thread(getInstance()::load);
@@ -54,9 +43,23 @@ public abstract class JSONSaveable<T>
             //noinspection unchecked
             new Thread(((JSONSaveable<T>) instance)::save).start();
         }
-        
+
         return instance;
     }
+
+    /**
+     * Returns the file path of the JSON where the data is saved.
+     *
+     * @return The file path.
+     */
+    public abstract String getFilePath();
+
+    /**
+     * Creates a new static instance of the final class.
+     *
+     * @return The new static instance.
+     */
+    public abstract T newInstance();
 
     /**
      * Saves the configuration file.
@@ -70,7 +73,7 @@ public abstract class JSONSaveable<T>
         }
         catch (Exception e)
         {
-            System.err.println("Error saving " + 
+            System.err.println("Error saving " +
                     this.getClass().getName() + " file.");
         }
     }

@@ -5,8 +5,9 @@ import java.util.List;
 
 /**
  * This class is used for the event system. Defines the methods that all AppEvents must have.
- * @param <T> The type of the event method. This is the interface that the event method must implement and should be 
- * created in the AppEvent class.
+ *
+ * @param <T> The type of the event method. This is the interface that the event method must implement and
+ *         should be created in the AppEvent class.
  */
 public abstract class EventHandler<T>
 {

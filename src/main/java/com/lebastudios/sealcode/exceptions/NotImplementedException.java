@@ -6,7 +6,7 @@ public class NotImplementedException extends RuntimeException
     {
         super("Not implemented yet");
     }
-    
+
     public NotImplementedException(String message)
     {
         super(message);

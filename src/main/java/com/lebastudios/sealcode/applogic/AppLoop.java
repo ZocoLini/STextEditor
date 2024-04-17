@@ -3,10 +3,8 @@ package com.lebastudios.sealcode.applogic;
 import com.lebastudios.sealcode.applogic.events.AppEvent;
 import com.lebastudios.sealcode.applogic.events.IEventMethod;
 
-public class AppLoop
+public final class AppLoop
 {
-    private static class OnUpdate extends AppEvent {}
-
     private static final OnUpdate onUpdate = new OnUpdate();
     private static Thread loopThread;
 
@@ -46,7 +44,7 @@ public class AppLoop
     {
         onUpdate.removeListener(eventMethod);
     }
-    
+
     public static boolean contains(IEventMethod eventMethod)
     {
         return onUpdate.hasListener(eventMethod);
@@ -68,4 +66,6 @@ public class AppLoop
             eventMethod.invoke();
         }).start();
     }
+
+    private static class OnUpdate extends AppEvent {}
 }
