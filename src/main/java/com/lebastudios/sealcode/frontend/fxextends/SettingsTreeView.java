@@ -1,6 +1,7 @@
 package com.lebastudios.sealcode.frontend.fxextends;
 
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
 public class SettingsTreeView extends TreeView<String>

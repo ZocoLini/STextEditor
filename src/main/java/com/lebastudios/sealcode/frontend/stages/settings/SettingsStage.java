@@ -13,17 +13,23 @@ public class SettingsStage extends StageBuilder
     {
         super("settingsScene.fxml", "Settings");
         
-        this.initModality(Modality.WINDOW_MODAL);
+        this.initModality(Modality.APPLICATION_MODAL);
     }
 
     @Override
     protected void addEventHandlers()
     {
-        this.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+        this.addEventHandler(KeyEvent.KEY_PRESSED, event -> 
+        {
             if (event.getCode() == KeyCode.ESCAPE) 
             {
                 this.close();
             }
+        });
+
+        this.addEventHandler(KeyEvent.KEY_PRESSED, event ->
+        {
+            SettingsStageController.getInstance().loadNewSettingsPane("themeAnchorPane.fxml");
         });
     }
 
