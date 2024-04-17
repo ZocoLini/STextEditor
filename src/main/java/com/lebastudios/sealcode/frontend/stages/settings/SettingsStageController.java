@@ -1,12 +1,15 @@
 package com.lebastudios.sealcode.frontend.stages.settings;
 
+import com.lebastudios.sealcode.frontend.fxextends.SettingsTreeView;
 import javafx.fxml.FXML;
 import javafx.scene.control.TreeView;
+import javafx.scene.layout.VBox;
 
 public class SettingsStageController
 {
     private static SettingsStageController instance;
-    @FXML public TreeView<String> treeViewMenu;
+    
+    @FXML public SettingsTreeView settingsTreeView;
 
     public SettingsStageController()
     {

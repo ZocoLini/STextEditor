@@ -3,14 +3,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<SplitPane dividerPositions="0.3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-           minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1"
-           xmlns="http://javafx.com/javafx/17.0.2-ea"
+<?import com.lebastudios.sealcode.frontend.fxextends.SettingsTreeView?>
+
+<SplitPane dividerPositions="0.3, 0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" 
+           minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" 
+           xmlns:fx="http://javafx.com/fxml/1" 
            fx:controller="com.lebastudios.sealcode.frontend.stages.settings.SettingsStageController">
-    <ScrollPane  prefHeight="200.0" prefWidth="174.0" >
-        <VBox  prefHeight="200.0" prefWidth="174.0" >
-            <TreeView fx:id="treeViewMenu"  prefHeight="200.0" prefWidth="174.0" />
-        </VBox>
+    <ScrollPane prefHeight="200.0" prefWidth="174.0">
+        <SettingsTreeView fx:id="settingsTreeView" prefHeight="200.0" prefWidth="174.0" />
     </ScrollPane>
-    <AnchorPane prefHeight="160.0" prefWidth="100.0"/>
+    
+    <AnchorPane prefHeight="160.0" prefWidth="100.0" />
 </SplitPane>

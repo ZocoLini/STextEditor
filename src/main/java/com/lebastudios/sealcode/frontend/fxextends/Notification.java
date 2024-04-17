@@ -7,7 +7,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -45,10 +44,8 @@ public final class Notification extends VBox
         Button deleteButton = new Button();
         deleteButton.setBackground(
                 new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(20), Insets.EMPTY)));
-        ImageView imageView = new ImageView(Resources.getIcon("x.png"));
-        imageView.setFitHeight(10);
-        imageView.setFitWidth(10);
-        deleteButton.setGraphic(imageView);
+        
+        deleteButton.setGraphic(new IconView("x.png"));
 
         deleteButton.setOnAction(event -> ((Pane) getParent()).getChildren().remove(this));
 

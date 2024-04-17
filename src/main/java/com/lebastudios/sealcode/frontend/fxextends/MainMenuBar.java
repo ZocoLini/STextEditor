@@ -8,7 +8,6 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.image.ImageView;
 
 public final class MainMenuBar extends MenuBar
 {
@@ -75,14 +74,9 @@ public final class MainMenuBar extends MenuBar
         this.getMenus().addAll(menuFile, menuHelp);
     }
 
-    private static ImageView getGraphic(String image)
+    private static IconView getGraphic(String image)
     {
-        ImageView imageView = new ImageView(Resources.getIcon(image));
-
-        imageView.setFitHeight(20);
-        imageView.setFitWidth(20);
-
-        return imageView;
+        return new IconView(image);
     }
 
     void exit()

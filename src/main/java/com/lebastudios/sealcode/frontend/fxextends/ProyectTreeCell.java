@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeCell;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 
@@ -17,14 +16,12 @@ import java.util.List;
 
 public final class ProyectTreeCell extends TreeCell<ProyectTreeCellContent>
 {
-    private final ImageView imageView;
+    private final IconView iconView;
     private ContextMenu contextMenu = new ContextMenu(defaultMenuItems());
 
     public ProyectTreeCell()
     {
-        imageView = new ImageView();
-        imageView.setFitHeight(20);
-        imageView.setFitWidth(20);
+        iconView = new IconView();
 
         addEventHandlers();
     }
@@ -225,8 +222,8 @@ public final class ProyectTreeCell extends TreeCell<ProyectTreeCellContent>
             this.setItem(item);
 
             setText(item.getName());
-            imageView.setImage(item.getImage());
-            setGraphic(imageView);
+            iconView.setImage(item.getImage());
+            setGraphic(iconView);
         }
     }
 }
