@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.lebastudios.sealcode.frontend.fxextends.*?>
+<?import com.lebastudios.sealcode.frontend.fxextends.buttons.*?>
+
+<?import com.lebastudios.sealcode.frontend.fxextends.treeviews.FileSystemTreeView?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900"
+            prefWidth="1200" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.lebastudios.sealcode.controllers.MainStageController">
+    <top>
+        <MainMenuBar prefHeight="10"/>
+    </top>
+
+    <center>
+        <SplitPane fx:id="verticalContainer" dividerPositions="0.5" orientation="VERTICAL">
+            <SplitPane fx:id="horizontalContainer" dividerPositions="0.1, 0.9" prefHeight="160.0" prefWidth="200.0"
+                       BorderPane.alignment="CENTER">
+                <FileSystemTreeView fx:id="fileSystemTreeView" prefHeight="200.0" prefWidth="174.0"/>
+                <CodeTabPane fx:id="codeTabPane" tabClosingPolicy="ALL_TABS"/>
+            </SplitPane>
+        </SplitPane>
+    </center>
+
+    <bottom>
+
+    </bottom>
+
+    <!-- Gestor de Ventanas -->
+    <left>
+        <VBox prefWidth="30">
+            <FileSystemButton onAction="#alternateFileSystemVisibility" prefHeight="30" prefWidth="30"/>
+            <NotificationsButton onAction="#altrnateNotiVisibility" prefHeight="30" prefWidth="30"/>
+            <TerminalButton onAction="#altrnateTerminalVisibility" prefHeight="30" prefWidth="30"/>
+            <CompileButton onAction="#compileCode" prefHeight="30" prefWidth="30"/>
+            <ExecuteButton onAction="#executeCode" prefHeight="30" prefWidth="30"/>
+        </VBox>
+    </left>
+
+    <!-- Acciones sobre el codigo -->
+    <right>
+    </right>
+
+    <VBox visible="false">
+        <NotificationsContainer fx:id="notificationsContainer" prefHeight="200.0" prefWidth="200.0"/>
+        <ConsoleTextArea fx:id="consoleTextArea"/>
+    </VBox>
+</BorderPane>
