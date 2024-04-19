@@ -42,7 +42,7 @@ public final class FilePaths
 
     public static String getDefaultLangStyleFile() {return getDefaultStyleDirectory() + "default.css";}
 
-    public static String getDefaultStyleDirectory() {return getDefaultDirectory() + "/style/";}
+    public static String getDefaultStyleDirectory() {return getDefaultDirectory() + "style/";}
 
     public static String getDefaultImgFile() {return getDefaultImgDirectory() + "notfoundtype.png";}
 

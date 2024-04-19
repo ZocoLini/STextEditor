@@ -6,7 +6,7 @@ import javafx.scene.control.ChoiceBox;
 
 import java.io.File;
 
-public class ThemeSettingsController extends Controller
+public class ThemeController extends SettingsPaneController
 {
     @FXML public ChoiceBox<String> themeChoiceBox;
     
@@ -15,6 +15,12 @@ public class ThemeSettingsController extends Controller
     {
         loadAvailableThemes();
     }
+
+    @Override
+    public void apply()
+    {
+        GlobalConfig.getStaticInstance().editorConfig.theme = themeChoiceBox.getValue();
+    }
     
     private void loadAvailableThemes()
     {
@@ -22,8 +28,8 @@ public class ThemeSettingsController extends Controller
 
         for (File theme : file.listFiles())
         {
-            if (!file.isDirectory()) continue;
-            if (file.getName().equals("com")) continue;
+            if (!theme.isDirectory()) continue;
+            if (theme.getName().equals("com")) continue;
 
             themeChoiceBox.getItems().add(theme.getName());
         }

@@ -1,17 +1,21 @@
 package com.lebastudios.sealcode.applogic.config;
 
 import com.lebastudios.sealcode.applogic.FilePaths;
+import com.lebastudios.sealcode.applogic.events.AppEvents;
 
 public class GlobalConfig extends JSONSaveable<GlobalConfig>
 {
     private static GlobalConfig instance;
-    
+
     public String lang = "es";
     public String verion = "prototype";
     public EditorConfig editorConfig = new EditorConfig();
     public UserPrefs userPrefs = new UserPrefs();
-    
-    private GlobalConfig() {}
+
+    private GlobalConfig()
+    {
+        AppEvents.onSettingsUpdate.addListener(this::save);
+    }
 
     @Override
     public String getFilePath()
@@ -49,7 +53,7 @@ public class GlobalConfig extends JSONSaveable<GlobalConfig>
         public int indentation = 4;
         public int tabSize = 4;
     }
-    
+
     public static class UserPrefs
     {
         public boolean ignoreGitDir = true;

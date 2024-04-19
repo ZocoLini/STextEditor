@@ -45,6 +45,12 @@ public class Dialogs
             }
         });
 
+        dialogStage.setOnCloseRequest(event ->
+        {
+            textField.setText("");
+            dialogStage.close();
+        });
+
         // Crear la escena del cuadro de diálogo y mostrarla
         Scene dialogScene = new Scene(textField, 300, 30);
         dialogStage.setScene(dialogScene);

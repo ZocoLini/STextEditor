@@ -4,7 +4,7 @@ import com.lebastudios.sealcode.applogic.config.GlobalConfig;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
-public class GeneralSettingsController extends Controller
+public class GeneralController extends SettingsPaneController
 {
     @FXML public TextField indentationTF;
     @FXML public TextField tabSizeTF;
@@ -14,5 +14,12 @@ public class GeneralSettingsController extends Controller
     {
         indentationTF.setText(String.valueOf(GlobalConfig.getStaticInstance().editorConfig.indentation));
         tabSizeTF.setText(String.valueOf(GlobalConfig.getStaticInstance().editorConfig.tabSize));
+    }
+
+    @Override
+    public void apply()
+    {
+        GlobalConfig.getStaticInstance().editorConfig.indentation = Integer.parseInt(indentationTF.getText());
+        GlobalConfig.getStaticInstance().editorConfig.tabSize = Integer.parseInt(tabSizeTF.getText());
     }
 }

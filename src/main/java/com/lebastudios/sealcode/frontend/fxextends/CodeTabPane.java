@@ -29,7 +29,7 @@ public final class CodeTabPane extends TabPane
 
     private void addEventHandlers()
     {
-        AppEvents.ON_APP_EXIT.addListener(this::saveAllFiles);
+        AppEvents.OnAppExit.addListener(this::saveAllFiles);
         
         // Add an event in which, if Ctrl + ANYKEY is pressed
         this.addEventHandler(KeyEvent.KEY_PRESSED, event ->
