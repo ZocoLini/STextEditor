@@ -8,25 +8,17 @@ import java.io.File;
 public final class FileSystemTreeCellContent
 {
     private final File representingFile;
-    private final Image image;
 
     public FileSystemTreeCellContent(File file)
     {
         super();
 
         representingFile = file;
-
-        image = Resources.getImg(file);
     }
 
     public String getName()
     {
         return representingFile.getName();
-    }
-
-    public Image getImage()
-    {
-        return image;
     }
 
     @Override

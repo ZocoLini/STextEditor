@@ -11,22 +11,6 @@ import java.io.IOException;
 
 public class SealCodeApplication extends Application
 {
-    private static SealCodeApplication instance;
-
-    public SealCodeApplication()
-    {
-        super();
-
-        instance = this;
-    }
-
-    public static SealCodeApplication getInstance()
-    {
-        if (instance == null) instance = new SealCodeApplication();
-
-        return instance;
-    }
-
     public static void main(String[] args)
     {
         launch(args);

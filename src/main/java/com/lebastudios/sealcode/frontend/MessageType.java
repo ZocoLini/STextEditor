@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.applogic;
+package com.lebastudios.sealcode.frontend;
 
 public enum MessageType
 {

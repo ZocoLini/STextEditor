@@ -1,8 +1,6 @@
 package com.lebastudios.sealcode.frontend.fxextends;
 
-import com.lebastudios.sealcode.applogic.MessageType;
-import com.lebastudios.sealcode.applogic.Resources;
-import javafx.fxml.FXMLLoader;
+import com.lebastudios.sealcode.frontend.MessageType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

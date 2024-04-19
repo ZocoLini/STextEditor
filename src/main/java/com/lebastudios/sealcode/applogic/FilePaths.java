@@ -22,8 +22,6 @@ public final class FilePaths
 
     public static String getAppDirectory() {return System.getProperty("user.dir");}
 
-    public static String getImgDirectory() {return "/" + GlobalConfig.getStaticInstance().editorConfig.theme + "/img/";}
-
     public static String getIconDirectory()
     {
         return "/" + GlobalConfig.getStaticInstance().editorConfig.theme + "/icon/";
@@ -44,11 +42,7 @@ public final class FilePaths
 
     public static String getDefaultStyleDirectory() {return getDefaultDirectory() + "style/";}
 
-    public static String getDefaultImgFile() {return getDefaultImgDirectory() + "notfoundtype.png";}
-
-    public static String getDefaultImgDirectory() {return getDefaultDirectory() + "img/";}
-
-    public static String getDefaultIconFile() {return getDefaultImgDirectory() + "notfoundtype.png";}
+    public static String getDefaultIconFile() {return getDefaultIconDirectory() + "fileunknown.png";}
 
     public static String getDefaulThemeFile() {return getDefaultStyleDirectory() + "theme.css";}
 }

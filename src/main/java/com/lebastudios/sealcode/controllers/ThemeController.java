@@ -1,6 +1,7 @@
 package com.lebastudios.sealcode.controllers;
 
 import com.lebastudios.sealcode.applogic.config.GlobalConfig;
+import com.lebastudios.sealcode.applogic.events.AppEvents;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 
@@ -20,6 +21,8 @@ public class ThemeController extends SettingsPaneController
     public void apply()
     {
         GlobalConfig.getStaticInstance().editorConfig.theme = themeChoiceBox.getValue();
+
+        AppEvents.onThemeChange.invoke();
     }
     
     private void loadAvailableThemes()

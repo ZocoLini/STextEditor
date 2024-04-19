@@ -17,7 +17,7 @@ import java.util.List;
 
 public final class FileSystemTreeCell extends TreeCell<FileSystemTreeCellContent>
 {
-    private final IconView iconView;
+    private IconView iconView;
     private ContextMenu contextMenu = new ContextMenu(defaultMenuItems());
 
     public FileSystemTreeCell()
@@ -210,7 +210,7 @@ public final class FileSystemTreeCell extends TreeCell<FileSystemTreeCellContent
         menuItem.setOnAction(this::createDirectory);
         contextMenu.getItems().add(menuItem);
     }
-
+    
     @Override
     protected void updateItem(FileSystemTreeCellContent item, boolean empty)
     {
@@ -227,8 +227,13 @@ public final class FileSystemTreeCell extends TreeCell<FileSystemTreeCellContent
             this.setItem(item);
 
             setText(item.getName());
-            iconView.setImage(item.getImage());
+            iconView = new IconView(getFileIconName(item.getRepresentingFile()));
             setGraphic(iconView);
         }
+    }
+    
+    private String getFileIconName(File file)
+    {
+        return file.isDirectory() ? "fileDirectory.png" : "file" + file.getName().substring(file.getName().lastIndexOf('.') + 1) + ".png";
     }
 }
