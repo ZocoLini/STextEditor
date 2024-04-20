@@ -1,36 +1,28 @@
 package com.lebastudios.sealcode.frontend.fxextends.treeviews;
 
 import javafx.scene.control.TreeItem;
-import javafx.scene.image.ImageView;
 
-public class SettingsTreeItem extends TreeItem<String>
+public class SettingsTreeItem extends IconTreeItem<String>
 {
-    private final String fxmlName;
+    private String fxmlSceneName = "notasignedscene.fxml";
     
-    public SettingsTreeItem(String name, String fxmlName, ImageView icon)
+    public SettingsTreeItem()
     {
-        super(name, icon);
-        
-        this.fxmlName = fxmlName;
-        
-        addEventsHandlers();
-    }
+        super();
 
-    public SettingsTreeItem(String name, String fxmlName)
-    {
-        this(name, fxmlName, null);
-    }
-    
-    private void addEventsHandlers()
-    {
         this.addEventHandler(TreeItem.branchCollapsedEvent(), (event) ->
         {
             this.setExpanded(false);
         });
     }
     
-    public String getFxmlName()
+    public String getFxmlSceneName()
     {
-        return fxmlName;
+        return fxmlSceneName;
+    }
+    
+    public void setFxmlSceneName(String fxmlSceneName)
+    {
+        this.fxmlSceneName = fxmlSceneName;
     }
 }

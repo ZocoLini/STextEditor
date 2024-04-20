@@ -122,7 +122,7 @@ public final class FileSystemTreeView extends TreeView<FileSystemTreeCellContent
 
             for (var child : current.getChildren())
             {
-                if (child.getValue().getRepresentingFileName().equals(part))
+                if (child.getValue().representingFileName().equals(part))
                 {
                     current = child;
                     found = true;

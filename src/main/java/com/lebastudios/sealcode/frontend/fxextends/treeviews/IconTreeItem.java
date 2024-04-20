@@ -1,17 +1,20 @@
-package com.lebastudios.sealcode.frontend.fxextends;
+package com.lebastudios.sealcode.frontend.fxextends.treeviews;
 
+import com.lebastudios.sealcode.frontend.fxextends.IconView;
 import javafx.scene.control.TreeItem;
 
 public class IconTreeItem<T> extends TreeItem<T>
 {
     private String iconName;
 
-    public IconTreeItem(T value, String iconPath)
+    public IconTreeItem() {}
+    
+    public IconTreeItem(T value, String iconName)
     {
         super(value);
-        this.iconName = iconPath;
+        this.iconName = iconName;
         
-        updateIcon();
+        actualizarIcono();
     }
 
     public String getIconName()
@@ -22,10 +25,10 @@ public class IconTreeItem<T> extends TreeItem<T>
     public void setIconName(String iconName)
     {
         this.iconName = iconName;
-        updateIcon();
+        actualizarIcono();
     }
     
-    private void updateIcon()
+    private void actualizarIcono()
     {
         this.setGraphic(new IconView(iconName));
     }

@@ -142,7 +142,7 @@ public final class FileSystemTreeItem extends TreeItem<FileSystemTreeCellContent
 
     public File getRepresentingFile()
     {
-        return new File(concatenatePathWithFather(this.getValue().getRepresentingFileName()));
+        return new File(concatenatePathWithFather(this.getValue().representingFileName()));
     }
 
     private String concatenatePathWithFather(String buildedPath)
@@ -158,7 +158,7 @@ public final class FileSystemTreeItem extends TreeItem<FileSystemTreeCellContent
         }
         
         return ((FileSystemTreeItem) this.getParent()).concatenatePathWithFather(
-                this.getParent().getValue().getRepresentingFileName() + "/" + buildedPath
+                this.getParent().getValue().representingFileName() + "/" + buildedPath
         );
     }
 
