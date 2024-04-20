@@ -3,6 +3,7 @@ package com.lebastudios.sealcode;
 import com.lebastudios.sealcode.applogic.AppLoop;
 import com.lebastudios.sealcode.applogic.config.GlobalConfig;
 import com.lebastudios.sealcode.applogic.config.Session;
+import com.lebastudios.sealcode.events.AppEvents;
 import com.lebastudios.sealcode.frontend.stages.MainStage;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -36,6 +37,8 @@ public class SealCodeApplication extends Application
 
         stage.show();
 
+        AppEvents.onAppStart.invoke();
+        
         AppLoop.startLoop();
     }
 }

@@ -2,7 +2,7 @@ package com.lebastudios.sealcode.frontend.stages;
 
 import com.lebastudios.sealcode.applogic.config.GlobalConfig;
 import com.lebastudios.sealcode.applogic.config.Session;
-import com.lebastudios.sealcode.applogic.events.AppEvents;
+import com.lebastudios.sealcode.events.AppEvents;
 import javafx.stage.WindowEvent;
 
 public class MainStage extends StageBuilder
@@ -19,7 +19,7 @@ public class MainStage extends StageBuilder
     {
         this.addEventHandler(WindowEvent.WINDOW_HIDING, event -> GlobalConfig.getStaticInstance().save());
         this.addEventHandler(WindowEvent.WINDOW_HIDING, event -> Session.getStaticInstance().save());
-        this.addEventHandler(WindowEvent.WINDOW_HIDING, event -> AppEvents.OnAppExit.invoke());
+        this.addEventHandler(WindowEvent.WINDOW_HIDING, event -> AppEvents.onAppExit.invoke());
     }
 
     public static MainStage getInstance()

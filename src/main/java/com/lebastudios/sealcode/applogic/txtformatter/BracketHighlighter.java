@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.applogic.txtformatter;
 
-import com.lebastudios.sealcode.frontend.fxextends.FormateableText;
+import com.lebastudios.sealcode.frontend.fxextends.SealCodeArea;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
@@ -10,14 +10,14 @@ import java.util.List;
 
 // TODO: PEndiente d ehacer un rainbow bracket system
 
-class BracketHighlighter
+public class BracketHighlighter
 {
     // constants
     private static final List<String> CLEAR_STYLE = Collections.emptyList();
     private static final List<String> MATCH_STYLE = Collections.singletonList("match-bracket");
     private static final String BRACKET_PAIRS = "(){}[]<>";
     // the code area
-    private final FormateableText codeArea;
+    private final SealCodeArea codeArea;
     // the list of highlighted bracket pairs
     private final List<BracketPair> bracketPairs = new ArrayList<>();
 
@@ -26,7 +26,7 @@ class BracketHighlighter
      *
      * @param codeArea the code area
      */
-    public BracketHighlighter(FormateableText codeArea)
+    public BracketHighlighter(SealCodeArea codeArea)
     {
         this.codeArea = codeArea;
 

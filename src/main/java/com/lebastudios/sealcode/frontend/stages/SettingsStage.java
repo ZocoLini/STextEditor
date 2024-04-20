@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.frontend.stages;
 
-import com.lebastudios.sealcode.applogic.events.AppEvents;
+import com.lebastudios.sealcode.events.AppEvents;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;

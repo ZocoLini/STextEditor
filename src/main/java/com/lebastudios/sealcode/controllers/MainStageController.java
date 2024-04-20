@@ -1,13 +1,20 @@
 package com.lebastudios.sealcode.controllers;
 
 import com.lebastudios.sealcode.applogic.config.Session;
+import com.lebastudios.sealcode.frontend.Dialogs;
 import com.lebastudios.sealcode.frontend.fxextends.*;
-import com.lebastudios.sealcode.frontend.fxextends.treeviews.FileSystemTreeView;
+import com.lebastudios.sealcode.frontend.fxextends.treeviews.FileSystemTreeCellContent;
+import com.lebastudios.sealcode.frontend.fxextends.treeviews.FileSystemTreeItem;
+import com.lebastudios.sealcode.frontend.stages.MainStage;
 import com.lebastudios.sealcode.frontend.stages.SettingsStage;
 import javafx.fxml.FXML;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TreeItem;
+import javafx.scene.layout.BorderPane;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class MainStageController
 {
@@ -19,23 +26,24 @@ public class MainStageController
     }
 
     @FXML
-    private CodeTabPane codeTabPane;
+    public CodeTabPane codeTabPane;
     @FXML
-    private FileSystemTreeView fileSystemTreeView;
+    public ConsoleTextArea consoleTextArea;
     @FXML
-    private ConsoleTextArea consoleTextArea;
+    public SplitPane horizontalContainer;
     @FXML
-    private SplitPane horizontalContainer;
+    public SplitPane verticalContainer;
     @FXML
-    private SplitPane verticalContainer;
+    public NotificationsContainer notificationsContainer;
     @FXML
-    private NotificationsContainer notificationsContainer;
+    public BorderPane fileSystemBorderPane;
 
     public MainStageController()
     {
         instance = this;
     }
 
+    @FXML
     public void altrnateNotiVisibility()
     {
         final var notifications = instance.notificationsContainer;
@@ -49,6 +57,7 @@ public class MainStageController
         }
     }
 
+    @FXML
     public void altrnateTerminalVisibility()
     {
         final var consoleTextArea = instance.consoleTextArea;
@@ -62,9 +71,10 @@ public class MainStageController
         }
     }
 
+    @FXML
     public void alternateFileSystemVisibility()
     {
-        final var proyectFileTreeView = instance.fileSystemTreeView;
+        final var proyectFileTreeView = instance.fileSystemBorderPane;
         SplitPane proyectTreeViewContainer = instance.horizontalContainer;
         final var items = proyectTreeViewContainer.getItems();
 
@@ -78,53 +88,35 @@ public class MainStageController
         }
     }
 
+    @FXML
     public void executeCode()
     {
-        addNotification(new Notification("This feature is not implemented in this version."));
+        notificationsContainer.addNotification(new Notification("This feature is not implemented in this version."));
     }
 
+    @FXML
     public void compileCode()
     {
-        addNotification(new Notification("This feature is not implemented in this version."));
+        notificationsContainer.addNotification(new Notification("This feature is not implemented in this version."));
     }
 
+    @FXML
     public void openNewProjectDirectory()
     {
-        fileSystemTreeView.openNewProjectDirectory();
+        FileSystemController.getInstance().fileSystemTreeView.openNewProjectDirectory();
     }
-
-    public void newFile()
-    {
-        instance.codeTabPane.newFile();
-    }
-
-    public void openFile()
-    {
-        instance.codeTabPane.openFile();
-    }
-
-    public void openFile(File file)
-    {
-        instance.codeTabPane.openFile(file);
-    }
-
-    public void saveActualTab()
-    {
-        instance.codeTabPane.saveActualTab();
-    }
-
-    public void saveActualFileAs()
-    {
-        instance.codeTabPane.saveActualFileAs();
-    }
-
+    
+    @FXML
     public void openSettings()
     {
         SettingsStage.getInstance().showAndWait();
     }
 
-    public static void addNotification(Notification notification)
+    @FXML
+    void exit()
     {
-        instance.notificationsContainer.addNotification(notification);
+        Session.getStaticInstance().reset();
+
+        MainStage.getInstance().close();
     }
 }

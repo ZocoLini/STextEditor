@@ -12,9 +12,9 @@
 
     <center>
         <SplitPane fx:id="mainSplitPane" dividerPositions="0.3, 0.5">
-            <SettingsTreeView fx:id="settingsTreeView"/>
+            <SettingsTreeView/>
 
-            <AnchorPane fx:id="optionsAnchorPane" prefHeight="160.0" prefWidth="100.0" />
+            <AnchorPane prefHeight="160.0" prefWidth="100.0" />
         </SplitPane>
     </center>
     

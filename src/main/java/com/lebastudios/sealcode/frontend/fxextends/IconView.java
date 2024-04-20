@@ -1,7 +1,7 @@
 package com.lebastudios.sealcode.frontend.fxextends;
 
 import com.lebastudios.sealcode.applogic.Resources;
-import com.lebastudios.sealcode.applogic.events.AppEvents;
+import com.lebastudios.sealcode.events.AppEvents;
 import javafx.scene.image.ImageView;
 
 public class IconView extends ImageView

@@ -1,34 +1,33 @@
 package com.lebastudios.sealcode.frontend.fxextends.treeviews;
 
-import com.lebastudios.sealcode.applogic.Resources;
-import javafx.scene.image.Image;
-
-import java.io.File;
-
 public final class FileSystemTreeCellContent
 {
-    private final File representingFile;
+    private final String representingFileName;
 
-    public FileSystemTreeCellContent(File file)
+    public FileSystemTreeCellContent(String representingFileName)
     {
         super();
 
-        representingFile = file;
+        this.representingFileName = representingFileName;
     }
 
     public String getName()
     {
-        return representingFile.getName();
+        int lastDotIndex = representingFileName.lastIndexOf('.'); // Find the last dot in the file name
+        
+        if (lastDotIndex == -1) return representingFileName; // If there is no dot, return the whole name
+        
+        return representingFileName.substring(0, lastDotIndex); // Return the name of the file (without the extension)
     }
 
     @Override
     public String toString()
     {
-        return representingFile.getName();
+        return representingFileName;
     }
 
-    public File getRepresentingFile()
+    public String getRepresentingFileName()
     {
-        return representingFile;
+        return representingFileName;
     }
 }

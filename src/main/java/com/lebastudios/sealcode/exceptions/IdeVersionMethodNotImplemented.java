@@ -1,7 +1,7 @@
 package com.lebastudios.sealcode.exceptions;
 
-import com.lebastudios.sealcode.frontend.fxextends.Notification;
 import com.lebastudios.sealcode.controllers.MainStageController;
+import com.lebastudios.sealcode.frontend.fxextends.Notification;
 
 public class IdeVersionMethodNotImplemented extends RuntimeException
 {
@@ -9,7 +9,7 @@ public class IdeVersionMethodNotImplemented extends RuntimeException
     {
         super("This method is not implemented in this version of the IDE.");
 
-        MainStageController.addNotification(new Notification("This function is not implemented in this version of " +
+        MainStageController.getInstance().notificationsContainer.addNotification(new Notification("This function is not implemented in this version of " +
                 "the IDE."));
     }
 }

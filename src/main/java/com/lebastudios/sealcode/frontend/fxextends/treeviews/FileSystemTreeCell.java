@@ -48,12 +48,12 @@ public final class FileSystemTreeCell extends TreeCell<FileSystemTreeCellContent
 
         if (getRepresentingFile().isDirectory()) return;
 
-        MainStageController.getInstance().openFile(getRepresentingFile());
+        MainStageController.getInstance().codeTabPane.openFile((FileSystemTreeItem) this.getTreeItem());
     }
 
     public File getRepresentingFile()
     {
-        return this.getItem().getRepresentingFile();
+        return ((FileSystemTreeItem) this.getTreeItem()).getRepresentingFile();
     }
 
     private MenuItem[] defaultMenuItems()
@@ -72,7 +72,6 @@ public final class FileSystemTreeCell extends TreeCell<FileSystemTreeCellContent
         return menuItems.toArray(arrayOfMenuItems);
     }
 
-    //TODO: When a file renames his name, his childs doesnt update their path
     private void renameRepresentingFile(ActionEvent event)
     {
         System.out.println("Se intentará renombrar " + getRepresentingFile().getAbsolutePath());
@@ -85,7 +84,7 @@ public final class FileSystemTreeCell extends TreeCell<FileSystemTreeCellContent
 
         if (getRepresentingFile().renameTo(newFilePath))
         {
-            this.setItem(new FileSystemTreeCellContent(newFilePath));
+            this.setItem(new FileSystemTreeCellContent(nuevoNombre));
             this.getTreeItem().setValue(this.getItem());
         }
         else
@@ -227,7 +226,7 @@ public final class FileSystemTreeCell extends TreeCell<FileSystemTreeCellContent
             this.setItem(item);
 
             setText(item.getName());
-            iconView = new IconView(getFileIconName(item.getRepresentingFile()));
+            iconView = new IconView(getFileIconName(getRepresentingFile()));
             setGraphic(iconView);
         }
     }

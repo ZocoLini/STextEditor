@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class KeyWordHighlighter
+public class KeyWordHighlighter
 {
     public final JSONPatterns patterns;
     private final CodeArea codeArea;

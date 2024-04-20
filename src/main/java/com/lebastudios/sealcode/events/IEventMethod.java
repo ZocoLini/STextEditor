@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.applogic.events;
+package com.lebastudios.sealcode.events;
 
 /**
  * Interface for the event method to be invoked without parameters.

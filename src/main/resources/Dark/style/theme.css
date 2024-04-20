@@ -431,3 +431,31 @@
     -fx-text-fill: black;
     -fx-background-color: -swatch-dark-gray;
 }
+
+/*******************************************************************************
+ *                                                                             *
+ * Code Area                                                                   *
+ *                                                                             *
+ ******************************************************************************/
+.match-bracket {
+    -rtfx-background-color: lightgreen;
+}
+
+.code-area {
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-background-color: #333333;
+}
+
+.code-area .line-number {
+    -fx-fill: #808080;
+}
+
+.code-area .caret {
+    -fx-background-color: #007bff;
+}
+
+.code-area .selection {
+    -fx-background-color: rgba(0, 123, 255, 0.3);
+}

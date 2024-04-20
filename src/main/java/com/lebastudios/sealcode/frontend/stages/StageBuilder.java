@@ -2,7 +2,7 @@ package com.lebastudios.sealcode.frontend.stages;
 
 import com.lebastudios.sealcode.SealCodeApplication;
 import com.lebastudios.sealcode.applogic.Resources;
-import com.lebastudios.sealcode.applogic.events.AppEvents;
+import com.lebastudios.sealcode.events.AppEvents;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

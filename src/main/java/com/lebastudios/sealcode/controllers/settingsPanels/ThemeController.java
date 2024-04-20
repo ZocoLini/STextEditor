@@ -1,7 +1,7 @@
-package com.lebastudios.sealcode.controllers;
+package com.lebastudios.sealcode.controllers.settingsPanels;
 
 import com.lebastudios.sealcode.applogic.config.GlobalConfig;
-import com.lebastudios.sealcode.applogic.events.AppEvents;
+import com.lebastudios.sealcode.events.AppEvents;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 

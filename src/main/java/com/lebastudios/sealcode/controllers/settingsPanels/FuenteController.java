@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.controllers;
+package com.lebastudios.sealcode.controllers.settingsPanels;
 
 import com.lebastudios.sealcode.applogic.config.GlobalConfig;
 import javafx.fxml.FXML;
@@ -15,7 +15,7 @@ public class FuenteController extends SettingsPaneController
         fontNameTF.setText(GlobalConfig.getStaticInstance().editorConfig.font);
         letterSizeTF.setText(String.valueOf(GlobalConfig.getStaticInstance().editorConfig.fontSize));
     }
-
+    
     @Override
     public void apply()
     {

@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.controllers;
+package com.lebastudios.sealcode.controllers.settingsPanels;
 
 import com.lebastudios.sealcode.applogic.config.GlobalConfig;
 import javafx.fxml.FXML;

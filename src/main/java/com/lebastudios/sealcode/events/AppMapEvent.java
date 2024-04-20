@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.applogic.events;
+package com.lebastudios.sealcode.events;
 
 import java.util.List;
 

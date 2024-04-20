@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.controllers;
+package com.lebastudios.sealcode.controllers.settingsPanels;
 
 public abstract class SettingsPaneController
 {

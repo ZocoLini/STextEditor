@@ -1,7 +1,8 @@
 package com.lebastudios.sealcode.frontend.fxextends.treeviews;
 
 import com.lebastudios.sealcode.applogic.AppLoop;
-import com.lebastudios.sealcode.applogic.events.IEventMethod;
+import com.lebastudios.sealcode.applogic.config.Session;
+import com.lebastudios.sealcode.events.IEventMethod;
 import javafx.scene.control.TreeItem;
 import javafx.stage.WindowEvent;
 
@@ -113,7 +114,7 @@ public final class FileSystemTreeItem extends TreeItem<FileSystemTreeCellContent
         }
 
         // Eliminamos los archivos o direcotrios que ya no existan
-        children.removeIf(childrenTreeItem -> !childrenTreeItem.getValue().getRepresentingFile().exists());
+        children.removeIf(childrenTreeItem -> !((FileSystemTreeItem) childrenTreeItem).getRepresentingFile().exists());
     }
 
     private final IEventMethod monitorearHijos = new IEventMethod()
@@ -141,14 +142,31 @@ public final class FileSystemTreeItem extends TreeItem<FileSystemTreeCellContent
 
     public File getRepresentingFile()
     {
-        return this.getValue().getRepresentingFile();
+        return new File(concatenatePathWithFather(this.getValue().getRepresentingFileName()));
+    }
+
+    private String concatenatePathWithFather(String buildedPath)
+    {
+        if (this.getParent() == null)
+        {
+            return Session.getStaticInstance().proyectDirectory;
+        }
+        
+        if (this.getParent().getParent() == null) 
+        {
+            return Session.getStaticInstance().proyectDirectory + "/" + buildedPath;
+        }
+        
+        return ((FileSystemTreeItem) this.getParent()).concatenatePathWithFather(
+                this.getParent().getValue().getRepresentingFileName() + "/" + buildedPath
+        );
     }
 
     private boolean isRepresented(File file)
     {
         for (var childrenTreeItem : this.getChildren())
         {
-            if (childrenTreeItem.getValue().getRepresentingFile().equals(file))
+            if (((FileSystemTreeItem) childrenTreeItem).getRepresentingFile().equals(file))
             {
                 return true;
             }
