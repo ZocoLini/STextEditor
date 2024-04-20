@@ -1,20 +1,14 @@
 package com.lebastudios.sealcode.controllers;
 
 import com.lebastudios.sealcode.applogic.config.Session;
-import com.lebastudios.sealcode.frontend.Dialogs;
 import com.lebastudios.sealcode.frontend.fxextends.*;
-import com.lebastudios.sealcode.frontend.fxextends.treeviews.FileSystemTreeCellContent;
-import com.lebastudios.sealcode.frontend.fxextends.treeviews.FileSystemTreeItem;
 import com.lebastudios.sealcode.frontend.stages.MainStage;
 import com.lebastudios.sealcode.frontend.stages.SettingsStage;
 import javafx.fxml.FXML;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.TreeItem;
 import javafx.scene.layout.BorderPane;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class MainStageController
 {

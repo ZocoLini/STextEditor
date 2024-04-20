@@ -8,7 +8,7 @@ import javafx.scene.control.TreeView;
 
 import java.io.File;
 
-public final class FileSystemTreeView extends TreeView<FileSystemTreeCellContent>
+public final class FileSystemTreeView extends TreeView<String>
 {
     public FileSystemTreeView()
     {
@@ -19,7 +19,7 @@ public final class FileSystemTreeView extends TreeView<FileSystemTreeCellContent
         openLastProjectDirectory();
     }
 
-    public static TreeItem<FileSystemTreeCellContent> createTreeView(File file)
+    public static FileSystemTreeItem createTreeView(File file)
     {
         if (file == null)
         {
@@ -31,9 +31,7 @@ public final class FileSystemTreeView extends TreeView<FileSystemTreeCellContent
             throw new IllegalArgumentException("File does not exist");
         }
 
-        String name = file.getName();
-
-        TreeItem<FileSystemTreeCellContent> root = new FileSystemTreeItem(new FileSystemTreeCellContent(name));
+        FileSystemTreeItem root = new FileSystemTreeItem(file);
 
         root.setExpanded(false);
 
@@ -122,7 +120,7 @@ public final class FileSystemTreeView extends TreeView<FileSystemTreeCellContent
 
             for (var child : current.getChildren())
             {
-                if (child.getValue().representingFileName().equals(part))
+                if (child.getValue().equals(part))
                 {
                     current = child;
                     found = true;

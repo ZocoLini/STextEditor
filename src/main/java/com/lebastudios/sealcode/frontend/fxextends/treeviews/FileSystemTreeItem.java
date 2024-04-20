@@ -1,24 +1,54 @@
 package com.lebastudios.sealcode.frontend.fxextends.treeviews;
 
-import com.lebastudios.sealcode.applogic.AppLoop;
 import com.lebastudios.sealcode.applogic.config.Session;
-import com.lebastudios.sealcode.events.IEventMethod;
-import javafx.scene.control.TreeItem;
-import javafx.stage.WindowEvent;
 
 import java.io.File;
 
-public final class FileSystemTreeItem extends TreeItem<FileSystemTreeCellContent>
+public final class FileSystemTreeItem extends IconTreeItem<String>
 {
-    private boolean monitorear = false;
-
-    public FileSystemTreeItem(FileSystemTreeCellContent content)
+    public FileSystemTreeItem(File file)
     {
-        super(content);
+        super();
 
-        addEventHandlers();
+        this.setValue(file.getName());
+        
+        String iconName = file.isDirectory()
+                ? "fileDirectory.png"
+                : "file" + file.getName().substring(file.getName().lastIndexOf('.') + 1) + ".png";
+        this.setIconName(iconName);
     }
 
+    public File getRepresentingFile()
+    {
+        return new File(concatenatePathWithFather(this.getValue()));
+    }
+
+    private String concatenatePathWithFather(String buildedPath)
+    {
+        if (this.getParent() == null)
+        {
+            return Session.getStaticInstance().proyectDirectory;
+        }
+
+        if (this.getParent().getParent() == null)
+        {
+            return Session.getStaticInstance().proyectDirectory + "/" + buildedPath;
+        }
+
+        return ((FileSystemTreeItem) this.getParent()).concatenatePathWithFather(
+                this.getParent().getValue() + "/" + buildedPath
+        );
+    }
+
+    public void reload()
+    {
+        this.getChildren().clear();
+        this.getChildren().addAll(FileSystemTreeView.createTreeView(getRepresentingFile()).getChildren());
+    }
+    
+    /* OLD FILE SYSTEM MONITORING
+    private boolean monitorear = false;
+    
     private void addEventHandlers()
     {
         this.addEventHandler(WindowEvent.WINDOW_HIDING, (event) -> monitorear = false);
@@ -96,7 +126,7 @@ public final class FileSystemTreeItem extends TreeItem<FileSystemTreeCellContent
         // Añadimos los archivos o directorios que no esten representados
         for (File file : representingFile.listFiles())
         {
-            if (!file.getName().equals(".seal") && file.getName().charAt(0) == '.') continue;
+            if (file.getName().equals(".git") && GlobalConfig.getStaticInstance().userPrefs.ignoreGitDir) continue;
 
             if (!isRepresented(file))
             {
@@ -109,7 +139,7 @@ public final class FileSystemTreeItem extends TreeItem<FileSystemTreeCellContent
                     throw new RuntimeException(e);
                 }
 
-                children.add(FileSystemTreeView.createTreeView(file));
+                FileSystemController.getInstance().reloadFileSystem();
             }
         }
 
@@ -139,29 +169,7 @@ public final class FileSystemTreeItem extends TreeItem<FileSystemTreeCellContent
             actualizar();
         }
     };
-
-    public File getRepresentingFile()
-    {
-        return new File(concatenatePathWithFather(this.getValue().representingFileName()));
-    }
-
-    private String concatenatePathWithFather(String buildedPath)
-    {
-        if (this.getParent() == null)
-        {
-            return Session.getStaticInstance().proyectDirectory;
-        }
-        
-        if (this.getParent().getParent() == null) 
-        {
-            return Session.getStaticInstance().proyectDirectory + "/" + buildedPath;
-        }
-        
-        return ((FileSystemTreeItem) this.getParent()).concatenatePathWithFather(
-                this.getParent().getValue().representingFileName() + "/" + buildedPath
-        );
-    }
-
+    
     private boolean isRepresented(File file)
     {
         for (var childrenTreeItem : this.getChildren())
@@ -174,6 +182,5 @@ public final class FileSystemTreeItem extends TreeItem<FileSystemTreeCellContent
 
         return false;
     }
-
-
+*/
 }

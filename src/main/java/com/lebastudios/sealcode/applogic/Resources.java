@@ -60,45 +60,6 @@ public final class Resources
         
         return icon;
     }
-    
-    private static String getClassStyleFromFile(String resourcePath, String className)
-    {
-        String content = null;
-
-        try
-        {
-            content = FileOperation.readResource(resourcePath);
-        }
-        catch (Exception e)
-        {
-            System.out.println("Error in Resources.java reading the file " + resourcePath + ". The class style will " +
-                    "not be applied.");
-        }
-
-        Matcher matcher = Pattern.compile("\\." + className + "\\s*\\{([^}]*)\\}").matcher(content);
-
-        if (matcher.find())
-        {
-            String classFound = matcher.group();
-
-            classFound = classFound.replace("." + className, "").replace("{", "")
-                    .replace("}", "").trim().replaceAll("\\s+", " ");
-
-            return classFound;
-        }
-
-        if (!Objects.equals(resourcePath, FilePaths.getDefaulThemeFile()))
-        {
-            return getClassStyleFromFile(FilePaths.getDefaulThemeFile(), className);
-        }
-
-        return "";
-    }
-
-    public static String getThemeClassStyleFromFile(String className)
-    {
-        return getClassStyleFromFile(FilePaths.getStyleDirectory() + "theme.css", className);
-    }
 
     public static String getLangCommonStyle()
     {
@@ -138,20 +99,6 @@ public final class Resources
 
         // If the extension has no style defined, use the default style
         return SealCodeApplication.class.getResource(FilePaths.getDefaultLangStyleFile()).toExternalForm();
-    }
-
-    public static String getCodeAreaStyle()
-    {
-        // Check if the code area has a style defined in the actual theme
-        String codeAreaStylePath = FilePaths.getStyleDirectory() + "codeArea.css";
-        if (existsResource(codeAreaStylePath))
-        {
-            return SealCodeApplication.class.getResource(codeAreaStylePath).toExternalForm();
-        }
-
-        // Using the default style defined in the default theme
-        codeAreaStylePath = FilePaths.getDefaultStyleDirectory() + "codeArea.css";
-        return SealCodeApplication.class.getResource(codeAreaStylePath).toExternalForm();
     }
 
     public static String getThemeStyle()

@@ -1,8 +1,9 @@
 package com.lebastudios.sealcode.frontend.fxextends.treeviews;
 
-import com.lebastudios.sealcode.frontend.Dialogs;
 import com.lebastudios.sealcode.controllers.MainStageController;
-import com.lebastudios.sealcode.frontend.fxextends.IconView;
+import com.lebastudios.sealcode.frontend.Dialogs;
+import com.lebastudios.sealcode.frontend.MessageType;
+import com.lebastudios.sealcode.frontend.fxextends.Notification;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -15,19 +16,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class FileSystemTreeCell extends TreeCell<FileSystemTreeCellContent>
+public final class FileSystemTreeCell extends TreeCell<String>
 {
-    private IconView iconView;
-    private ContextMenu contextMenu = new ContextMenu(defaultMenuItems());
+    private CellContextMenu cellContextMenu;
 
     public FileSystemTreeCell()
-    {
-        iconView = new IconView();
-
-        addEventHandlers();
-    }
-
-    private void addEventHandlers()
     {
         this.setOnContextMenuRequested(this::showContextActions);
         this.setOnMouseClicked(this::openRepresentingFile);
@@ -36,14 +29,14 @@ public final class FileSystemTreeCell extends TreeCell<FileSystemTreeCellContent
     private void showContextActions(ContextMenuEvent event)
     {
         if (this.getTreeItem() == null) return;
-        
-        contextMenu.show(this, event.getScreenX(), event.getScreenY());
+
+        cellContextMenu.show(this, event.getScreenX(), event.getScreenY());
     }
 
     private void openRepresentingFile(MouseEvent event)
     {
         if (this.getTreeItem() == null) return;
-        
+
         if (event.getClickCount() < 2) return;
 
         if (getRepresentingFile().isDirectory()) return;
@@ -56,162 +49,8 @@ public final class FileSystemTreeCell extends TreeCell<FileSystemTreeCellContent
         return ((FileSystemTreeItem) this.getTreeItem()).getRepresentingFile();
     }
 
-    private MenuItem[] defaultMenuItems()
-    {
-        List<MenuItem> menuItems = new ArrayList<>();
-
-        MenuItem menuItem = new MenuItem("Remove");
-        menuItem.setOnAction(this::removeRepresentingFile);
-        menuItems.add(menuItem);
-
-        menuItem = new MenuItem("Rename");
-        menuItem.setOnAction(this::renameRepresentingFile);
-        menuItems.add(menuItem);
-
-        MenuItem[] arrayOfMenuItems = new MenuItem[0];
-        return menuItems.toArray(arrayOfMenuItems);
-    }
-
-    private void renameRepresentingFile(ActionEvent event)
-    {
-        System.out.println("Se intentará renombrar " + getRepresentingFile().getAbsolutePath());
-        String nuevoNombre = Dialogs.insertTextDialog("Insert new name");
-
-        if (nuevoNombre.isEmpty()) return;
-
-        File parent = getRepresentingFile().getParentFile();
-        File newFilePath = new File(parent.toString() + "/" + nuevoNombre);
-
-        if (getRepresentingFile().renameTo(newFilePath))
-        {
-            this.setItem(new FileSystemTreeCellContent(nuevoNombre));
-            this.getTreeItem().setValue(this.getItem());
-        }
-        else
-        {
-            System.err.println("Error al instentar modificar el nombre.");
-        }
-    }
-
-    private void createFile(ActionEvent event)
-    {
-        String name = Dialogs.insertTextDialog("Insert new file name");
-
-        File newFile = new File(getRepresentingFile().getAbsoluteFile() + "/" + name);
-
-        try
-        {
-            newFile.createNewFile();
-        }
-        catch (IOException e)
-        {
-            throw new RuntimeException(e);
-        }
-
-        updateThisItemChildren();
-    }
-
-    private void createDirectory(ActionEvent event)
-    {
-        String name = Dialogs.insertTextDialog("Insert new directory name");
-
-        File newFile = new File(getRepresentingFile().getAbsoluteFile() + "/" + name);
-
-        newFile.mkdirs();
-        updateThisItemChildren();
-    }
-
-    private void removeRepresentingFile(ActionEvent event)
-    {
-        System.out.println("Se intentará eliminar " + getRepresentingFile().getAbsolutePath());
-        removeFile(getRepresentingFile());
-
-        updateParentItemChildren();
-    }
-
-    private void removeFile(File fileToRemove)
-    {
-        if (!fileToRemove.exists())
-        {
-            System.out.println("File " + fileToRemove + " does not exists.");
-            return;
-        }
-
-        if (fileToRemove.isFile())
-        {
-            fileToRemove.delete();
-            return;
-        }
-
-        for (var file : fileToRemove.listFiles())
-        {
-            removeFile(file);
-        }
-
-        fileToRemove.delete();
-    }
-
-    private void updateParentItemChildren()
-    {
-        ((FileSystemTreeItem) this.getTreeItem().getParent()).actualizarHijos();
-    }
-
-    private void updateThisItemChildren()
-    {
-        ((FileSystemTreeItem) this.getTreeItem()).actualizarHijos();
-    }
-
-    private void customizeContextMenu()
-    {
-        if (getRepresentingFile().isDirectory())
-        {
-            if (this.getTreeItem().equals(this.getTreeView().getRoot()))
-            {
-                makeRootContextActions();
-                return;
-            }
-
-            makeDirectoryContextActions();
-        }
-        else
-        {
-            makeFileContextActions();
-        }
-    }
-
-    private void makeFileContextActions()
-    {
-        contextMenu = new ContextMenu(defaultMenuItems());
-    }
-
-    private void makeRootContextActions()
-    {
-        contextMenu = new ContextMenu();
-
-        MenuItem menuItem = new MenuItem("New File");
-        menuItem.setOnAction(this::createFile);
-        contextMenu.getItems().add(menuItem);
-
-        menuItem = new MenuItem("New Directory");
-        menuItem.setOnAction(this::createDirectory);
-        contextMenu.getItems().add(menuItem);
-    }
-
-    private void makeDirectoryContextActions()
-    {
-        contextMenu = new ContextMenu(defaultMenuItems());
-
-        MenuItem menuItem = new MenuItem("New File");
-        menuItem.setOnAction(this::createFile);
-        contextMenu.getItems().add(menuItem);
-
-        menuItem = new MenuItem("New Directory");
-        menuItem.setOnAction(this::createDirectory);
-        contextMenu.getItems().add(menuItem);
-    }
-    
     @Override
-    protected void updateItem(FileSystemTreeCellContent item, boolean empty)
+    protected void updateItem(String item, boolean empty)
     {
         super.updateItem(item, empty);
 
@@ -219,20 +58,190 @@ public final class FileSystemTreeCell extends TreeCell<FileSystemTreeCellContent
         {
             setText(null);
             setGraphic(null);
-        }
-        else
+        } else
         {
-            customizeContextMenu();
-            this.setItem(item);
+            cellContextMenu = new CellContextMenu(this);
 
-            setText(item.getName());
-            iconView = new IconView(getFileIconName(getRepresentingFile()));
-            setGraphic(iconView);
+            setText(item);
+            setGraphic(this.getTreeItem().getGraphic());
         }
     }
-    
-    private String getFileIconName(File file)
+
+    private class CellContextMenu extends ContextMenu
     {
-        return file.isDirectory() ? "fileDirectory.png" : "file" + file.getName().substring(file.getName().lastIndexOf('.') + 1) + ".png";
+        private final FileSystemTreeCell treeCell;
+        
+        public CellContextMenu(FileSystemTreeCell treeCell)
+        {
+            super();
+            
+            this.treeCell = treeCell;
+            
+            this.getItems().clear();
+            this.getItems().addAll(customizeContextMenu(treeCell));
+        }
+
+        private List<MenuItem> customizeContextMenu(FileSystemTreeCell treeCell)
+        {
+            if (getRepresentingFile().isDirectory())
+            {
+                if (treeCell.getParent() == null)
+                {
+                    return makeRootContextActions();
+                }
+
+                return makeDirectoryContextActions();
+            } 
+            
+            return makeFileContextActions();
+        }
+
+        private List<MenuItem> defaultMenuItems()
+        {
+            List<MenuItem> menuItems = new ArrayList<>();
+
+            MenuItem menuItem = new MenuItem("Remove");
+            menuItem.setOnAction(this::removeRepresentingFile);
+            menuItems.add(menuItem);
+
+            menuItem = new MenuItem("Rename");
+            menuItem.setOnAction(this::renameRepresentingFile);
+            menuItems.add(menuItem);
+
+            return menuItems;
+        }
+
+        private List<MenuItem> makeFileContextActions()
+        {
+            return defaultMenuItems();
+        }
+
+        private List<MenuItem> makeRootContextActions()
+        {
+            List<MenuItem> menuItems = new ArrayList<>();
+
+            MenuItem menuItem = new MenuItem("New File");
+            menuItem.setOnAction(this::createFile);
+            menuItems.add(menuItem);
+
+            menuItem = new MenuItem("New Directory");
+            menuItem.setOnAction(this::createDirectory);
+            menuItems.add(menuItem);
+
+            return menuItems;
+        }
+
+        private List<MenuItem> makeDirectoryContextActions()
+        {
+            List<MenuItem> menuItems = defaultMenuItems();
+
+            MenuItem menuItem = new MenuItem("New File");
+            menuItem.setOnAction(this::createFile);
+            menuItems.add(menuItem);
+
+            menuItem = new MenuItem("New Directory");
+            menuItem.setOnAction(this::createDirectory);
+            menuItems.add(menuItem);
+
+            return menuItems;
+        }
+
+        private void renameRepresentingFile(ActionEvent event)
+        {
+            System.out.println("Se intentará renombrar " + getRepresentingFile());
+            String nuevoNombre = Dialogs.insertTextDialog("Insert new name", treeCell.getItem());
+
+            if (nuevoNombre.isEmpty()) return;
+
+            File parent = getRepresentingFile().getParentFile();
+            File newFilePath = new File(parent.toString() + "/" + nuevoNombre);
+
+            if (getRepresentingFile().renameTo(newFilePath))
+            {
+                treeCell.setItem(nuevoNombre);
+                treeCell.getTreeItem().setValue(treeCell.getItem());
+            } else
+            {
+                System.err.println("Error al instentar modificar el nombre.");
+            }
+        }
+
+        private void createFile(ActionEvent event)
+        {
+            String name = Dialogs.insertTextDialog("Insert new file name");
+
+            File newFile = new File(getRepresentingFile().getAbsoluteFile() + "/" + name);
+
+            try
+            {
+                if (newFile.createNewFile())
+                {
+                    treeCell.getTreeItem().getChildren().add(new FileSystemTreeItem(newFile));
+                }
+            } catch (IOException e)
+            {
+                MainStageController.getInstance().notificationsContainer.addNotification(
+                        new Notification("Error creating file " + newFile.getName(), MessageType.Error)
+                );
+            }
+        }
+
+        private void createDirectory(ActionEvent event)
+        {
+            String name = Dialogs.insertTextDialog("Insert new directory name");
+
+            File newFile = new File(getRepresentingFile().getAbsoluteFile() + "/" + name);
+
+            try
+            {
+                if (newFile.mkdirs())
+                {
+                    treeCell.getTreeItem().getChildren().add(new FileSystemTreeItem(newFile));
+                }
+            } catch (Exception e)
+            {
+                MainStageController.getInstance().notificationsContainer.addNotification(
+                        new Notification("Error creating directory " + newFile.getName(), MessageType.Error)
+                );
+            }
+        }
+
+        private void removeRepresentingFile(ActionEvent event)
+        {
+            removeFile(getRepresentingFile());
+
+            treeCell.getTreeItem().getParent().getChildren().remove(treeCell.getTreeItem());
+        }
+
+        private void removeFile(File fileToRemove)
+        {
+            if (!fileToRemove.exists())
+            {
+                System.out.println("File " + fileToRemove + " does not exists.");
+                return;
+            }
+
+            if (!fileToRemove.isFile())
+            {
+                for (var file : fileToRemove.listFiles())
+                {
+                    removeFile(file);
+                }
+            }
+
+            try
+            {
+                if (!fileToRemove.delete())
+                {
+                    throw new IOException("Error removing directory " + fileToRemove);
+                }
+            } catch (Exception e)
+            {
+                MainStageController.getInstance().notificationsContainer.addNotification(
+                        new Notification("Error removing directory " + fileToRemove.getName() + ". An update is" +
+                                " recomended in te proyect tree view.", MessageType.Error)
+                );
+            }
+        }
     }
 }

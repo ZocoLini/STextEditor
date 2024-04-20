@@ -4,9 +4,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.util.Optional;
 
 public class Dialogs
 {
@@ -20,43 +23,34 @@ public class Dialogs
         return alert.showAndWait().filter(buttonType -> buttonType == ButtonType.OK).isPresent();
     }
 
-    public static String insertTextDialog(String title)
+    public static String insertTextDialog(String title, String defaultText)
     {
-        // Crear un nuevo Stage para el cuadro de diálogo
-        Stage dialogStage = new Stage();
-        dialogStage.initModality(Modality.APPLICATION_MODAL);
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle(title);
+        dialog.setHeaderText(defaultText);
+        dialog.setContentText("Nombre:");
 
-        // Crear un campo de texto para ingresar el string
-        TextField textField = new TextField();
-        textField.setPrefHeight(30);
-        textField.setPrefWidth(200);
+        // Mostrar el diálogo y esperar a que el usuario ingrese el texto
+        Optional<String> result = dialog.showAndWait();
 
-        dialogStage.addEventHandler(KeyEvent.KEY_PRESSED, event ->
+        dialog.addEventHandler(KeyEvent.KEY_PRESSED, event ->
         {
             switch (event.getCode())
             {
                 case ENTER:
-                    dialogStage.close();
+                    dialog.close();
                     break;
                 case ESCAPE:
-                    textField.setText("");
-                    dialogStage.close();
+                    dialog.close();
                     break;
             }
         });
 
-        dialogStage.setOnCloseRequest(event ->
-        {
-            textField.setText("");
-            dialogStage.close();
-        });
+        return result.orElse("");
+    }
 
-        // Crear la escena del cuadro de diálogo y mostrarla
-        Scene dialogScene = new Scene(textField, 300, 30);
-        dialogStage.setScene(dialogScene);
-        dialogStage.setTitle(title);
-        dialogStage.showAndWait();
-
-        return textField.getText();
+    public static String insertTextDialog(String title)
+    {
+       return insertTextDialog(title, "");
     }
 }
