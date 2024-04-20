@@ -77,7 +77,7 @@ public class KeyWordHighlighter
     private void startTask()
     {
         Subscription cleanupWhenDone = codeArea.multiPlainChanges()
-                .successionEnds(Duration.ofMillis(500))
+                .successionEnds(Duration.ofMillis(100))
                 .retainLatestUntilLater(executor)
                 .supplyTask(this::computeHighlightingAsync)
                 .awaitLatest(codeArea.multiPlainChanges())

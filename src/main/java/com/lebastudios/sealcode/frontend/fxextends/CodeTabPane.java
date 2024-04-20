@@ -61,7 +61,7 @@ public final class CodeTabPane extends TabPane
     {
         for (Tab tab : this.getTabs())
         {
-            ((FormateableTextTab) tab).saveFile();
+            ((CodeTab) tab).saveFile();
         }
     }
 
@@ -97,7 +97,7 @@ public final class CodeTabPane extends TabPane
             return;
         }
 
-        Tab newTab = new FormateableTextTab(file.getName(), content, treeItem);
+        Tab newTab = new CodeTab(file.getName(), content, treeItem);
         this.getTabs().add(newTab);
         this.getSelectionModel().select(newTab);
         Session.getStaticInstance().filesOpen.add(file.getPath());

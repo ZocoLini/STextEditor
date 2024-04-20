@@ -16,4 +16,7 @@ public final class AppEvents
     
     public static class OnPreferencesUpdate extends AppEvent {}
     public static final OnPreferencesUpdate onPreferencesUpdate = new OnPreferencesUpdate();
+    
+    public static class OnProfileChange extends AppEvent {}
+    public static final OnProfileChange onProfileChange = new OnProfileChange();
 }

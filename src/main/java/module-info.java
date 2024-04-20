@@ -16,9 +16,12 @@ module com.lebastudios.sealcode {
     opens com.lebastudios.sealcode.frontend.stages to javafx.fxml;
 
     opens com.lebastudios.sealcode.controllers to javafx.fxml;
+    
+    opens com.lebastudios.sealcode.controllers.settingsPanels to javafx.fxml;
 
     opens com.lebastudios.sealcode.applogic.txtformatter to com.google.gson;
 
     opens com.lebastudios.sealcode.applogic.config to com.google.gson;
-    opens com.lebastudios.sealcode.controllers.settingsPanels to javafx.fxml;
+    opens com.lebastudios.sealcode.applogic to com.google.gson;
+    opens com.lebastudios.sealcode.applogic.completations to com.google.gson;
 }

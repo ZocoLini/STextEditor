@@ -28,7 +28,9 @@
             <SplitPane fx:id="horizontalContainer" dividerPositions="0.1, 0.9" prefHeight="160.0" prefWidth="200.0"
                        BorderPane.alignment="CENTER">
                 <fx:include fx:id="fileSystemBorderPane" source="mainScenePanels/fileSystemBorderPane.fxml"/>
-                <CodeTabPane fx:id="codeTabPane" tabClosingPolicy="ALL_TABS"/>
+                <StackPane fx:id="codeEditorStackPane" prefHeight="200.0" prefWidth="200.0">
+                    <CodeTabPane fx:id="codeTabPane" tabClosingPolicy="ALL_TABS"/>
+                </StackPane>
             </SplitPane>
         </SplitPane>
     </center>

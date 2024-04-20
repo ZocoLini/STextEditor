@@ -28,7 +28,6 @@ public class SettingsStage extends StageBuilder
             }
         });
         
-        // TODO parece no funcionar el guardado de las settings.
         this.addEventHandler(WindowEvent.WINDOW_HIDING, event -> AppEvents.onSettingsUpdate.invoke());
     }
 

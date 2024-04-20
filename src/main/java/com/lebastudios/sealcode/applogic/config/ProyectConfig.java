@@ -5,7 +5,7 @@ import com.lebastudios.sealcode.applogic.FilePaths;
 public class ProyectConfig extends JSONSaveable<ProyectConfig>
 {
     private static ProyectConfig instance;
-
+    
     private ProyectConfig() {}
 
     @Override

@@ -1,7 +1,7 @@
 package com.lebastudios.sealcode.frontend.fxextends.treeviews;
 
 import com.lebastudios.sealcode.controllers.MainStageController;
-import com.lebastudios.sealcode.frontend.Dialogs;
+import com.lebastudios.sealcode.frontend.dialogs.Dialogs;
 import com.lebastudios.sealcode.frontend.MessageType;
 import com.lebastudios.sealcode.frontend.fxextends.Notification;
 import javafx.event.ActionEvent;

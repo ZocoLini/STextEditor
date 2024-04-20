@@ -1,9 +1,0 @@
-{
-  "patternsInfo": [
-    {
-      "name": "testing",
-      "pattern": "\\btesting\\b",
-      "colourleablePattern": ""
-    }
-  ]
-}

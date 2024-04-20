@@ -18,9 +18,12 @@ public final class FilePaths
 
     public static String getActualProyectDirectory() {return Session.getStaticInstance().proyectDirectory + "/";}
 
+    public static String getAppDirectory() {return System.getProperty("user.dir");}
+    
     public static String getProgLangSyntaxDirectory() {return getAppDirectory() + "/highlightingRules/";}
 
-    public static String getAppDirectory() {return System.getProperty("user.dir");}
+    public static String getProgLangCompletationsDirectory() {return getAppDirectory() + "/completations/" 
+            + GlobalConfig.getStaticInstance().userPrefs.profile + "/";}
 
     public static String getIconDirectory()
     {

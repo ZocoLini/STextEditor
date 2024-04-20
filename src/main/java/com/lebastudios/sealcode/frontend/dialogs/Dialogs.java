@@ -1,18 +1,16 @@
-package com.lebastudios.sealcode.frontend;
+package com.lebastudios.sealcode.frontend.dialogs;
 
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.util.Optional;
 
 public class Dialogs
 {
+    // TODO: Cambiar la forma en que se manejan los diálogos. Usar fxml y controllers quizas.
+    
     public static boolean confirmationDialog(String title, String message)
     {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

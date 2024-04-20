@@ -7,6 +7,7 @@ import com.lebastudios.sealcode.frontend.stages.SettingsStage;
 import javafx.fxml.FXML;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 
 import java.io.File;
 
@@ -31,6 +32,8 @@ public class MainStageController
     public NotificationsContainer notificationsContainer;
     @FXML
     public BorderPane fileSystemBorderPane;
+    @FXML
+    public StackPane codeEditorStackPane;
 
     public MainStageController()
     {

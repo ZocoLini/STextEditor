@@ -8,9 +8,11 @@ import java.util.List;
 public class Session extends JSONSaveable<Session>
 {
     private static Session instance;
+    
     public List<String> filesOpen = new ArrayList<>();
     public String fileFilter = "none";
     public String proyectDirectory = "";
+    
     private Session() {}
 
     public void reset()

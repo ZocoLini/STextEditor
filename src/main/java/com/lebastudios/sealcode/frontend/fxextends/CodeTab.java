@@ -4,9 +4,9 @@ import com.lebastudios.sealcode.applogic.config.Session;
 import com.lebastudios.sealcode.frontend.fxextends.treeviews.FileSystemTreeItem;
 import javafx.scene.control.Tab;
 
-public final class FormateableTextTab extends Tab
+public final class CodeTab extends Tab
 {
-    public FormateableTextTab(String name, String content, FileSystemTreeItem treeItem)
+    public CodeTab(String name, String content, FileSystemTreeItem treeItem)
     {
         this.setText(name);
         
