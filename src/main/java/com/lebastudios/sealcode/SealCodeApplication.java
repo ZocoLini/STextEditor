@@ -3,6 +3,7 @@ package com.lebastudios.sealcode;
 import com.lebastudios.sealcode.applogic.AppLoop;
 import com.lebastudios.sealcode.applogic.config.GlobalConfig;
 import com.lebastudios.sealcode.applogic.config.Session;
+import com.lebastudios.sealcode.events.AppEvents;
 import com.lebastudios.sealcode.frontend.stages.MainStage;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -11,22 +12,6 @@ import java.io.IOException;
 
 public class SealCodeApplication extends Application
 {
-    private static SealCodeApplication instance;
-
-    public SealCodeApplication()
-    {
-        super();
-
-        instance = this;
-    }
-
-    public static SealCodeApplication getInstance()
-    {
-        if (instance == null) instance = new SealCodeApplication();
-
-        return instance;
-    }
-
     public static void main(String[] args)
     {
         launch(args);
@@ -52,6 +37,8 @@ public class SealCodeApplication extends Application
 
         stage.show();
 
+        AppEvents.onAppStart.invoke();
+        
         AppLoop.startLoop();
     }
 }

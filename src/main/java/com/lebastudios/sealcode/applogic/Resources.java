@@ -1,6 +1,7 @@
 package com.lebastudios.sealcode.applogic;
 
 import com.lebastudios.sealcode.SealCodeApplication;
+import com.lebastudios.sealcode.applogic.config.GlobalConfig;
 import com.lebastudios.sealcode.exceptions.ResourceNotLoadedException;
 import javafx.scene.image.Image;
 
@@ -13,55 +14,7 @@ import java.util.regex.Pattern;
 
 public final class Resources
 {
-    private static final Map<String, Image> loadedImages = new HashMap<>();
-    
-    public static Image getImg(File file)
-    {
-        String extension = file.isDirectory() ? "directory" : FileOperation.getFileExtension(file);
-
-        Image image = loadedImages.get(extension);
-
-        if (image == null)
-        {
-            return loadImg(extension);
-        }
-        
-        return image;
-    }
-
-    private static Image loadImg(String extension)
-    {
-        Image image = null;
-
-        // Check if the extension has an img defined in the actual theme
-        String path = FilePaths.getImgDirectory() + extension + ".png";
-        if (existsResource(path))
-        {
-            image = new Image(SealCodeApplication.class.getResourceAsStream(path));
-        }
-
-        // Check if the extension has an img defined in the default theme
-        path = FilePaths.getDefaultImgDirectory() + extension + ".png";
-        if (image == null && existsResource(path))
-        {
-            return new Image(SealCodeApplication.class.getResourceAsStream(path));
-        }
-
-        if (image == null)
-        {
-            image = new Image(SealCodeApplication.class.getResourceAsStream(FilePaths.getDefaultImgFile()));
-        }
-
-        if (image == null)
-        {
-            throw new ResourceNotLoadedException();
-        }
-
-        loadedImages.put(extension, image);
-
-        // If the extension has no img defined, use the default img
-        return image;
-    }
+    private static final Map<String, Image> loadedIcons = new HashMap<>();
 
     private static boolean existsResource(String path)
     {
@@ -70,58 +23,42 @@ public final class Resources
 
     public static Image getIcon(String iconName)
     {
+        Image image = loadedIcons.get(GlobalConfig.getStaticInstance().editorConfig.theme + iconName);
+
+        if (image == null)
+        {
+            return loadIcon(iconName);
+        }
+
+        return image;
+    }
+
+    private static Image loadIcon(String iconName)
+    {
+        Image icon = null;
+
+        // Check if the icon is defined in the actual theme
         String path = FilePaths.getIconDirectory() + iconName;
         if (existsResource(path))
         {
-            return new Image(SealCodeApplication.class.getResourceAsStream(path));
+            icon = new Image(SealCodeApplication.class.getResourceAsStream(path));
         }
 
+        // Check if the icon is defined in the default theme
         path = FilePaths.getDefaultIconDirectory() + iconName;
-        if (existsResource(path))
+        if (icon == null && existsResource(path))
         {
-            return new Image(SealCodeApplication.class.getResourceAsStream(path));
+            icon = new Image(SealCodeApplication.class.getResourceAsStream(path));
         }
 
-        return new Image(SealCodeApplication.class.getResourceAsStream(FilePaths.getDefaultIconFile()));
-    }
-
-    private static String getClassStyleFromFile(String resourcePath, String className)
-    {
-        String content = null;
-
-        try
+        if (icon == null)
         {
-            content = FileOperation.readResource(resourcePath);
+            icon = new Image(SealCodeApplication.class.getResourceAsStream(FilePaths.getDefaultIconFile()));
         }
-        catch (Exception e)
-        {
-            System.out.println("Error in Resources.java reading the file " + resourcePath + ". The class style will " +
-                    "not be applied.");
-        }
-
-        Matcher matcher = Pattern.compile("\\." + className + "\\s*\\{([^}]*)\\}").matcher(content);
-
-        if (matcher.find())
-        {
-            String classFound = matcher.group();
-
-            classFound = classFound.replace("." + className, "").replace("{", "")
-                    .replace("}", "").trim().replaceAll("\\s+", " ");
-
-            return classFound;
-        }
-
-        if (!Objects.equals(resourcePath, FilePaths.getDefaulThemeFile()))
-        {
-            return getClassStyleFromFile(FilePaths.getDefaulThemeFile(), className);
-        }
-
-        return "";
-    }
-
-    public static String getThemeClassStyleFromFile(String className)
-    {
-        return getClassStyleFromFile(FilePaths.getStyleDirectory() + "theme.css", className);
+        
+        loadedIcons.put(GlobalConfig.getStaticInstance().editorConfig.theme + iconName, icon);
+        
+        return icon;
     }
 
     public static String getLangCommonStyle()
@@ -162,20 +99,6 @@ public final class Resources
 
         // If the extension has no style defined, use the default style
         return SealCodeApplication.class.getResource(FilePaths.getDefaultLangStyleFile()).toExternalForm();
-    }
-
-    public static String getCodeAreaStyle()
-    {
-        // Check if the code area has a style defined in the actual theme
-        String codeAreaStylePath = FilePaths.getStyleDirectory() + "codeArea.css";
-        if (existsResource(codeAreaStylePath))
-        {
-            return SealCodeApplication.class.getResource(codeAreaStylePath).toExternalForm();
-        }
-
-        // Using the default style defined in the default theme
-        codeAreaStylePath = FilePaths.getDefaultStyleDirectory() + "codeArea.css";
-        return SealCodeApplication.class.getResource(codeAreaStylePath).toExternalForm();
     }
 
     public static String getThemeStyle()

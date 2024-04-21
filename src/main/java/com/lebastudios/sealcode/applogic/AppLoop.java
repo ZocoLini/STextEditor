@@ -1,7 +1,7 @@
 package com.lebastudios.sealcode.applogic;
 
-import com.lebastudios.sealcode.applogic.events.AppEvent;
-import com.lebastudios.sealcode.applogic.events.IEventMethod;
+import com.lebastudios.sealcode.events.AppEvent;
+import com.lebastudios.sealcode.events.IEventMethod;
 
 public final class AppLoop
 {

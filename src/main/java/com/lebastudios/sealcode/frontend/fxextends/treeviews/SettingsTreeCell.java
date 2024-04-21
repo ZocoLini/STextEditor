@@ -8,18 +8,13 @@ public class SettingsTreeCell extends TreeCell<String>
     public SettingsTreeCell()
     {
         super();
-        
-        addEventHandlers();
-    }
-    
-    private void addEventHandlers()
-    {
+
         this.setOnMouseClicked(event ->
         {
             if (this.getTreeItem() == null) return;
             if (this.getTreeItem().getClass() != SettingsTreeItem.class) return;
-            
-            SettingsStageController.getInstance().loadNewSettingsPane(((SettingsTreeItem) this.getTreeItem()).getFxmlName());
+
+            SettingsStageController.getInstance().loadNewSettingsPane(((SettingsTreeItem) this.getTreeItem()).getFxmlSceneName());
         });
     }
     

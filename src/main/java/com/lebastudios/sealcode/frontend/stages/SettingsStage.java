@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.frontend.stages;
 
-import com.lebastudios.sealcode.applogic.events.AppEvents;
+import com.lebastudios.sealcode.events.AppEvents;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
@@ -28,7 +28,6 @@ public class SettingsStage extends StageBuilder
             }
         });
         
-        // TODO parece no funcionar el guardado de las settings.
         this.addEventHandler(WindowEvent.WINDOW_HIDING, event -> AppEvents.onSettingsUpdate.invoke());
     }
 

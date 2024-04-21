@@ -1,0 +1,184 @@
+{
+  "keywordsCompletations":[
+    {
+      "value": "public"
+    },
+    {
+      "value": "private"
+    },
+    {
+      "value": "protected"
+    },
+    {
+      "value": "static"
+    },
+    {
+      "value": "final"
+    },
+    {
+      "value": "void"
+    },
+    {
+      "value": "int"
+    },
+    {
+      "value": "boolean"
+    },
+    {
+      "value": "return"
+    },
+    {
+      "value": "true"
+    },
+    {
+      "value": "false"
+    },
+    {
+      "value": "null"
+    },
+    {
+      "value": "this"
+    },
+    {
+      "value": "new"
+    },
+    {
+      "value": "class"
+    },
+    {
+      "value": "extends"
+    },
+    {
+      "value": "implements"
+    },
+    {
+      "value": "interface"
+    },
+    {
+      "value": "package"
+    },
+    {
+      "value": "import"
+    },
+    {
+      "value": "super"
+    },
+    {
+      "value": "try"
+    },
+    {
+      "value": "catch"
+    },
+    {
+      "value": "finally"
+    },
+    {
+      "value": "throw"
+    },
+    {
+      "value": "throws"
+    },
+    {
+      "value": "assert"
+    },
+    {
+      "value": "break"
+    },
+    {
+      "value": "continue"
+    },
+    {
+      "value": "case"
+    },
+    {
+      "value": "default"
+    },
+    {
+      "value": "do"
+    },
+    {
+      "value": "enum"
+    },
+    {
+      "value": "goto"
+    },
+    {
+      "value": "instanceof"
+    },
+    {
+      "value": "synchronized"
+    },
+    {
+      "value": "transient"
+    },
+    {
+      "value": "volatile"
+    },
+    {
+      "value": "strictfp"
+    },
+    {
+      "value": "native"
+    },
+    {
+      "value": "const"
+    }
+  ],
+  "liveTemplatesCompletations": [
+    {
+      "value": "main",
+      "description": "Creates a main method",
+      "completation": "public static void main(String[] args)\n{\n\t$END$\n}"
+    },
+    {
+      "value": "sout",
+      "description": "Creates a System.out.println",
+      "completation": "System.out.println($END$);"
+    },
+    {
+      "value": "for",
+      "description": "Creates a for loop",
+      "completation": "for (int i = 0; i < $END$; i++)\n{\n\t\n}"
+    },
+    {
+      "value": "if",
+      "description": "Creates an if statement",
+      "completation": "if ($END$)\n{\n\t\n}"
+    },
+    {
+      "value": "else",
+      "description": "Creates an else statement",
+      "completation": "else\n{\n\t\n}"
+    },
+    {
+      "value": "while",
+      "description": "Creates a while loop",
+      "completation": "while ($END$)\n{\n\t\n}"
+    },
+    {
+      "value": "do",
+      "description": "Creates a do while loop",
+      "completation": "do\n{\n\t\n} while ($END$);"
+    },
+    {
+      "value": "switch",
+      "description": "Creates a switch statement",
+      "completation": "switch ($END$)\n{\n\tcase $END$:\n\t\tbreak;\n\tdefault:\n\t\tbreak;\n}"
+    },
+    {
+      "value": "try",
+      "description": "Creates a try catch statement",
+      "completation": "try\n{\n\t$END$\n}\ncatch (Exception e)\n{\n\te.printStackTrace();\n}"
+    },
+    {
+      "value": "class",
+      "description": "Creates a class",
+      "completation": "public class $END$\n{\n\t\n}"
+    },
+    {
+      "value": "interface",
+      "description": "Creates an interface",
+      "completation": "public interface $END$\n{\n\t\n}"
+    }
+  ]
+}

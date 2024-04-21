@@ -8,7 +8,7 @@ import javafx.scene.control.TreeView;
 
 import java.io.File;
 
-public final class FileSystemTreeView extends TreeView<FileSystemTreeCellContent>
+public final class FileSystemTreeView extends TreeView<String>
 {
     public FileSystemTreeView()
     {
@@ -19,7 +19,7 @@ public final class FileSystemTreeView extends TreeView<FileSystemTreeCellContent
         openLastProjectDirectory();
     }
 
-    public static TreeItem<FileSystemTreeCellContent> createTreeView(File file)
+    public static FileSystemTreeItem createTreeView(File file)
     {
         if (file == null)
         {
@@ -31,7 +31,7 @@ public final class FileSystemTreeView extends TreeView<FileSystemTreeCellContent
             throw new IllegalArgumentException("File does not exist");
         }
 
-        TreeItem<FileSystemTreeCellContent> root = new FileSystemTreeItem(new FileSystemTreeCellContent(file));
+        FileSystemTreeItem root = new FileSystemTreeItem(file);
 
         root.setExpanded(false);
 
@@ -60,9 +60,11 @@ public final class FileSystemTreeView extends TreeView<FileSystemTreeCellContent
         Session.getStaticInstance().proyectDirectory = file.getPath();
 
         this.setRoot(createTreeView(file));
+
+        this.getRoot().setExpanded(true);
     }
 
-    private void openLastProjectDirectory()
+    public void openLastProjectDirectory()
     {
         File file = new File(Session.getStaticInstance().proyectDirectory);
 
@@ -84,5 +86,54 @@ public final class FileSystemTreeView extends TreeView<FileSystemTreeCellContent
         }
 
         openProyectDirectory(file);
+    }
+
+    public FileSystemTreeItem getTreeItemByFile(File file)
+    {
+        if (!file.exists())
+        {
+            return null;
+        }
+
+        String path = file.getAbsolutePath();
+        String proyectDirectory = Session.getStaticInstance().proyectDirectory;
+
+        if (!path.startsWith(proyectDirectory))
+        {
+            return null;
+        }
+
+        path = path.substring(proyectDirectory.length());
+
+        if (path.startsWith(File.separator))
+        {
+            path = path.substring(1);
+        }
+
+        String[] pathParts = path.split(File.separator);
+
+        var current = this.getRoot();
+        
+        for (String part : pathParts)
+        {
+            boolean found = false;
+
+            for (var child : current.getChildren())
+            {
+                if (child.getValue().equals(part))
+                {
+                    current = child;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                return null;
+            }
+        }
+        
+        return (FileSystemTreeItem) current;
     }
 }

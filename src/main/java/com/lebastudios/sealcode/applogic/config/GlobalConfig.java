@@ -1,7 +1,7 @@
 package com.lebastudios.sealcode.applogic.config;
 
 import com.lebastudios.sealcode.applogic.FilePaths;
-import com.lebastudios.sealcode.applogic.events.AppEvents;
+import com.lebastudios.sealcode.events.AppEvents;
 
 public class GlobalConfig extends JSONSaveable<GlobalConfig>
 {
@@ -57,5 +57,6 @@ public class GlobalConfig extends JSONSaveable<GlobalConfig>
     public static class UserPrefs
     {
         public boolean ignoreGitDir = true;
+        public String profile = "default";
     }
 }

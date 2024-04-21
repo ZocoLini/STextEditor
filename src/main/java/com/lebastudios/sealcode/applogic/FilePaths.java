@@ -18,11 +18,12 @@ public final class FilePaths
 
     public static String getActualProyectDirectory() {return Session.getStaticInstance().proyectDirectory + "/";}
 
+    public static String getAppDirectory() {return System.getProperty("user.dir");}
+    
     public static String getProgLangSyntaxDirectory() {return getAppDirectory() + "/highlightingRules/";}
 
-    public static String getAppDirectory() {return System.getProperty("user.dir");}
-
-    public static String getImgDirectory() {return "/" + GlobalConfig.getStaticInstance().editorConfig.theme + "/img/";}
+    public static String getProgLangCompletationsDirectory() {return getAppDirectory() + "/completations/" 
+            + GlobalConfig.getStaticInstance().userPrefs.profile + "/";}
 
     public static String getIconDirectory()
     {
@@ -44,11 +45,7 @@ public final class FilePaths
 
     public static String getDefaultStyleDirectory() {return getDefaultDirectory() + "style/";}
 
-    public static String getDefaultImgFile() {return getDefaultImgDirectory() + "notfoundtype.png";}
-
-    public static String getDefaultImgDirectory() {return getDefaultDirectory() + "img/";}
-
-    public static String getDefaultIconFile() {return getDefaultImgDirectory() + "notfoundtype.png";}
+    public static String getDefaultIconFile() {return getDefaultIconDirectory() + "fileunknown.png";}
 
     public static String getDefaulThemeFile() {return getDefaultStyleDirectory() + "theme.css";}
 }

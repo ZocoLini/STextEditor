@@ -1,6 +1,7 @@
 package com.lebastudios.sealcode.frontend.fxextends;
 
 import com.lebastudios.sealcode.applogic.config.Session;
+import com.lebastudios.sealcode.controllers.FileSystemController;
 import com.lebastudios.sealcode.controllers.MainStageController;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
@@ -32,7 +33,7 @@ public final class ConsoleTextArea extends TextArea
         }
         catch (IOException exception)
         {
-            MainStageController.getInstance().openNewProjectDirectory();
+            FileSystemController.getInstance().fileSystemTreeView.openNewProjectDirectory();
 
             try
             {
