@@ -1,33 +1,38 @@
 package com.lebastudios.sealcode.frontend.fxextends;
 
+import com.lebastudios.sealcode.applogic.DocumentsOperations;
 import com.lebastudios.sealcode.applogic.FileOperation;
 import com.lebastudios.sealcode.applogic.Resources;
 import com.lebastudios.sealcode.applogic.completations.CompletationsPopup;
 import com.lebastudios.sealcode.applogic.config.GlobalConfig;
 import com.lebastudios.sealcode.applogic.txtformatter.BracketHighlighter;
 import com.lebastudios.sealcode.applogic.txtformatter.KeyWordHighlighter;
+import com.lebastudios.sealcode.applogic.txtmod.TextModParen;
 import com.lebastudios.sealcode.events.AppEvents;
+import com.lebastudios.sealcode.events.Events.*;
 import com.lebastudios.sealcode.frontend.fxextends.treeviews.FileSystemTreeItem;
 import javafx.scene.input.KeyEvent;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
-import org.fxmisc.richtext.model.ReadOnlyStyledDocument;
-import org.fxmisc.richtext.model.SegmentOps;
 import org.fxmisc.richtext.model.StyledDocument;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+
+import static com.lebastudios.sealcode.applogic.DocumentsOperations.createStyledDocument;
 
 public final class SealCodeArea extends CodeArea
 {
+    public OnTextInserted onTextInserted = new OnTextInserted();
+    public OnTextDeleted onTextRemoved = new OnTextDeleted();
+    public OnTextReplaced onTextReplaced = new OnTextReplaced();
+    
     private final FileSystemTreeItem fileSystemTreeItem;
     public final String fileExtension;
 
     private boolean modified = false;
+    private boolean initialized = false;
 
     public SealCodeArea(String string, FileSystemTreeItem fileSystemTreeItem)
     {
@@ -46,6 +51,11 @@ public final class SealCodeArea extends CodeArea
         new BracketHighlighter(this);
         new KeyWordHighlighter(this, fileExtension);
         new CompletationsPopup(this);
+        
+        // Text Modifications
+        new TextModParen(this);
+        
+        initialized = true;
     }
 
     private void updateResources()
@@ -104,13 +114,13 @@ public final class SealCodeArea extends CodeArea
         }).start();
     }
 
-    private String getPreviusChar(int position)
+    public String getPreviusChar(int position)
     {
         if (position == 0) return "";
         return this.getText(position - 1, position);
     }
 
-    private String getNoBlankPreviusChar(int position)
+    public String getNoBlankPreviusChar(int position)
     {
         if (position == 0) return "";
 
@@ -121,13 +131,13 @@ public final class SealCodeArea extends CodeArea
         return previusChar;
     }
 
-    private String getNextChar(int position)
+    public String getNextChar(int position)
     {
         if (position == this.getText().length() - 1) return "";
         return this.getText(position, position + 1);
     }
 
-    private String getNoBlankNextChar(int position)
+    public String getNoBlankNextChar(int position)
     {
         if (position >= this.getText().length() - 1) return "";
 
@@ -151,7 +161,7 @@ public final class SealCodeArea extends CodeArea
         return i;
     }
 
-    private int paragraphStart(int paragraph)
+    public int paragraphStart(int paragraph)
     {
         int start = 0;
 
@@ -163,65 +173,51 @@ public final class SealCodeArea extends CodeArea
         return start;
     }
 
-    private int paragraphEnd(int paragraph)
+    public int paragraphEnd(int paragraph)
     {
         return paragraphStart(paragraph) + this.getParagraph(paragraph).length();
     }
-
+    
     // TODO: Se esta haciendo la configuración para lenguajes del tipo C. Buscar manera de hacerlo dependiendo del lenguaje
     @Override
     public void replace(int start, int end, StyledDocument<Collection<String>, String, Collection<String>> replacement)
     {
-        // TODO: Hacer eventos de insercion, borrado y reemplazo
         modified = true;
-
-        boolean needToMoveCaret = false;
+        
         int newCaretPosition = start;
 
         final String newText = replacement.getText();
         final String oldText = this.getText(start, end);
         String modifiedText = newText;
 
-        /*********************************************************************************/
-
-        // Cuando se inserta un caracter del tipo parentesis, corchete, llave, comillas o comillas simples, se añade el par
-        Map<String, String> completingPair = Map.of(
-                "(", ")",
-                "{", "}",
-                "[", "]",
-                "\"", "\"",
-                "'", "'"
-        );
-        if (completingPair.containsKey(newText))
+        if (!newText.isEmpty() && !oldText.isEmpty())
         {
-            super.replace(start, end, createStyledDocument(newText + completingPair.get(newText)));
-            this.moveTo(start + 1);
-            return;
-        }
-
-        // Cuando se borra un caracter del tipo parentesis, corchete, llave, comillas o comillas simples, se borra el par
-        if (completingPair.containsKey(oldText) && newText.isEmpty() && start + 1 < this.getText().length()
-                && this.getText(start + 1, start + 2).equals(completingPair.get(oldText)))
-        {
-            super.replace(start, end + 1, createStyledDocument());
-            return;
-        }
-
-        // Cuando se intenta cerrar un par ya cerrado, solo se mueve el caret
-        try
-        {
-            if (Objects.equals(completingPair.get(this.getText(start - 1, end)), newText))
+            // Invocar eventos de reemplazo
+            for (var variable : onTextReplaced.getListeners())
             {
-                super.replace(start, end, createStyledDocument());
-                this.moveTo(end + 1);
-                return;
+                modifiedText = variable.textModified(start, end, oldText, modifiedText);
             }
-        } catch (Exception ignored)
-        {
         }
-
-        /**********************************************************************************/
-
+        else if (newText.isEmpty())
+        {
+            // Invocar eventos de borrado
+            for (var variable : onTextRemoved.getListeners())
+            {
+                modifiedText = variable.textModified(start, end, oldText, modifiedText);
+            }
+        }
+        else if (oldText.isEmpty())
+        {
+            // Invocar eventos de inserción
+            if (initialized)
+            {
+                for (var variable : onTextInserted.getListeners())
+                {
+                    modifiedText = variable.textModified(start, end, oldText, modifiedText);
+                }
+            }
+        }
+        
         // Cuando se borra y el paragrafo solo son espacios, se borra_todo el paragrafo
         if (newText.isEmpty() && oldText.equals(" ") && getCurrentParagraph() != 0)
         {
@@ -233,13 +229,11 @@ public final class SealCodeArea extends CodeArea
             if (getText(paragraphStart, caretPosition).trim().isEmpty())
             {
                 super.replace(paragraphStart - 1, paragraphEnd, 
-                        createStyledDocument(getText().substring(caretPosition, paragraphEnd).trim()));
+                        DocumentsOperations.createStyledDocument(getText().substring(caretPosition, paragraphEnd).trim()));
                 this.moveTo(paragraphStart - 1);
                 return;
             }
         }
-
-        /*********************************************************************************/
 
         // Remplaza los tabs por espacios según los ajustes del editor
         modifiedText = modifiedText
@@ -258,16 +252,12 @@ public final class SealCodeArea extends CodeArea
 
         if (getNoBlankNextChar(end).equals("}") && getNoBlankPreviusChar(start).equals("{") && oldText.isEmpty())
         {
-            modifiedText += "\n" + " ".repeat(actualIndentation);
-
-            // Sets the caret in the middle of the brackets
-            needToMoveCaret = true;
-            newCaretPosition = start + 1 + indentationNeeded;
+            modifiedText += "$END$\n" + " ".repeat(actualIndentation);
         }
 
-        /****************************************************************************************/
-
         // Procesamos las marcas $END$ como la ubicacion donde debe ir el caret
+        boolean needToMoveCaret = false;
+        
         if (modifiedText.contains("$END$"))
         {
             int caretDesiredPosition = modifiedText.indexOf("$END$");
@@ -275,28 +265,14 @@ public final class SealCodeArea extends CodeArea
             needToMoveCaret = true;
             newCaretPosition = caretDesiredPosition + start;
         }
-        
-        /*****************************************************************/
 
         var newReplacement = createStyledDocument(modifiedText);
-        
+
         super.replace(start, end, newReplacement);
 
         if (needToMoveCaret)
         {
             this.moveTo(newCaretPosition);
         }
-    }
-    
-    private StyledDocument<Collection<String>, String, Collection<String>> createStyledDocument(String text)
-    {
-        return ReadOnlyStyledDocument.fromString(
-                text, Collections.singleton(""), Collections.singleton(""), SegmentOps.styledTextOps()
-        );
-    }
-    
-    private StyledDocument<Collection<String>, String, Collection<String>> createStyledDocument()
-    {
-        return createStyledDocument("");
     }
 }
