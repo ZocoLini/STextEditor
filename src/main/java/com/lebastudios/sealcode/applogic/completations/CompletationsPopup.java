@@ -128,7 +128,7 @@ public class CompletationsPopup implements ChangeListener<String>
                 return text.substring(i + 1, caretPosition);
             }
         }
-        
-        return "";
+
+        return text.substring(0, caretPosition);
     }
 }
