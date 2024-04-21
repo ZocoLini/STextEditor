@@ -22,22 +22,7 @@
       "value": "int"
     },
     {
-      "value": "String"
-    },
-    {
       "value": "boolean"
-    },
-    {
-      "value": "if"
-    },
-    {
-      "value": "else"
-    },
-    {
-      "value": "while"
-    },
-    {
-      "value": "for"
     },
     {
       "value": "return"
@@ -124,9 +109,6 @@
       "value": "synchronized"
     },
     {
-      "value": "switch"
-    },
-    {
       "value": "transient"
     },
     {
@@ -146,57 +128,57 @@
     {
       "value": "main",
       "description": "Creates a main method",
-      "completation": "public static void main(String[] args) \n{\n\t$END$\n}"
+      "completation": "public static void main(String[] args)\n{\n\t$END$\n}"
+    },
+    {
+      "value": "sout",
+      "description": "Creates a System.out.println",
+      "completation": "System.out.println($END$);"
     },
     {
       "value": "for",
       "description": "Creates a for loop",
-      "completation": "for (int i = 0; i < $END$; i++) \n{\n\t\n}"
+      "completation": "for (int i = 0; i < $END$; i++)\n{\n\t\n}"
     },
     {
       "value": "if",
       "description": "Creates an if statement",
-      "completation": "if ($END$) \n{\n\t\n}"
+      "completation": "if ($END$)\n{\n\t\n}"
     },
     {
       "value": "else",
       "description": "Creates an else statement",
-      "completation": "else \n{\n\t\n}"
+      "completation": "else\n{\n\t\n}"
     },
     {
       "value": "while",
       "description": "Creates a while loop",
-      "completation": "while ($END$) \n{\n\t\n}"
+      "completation": "while ($END$)\n{\n\t\n}"
     },
     {
       "value": "do",
       "description": "Creates a do while loop",
-      "completation": "do \n{\n\t\n} while ($END$);"
+      "completation": "do\n{\n\t\n} while ($END$);"
     },
     {
       "value": "switch",
       "description": "Creates a switch statement",
-      "completation": "switch ($END$) \n{\n\tcase $END$:\n\t\tbreak;\n\tdefault:\n\t\tbreak;\n}"
+      "completation": "switch ($END$)\n{\n\tcase $END$:\n\t\tbreak;\n\tdefault:\n\t\tbreak;\n}"
     },
     {
       "value": "try",
       "description": "Creates a try catch statement",
-      "completation": "try \n{\n\t$END$\n} \ncatch (Exception e) \n{\n\te.printStackTrace();\n}"
+      "completation": "try\n{\n\t$END$\n}\ncatch (Exception e)\n{\n\te.printStackTrace();\n}"
     },
     {
       "value": "class",
       "description": "Creates a class",
-      "completation": "public class $END$ \n{\n\t\n}"
+      "completation": "public class $END$\n{\n\t\n}"
     },
     {
       "value": "interface",
       "description": "Creates an interface",
-      "completation": "public interface $END$ \n{\n\t\n}"
-    },
-    {
-      "value": "getter",
-      "description": "Creates a getter",
-      "completation": "public $END$ get$END$() \n{\n\treturn $END$;\n}"
+      "completation": "public interface $END$\n{\n\t\n}"
     }
   ]
 }

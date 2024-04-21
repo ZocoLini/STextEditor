@@ -2,9 +2,9 @@ package com.lebastudios.sealcode.applogic.completations;
 
 public class KeyWordCompletation extends Completation
 {
-    public KeyWordCompletation(String value)
+    public KeyWordCompletation()
     {
-        super(value, "keyword.png");
+        super("keyword.png");
     }
 
     @Override
@@ -16,6 +16,6 @@ public class KeyWordCompletation extends Completation
     @Override
     public String getCompletation()
     {
-        return getValue();
+        return getValue() + " ";
     }
 }

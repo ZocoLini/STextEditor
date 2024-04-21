@@ -5,9 +5,9 @@ public class LiveTemplateCompletation extends Completation
     private String description;
     private String completation;
     
-    public LiveTemplateCompletation(String value)
+    public LiveTemplateCompletation()
     {
-        super(value, "template.png");
+        super("template.png");
     }
 
     @Override

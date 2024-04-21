@@ -1,11 +1,9 @@
-package com.lebastudios.sealcode.applogic.config;
+package com.lebastudios.sealcode.applogic.completations;
 
 import com.google.gson.Gson;
 import com.lebastudios.sealcode.applogic.FileOperation;
 import com.lebastudios.sealcode.applogic.FilePaths;
-import com.lebastudios.sealcode.applogic.completations.Completation;
-import com.lebastudios.sealcode.applogic.completations.KeyWordCompletation;
-import com.lebastudios.sealcode.applogic.completations.LiveTemplateCompletation;
+import com.lebastudios.sealcode.applogic.config.GlobalConfig;
 import com.lebastudios.sealcode.controllers.MainStageController;
 import com.lebastudios.sealcode.frontend.MessageType;
 import com.lebastudios.sealcode.frontend.fxextends.Notification;

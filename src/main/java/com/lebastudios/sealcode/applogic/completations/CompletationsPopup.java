@@ -1,8 +1,7 @@
 package com.lebastudios.sealcode.applogic.completations;
 
-import com.lebastudios.sealcode.applogic.config.CompletationsLoader;
-import com.lebastudios.sealcode.applogic.config.GlobalConfig;
 import com.lebastudios.sealcode.events.AppEvents;
+import com.lebastudios.sealcode.frontend.fxextends.CompletationListCell;
 import com.lebastudios.sealcode.frontend.fxextends.SealCodeArea;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,7 +16,7 @@ public class CompletationsPopup implements ChangeListener<String>
 {
     private TreeSet<Completation> completations;
     
-    private final ListView<Completation> shownCompletations = new ListView<>();
+    private final ListView<Completation> completationSListView = new ListView<>();
     private final Popup completationsBox = new Popup();
     private final SealCodeArea sealCodeArea;
     
@@ -29,9 +28,11 @@ public class CompletationsPopup implements ChangeListener<String>
 
         loadCompletations();
         
-        completationsBox.getContent().add(shownCompletations);
-        shownCompletations.setMaxHeight(80);
-
+        completationsBox.getContent().add(completationSListView);
+        completationSListView.setMaxHeight(80);
+        
+        completationSListView.setCellFactory(param -> new CompletationListCell());
+        
         AppEvents.onProfileChange.addListener(this::loadCompletations);
         
         sealCodeArea.textProperty().addListener(this);
@@ -52,7 +53,7 @@ public class CompletationsPopup implements ChangeListener<String>
     
     private void reset()
     {
-        shownCompletations.getItems().clear();
+        completationSListView.getItems().clear();
         completationsBox.hide();
     }
     
@@ -60,11 +61,11 @@ public class CompletationsPopup implements ChangeListener<String>
     {
         final var caretPosition = sealCodeArea.getCaretPosition();
         
-        final var completation = shownCompletations.getSelectionModel().getSelectedItem();
+        final var completation = completationSListView.getSelectionModel().getSelectedItem();
         
         if (completation == null) return;
         
-        final var text = completation.getCompletation() + " ";
+        final var text = completation.getCompletation();
         
         sealCodeArea.replaceText(caretPosition - currentWord.length(), caretPosition, text);
         
@@ -76,6 +77,8 @@ public class CompletationsPopup implements ChangeListener<String>
     @Override
     public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
     {
+        // TODO: Posible problema con el rendimiento en este método
+        
         currentWord = readLastWord();
 
         if (currentWord.isEmpty())
@@ -84,21 +87,21 @@ public class CompletationsPopup implements ChangeListener<String>
             return;
         }
 
-        shownCompletations.getItems().clear();
+        completationSListView.getItems().clear();
 
         for (var completation : completations)
         {
             final var completationValue = completation.getValue();
             
-            if (completationValue.contains(currentWord) && !completationValue.equals(currentWord))
+            if (completationValue.contains(currentWord))
             {
-                shownCompletations.getItems().add(completation);
+                completationSListView.getItems().add(completation);
             }
         }
 
-        if (!shownCompletations.getItems().isEmpty())
+        if (!completationSListView.getItems().isEmpty())
         {
-            shownCompletations.getSelectionModel().selectFirst();
+            completationSListView.getSelectionModel().selectFirst();
 
             completationsBox.show(
                     sealCodeArea, sealCodeArea.getCaretBounds().get().getMaxX(), // Posicion X del caret

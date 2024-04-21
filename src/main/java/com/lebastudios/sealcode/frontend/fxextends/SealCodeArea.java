@@ -264,6 +264,17 @@ public final class SealCodeArea extends CodeArea
         
         /****************************************************************************************/
         
+        // Procesamos las marcas $END$ como la ubicacion donde debe ir el caret
+        if (modifiedText.contains("$END$"))
+        {
+            int caretDesiredPosition = modifiedText.indexOf("$END$");
+            modifiedText = modifiedText.replace("$END$", "");
+            needToMoveCaret = true;
+            newCaretPosition = caretDesiredPosition + start;
+        }
+        
+        /*****************************************************************/
+        
         var newReplacement = ReadOnlyStyledDocument.fromString(
                         modifiedText, 
                         replacement.getParagraphStyle(0), 

@@ -10,14 +10,8 @@ public abstract class Completation implements Comparable<Completation>
     private String value;
     private String iconName;
 
-    public Completation(String value)
+    public Completation(String iconName)
     {
-        this.value = value;
-    }
-
-    public Completation(String value, String iconName)
-    {
-        this.value = value;
         this.iconName = iconName;
     }
 
