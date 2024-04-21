@@ -25,8 +25,6 @@ public class CompletationsLoader
         Completations completations = getCompletations(fileExtension);
 
         TreeSet<Completation> completationsSet = new TreeSet<>();
-
-        System.out.println(Arrays.asList(completations.keywordsCompletations));
         
         completationsSet.addAll(Arrays.asList(completations.keywordsCompletations));
         completationsSet.addAll(Arrays.asList(completations.liveTemplatesCompletations));
@@ -53,7 +51,8 @@ public class CompletationsLoader
         try
         {
             return new Gson().fromJson(FileOperation.readFile(file), Completations.class);
-        } catch (Exception e)
+        } 
+        catch (Exception e)
         {
             MainStageController.getInstance().notificationsContainer.addNotification(new Notification(
                     "Error loading completations for " + fileExtension + " language", MessageType.Error)

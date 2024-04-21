@@ -1,6 +1,7 @@
 package com.lebastudios.sealcode.applogic.completations;
 
 import com.lebastudios.sealcode.applogic.config.CompletationsLoader;
+import com.lebastudios.sealcode.applogic.config.GlobalConfig;
 import com.lebastudios.sealcode.events.AppEvents;
 import com.lebastudios.sealcode.frontend.fxextends.SealCodeArea;
 import javafx.beans.value.ChangeListener;
@@ -12,7 +13,7 @@ import javafx.stage.Popup;
 import java.util.TreeSet;
 
 
-public class Autocompletations implements ChangeListener<String>
+public class CompletationsPopup implements ChangeListener<String>
 {
     private TreeSet<Completation> completations;
     
@@ -22,7 +23,7 @@ public class Autocompletations implements ChangeListener<String>
     
     private String currentWord = "";
     
-    public Autocompletations(SealCodeArea sealCodeArea)
+    public CompletationsPopup(SealCodeArea sealCodeArea)
     {
         this.sealCodeArea = sealCodeArea;
 

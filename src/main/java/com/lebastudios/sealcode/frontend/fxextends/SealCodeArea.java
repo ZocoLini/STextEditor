@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.frontend.fxextends;
 
-import com.lebastudios.sealcode.applogic.completations.Autocompletations;
+import com.lebastudios.sealcode.applogic.completations.CompletationsPopup;
 import com.lebastudios.sealcode.applogic.FileOperation;
 import com.lebastudios.sealcode.applogic.Resources;
 import com.lebastudios.sealcode.applogic.config.GlobalConfig;
@@ -42,7 +42,7 @@ public final class SealCodeArea extends CodeArea
         
         new BracketHighlighter(this);
         new KeyWordHighlighter(this, fileExtension);
-        new Autocompletations(this);
+        new CompletationsPopup(this);
     }
 
     private void updateResources()
@@ -101,41 +101,85 @@ public final class SealCodeArea extends CodeArea
             }
         }).start();
     }
+    private String getPreviusChar(int position)
+    {
+        if (position == 0) return "";
+        return this.getText(position - 1, position);
+    }
+    
+    private String getNoBlankPreviusChar(int position)
+    {
+        if (position == 0) return "";
+        
+        String previusChar = this.getText(position - 1, position);
+        
+        if (previusChar.equals(" ")) return getNoBlankPreviusChar(position - 1);
+        
+        return previusChar;
+    }
+    
+    private String getNextChar(int position)
+    {
+        if (position == this.getText().length() - 1) return "";
+        return this.getText(position, position + 1);
+    }
+    
+    private String getNoBlankNextChar(int position)
+    {
+        if (position >= this.getText().length() - 1) return "";
+        
+        String nextChar = this.getText(position, position + 1);
+        
+        if (nextChar.equals(" ")) return getNoBlankNextChar(position + 1);
+        
+        return nextChar;
+    }
+    
+    public int getParagraphIndentation()
+    {
+        final var firstParagraphText = this.getParagraph(this.getCurrentParagraph()).getText();
+        int i;
+        
+        for (i = 0; i < firstParagraphText.length(); i++)
+        {
+            if (firstParagraphText.charAt(i) != ' ') return i;
+        }
+        
+        return i;
+    }
+    
+    private int paragraphStart(int paragraph)
+    {
+        int start = 0;
+        
+        for (int i = 0; i < paragraph; i++)
+        {
+            start += this.getParagraph(i).length() + 1;
+        }
+        
+        return start;
+    }
+    
+    private int paragraphEnd(int paragraph)
+    {
+        return paragraphStart(paragraph) + this.getParagraph(paragraph).length();
+    }
     
     // TODO: Se esta haciendo la configuración para lenguajes del tipo C. Buscar manera de hacerlo dependiendo del lenguaje
     @Override
     public void replace(int start, int end, StyledDocument<Collection<String>, String, Collection<String>> replacement)
     {
+        // TODO: Hacer eventos de insercion, borrado y reemplazo
         modified = true;
 
+        boolean needToMoveCaret = false;
+        int newCaretPosition = start;
+        
         final String newText = replacement.getText();
         final String oldText = this.getText(start, end);
+        String modifiedText = newText;
         
-        // Remplaza los tabs por espacios según los ajustes del editor
-        if (newText.equals("\t")) 
-        {
-            super.replace(start, end, " ".repeat(GlobalConfig.getStaticInstance().editorConfig.tabSize), "");
-            return;
-        }
-        
-        // Cuando se hace enter, indentamos si es necesario
-        if (newText.equals("\n")) 
-        {
-            int indentacionLineStart;
-
-            final var firstParagraphText = this.getParagraph(this.getCurrentParagraph()).getText();
-            for (indentacionLineStart = 0; indentacionLineStart < firstParagraphText.length(); indentacionLineStart++) 
-            {
-                if (firstParagraphText.charAt(indentacionLineStart) != ' ') 
-                {
-                    break;
-                }
-            }
-            
-            super.replace(start, end, "\n" + " ".repeat(indentacionLineStart), "");
-            this.moveTo(end + indentacionLineStart + 1);
-            return;
-        }
+        /*********************************************************************************/
         
         // Cuando se inserta un caracter del tipo parentesis, corchete, llave, comillas o comillas simples, se añade el par
         Map<String, String> completingPair = Map.of(
@@ -145,7 +189,6 @@ public final class SealCodeArea extends CodeArea
                 "\"", "\"",
                 "'", "'"
         );
-        
         if (completingPair.containsKey(newText)) 
         {
             super.replace(start, end, newText + completingPair.get(newText), "");
@@ -161,6 +204,7 @@ public final class SealCodeArea extends CodeArea
             return;
         }
 
+        // Cuando se intenta cerrar un par ya cerrado, solo se mueve el caret
         try
         {
             if (Objects.equals(completingPair.get(this.getText(start - 1, end)), newText))
@@ -171,7 +215,66 @@ public final class SealCodeArea extends CodeArea
             }
         }
         catch (Exception ignored) {}
+
+        /**********************************************************************************/
         
-        super.replace(start, end, replacement);
+        // Cuando se borra y el paragrafo solo son espacios, se borra_todo el paragrafo
+        if (newText.isEmpty() && oldText.equals(" "))
+        {
+            String paragraphText = this.getParagraph(this.getCurrentParagraph()).getText();
+            
+            int paragraphStart = paragraphStart(getCurrentParagraph());
+            int paragraphEnd = paragraphEnd(getCurrentParagraph());
+            
+            int caretPosition = this.getCaretPosition();
+            
+            if (getText(paragraphStart, caretPosition).trim().isEmpty())
+            {
+                super.replace(paragraphStart - 1, paragraphEnd, getText().substring(caretPosition, paragraphEnd).trim(), "");
+                this.moveTo(paragraphStart - 1);
+                return;
+            }
+        }
+        
+        /*********************************************************************************/
+        
+        // Remplaza los tabs por espacios según los ajustes del editor
+        modifiedText = modifiedText
+                .replace("\t", " ".repeat(GlobalConfig.getStaticInstance().editorConfig.tabSize));
+
+        // Remplaza los \n por \n + " " * indentación necesaria
+        int actualIndentation = this.getParagraphIndentation();
+        int indentationNeeded = actualIndentation;
+
+        if (getNoBlankPreviusChar(start).equals("{") && oldText.isEmpty())
+        {
+            indentationNeeded += GlobalConfig.getStaticInstance().editorConfig.indentation;
+        }
+
+        modifiedText = modifiedText.replace("\n", "\n" + " ".repeat(indentationNeeded));
+        
+        if (getNoBlankNextChar(end).equals("}") && getNoBlankPreviusChar(start).equals("{") && oldText.isEmpty())
+        {
+            modifiedText += "\n" + " ".repeat(actualIndentation);
+            
+            // Sets the caret in the middle of the brackets
+            needToMoveCaret = true;
+            newCaretPosition = start + 1 + indentationNeeded;
+        }
+        
+        /****************************************************************************************/
+        
+        var newReplacement = ReadOnlyStyledDocument.fromString(
+                        modifiedText, 
+                        replacement.getParagraphStyle(0), 
+                        replacement.getStyleOfChar(0), 
+                        SegmentOps.styledTextOps());
+        
+        super.replace(start, end, newReplacement);
+        
+        if (needToMoveCaret) 
+        {
+            this.moveTo(newCaretPosition);
+        }
     }
 }
