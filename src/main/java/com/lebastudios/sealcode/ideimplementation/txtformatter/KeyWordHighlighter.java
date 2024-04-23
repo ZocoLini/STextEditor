@@ -1,11 +1,11 @@
-package com.lebastudios.sealcode.applogic.txtformatter;
+package com.lebastudios.sealcode.ideimplementation.txtformatter;
 
 
 import com.google.gson.Gson;
 import com.lebastudios.sealcode.applogic.Resources;
+import com.lebastudios.sealcode.frontend.fxextends.SealCodeArea;
 import javafx.concurrent.Task;
 import javafx.stage.WindowEvent;
-import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.reactfx.Subscription;
@@ -22,13 +22,13 @@ import java.util.regex.Pattern;
 public class KeyWordHighlighter
 {
     public final JSONPatterns patterns;
-    private final CodeArea codeArea;
+    private final SealCodeArea codeArea;
     private final ExecutorService executor;
     private Pattern pattern;
 
-    public KeyWordHighlighter(CodeArea codeArea, String extension)
+    public KeyWordHighlighter(SealCodeArea codeArea)
     {
-        this.patterns = new Gson().fromJson(Resources.getHighlightingRules(extension), JSONPatterns.class);
+        this.patterns = new Gson().fromJson(Resources.getHighlightingRules(codeArea.fileExtension), JSONPatterns.class);
 
         patternsCreator();
 

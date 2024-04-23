@@ -1,7 +1,8 @@
-package com.lebastudios.sealcode.applogic.txtformatter;
+package com.lebastudios.sealcode.ideimplementation.txtformatter;
 
 import com.lebastudios.sealcode.frontend.fxextends.SealCodeArea;
 import javafx.application.Platform;
+
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,12 +1,12 @@
 package com.lebastudios.sealcode.events;
 
-import com.lebastudios.sealcode.applogic.txtmod.ITextMod;
+import com.lebastudios.sealcode.frontend.fxextends.SealCodeArea;
 
 public class Events
 {
-    public static class OnTextReplaced extends EventHandler<ITextMod> {}
-    public static class OnTextInserted extends EventHandler<ITextMod> {}
-    public static class OnTextDeleted extends EventHandler<ITextMod> {}
+    /*  Seal Code Area  */
+    public static class OnTextModified extends TextModEvent {}
+    public static class OnCodeAreaCreated extends AppEvent1<SealCodeArea> {}
     
     public static class OnAppExit extends AppEvent {}
     public static class OnAppStart extends AppEvent {}

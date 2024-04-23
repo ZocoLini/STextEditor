@@ -19,10 +19,11 @@ module com.lebastudios.sealcode {
     
     opens com.lebastudios.sealcode.controllers.settingsPanels to javafx.fxml;
 
-    opens com.lebastudios.sealcode.applogic.txtformatter to com.google.gson;
+    opens com.lebastudios.sealcode.ideimplementation.txtformatter to com.google.gson;
 
     opens com.lebastudios.sealcode.applogic.config to com.google.gson;
     opens com.lebastudios.sealcode.applogic to com.google.gson;
     opens com.lebastudios.sealcode.applogic.completations to com.google.gson;
-    opens com.lebastudios.sealcode.applogic.txtmod to com.google.gson;
+    opens com.lebastudios.sealcode.ideimplementation.txtmod to com.google.gson;
+    opens com.lebastudios.sealcode.events to com.google.gson;
 }

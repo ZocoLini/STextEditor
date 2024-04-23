@@ -1,10 +1,11 @@
-package com.lebastudios.sealcode.applogic.txtmod;
+package com.lebastudios.sealcode.ideimplementation.txtmod;
 
+import com.lebastudios.sealcode.events.ITextMod;
 import com.lebastudios.sealcode.frontend.fxextends.SealCodeArea;
 
 import java.util.Map;
 
-public class ParenModifications implements ITextMod
+public class ParenPairInsert implements ITextMod
 {
     private static final Map<String, String> pairs = Map.of(
             "(", ")",
@@ -16,7 +17,7 @@ public class ParenModifications implements ITextMod
     );
     
     @Override
-    public TextModInf onTextInserted(String oldText, TextModInf modInf, SealCodeArea codeArea)
+    public void invoke(String oldText, TextModInf modInf, SealCodeArea codeArea)
     {
         String nextChar = codeArea.getNextChar(modInf.end);
         String prevChar = codeArea.getPreviusChar(modInf.start);
@@ -27,27 +28,15 @@ public class ParenModifications implements ITextMod
         if (pairs.containsKey(newText))
         {
             newText += "$END$" + pairs.get(newText);
-            return new TextModInf(modInf.start, modInf.end, newText, -1);
+            modInf.update(modInf.start, modInf.end, newText);
+            return;
         }
 
         // Salta el caret al intentar completar un par ya completo
         if (newText.equals(nextChar) && nextChar.equals(pairs.getOrDefault(prevChar, "")))
         {
-            return new TextModInf(modInf.start, modInf.end, "", modInf.start + 1);
+            modInf.update(modInf.start, modInf.end, "", modInf.start + 1);
+            return;
         }
-        
-        return modInf;
-    }
-
-    @Override
-    public TextModInf onTextDeleted(String oldText, TextModInf modInf, SealCodeArea codeArea)
-    {
-        // Autoelimina pares
-        if (pairs.containsKey(oldText) && codeArea.getNextChar(modInf.end).equals(pairs.get(oldText)))
-        {
-            return new TextModInf(modInf.start, modInf.end + 1, "", -1);
-        }
-
-        return modInf;
     }
 }

@@ -1,12 +1,13 @@
-package com.lebastudios.sealcode.applogic.txtmod;
+package com.lebastudios.sealcode.ideimplementation.txtmod;
 
 import com.lebastudios.sealcode.applogic.config.GlobalConfig;
+import com.lebastudios.sealcode.events.ITextMod;
 import com.lebastudios.sealcode.frontend.fxextends.SealCodeArea;
 
 public class Indent implements ITextMod
 {
     @Override
-    public TextModInf onTextInserted(String oldText, TextModInf modInf, SealCodeArea codeArea)
+    public void invoke(String oldText, TextModInf modInf, SealCodeArea codeArea)
     {
         // Remplaza los \n por \n + " " * indentación necesaria
         int actualIndentation = codeArea.getParagraphIndentation();
@@ -26,6 +27,6 @@ public class Indent implements ITextMod
             newText += "$END$\n" + " ".repeat(actualIndentation);
         }
         
-        return new TextModInf(modInf.start, modInf.end, newText);
+        modInf.update(modInf.start, modInf.end, newText);
     }
 }

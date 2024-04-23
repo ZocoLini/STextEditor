@@ -1,11 +1,11 @@
-package com.lebastudios.sealcode.applogic.txtmod;
+package com.lebastudios.sealcode.ideimplementation.txtmod;
 
 public class TextModInf
 { 
     public int start;
     public int end;
     public String textModificated;
-    public int caretPos;
+    public int caretPos = -1;
     
     public TextModInf(int start, int end, String textModificated, int caretPos)
     {
@@ -19,6 +19,11 @@ public class TextModInf
     
     public TextModInf update(int start, int end, String textModificated, int caretPos)
     {
+        if (caretPos == -1 && this.caretPos != -1) 
+        {
+           throw new IllegalArgumentException("Caret position can't be -1");
+        }
+        
         this.start = start;
         this.end = end;
         this.textModificated = textModificated;
@@ -29,6 +34,6 @@ public class TextModInf
 
     public TextModInf update(int start, int end, String textModificated)
     {
-        return update(start, end, textModificated, -1);
+        return update(start, end, textModificated, this.caretPos);
     }
 }

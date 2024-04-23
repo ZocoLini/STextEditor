@@ -5,13 +5,11 @@ import com.lebastudios.sealcode.applogic.FileOperation;
 import com.lebastudios.sealcode.applogic.Resources;
 import com.lebastudios.sealcode.applogic.completations.CompletationsPopup;
 import com.lebastudios.sealcode.applogic.config.GlobalConfig;
-import com.lebastudios.sealcode.applogic.txtformatter.BracketHighlighter;
-import com.lebastudios.sealcode.applogic.txtformatter.KeyWordHighlighter;
-import com.lebastudios.sealcode.applogic.txtmod.*;
+import com.lebastudios.sealcode.ideimplementation.txtmod.*;
 import com.lebastudios.sealcode.events.AppEvents;
+import com.lebastudios.sealcode.events.ITextMod;
 import com.lebastudios.sealcode.frontend.fxextends.treeviews.FileSystemTreeItem;
 import javafx.scene.input.KeyEvent;
-import org.fxmisc.richtext.CaretNode;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyledDocument;
@@ -21,10 +19,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static com.lebastudios.sealcode.applogic.DocumentsOperations.createStyledDocument;
 
 public final class SealCodeArea extends CodeArea
 {
@@ -48,9 +42,8 @@ public final class SealCodeArea extends CodeArea
 
         updateResources();
 
-        new BracketHighlighter(this);
-        new KeyWordHighlighter(this, fileExtension);
         new CompletationsPopup(this);
+        AppEvents.onSealCodeAreaCreated.invoke(this);
         
         instantiated = true;
     }
@@ -176,11 +169,6 @@ public final class SealCodeArea extends CodeArea
         return paragraphStart(paragraph) + this.getParagraph(paragraph).length();
     }
 
-    private final List<ITextMod> onTextModifications = new ArrayList<>(List.of(
-            new JumpBlankLines(),
-            new ParenModifications()
-    ));
-
     // TODO: Se esta haciendo la configuración para lenguajes del tipo C. Buscar manera de hacerlo dependiendo del lenguaje
     @Override
     public void replace(int start, int end, StyledDocument<Collection<String>, String, Collection<String>> replacement)
@@ -204,31 +192,21 @@ public final class SealCodeArea extends CodeArea
         if (!newText.isEmpty() && !oldText.isEmpty())
         {
             // Remplazo
-            for (var operation : onTextModifications)
-            {
-                modInf = operation.onTextReplaced(oldText, modInf, this);
-            }
+            AppEvents.onTextReplaced.invoke(oldText, modInf, this);
         } else if (newText.isEmpty())
         {
             // Eliminación
-            for (var operation : onTextModifications)
-            {
-                modInf = operation.onTextDeleted(oldText, modInf, this);
-            }
+            AppEvents.onTextDeleted.invoke(oldText, modInf, this);
         } else if (oldText.isEmpty())
         {
             if (!instantiated) return;
             
             // Adicion
-            for (var operation : onTextModifications)
-            {
-                modInf = operation.onTextInserted(oldText, modInf, this);
-            }
+            AppEvents.onTextInserted.invoke(oldText, modInf, this);
         }
         
         // Ejecutar siempre
-        // Remplaza los \n por \n + " " * indentación necesaria
-        modInf = new Indent().onTextInserted(oldText, modInf, this);
+        AppEvents.onTextModified.invoke(oldText, modInf, this);
 
         // Ver donde tiene que posicionar el caret al final
         if (modInf.textModificated.contains("$END$"))
