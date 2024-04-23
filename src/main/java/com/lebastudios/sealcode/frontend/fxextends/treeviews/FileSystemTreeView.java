@@ -3,6 +3,7 @@ package com.lebastudios.sealcode.frontend.fxextends.treeviews;
 import com.lebastudios.sealcode.applogic.FileOperation;
 import com.lebastudios.sealcode.applogic.config.GlobalConfig;
 import com.lebastudios.sealcode.applogic.config.Session;
+import com.lebastudios.sealcode.os.OperativeSystem;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
@@ -109,8 +110,8 @@ public final class FileSystemTreeView extends TreeView<String>
         {
             path = path.substring(1);
         }
-
-        String[] pathParts = path.split(File.separator);
+        
+        String[] pathParts = path.split(OperativeSystem.fileSeparator());
 
         var current = this.getRoot();
         

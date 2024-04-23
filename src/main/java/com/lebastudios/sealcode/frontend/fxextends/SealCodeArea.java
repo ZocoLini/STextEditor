@@ -7,33 +7,33 @@ import com.lebastudios.sealcode.applogic.completations.CompletationsPopup;
 import com.lebastudios.sealcode.applogic.config.GlobalConfig;
 import com.lebastudios.sealcode.applogic.txtformatter.BracketHighlighter;
 import com.lebastudios.sealcode.applogic.txtformatter.KeyWordHighlighter;
-import com.lebastudios.sealcode.applogic.txtmod.TextModParen;
+import com.lebastudios.sealcode.applogic.txtmod.*;
 import com.lebastudios.sealcode.events.AppEvents;
-import com.lebastudios.sealcode.events.Events.*;
 import com.lebastudios.sealcode.frontend.fxextends.treeviews.FileSystemTreeItem;
 import javafx.scene.input.KeyEvent;
+import org.fxmisc.richtext.CaretNode;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyledDocument;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.lebastudios.sealcode.applogic.DocumentsOperations.createStyledDocument;
 
 public final class SealCodeArea extends CodeArea
 {
-    public OnTextInserted onTextInserted = new OnTextInserted();
-    public OnTextDeleted onTextRemoved = new OnTextDeleted();
-    public OnTextReplaced onTextReplaced = new OnTextReplaced();
-    
     private final FileSystemTreeItem fileSystemTreeItem;
     public final String fileExtension;
 
     private boolean modified = false;
-    private boolean initialized = false;
-
+    private boolean instantiated = false;
+    
     public SealCodeArea(String string, FileSystemTreeItem fileSystemTreeItem)
     {
         super(string);
@@ -52,10 +52,7 @@ public final class SealCodeArea extends CodeArea
         new KeyWordHighlighter(this, fileExtension);
         new CompletationsPopup(this);
         
-        // Text Modifications
-        new TextModParen(this);
-        
-        initialized = true;
+        instantiated = true;
     }
 
     private void updateResources()
@@ -133,7 +130,8 @@ public final class SealCodeArea extends CodeArea
 
     public String getNextChar(int position)
     {
-        if (position == this.getText().length() - 1) return "";
+        if (position >= this.getText().length()) return "";
+
         return this.getText(position, position + 1);
     }
 
@@ -177,102 +175,91 @@ public final class SealCodeArea extends CodeArea
     {
         return paragraphStart(paragraph) + this.getParagraph(paragraph).length();
     }
-    
+
+    private final List<ITextMod> onTextModifications = new ArrayList<>(List.of(
+            new JumpBlankLines(),
+            new ParenModifications()
+    ));
+
     // TODO: Se esta haciendo la configuración para lenguajes del tipo C. Buscar manera de hacerlo dependiendo del lenguaje
     @Override
     public void replace(int start, int end, StyledDocument<Collection<String>, String, Collection<String>> replacement)
     {
         modified = true;
-        
-        int newCaretPosition = start;
 
         final String newText = replacement.getText();
-        final String oldText = this.getText(start, end);
-        String modifiedText = newText;
-
-        if (!newText.isEmpty() && !oldText.isEmpty())
-        {
-            // Invocar eventos de reemplazo
-            for (var variable : onTextReplaced.getListeners())
-            {
-                modifiedText = variable.textModified(start, end, oldText, modifiedText);
-            }
-        }
-        else if (newText.isEmpty())
-        {
-            // Invocar eventos de borrado
-            for (var variable : onTextRemoved.getListeners())
-            {
-                modifiedText = variable.textModified(start, end, oldText, modifiedText);
-            }
-        }
-        else if (oldText.isEmpty())
-        {
-            // Invocar eventos de inserción
-            if (initialized)
-            {
-                for (var variable : onTextInserted.getListeners())
-                {
-                    modifiedText = variable.textModified(start, end, oldText, modifiedText);
-                }
-            }
-        }
-        
-        // Cuando se borra y el paragrafo solo son espacios, se borra_todo el paragrafo
-        if (newText.isEmpty() && oldText.equals(" ") && getCurrentParagraph() != 0)
-        {
-            int paragraphStart = paragraphStart(getCurrentParagraph());
-            int paragraphEnd = paragraphEnd(getCurrentParagraph());
-
-            int caretPosition = this.getCaretPosition();
-
-            if (getText(paragraphStart, caretPosition).trim().isEmpty())
-            {
-                super.replace(paragraphStart - 1, paragraphEnd, 
-                        DocumentsOperations.createStyledDocument(getText().substring(caretPosition, paragraphEnd).trim()));
-                this.moveTo(paragraphStart - 1);
-                return;
-            }
-        }
-
-        // Remplaza los tabs por espacios según los ajustes del editor
-        modifiedText = modifiedText
+        final String oldText = start == end ? "" : this.getText(start, end);
+        String modifiedText = newText
                 .replace("\t", " ".repeat(GlobalConfig.getStaticInstance().editorConfig.tabSize));
 
-        // Remplaza los \n por \n + " " * indentación necesaria
-        int actualIndentation = this.getParagraphIndentation();
-        int indentationNeeded = actualIndentation;
+        TextModInf modInf = new TextModInf(start, end, modifiedText);
 
-        if (getNoBlankPreviusChar(start).equals("{") && oldText.isEmpty())
+        if (!instantiated) 
         {
-            indentationNeeded += GlobalConfig.getStaticInstance().editorConfig.indentation;
+            super.replace(start, end,
+                    DocumentsOperations.createStyledDocument(modifiedText));
+            return;
         }
-
-        modifiedText = modifiedText.replace("\n", "\n" + " ".repeat(indentationNeeded));
-
-        if (getNoBlankNextChar(end).equals("}") && getNoBlankPreviusChar(start).equals("{") && oldText.isEmpty())
-        {
-            modifiedText += "$END$\n" + " ".repeat(actualIndentation);
-        }
-
-        // Procesamos las marcas $END$ como la ubicacion donde debe ir el caret
-        boolean needToMoveCaret = false;
         
-        if (modifiedText.contains("$END$"))
+        if (!newText.isEmpty() && !oldText.isEmpty())
         {
-            int caretDesiredPosition = modifiedText.indexOf("$END$");
-            modifiedText = modifiedText.replace("$END$", "");
-            needToMoveCaret = true;
-            newCaretPosition = caretDesiredPosition + start;
+            // Remplazo
+            for (var operation : onTextModifications)
+            {
+                modInf = operation.onTextReplaced(oldText, modInf, this);
+            }
+        } else if (newText.isEmpty())
+        {
+            // Eliminación
+            for (var operation : onTextModifications)
+            {
+                modInf = operation.onTextDeleted(oldText, modInf, this);
+            }
+        } else if (oldText.isEmpty())
+        {
+            if (!instantiated) return;
+            
+            // Adicion
+            for (var operation : onTextModifications)
+            {
+                modInf = operation.onTextInserted(oldText, modInf, this);
+            }
+        }
+        
+        // Ejecutar siempre
+        // Remplaza los \n por \n + " " * indentación necesaria
+        modInf = new Indent().onTextInserted(oldText, modInf, this);
+
+        // Ver donde tiene que posicionar el caret al final
+        if (modInf.textModificated.contains("$END$"))
+        {
+            int caretDesiredPosition = modInf.textModificated.indexOf("$END$");
+            modInf.textModificated = modInf.textModificated.replace("$END$", "");
+            modInf.caretPos = caretDesiredPosition + start;
         }
 
-        var newReplacement = createStyledDocument(modifiedText);
-
-        super.replace(start, end, newReplacement);
-
-        if (needToMoveCaret)
+        /* Añadimos extra carets pendiente de terminar
+        Matcher matcher = Pattern.compile("\\$VAR\\$").matcher(modInf.textModificated);
+        List<Integer> posicionesCaretVAR = new ArrayList<>();
+        
+        while (matcher.find())
         {
-            this.moveTo(newCaretPosition);
+            posicionesCaretVAR.add(matcher.start());
+            System.out.println(matcher.start());
+        }
+        
+        if (!posicionesCaretVAR.isEmpty()) 
+        {
+            this.addCaret(new CaretNode("caret1", this, start + posicionesCaretVAR.get(0)));
+        }
+         */
+        
+        super.replace(modInf.start, modInf.end,
+                DocumentsOperations.createStyledDocument(modInf.textModificated));
+        
+        if (modInf.caretPos != -1)
+        {
+            this.moveTo(modInf.caretPos);
         }
     }
 }

@@ -5,9 +5,9 @@ import java.io.IOException;
 class Windows implements IOperativeSystem
 {
     @Override
-    public String fileSeparatorBar()
+    public String fileSeparator()
     {
-        return "\\";
+        return "\\\\";
     }
 
     @Override

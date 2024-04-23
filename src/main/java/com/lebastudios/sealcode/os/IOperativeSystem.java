@@ -4,8 +4,6 @@ import java.io.IOException;
 
 public interface IOperativeSystem
 {
-    default String fileSeparatorBar() {return "/";}
-
     default Process executeCommand(String commando)
     {
         ProcessBuilder builder = new ProcessBuilder();
@@ -24,4 +22,6 @@ public interface IOperativeSystem
 
         return proceso;
     }
+
+    default String fileSeparator() { return "/"; }
 }

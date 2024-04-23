@@ -126,9 +126,19 @@
   ],
   "liveTemplatesCompletations": [
     {
+      "value": "pruebaCaret",
+      "description": "Creates a main method",
+      "completation": "switch ($VAR$)\n{\n\tcase $END$:\n\t\tbreak;\n\tdefault:\n\t\tbreak;\n}"
+    },
+    {
       "value": "main",
       "description": "Creates a main method",
       "completation": "public static void main(String[] args)\n{\n\t$END$\n}"
+    },
+    {
+      "value": "scan",
+      "description": "Creates a Scanner object",
+        "completation": "new Scanner(System.in)"
     },
     {
       "value": "sout",

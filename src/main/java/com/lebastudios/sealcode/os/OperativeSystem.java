@@ -14,6 +14,11 @@ public class OperativeSystem
         return actualOS;
     }
 
+    public static String fileSeparator()
+    {
+        return getActualOS().fileSeparator();
+    }
+    
     private static IOperativeSystem detectOS()
     {
         String osName = System.getProperty("os.name");
