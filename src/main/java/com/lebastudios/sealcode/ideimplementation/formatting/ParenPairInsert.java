@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.ideimplementation.txtmod;
+package com.lebastudios.sealcode.ideimplementation.formatting;
 
 import com.lebastudios.sealcode.events.ITextMod;
 import com.lebastudios.sealcode.frontend.fxextends.SealCodeArea;

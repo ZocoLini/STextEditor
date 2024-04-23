@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.ideimplementation.txtmod;
+package com.lebastudios.sealcode.ideimplementation.formatting;
 
 public class TextModInf
 { 

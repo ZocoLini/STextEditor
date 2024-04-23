@@ -1,11 +1,10 @@
 package com.lebastudios.sealcode.ideimplementation;
 
 import com.lebastudios.sealcode.ideimplementation.txtformatter.BracketHighlighter;
-import com.lebastudios.sealcode.ideimplementation.txtformatter.KeyWordHighlighter;
-import com.lebastudios.sealcode.ideimplementation.txtmod.Indent;
-import com.lebastudios.sealcode.ideimplementation.txtmod.JumpBlankLines;
-import com.lebastudios.sealcode.ideimplementation.txtmod.ParenPairInsert;
-import com.lebastudios.sealcode.ideimplementation.txtmod.ParenPairRemove;
+import com.lebastudios.sealcode.ideimplementation.formatting.Indent;
+import com.lebastudios.sealcode.ideimplementation.formatting.JumpBlankLines;
+import com.lebastudios.sealcode.ideimplementation.formatting.ParenPairInsert;
+import com.lebastudios.sealcode.ideimplementation.formatting.ParenPairRemove;
 import com.lebastudios.sealcode.events.AppEvents;
 
 public class SpecificIDEImplementations
@@ -21,7 +20,6 @@ public class SpecificIDEImplementations
     private static void setOnSealCodeAreaCreatedEvents()
     {
         AppEvents.onSealCodeAreaCreated.addListener(BracketHighlighter::new);
-        AppEvents.onSealCodeAreaCreated.addListener(KeyWordHighlighter::new);
     }
     
     private static void setOnTextModificationEvents()

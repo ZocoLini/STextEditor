@@ -5,9 +5,9 @@ import com.lebastudios.sealcode.applogic.FileOperation;
 import com.lebastudios.sealcode.applogic.Resources;
 import com.lebastudios.sealcode.applogic.completations.CompletationsPopup;
 import com.lebastudios.sealcode.applogic.config.GlobalConfig;
-import com.lebastudios.sealcode.ideimplementation.txtmod.*;
+import com.lebastudios.sealcode.applogic.txtformatter.KeyWordHighlighter;
+import com.lebastudios.sealcode.ideimplementation.formatting.*;
 import com.lebastudios.sealcode.events.AppEvents;
-import com.lebastudios.sealcode.events.ITextMod;
 import com.lebastudios.sealcode.frontend.fxextends.treeviews.FileSystemTreeItem;
 import javafx.scene.input.KeyEvent;
 import org.fxmisc.richtext.CodeArea;
@@ -16,9 +16,7 @@ import org.fxmisc.richtext.model.StyledDocument;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public final class SealCodeArea extends CodeArea
 {
@@ -43,6 +41,7 @@ public final class SealCodeArea extends CodeArea
         updateResources();
 
         new CompletationsPopup(this);
+        new KeyWordHighlighter(this);
         AppEvents.onSealCodeAreaCreated.invoke(this);
         
         instantiated = true;

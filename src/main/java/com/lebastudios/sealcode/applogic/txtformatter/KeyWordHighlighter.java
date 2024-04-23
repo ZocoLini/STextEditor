@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.ideimplementation.txtformatter;
+package com.lebastudios.sealcode.applogic.txtformatter;
 
 
 import com.google.gson.Gson;

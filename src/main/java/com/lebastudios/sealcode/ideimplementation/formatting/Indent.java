@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.ideimplementation.txtmod;
+package com.lebastudios.sealcode.ideimplementation.formatting;
 
 import com.lebastudios.sealcode.applogic.config.GlobalConfig;
 import com.lebastudios.sealcode.events.ITextMod;

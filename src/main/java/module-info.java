@@ -24,6 +24,6 @@ module com.lebastudios.sealcode {
     opens com.lebastudios.sealcode.applogic.config to com.google.gson;
     opens com.lebastudios.sealcode.applogic to com.google.gson;
     opens com.lebastudios.sealcode.applogic.completations to com.google.gson;
-    opens com.lebastudios.sealcode.ideimplementation.txtmod to com.google.gson;
+    opens com.lebastudios.sealcode.ideimplementation.formatting to com.google.gson;
     opens com.lebastudios.sealcode.events to com.google.gson;
 }
