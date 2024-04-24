@@ -1,11 +1,11 @@
 package com.lebastudios.sealcode;
 
-import com.lebastudios.sealcode.applogic.AppLoop;
-import com.lebastudios.sealcode.applogic.config.GlobalConfig;
-import com.lebastudios.sealcode.applogic.config.Session;
+import com.lebastudios.sealcode.core.logic.AppLoop;
+import com.lebastudios.sealcode.config.GlobalConfig;
+import com.lebastudios.sealcode.config.Session;
 import com.lebastudios.sealcode.events.AppEvents;
-import com.lebastudios.sealcode.frontend.stages.MainStage;
-import com.lebastudios.sealcode.ideimplementation.SpecificIDEImplementations;
+import com.lebastudios.sealcode.core.frontend.stages.MainStage;
+import com.lebastudios.sealcode.logic.SpecificIDEImplementations;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

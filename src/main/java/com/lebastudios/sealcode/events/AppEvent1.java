@@ -2,7 +2,7 @@ package com.lebastudios.sealcode.events;
 
 import java.util.List;
 
-public class AppEvent1<T> extends EventHandler<IEventMethod1<T>>
+public abstract class AppEvent1<T> extends EventHandler<IEventMethod1<T>>
 {
     public void invoke(T t)
     {

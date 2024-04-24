@@ -4,8 +4,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import com.lebastudios.sealcode.frontend.fxextends.IconButton?>
-<?import com.lebastudios.sealcode.frontend.fxextends.treeviews.FileSystemTreeView?>
+<?import com.lebastudios.sealcode.core.frontend.fxextends.IconButton?>
+<?import com.lebastudios.sealcode.core.frontend.fxextends.FileSystemTreeView?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.lebastudios.sealcode.controllers.FileSystemController"

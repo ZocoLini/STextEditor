@@ -7,6 +7,9 @@
       "value": "private"
     },
     {
+      "value": "abstract"
+    },
+    {
       "value": "protected"
     },
     {
@@ -104,18 +107,6 @@
     },
     {
       "value": "instanceof"
-    },
-    {
-      "value": "synchronized"
-    },
-    {
-      "value": "transient"
-    },
-    {
-      "value": "volatile"
-    },
-    {
-      "value": "strictfp"
     },
     {
       "value": "native"

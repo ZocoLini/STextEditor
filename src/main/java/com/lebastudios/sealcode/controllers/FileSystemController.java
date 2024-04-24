@@ -1,7 +1,7 @@
 package com.lebastudios.sealcode.controllers;
 
 import com.lebastudios.sealcode.events.AppEvents;
-import com.lebastudios.sealcode.frontend.fxextends.treeviews.FileSystemTreeView;
+import com.lebastudios.sealcode.core.frontend.fxextends.FileSystemTreeView;
 import javafx.fxml.FXML;
 import javafx.scene.control.TreeItem;
 

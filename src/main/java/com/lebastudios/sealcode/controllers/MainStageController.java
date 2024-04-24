@@ -1,9 +1,9 @@
 package com.lebastudios.sealcode.controllers;
 
-import com.lebastudios.sealcode.applogic.config.Session;
-import com.lebastudios.sealcode.frontend.fxextends.*;
-import com.lebastudios.sealcode.frontend.stages.MainStage;
-import com.lebastudios.sealcode.frontend.stages.SettingsStage;
+import com.lebastudios.sealcode.config.Session;
+import com.lebastudios.sealcode.core.frontend.fxextends.*;
+import com.lebastudios.sealcode.core.frontend.stages.MainStage;
+import com.lebastudios.sealcode.core.frontend.stages.SettingsStage;
 import javafx.fxml.FXML;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;

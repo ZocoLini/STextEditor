@@ -9,9 +9,10 @@ public final class AppEvents
     public static final OnAppStart onAppStart = new OnAppStart();
     
     /*  IDE Objects  */
-        /*  Seal Code Area  */
+        /*  Seal Code Área  */
             /*  Modificaciones de Texto  */
-    public static final OnTextModified onTextModified = new OnTextModified();
+    public static final OnTextModified onTextModifiedBefore = new OnTextModified();
+    public static final OnTextModified onTextModifiedAfter = new OnTextModified();
     public static final OnTextModified onTextDeleted = new OnTextModified();
     public static final OnTextModified onTextInserted = new OnTextModified();
     public static final OnTextModified onTextReplaced = new OnTextModified();

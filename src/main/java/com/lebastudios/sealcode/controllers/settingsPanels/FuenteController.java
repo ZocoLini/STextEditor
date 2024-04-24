@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.controllers.settingsPanels;
 
-import com.lebastudios.sealcode.applogic.config.GlobalConfig;
+import com.lebastudios.sealcode.config.GlobalConfig;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 

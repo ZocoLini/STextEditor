@@ -1,8 +1,8 @@
 package com.lebastudios.sealcode.events;
 
-import com.lebastudios.sealcode.frontend.fxextends.SealCodeArea;
+import com.lebastudios.sealcode.core.frontend.fxextends.SealCodeArea;
 
-public class Events
+public final class Events
 {
     /*  Seal Code Area  */
     public static class OnTextModified extends TextModEvent {}

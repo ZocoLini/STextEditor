@@ -2,12 +2,10 @@ package com.lebastudios.sealcode.controllers;
 
 import com.lebastudios.sealcode.SealCodeApplication;
 import com.lebastudios.sealcode.controllers.settingsPanels.SettingsPaneController;
-import com.lebastudios.sealcode.frontend.fxextends.treeviews.SettingsTreeView;
-import com.lebastudios.sealcode.frontend.stages.SettingsStage;
+import com.lebastudios.sealcode.core.frontend.stages.SettingsStage;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.SplitPane;
-import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
