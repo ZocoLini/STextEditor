@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.core.logic;
+package com.lebastudios.sealcode;
 
 import com.lebastudios.sealcode.events.AppEvent;
 import com.lebastudios.sealcode.events.IEventMethod;

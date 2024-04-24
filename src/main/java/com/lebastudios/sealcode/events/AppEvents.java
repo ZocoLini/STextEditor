@@ -10,6 +10,8 @@ public final class AppEvents
     
     /*  IDE Objects  */
         /*  Seal Code Área  */
+            /*  Completations Popup  */
+    public static final OnCompletationsRequest onCompletationsRequest = new OnCompletationsRequest();
             /*  Modificaciones de Texto  */
     public static final OnTextModified onTextModifiedBefore = new OnTextModified();
     public static final OnTextModified onTextModifiedAfter = new OnTextModified();

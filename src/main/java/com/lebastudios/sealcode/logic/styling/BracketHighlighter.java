@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.logic.txtformatter;
+package com.lebastudios.sealcode.logic.styling;
 
 import com.lebastudios.sealcode.core.frontend.fxextends.SealCodeArea;
 import javafx.application.Platform;

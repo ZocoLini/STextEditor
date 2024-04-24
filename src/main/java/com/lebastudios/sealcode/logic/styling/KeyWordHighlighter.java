@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.logic.txtformatter;
+package com.lebastudios.sealcode.logic.styling;
 
 
 import com.google.gson.Gson;

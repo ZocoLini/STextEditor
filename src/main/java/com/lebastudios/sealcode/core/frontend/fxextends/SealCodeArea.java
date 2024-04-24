@@ -1,16 +1,17 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
 import com.lebastudios.sealcode.config.Resources;
-import com.lebastudios.sealcode.core.logic.completations.CompletationsPopup;
 import com.lebastudios.sealcode.events.AppEvents;
 import com.lebastudios.sealcode.util.DocumentsOperations;
 import com.lebastudios.sealcode.util.FileOperation;
 import com.lebastudios.sealcode.util.TextModInf;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyledDocument;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
@@ -68,7 +69,7 @@ public final class SealCodeArea extends CodeArea
         this.addEventHandler(KeyEvent.KEY_PRESSED, event ->
         {
             if (event.isControlDown()
-                    && event.getCode().equals(javafx.scene.input.KeyCode.Z)
+                    && event.getCode().equals(KeyCode.Z)
                     && !event.isShiftDown()
                     && this.isUndoAvailable())
             {
@@ -76,6 +77,19 @@ public final class SealCodeArea extends CodeArea
             }
         });
 
+        this.addEventHandler(KeyEvent.KEY_PRESSED, event ->
+        {
+            // Si hacemos Ctrl + Alt + L se formatea el texto
+            if (event.isControlDown()
+                    && event.isAltDown()
+                    && event.getCode().equals(KeyCode.L))
+            {
+                String text = this.getText();
+                this.replace(0, text.length() - 1, DocumentsOperations.createStyledDocument(""));
+                this.appendText(text);
+            }
+        });
+        
         // Añade un evento en el que, si se pusa Ctrl + Y, se rehace la última acción
         this.addEventHandler(KeyEvent.KEY_PRESSED, event ->
         {
@@ -142,7 +156,7 @@ public final class SealCodeArea extends CodeArea
         return nextChar;
     }
 
-    public int getParagraphIndentation(int paragraph)
+    public int getParagraphInden(int paragraph)
     {
         final var firstParagraphText = this.getParagraph(paragraph).getText();
         int i;
@@ -155,9 +169,24 @@ public final class SealCodeArea extends CodeArea
         return i;
     }
 
-    public int getParagraphIndentation()
+    public int getParagraphInden()
     {
-        return getParagraphIndentation(getCurrentParagraph());
+        return getParagraphInden(getCurrentParagraph());
+    }
+    
+    public int getParagraphByChar(int charIndex)
+    {
+        int paragraphs = 0;
+        
+        for (int i = 0; i < charIndex; i++) 
+        {
+            if (getText().charAt(i) == '\n') 
+            {
+                paragraphs++;
+            }
+        }
+        
+        return paragraphs;
     }
     
     public int paragraphStart(int paragraph)
@@ -227,7 +256,7 @@ public final class SealCodeArea extends CodeArea
             modInf.textModificated = modInf.textModificated.replace("$END$", "");
             modInf.caretPos = caretDesiredPosition + start;
         }
-
+        
         /* Añadimos extra carets pendiente de terminar
         Matcher matcher = Pattern.compile("\\$VAR\\$").matcher(modInf.textModificated);
         List<Integer> posicionesCaretVAR = new ArrayList<>();
@@ -251,5 +280,10 @@ public final class SealCodeArea extends CodeArea
         {
             this.moveTo(modInf.caretPos);
         }
+    }
+
+    public File getRepresentingFile()
+    {
+        return fileSystemTreeItem.getRepresentingFile();
     }
 }

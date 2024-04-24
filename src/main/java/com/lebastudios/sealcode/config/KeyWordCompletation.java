@@ -1,4 +1,6 @@
-package com.lebastudios.sealcode.core.logic.completations;
+package com.lebastudios.sealcode.config;
+
+import com.lebastudios.sealcode.util.Completation;
 
 class KeyWordCompletation extends Completation
 {

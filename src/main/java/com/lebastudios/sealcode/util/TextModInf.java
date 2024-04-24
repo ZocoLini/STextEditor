@@ -36,4 +36,9 @@ public class TextModInf
     {
         return update(start, end, textModificated, this.caretPos);
     }
+
+    public TextModInf update(String newText)
+    {
+        return update(start, end, newText); 
+    }
 }

@@ -1,6 +1,5 @@
 package com.lebastudios.sealcode;
 
-import com.lebastudios.sealcode.core.logic.AppLoop;
 import com.lebastudios.sealcode.config.GlobalConfig;
 import com.lebastudios.sealcode.config.Session;
 import com.lebastudios.sealcode.events.AppEvents;

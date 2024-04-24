@@ -21,6 +21,7 @@ public abstract class TextModEvent extends EventMapHandler<String, ITextMod>
             catch (Exception e)
             {
                 System.err.println("An error ocurred invoking an event, it will bre removed.");
+                e.printStackTrace();
                 removeListenerFromKey(key, listener);
             }
         }

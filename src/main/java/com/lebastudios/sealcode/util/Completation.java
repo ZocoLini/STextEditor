@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.core.logic.completations;
+package com.lebastudios.sealcode.util;
 
 import com.lebastudios.sealcode.core.frontend.fxextends.IconView;
 
@@ -10,6 +10,12 @@ public abstract class Completation implements Comparable<Completation>
     private String value;
     private String iconName;
 
+    public Completation(String value, String iconName)
+    {
+        this.value = value;
+        this.iconName = iconName;
+    }
+    
     public Completation(String iconName)
     {
         this.iconName = iconName;

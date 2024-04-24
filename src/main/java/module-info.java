@@ -13,8 +13,8 @@ module com.lebastudios.sealcode {
     opens com.lebastudios.sealcode.controllers to javafx.fxml;
     opens com.lebastudios.sealcode.controllers.settingsPanels to javafx.fxml;
 
-    opens com.lebastudios.sealcode.logic.txtformatter to com.google.gson;
-    opens com.lebastudios.sealcode.core.logic.completations to com.google.gson;
+    opens com.lebastudios.sealcode.logic.styling to com.google.gson;
     opens com.lebastudios.sealcode.logic.formatting to com.google.gson;
     opens com.lebastudios.sealcode.config to com.google.gson;
+    opens com.lebastudios.sealcode.util to com.google.gson;
 }

@@ -1,20 +1,20 @@
 package com.lebastudios.sealcode.logic.formatting;
 
-import com.lebastudios.sealcode.util.TextModInf;
 import com.lebastudios.sealcode.config.GlobalConfig;
-import com.lebastudios.sealcode.events.ITextMod;
 import com.lebastudios.sealcode.core.frontend.fxextends.SealCodeArea;
+import com.lebastudios.sealcode.events.ITextMod;
+import com.lebastudios.sealcode.util.TextModInf;
 
-public class Indent implements ITextMod
+public class IndentNextLineInsert implements ITextMod
 {
     @Override
     public void invoke(String oldText, TextModInf modInf, SealCodeArea codeArea)
     {
-        //TODO: no indenta again??
+        if (!modInf.textModificated.equals("\n")) return;
         
         // Remplaza los \n por \n + " " * indentación necesaria
-        int actualIndentation = codeArea.getParagraphIndentation();
-        int indentationNeeded = actualIndentation;
+        int actualInden = codeArea.getParagraphInden();
+        int indentationNeeded = actualInden;
         String newText = modInf.textModificated;
 
         if (codeArea.getNoBlankPreviusChar(modInf.start).equals("{") && oldText.isEmpty())
@@ -27,7 +27,7 @@ public class Indent implements ITextMod
         if (codeArea.getNoBlankNextChar(modInf.end).equals("}") 
                 && codeArea.getNoBlankPreviusChar(modInf.start).equals("{") && oldText.isEmpty())
         {
-            newText += "$END$\n" + " ".repeat(actualIndentation);
+            newText += "$END$\n" + " ".repeat(actualInden);
         }
         
         modInf.update(modInf.start, modInf.end, newText);
