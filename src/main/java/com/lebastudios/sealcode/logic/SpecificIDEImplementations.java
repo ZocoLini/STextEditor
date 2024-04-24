@@ -23,10 +23,10 @@ public class SpecificIDEImplementations
     
     private static void setOnTextModificationEvents()
     {
-        AppEvents.onTextModifiedAfter.addListener(new TabRemover());
-        AppEvents.onTextModifiedBefore.addListener(new Indent());
-        AppEvents.onTextInserted.addListener(new ParenPairInsert());
-        AppEvents.onTextDeleted.addListener(new JumpBlankLines());
-        AppEvents.onTextDeleted.addListener(new ParenPairRemove());
+        AppEvents.onTextModifiedAfter.addListener("All", new TabRemover());
+        AppEvents.onTextModifiedBefore.addListener("java", new Indent());
+        AppEvents.onTextInserted.addListener("All", new ParenPairInsert());
+        AppEvents.onTextDeleted.addListener("java", new JumpBlankLines());
+        AppEvents.onTextDeleted.addListener("java", new ParenPairRemove());
     }
 }

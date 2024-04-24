@@ -157,7 +157,7 @@ public final class SealCodeArea extends CodeArea
 
     public int getParagraphIndentation()
     {
-        return getParagraphIndentation(0);
+        return getParagraphIndentation(getCurrentParagraph());
     }
     
     public int paragraphStart(int paragraph)
@@ -187,7 +187,8 @@ public final class SealCodeArea extends CodeArea
 
         TextModInf modInf = new TextModInf(start, end, newText);
 
-        AppEvents.onTextModifiedBefore.invoke(oldText, modInf, this);
+        AppEvents.onTextModifiedBefore.invoke(fileExtension, oldText, modInf, this);
+        AppEvents.onTextModifiedBefore.invoke("All", oldText, modInf, this);
 
         if (!instantiated)
         {
@@ -195,25 +196,29 @@ public final class SealCodeArea extends CodeArea
                     DocumentsOperations.createStyledDocument(newText));
             return;
         }
-
+        
         if (!newText.isEmpty() && !oldText.isEmpty())
         {
             // Remplazo
-            AppEvents.onTextReplaced.invoke(oldText, modInf, this);
+            AppEvents.onTextReplaced.invoke(fileExtension, oldText, modInf, this);
+            AppEvents.onTextReplaced.invoke("All", oldText, modInf, this);
         } else if (newText.isEmpty())
         {
             // Eliminación
-            AppEvents.onTextDeleted.invoke(oldText, modInf, this);
+            AppEvents.onTextDeleted.invoke(fileExtension, oldText, modInf, this);
+            AppEvents.onTextDeleted.invoke("All", oldText, modInf, this);
         } else if (oldText.isEmpty())
         {
             if (!instantiated) return;
 
             // Adicion
-            AppEvents.onTextInserted.invoke(oldText, modInf, this);
+            AppEvents.onTextInserted.invoke(fileExtension, oldText, modInf, this);
+            AppEvents.onTextInserted.invoke("All", oldText, modInf, this);
         }
 
         // Ejecutar siempre
-        AppEvents.onTextModifiedAfter.invoke(oldText, modInf, this);
+        AppEvents.onTextModifiedAfter.invoke(fileExtension, oldText, modInf, this);
+        AppEvents.onTextModifiedAfter.invoke("All", oldText, modInf, this);
 
         // Ver donde tiene que posicionar el caret al final
         if (modInf.textModificated.contains("$END$"))

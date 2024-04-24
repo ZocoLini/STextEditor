@@ -10,6 +10,8 @@ public class Indent implements ITextMod
     @Override
     public void invoke(String oldText, TextModInf modInf, SealCodeArea codeArea)
     {
+        //TODO: no indenta again??
+        
         // Remplaza los \n por \n + " " * indentación necesaria
         int actualIndentation = codeArea.getParagraphIndentation();
         int indentationNeeded = actualIndentation;
