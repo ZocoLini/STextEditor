@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.control.Label?>
-<?import com.lebastudios.sealcode.frontend.fxextends.IntegerField?>
+<?import com.lebastudios.sealcode.core.frontend.fxextends.IntegerField?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.lebastudios.sealcode.controllers.settingsPanels.GeneralController"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.lebastudios.sealcode.frontend.fxextends.treeviews.*?>
+<?import com.lebastudios.sealcode.core.frontend.fxextends.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>

@@ -18,6 +18,7 @@ public abstract class AppMapEvent<K> extends EventMapHandler<K, IEventMethod>
             catch (Exception e)
             {
                 System.err.println("An error ocurred invoking an event, it will bre removed.");
+                e.printStackTrace();
                 removeListenerFromKey(key, listener);
             }
         }
