@@ -46,7 +46,15 @@ public final class SealCodeArea extends CodeArea
     private void updateResources()
     {
         final String fileExtension = FileOperation.getFileExtension(fileSystemTreeItem.getRepresentingFile());
-
+        
+        String dontDelete = this.getStylesheets().get(0);
+        String dontDelete2 = this.getStylesheets().get(1);
+        
+        this.getStylesheets().clear();
+        
+        this.getStylesheets().add(dontDelete);
+        this.getStylesheets().add(dontDelete2);
+        
         this.getStylesheets().add(Resources.getLangCommonStyle());
         this.getStylesheets().add(Resources.getExtensionStyle(fileExtension));
     }
@@ -134,9 +142,9 @@ public final class SealCodeArea extends CodeArea
         return nextChar;
     }
 
-    public int getParagraphIndentation()
+    public int getParagraphIndentation(int paragraph)
     {
-        final var firstParagraphText = this.getParagraph(this.getCurrentParagraph()).getText();
+        final var firstParagraphText = this.getParagraph(paragraph).getText();
         int i;
 
         for (i = 0; i < firstParagraphText.length(); i++)
@@ -147,6 +155,11 @@ public final class SealCodeArea extends CodeArea
         return i;
     }
 
+    public int getParagraphIndentation()
+    {
+        return getParagraphIndentation(0);
+    }
+    
     public int paragraphStart(int paragraph)
     {
         int start = 0;
@@ -164,7 +177,6 @@ public final class SealCodeArea extends CodeArea
         return paragraphStart(paragraph) + this.getParagraph(paragraph).length();
     }
 
-    // TODO: Se esta haciendo la configuración para lenguajes del tipo C. Buscar manera de hacerlo dependiendo del lenguaje
     @Override
     public void replace(int start, int end, StyledDocument<Collection<String>, String, Collection<String>> replacement)
     {

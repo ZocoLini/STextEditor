@@ -48,7 +48,7 @@ public final class CodeTabPane extends TabPane
         {
             MainStage.getInstance().getScene().focusOwnerProperty().addListener((observable, oldValue, newValue) ->
             {
-                if (!newValue.equals(this))
+                if (newValue == null || !newValue.equals(this))
                 {
                     saveAllFiles();
                 }
