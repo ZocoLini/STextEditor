@@ -7,7 +7,9 @@ public final class Events
     /*  Seal Code Area  */
     public static class OnTextModified extends TextModEvent {}
     public static class OnCodeAreaCreated extends AppEvent1<SealCodeArea> {}
+    public static class OnCodeAreaDeleted extends AppEvent1<SealCodeArea> {}
     public static class OnCompletationsRequest extends CompletationRequestEvent {}
+    public static class OnStyleSpansRequest extends StyleSpansRequestEvent {}
     
     public static class OnAppExit extends AppEvent {}
     public static class OnAppStart extends AppEvent {}

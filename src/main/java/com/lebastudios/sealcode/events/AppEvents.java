@@ -10,6 +10,7 @@ public final class AppEvents
     
     /*  IDE Objects  */
         /*  Seal Code Área  */
+    public static final OnStyleSpansRequest onStyleSpansRequest = new OnStyleSpansRequest();
             /*  Completations Popup  */
     public static final OnCompletationsRequest onCompletationsRequest = new OnCompletationsRequest();
             /*  Modificaciones de Texto  */
@@ -20,6 +21,7 @@ public final class AppEvents
     public static final OnTextModified onTextReplaced = new OnTextModified();
             /*Instanciación de un nuevo Seal Code Area*/
     public static final OnCodeAreaCreated onSealCodeAreaCreated = new OnCodeAreaCreated();
+    public static final OnCodeAreaDeleted onSealCodeAreaDeleted = new OnCodeAreaDeleted();
     
     /*  Settings Pane   */
     public static final OnSettingsUpdate onSettingsUpdate = new OnSettingsUpdate();

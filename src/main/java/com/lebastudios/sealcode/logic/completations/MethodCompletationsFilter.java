@@ -1,38 +1,65 @@
 package com.lebastudios.sealcode.logic.completations;
 
+import com.github.javaparser.ParseProblemException;
+import com.github.javaparser.StaticJavaParser;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.lebastudios.sealcode.events.ICompletationsRequest;
 import com.lebastudios.sealcode.util.Completation;
+import com.lebastudios.sealcode.util.FileOperation;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Optional;
 import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class MethodCompletationsFilter implements ICompletationsRequest
 {
-    String methodDeclarationRegex = "\\b(public|private|protected|static|\\s)*\\s*[\\w<>,\\[\\]]+\\s+\\b\\w+\\s*\\([^)]*\\)\\s*(?:throws\\s+[\\w.]+\\s*)?\\{\n";
-    String methodNameRegex = "\\("; //Regex to match the method name
-
     @Override
     public void invoke(TreeSet<Completation> newCompletations, File file, String fileExtension, 
                        String lastWord, String codeAreaText)
     {
-        Pattern pattern = Pattern.compile(methodDeclarationRegex);
-        Matcher matcher = pattern.matcher(codeAreaText);
+        if (!fileExtension.equals("java")) return;
 
-        System.out.println(123);
+        CompilationUnit cu;
         
-        while (matcher.find())
+        try
         {
-            String method = matcher.group();
-            System.out.println(method);
-            String methodName = method.split(methodNameRegex)[0].trim();
-
-            methodName = methodName.substring(methodName.lastIndexOf(" ") + 1);
-            
-            System.out.println(methodName);
-            
-            newCompletations.add(new MethodCompletation(methodName));
+            cu = StaticJavaParser.parse(codeAreaText);
+            new Thread(() ->
+            {
+                try
+                {
+                    FileOperation.writeFile(file, codeAreaText);
+                } catch (Exception e)
+                {
+                    throw new RuntimeException(e);
+                }
+            }).start();
         }
+        catch (Exception exception)
+        {
+            System.out.println(exception.getMessage());
+            cu = null;
+        }
+
+        try
+        {
+            cu = StaticJavaParser.parse(file);
+        } catch (ParseProblemException e)
+        {
+            System.out.println(e.getMessage());
+        } catch (FileNotFoundException e)
+        {
+            throw new RuntimeException(e);
+        }
+        
+        Optional<ClassOrInterfaceDeclaration> classA = cu.getClassByName("Main");
+        
+        newCompletations.addAll(classA.get().getMethods().stream().map(method -> 
+                new MethodCompletation(method.getNameAsString())).toList());
+        
+        newCompletations.addAll(classA.get().getFields().stream().map(field ->
+                new FieldCompletation(field.getVariable(0).getNameAsString())).toList());
     }
 }
