@@ -5,6 +5,7 @@ module com.lebastudios.sealcode {
     requires org.fxmisc.richtext;
     requires reactfx;
     requires com.github.javaparser.core;
+    requires jdk.compiler;
 
     exports com.lebastudios.sealcode;
     opens com.lebastudios.sealcode to javafx.fxml;

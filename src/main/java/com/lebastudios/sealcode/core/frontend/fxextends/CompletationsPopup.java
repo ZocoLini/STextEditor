@@ -59,7 +59,7 @@ public class CompletationsPopup extends Popup implements ChangeListener<String>
 
         final var text = completation.getCompletation();
 
-        sealCodeArea.replaceText(caretPosition - currentWord.length(), caretPosition, text);
+        sealCodeArea.replaceText(caretPosition - currentWord.substring(currentWord.lastIndexOf(".") + 1).length(), caretPosition, text);
 
         reset();
 
@@ -103,13 +103,13 @@ public class CompletationsPopup extends Popup implements ChangeListener<String>
         completationSListView.getItems().clear();
 
         filterCompletations(currentWord, completations, completationSListView.getItems());
-
+        
         try
         {
             requestCompletations.join();
         } catch (InterruptedException ignore) {}
 
-        filterCompletations(currentWord, requestedCompletations, completationSListView.getItems());
+        completationSListView.getItems().addAll(requestedCompletations);
         
         if (!completationSListView.getItems().isEmpty())
         {

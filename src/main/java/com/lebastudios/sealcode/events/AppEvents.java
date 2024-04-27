@@ -10,7 +10,6 @@ public final class AppEvents
     
     /*  IDE Objects  */
         /*  Seal Code Área  */
-    public static final OnStyleSpansRequest onStyleSpansRequest = new OnStyleSpansRequest();
             /*  Completations Popup  */
     public static final OnCompletationsRequest onCompletationsRequest = new OnCompletationsRequest();
             /*  Modificaciones de Texto  */

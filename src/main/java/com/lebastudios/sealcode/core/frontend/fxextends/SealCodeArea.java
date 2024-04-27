@@ -2,13 +2,12 @@ package com.lebastudios.sealcode.core.frontend.fxextends;
 
 import com.lebastudios.sealcode.config.Resources;
 import com.lebastudios.sealcode.events.AppEvents;
-import com.lebastudios.sealcode.util.DocumentsOperations;
-import com.lebastudios.sealcode.util.FileOperation;
-import com.lebastudios.sealcode.util.TextModInf;
+import com.lebastudios.sealcode.util.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
+import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyledDocument;
 
 import java.io.File;
@@ -28,7 +27,7 @@ public final class SealCodeArea extends CodeArea
     {
         super(string);
 
-        fileExtension = FileOperation.getFileExtension(fileSystemTreeItem.getRepresentingFile());
+        fileExtension = FileOperation.getEquivalentFileExtension(fileSystemTreeItem.getRepresentingFile());
 
         this.fileSystemTreeItem = fileSystemTreeItem;
 
@@ -38,6 +37,17 @@ public final class SealCodeArea extends CodeArea
 
         updateResources();
 
+        this.textProperty().addListener((observable, oldValue, newValue) ->
+        {
+            StyleSpans<Collection<String>> styleSpans = Inspector.getInspector()
+                    .inspect(newValue, FileOperation.getFileExtension(getRepresentingFile()));
+            
+            if (styleSpans == null)
+            {
+                Indexer.getIndexer().index(newValue, FileOperation.getFileExtension(getRepresentingFile()));
+            }
+        });
+        
         new CompletationsPopup(this);
         AppEvents.onSealCodeAreaCreated.invoke(this);
 
@@ -46,7 +56,7 @@ public final class SealCodeArea extends CodeArea
 
     private void updateResources()
     {
-        final String fileExtension = FileOperation.getFileExtension(fileSystemTreeItem.getRepresentingFile());
+        final String fileExtension = FileOperation.getEquivalentFileExtension(fileSystemTreeItem.getRepresentingFile());
         
         String dontDelete = this.getStylesheets().get(0);
         String dontDelete2 = this.getStylesheets().get(1);
