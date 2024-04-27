@@ -111,7 +111,6 @@ public final class FileOperation
 
     public static String getFileExtension(File file)
     {
-
         if (file == null)
         {
             throw new IllegalArgumentException("File is null");
@@ -135,7 +134,24 @@ public final class FileOperation
             return "";
         }
 
-        return toEquivalentFileExtension(fileName.substring(index + 1));
+        return fileName.substring(index + 1);
+    }
+
+    public static String getEquivalentFileExtension(File file)
+    {
+        return toEquivalentFileExtension(getFileExtension(file));
+    }
+
+    public static String getFileName(File file)
+    {
+        if (file.isDirectory()) 
+        {
+            return file.getName();
+        }
+        
+        String fileExtension = getFileExtension(file);
+        
+        return file.getName().replace("." + fileExtension, "");
     }
 
     /**

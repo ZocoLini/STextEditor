@@ -1,12 +1,15 @@
-package com.lebastudios.sealcode.logic.completations;
+package com.lebastudios.sealcode.logic.java.completations;
 
+import com.github.javaparser.ast.body.MethodDeclaration;
 import com.lebastudios.sealcode.util.Completation;
 
 public class MethodCompletation extends Completation
 {
-    public MethodCompletation(String value)
+    private MethodCompletation method;
+    
+    public MethodCompletation(MethodDeclaration method)
     {
-        super(value, "method.png");
+        super(method.getNameAsString(), "method.png");
     }
 
     @Override
