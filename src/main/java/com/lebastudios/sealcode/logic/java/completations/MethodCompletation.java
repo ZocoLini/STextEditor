@@ -1,15 +1,18 @@
 package com.lebastudios.sealcode.logic.java.completations;
 
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.lebastudios.sealcode.util.Completation;
 
-public class MethodCompletation extends Completation
+import java.util.TreeSet;
+
+public class MethodCompletation extends JavaNodeCompletation
 {
-    private MethodCompletation method;
+    private final MethodDeclaration method;
     
     public MethodCompletation(MethodDeclaration method)
     {
         super(method.getNameAsString(), "method.png");
+        
+        this.method = method;
     }
 
     @Override
@@ -22,5 +25,11 @@ public class MethodCompletation extends Completation
     public String getCompletation()
     {
         return getValue() + "()";
+    }
+
+    @Override
+    public TreeSet<JavaNodeCompletation> getChildren()
+    {
+        return JavaNodeCompletation.toJavaNode(method.getType()).getChildren();
     }
 }

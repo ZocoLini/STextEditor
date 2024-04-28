@@ -5,9 +5,9 @@ import java.util.TreeSet;
 
 public interface ILangIndexer
 {
-    void index(String string);
+    void index(File file);
 
-    void unIndex(String string);
+    void unIndex(File file);
 
     TreeSet<Completation> getCompletations(String word, File file);
 }

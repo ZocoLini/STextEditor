@@ -17,24 +17,58 @@ public class GlobalIndexer extends Indexer
     private GlobalIndexer() {}
     
     @Override
-    public void index(String string, String fileExtension)
+    public void index(File file)
     {
-        switch (fileExtension)
+        try
+        {
+            if (file.isDirectory())
+            {
+                for (var childFiles : file.listFiles())
+                {
+                    index(childFiles);
+                }
+                
+                return;
+            }
+        } catch (Exception e)
+        {
+            System.out.println("Error reading: " + file + ". Maybe the file path wasn't correct. It couldn't be indexed");
+            System.out.println(e.getMessage());
+        }
+        
+        switch (FileOperation.getFileExtension(file))
         {
             case "java":
-                JavaIndexer.getInstance().index(string);
+                JavaIndexer.getInstance().index(file);
                 break;
             default:
         }
     }
 
     @Override
-    public void unindex(String string, String fileExtension)
+    public void unindex(File file)
     {
-        switch (fileExtension)
+        try
+        {
+            if (file.isDirectory())
+            {
+                for (var childFiles : file.listFiles())
+                {
+                    unindex(childFiles);
+                }
+
+                return;
+            }
+        } catch (Exception e)
+        {
+            System.out.println("Error reading: " + file + ". Maybe the file path wasn't correct. It couldn't be indexed");
+            System.out.println(e.getMessage());
+        }
+
+        switch (FileOperation.getFileExtension(file))
         {
             case "java":
-                JavaIndexer.getInstance().unIndex(string);
+                JavaIndexer.getInstance().unIndex(file);
                 break;
             default:
         }

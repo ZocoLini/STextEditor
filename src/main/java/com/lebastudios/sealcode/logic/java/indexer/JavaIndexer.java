@@ -4,14 +4,15 @@ import com.github.javaparser.ParseResult;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.*;
 import com.lebastudios.sealcode.logic.java.JavaConfiguration;
-import com.lebastudios.sealcode.logic.java.completations.ClassCompletation;
-import com.lebastudios.sealcode.logic.java.completations.FieldCompletation;
-import com.lebastudios.sealcode.logic.java.completations.MethodCompletation;
+import com.lebastudios.sealcode.logic.java.completations.ClassOrInterfceCompletation;
+import com.lebastudios.sealcode.logic.java.completations.JavaNodeCompletation;
 import com.lebastudios.sealcode.util.Completation;
 import com.lebastudios.sealcode.util.ILangIndexer;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.regex.Pattern;
 
 class JavaIndexer implements ILangIndexer
 {
@@ -36,14 +37,21 @@ class JavaIndexer implements ILangIndexer
     private final Map<String, AnnotationDeclaration> annotations = new HashMap<>();
 
     @Override
-    public void index(String string)
+    public void index(File file)
     {
-        ParseResult<CompilationUnit> result = JavaConfiguration.getInstance().getJavaParser().parse(string);
+        ParseResult<CompilationUnit> result = null;
+        try
+        {
+            result = JavaConfiguration.getInstance().getJavaParser().parse(file);
+        } catch (FileNotFoundException e)
+        {
+            throw new RuntimeException(e);
+        }
+
+        if (result.getResult().isEmpty()) return;
         
         CompilationUnit cu = result.getResult().get();
         
-        if (!result.isSuccessful()) return;
-
         String packageName = "";
 
         if (cu.getPackageDeclaration().isPresent())
@@ -56,7 +64,7 @@ class JavaIndexer implements ILangIndexer
             index(typeDeclaration, packageName);
         }
     }
-
+    
     private void index(TypeDeclaration<?> type, String identifier)
     {
         if (!identifier.isEmpty()) 
@@ -71,7 +79,7 @@ class JavaIndexer implements ILangIndexer
             {
                 System.out.println("Indexing class or interface: " + classOrInterfaceDeclaration.getNameAsString()
                         + " " + newidentifier);
-
+                
                 classesAndInterfaces.put(newidentifier, classOrInterfaceDeclaration);
             }
             case RecordDeclaration recordDeclaration ->
@@ -109,7 +117,7 @@ class JavaIndexer implements ILangIndexer
     }
 
     @Override
-    public void unIndex(String string)
+    public void unIndex(File file)
     {
         // TODO
     }
@@ -117,73 +125,80 @@ class JavaIndexer implements ILangIndexer
     @Override
     public TreeSet<Completation> getCompletations(String word, File file)
     {
-        List<Completation> completations = new ArrayList<>();
+        String wordToProcess = Pattern.compile("\\([^()]*\\)").matcher(word).replaceAll("");
+        String substring = wordToProcess;
+        JavaNodeCompletation javaNodeCompletation = null;
         
-        if (!word.contains(".")) return filterWord(word);
-        
-        String[] callSequence = word.split("\\.");
-        
-        ClassOrInterfaceDeclaration obj = getClassOrInterface(callSequence[0]);
-        
-        if (obj != null) 
+        if (wordToProcess.contains(".")) 
         {
-            return classOrIntrfaceCompletations(obj, callSequence.length > 1 ? callSequence[1] : "");
+            substring = wordToProcess.substring(0, wordToProcess.indexOf("."));
+            javaNodeCompletation = findNode(substring);
+            wordToProcess = wordToProcess.replace(substring, "").substring(1);
         }
+        
+        while (javaNodeCompletation != null && wordToProcess.contains("."))
+        {
+            substring = wordToProcess.substring(0, wordToProcess.indexOf("."));
+            javaNodeCompletation = findNode(substring, javaNodeCompletation.getChildren());
+            wordToProcess = wordToProcess.replace(substring, "").substring(1);
+        }
+        
+        if (javaNodeCompletation != null) 
+        {
+            return filterWord(wordToProcess, javaNodeCompletation.getChildren());
+        }
+        
+        return filterWord(substring);
+    }
+
+    private TreeSet<Completation> filterWord(String word)
+    {
+        List<Completation> completations = new ArrayList<>();
+
+        for (var key : classesAndInterfaces.keySet())
+        {
+            if (!key.contains(word)) continue;
+
+            completations.add(new ClassOrInterfceCompletation(classesAndInterfaces.get(key)));
+        }
+
+        // TODO: filtrar mas cosas que clases
         
         return new TreeSet<>(completations);
     }
     
-    private TreeSet<Completation> filterWord(String word)
+    private TreeSet<Completation> filterWord(String word, TreeSet<JavaNodeCompletation> childrens)
     {
         List<Completation> completations = new ArrayList<>();
         
-        for (var variable : classesAndInterfaces.keySet())
+        for (var children : childrens)
         {
-            if (!variable.contains(word)) continue;
+            if (!children.getValue().contains(word)) continue;
                 
-            completations.add(new ClassCompletation(classesAndInterfaces.get(variable)));
+            completations.add(children);
         }
-        
-        // TODO: Add enums, annotations and records
 
         return new TreeSet<>(completations);
     }
     
-    private ClassOrInterfaceDeclaration getClassOrInterface(String name)
+    private JavaNodeCompletation findNode(String nodeName)
     {
         for (var variable : classesAndInterfaces.keySet())
         {
             String aux = variable.substring(variable.lastIndexOf(".") + 1);
-            if (aux.equals(name)) return classesAndInterfaces.get(variable);
+            if (aux.equals(nodeName)) return JavaNodeCompletation.toJavaNode(classesAndInterfaces.get(variable));
         }
-        
+
         return null;
     }
     
-    private TreeSet<Completation> classOrIntrfaceCompletations(ClassOrInterfaceDeclaration obj, String wordToComplete)
+    private JavaNodeCompletation findNode(String node, TreeSet<JavaNodeCompletation> childrens)
     {
-        List<Completation> completations = new ArrayList<>();
-        
-        for (var variable : obj.getMethods())
+        for (var children : childrens)
         {
-            if (variable.getNameAsString().contains(wordToComplete)) 
-            {
-                completations.add(new MethodCompletation(variable));
-            }
+            if (children.getValue().equals(node)) return children;
         }
         
-        for (var field : obj.getFields())
-        {
-            for (var variable : field.getVariables())
-            {
-                System.out.println(variable.getName());
-                if (variable.getNameAsString().contains(wordToComplete))
-                {
-                    completations.add(new FieldCompletation(variable));
-                }
-            }
-        }
-        
-        return new TreeSet<>(completations); 
+        return null;
     }
 }

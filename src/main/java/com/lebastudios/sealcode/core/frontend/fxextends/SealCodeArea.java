@@ -44,7 +44,8 @@ public final class SealCodeArea extends CodeArea
             
             if (styleSpans == null)
             {
-                Indexer.getIndexer().index(newValue, FileOperation.getFileExtension(getRepresentingFile()));
+                saveFile();
+                Indexer.getIndexer().index(getRepresentingFile());
             }
         });
         

@@ -17,52 +17,9 @@ public abstract class Indexer
         return indexer;
     }
     
-    public abstract void index(String string, String fileExtension);
+    public abstract void index(File file);
 
-    public void index(File file)
-    {
-        try
-        {
-            if (file.isDirectory())
-            {
-                for (var childFiles : file.listFiles())
-                {
-                    index(childFiles);
-                }
-            }
-            else
-            {
-                index(FileOperation.readFile(file), FileOperation.getFileExtension(file));   
-            }
-        } catch (Exception e)
-        {
-            System.out.println("Error reading: " + file + ". Maybe the file path wasn't correct. It couldn't be indexed");
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public abstract void unindex(String string, String fileExtension);
-
-    public void unindex(File file)
-    {
-        try
-        {
-            if (file.isDirectory())
-            {
-                for (var childFiles : file.listFiles())
-                {
-                    unindex(childFiles);
-                }
-            }
-            else
-            {
-                unindex(FileOperation.readFile(file), FileOperation.getFileExtension(file));
-            }
-        } catch (Exception e)
-        {
-            System.out.println("Error reading: " + file + ". Maybe the file path wasn't correct. It couldn't be indexed");
-        }
-    }
+    public abstract void unindex(File file);
     
     public abstract TreeSet<Completation> getCompletation(String word, File file);
 }
