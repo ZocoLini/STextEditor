@@ -1,6 +1,7 @@
 package com.lebastudios.sealcode.logic.java.completations;
 
 import com.github.javaparser.ast.body.VariableDeclarator;
+import com.lebastudios.sealcode.logic.java.indexer.JavaIndexer;
 
 import java.util.TreeSet;
 
@@ -30,6 +31,6 @@ public class VariableCompletation extends JavaNodeCompletation
     @Override
     public TreeSet<JavaNodeCompletation> getChildren()
     {
-        return JavaNodeCompletation.toJavaNode(var.getType()).getChildren();
+        return JavaIndexer.getInstance().findNode(var.getType().asString()).getChildren();
     }
 }

@@ -1,6 +1,7 @@
 package com.lebastudios.sealcode.logic.java.completations;
 
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.lebastudios.sealcode.logic.java.indexer.JavaIndexer;
 
 import java.util.TreeSet;
 
@@ -30,6 +31,6 @@ public class MethodCompletation extends JavaNodeCompletation
     @Override
     public TreeSet<JavaNodeCompletation> getChildren()
     {
-        return JavaNodeCompletation.toJavaNode(method.getType()).getChildren();
+        return JavaIndexer.getInstance().findNode(method.getType().asString()).getChildren();
     }
 }

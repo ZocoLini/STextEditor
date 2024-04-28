@@ -14,11 +14,11 @@ import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.regex.Pattern;
 
-class JavaIndexer implements ILangIndexer
+public class JavaIndexer implements ILangIndexer
 {
-    private static ILangIndexer instance;
+    private static JavaIndexer instance;
 
-    static ILangIndexer getInstance()
+    public static JavaIndexer getInstance()
     {
         if (instance == null)
         {
@@ -181,7 +181,7 @@ class JavaIndexer implements ILangIndexer
         return new TreeSet<>(completations);
     }
     
-    private JavaNodeCompletation findNode(String nodeName)
+    public JavaNodeCompletation findNode(String nodeName)
     {
         for (var variable : classesAndInterfaces.keySet())
         {
