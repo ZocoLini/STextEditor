@@ -86,7 +86,7 @@ public final class FileOperation
 
         int caracter = reader.read();
         StringBuilder content = new StringBuilder();
-
+        
         while (caracter != -1)
         {
             content.append((char) caracter);

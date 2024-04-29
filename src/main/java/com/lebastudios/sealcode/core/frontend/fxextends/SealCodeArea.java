@@ -39,14 +39,16 @@ public final class SealCodeArea extends CodeArea
 
         this.textProperty().addListener((observable, oldValue, newValue) ->
         {
-            StyleSpans<Collection<String>> styleSpans = Inspector.getInspector()
-                    .inspect(newValue, FileOperation.getFileExtension(getRepresentingFile()));
-            
-            if (styleSpans == null)
-            {
-                saveFile();
-                Indexer.getIndexer().index(getRepresentingFile());
-            }
+            new Thread(() -> {
+                StyleSpans<Collection<String>> styleSpans = Inspector.getInspector()
+                        .inspect(newValue, FileOperation.getFileExtension(getRepresentingFile()));
+
+                if (styleSpans == null)
+                {
+                    saveFile();
+                    Indexer.getIndexer().index(getRepresentingFile());
+                }
+            }).start();
         });
         
         new CompletationsPopup(this);
