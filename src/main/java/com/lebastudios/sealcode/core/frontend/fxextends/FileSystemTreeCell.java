@@ -2,6 +2,7 @@ package com.lebastudios.sealcode.core.frontend.fxextends;
 
 import com.lebastudios.sealcode.controllers.MainStageController;
 import com.lebastudios.sealcode.core.frontend.dialogs.Dialogs;
+import com.lebastudios.sealcode.util.Indexer;
 import com.lebastudios.sealcode.util.MessageType;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ContextMenu;
@@ -176,6 +177,7 @@ public final class FileSystemTreeCell extends TreeCell<String>
                 if (newFile.createNewFile())
                 {
                     treeCell.getTreeItem().getChildren().add(new FileSystemTreeItem(newFile));
+                    Indexer.getIndexer().index(newFile);
                 }
             } catch (IOException e)
             {
@@ -207,17 +209,20 @@ public final class FileSystemTreeCell extends TreeCell<String>
 
         private void removeRepresentingFile(ActionEvent event)
         {
-            removeFile(getRepresentingFile());
+            if (removeFile(getRepresentingFile()))
+            {
+                treeCell.getTreeItem().getParent().getChildren().remove(treeCell.getTreeItem());
+                Indexer.getIndexer().unindex(getRepresentingFile());
+            }
 
-            treeCell.getTreeItem().getParent().getChildren().remove(treeCell.getTreeItem());
         }
 
-        private void removeFile(File fileToRemove)
+        private boolean removeFile(File fileToRemove)
         {
             if (!fileToRemove.exists())
             {
                 System.out.println("File " + fileToRemove + " does not exists.");
-                return;
+                return false;
             }
 
             if (!fileToRemove.isFile())
@@ -230,10 +235,7 @@ public final class FileSystemTreeCell extends TreeCell<String>
 
             try
             {
-                if (!fileToRemove.delete())
-                {
-                    throw new IOException("Error removing directory " + fileToRemove);
-                }
+                return fileToRemove.delete();
             } catch (Exception e)
             {
                 MainStageController.getInstance().notificationsContainer.addNotification(
@@ -241,6 +243,8 @@ public final class FileSystemTreeCell extends TreeCell<String>
                                 " recomended in te proyect tree view.", MessageType.Error)
                 );
             }
+            
+            return false;
         }
     }
 }

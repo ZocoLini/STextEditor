@@ -3,6 +3,7 @@ package com.lebastudios.sealcode.logic.java.indexer;
 import com.github.javaparser.ParseResult;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.*;
+import com.lebastudios.sealcode.exceptions.NotImplementedException;
 import com.lebastudios.sealcode.logic.java.JavaConfiguration;
 import com.lebastudios.sealcode.logic.java.completations.ClassOrInterfceCompletation;
 import com.lebastudios.sealcode.logic.java.completations.JavaNodeCompletation;
@@ -119,7 +120,7 @@ public class JavaIndexer implements ILangIndexer
     @Override
     public void unIndex(File file)
     {
-        // TODO
+        throw new NotImplementedException("Unindexing is not implemented yet");
     }
 
     @Override
