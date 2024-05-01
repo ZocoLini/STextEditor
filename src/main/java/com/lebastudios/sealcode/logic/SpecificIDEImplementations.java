@@ -6,8 +6,6 @@ import com.lebastudios.sealcode.events.AppEvents;
 import com.lebastudios.sealcode.logic.formatting.*;
 import com.lebastudios.sealcode.logic.java.JavaConfiguration;
 import com.lebastudios.sealcode.logic.java.completations.CompletationsFilter;
-import com.lebastudios.sealcode.logic.java.indexer.GlobalIndexer;
-import com.lebastudios.sealcode.logic.java.inspections.GlobalInspector;
 import com.lebastudios.sealcode.logic.styling.BracketHighlighter;
 import com.lebastudios.sealcode.logic.styling.KeyWordHighlighter;
 import com.lebastudios.sealcode.util.Indexer;

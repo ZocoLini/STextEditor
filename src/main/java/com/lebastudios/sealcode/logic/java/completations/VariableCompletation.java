@@ -1,7 +1,7 @@
 package com.lebastudios.sealcode.logic.java.completations;
 
 import com.github.javaparser.ast.body.VariableDeclarator;
-import com.lebastudios.sealcode.logic.java.indexer.JavaIndexer;
+import com.lebastudios.sealcode.logic.java.JavaIndexer;
 
 import java.util.TreeSet;
 

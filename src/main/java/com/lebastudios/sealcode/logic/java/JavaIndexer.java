@@ -1,11 +1,10 @@
-package com.lebastudios.sealcode.logic.java.indexer;
+package com.lebastudios.sealcode.logic.java;
 
 import com.github.javaparser.ParseResult;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.*;
 import com.lebastudios.sealcode.config.Session;
 import com.lebastudios.sealcode.exceptions.NotImplementedException;
-import com.lebastudios.sealcode.logic.java.JavaConfiguration;
 import com.lebastudios.sealcode.logic.java.completations.ClassOrInterfceCompletation;
 import com.lebastudios.sealcode.logic.java.completations.JavaNodeCompletation;
 import com.lebastudios.sealcode.util.Completation;
@@ -152,14 +151,16 @@ public class JavaIndexer implements ILangIndexer
     private TreeSet<Completation> filterOtherCompletations(String word, File file)
     {
         String wordToProcess = word;
-        JavaNodeCompletation javaNodeCompletation;
-        
-        do
+        String substring = wordToProcess.substring(0, wordToProcess.indexOf("."));
+        JavaNodeCompletation javaNodeCompletation = findNode(substring);
+        wordToProcess = wordToProcess.replace(substring, "").substring(1);
+
+        while (javaNodeCompletation != null && wordToProcess.contains("."))
         {
-            String substring = wordToProcess.substring(0, wordToProcess.indexOf("."));
-            javaNodeCompletation = findNode(substring);
+            substring = wordToProcess.substring(0, wordToProcess.indexOf("."));
+            javaNodeCompletation = findNode(substring, javaNodeCompletation.getChildren());
             wordToProcess = wordToProcess.replace(substring, "").substring(1);
-        } while (javaNodeCompletation != null && wordToProcess.contains("."));
+        } 
 
         if (javaNodeCompletation != null)
         {

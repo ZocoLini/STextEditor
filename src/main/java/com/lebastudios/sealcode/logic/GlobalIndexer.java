@@ -1,5 +1,6 @@
-package com.lebastudios.sealcode.logic.java.indexer;
+package com.lebastudios.sealcode.logic;
 
+import com.lebastudios.sealcode.logic.java.JavaIndexer;
 import com.lebastudios.sealcode.util.Completation;
 import com.lebastudios.sealcode.util.FileOperation;
 import com.lebastudios.sealcode.util.Indexer;

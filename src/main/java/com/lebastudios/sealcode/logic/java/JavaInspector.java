@@ -1,8 +1,7 @@
-package com.lebastudios.sealcode.logic.java.inspections;
+package com.lebastudios.sealcode.logic.java;
 
 import com.github.javaparser.ParseResult;
 import com.github.javaparser.ast.CompilationUnit;
-import com.lebastudios.sealcode.logic.java.JavaConfiguration;
 import com.lebastudios.sealcode.util.ILangInspector;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
@@ -10,7 +9,7 @@ import org.fxmisc.richtext.model.StyleSpansBuilder;
 import java.util.Collection;
 import java.util.Collections;
 
-class JavaInspector implements ILangInspector
+public class JavaInspector implements ILangInspector
 {
     private static ILangInspector instance;
     

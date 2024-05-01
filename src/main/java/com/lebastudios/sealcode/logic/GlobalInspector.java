@@ -1,5 +1,6 @@
-package com.lebastudios.sealcode.logic.java.inspections;
+package com.lebastudios.sealcode.logic;
 
+import com.lebastudios.sealcode.logic.java.JavaInspector;
 import com.lebastudios.sealcode.util.Inspector;
 import org.fxmisc.richtext.model.StyleSpans;
 
