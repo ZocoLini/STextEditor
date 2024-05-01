@@ -3,6 +3,7 @@ package com.lebastudios.sealcode.logic.java.indexer;
 import com.github.javaparser.ParseResult;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.*;
+import com.lebastudios.sealcode.config.Session;
 import com.lebastudios.sealcode.exceptions.NotImplementedException;
 import com.lebastudios.sealcode.logic.java.JavaConfiguration;
 import com.lebastudios.sealcode.logic.java.completations.ClassOrInterfceCompletation;
@@ -17,6 +18,7 @@ import java.util.regex.Pattern;
 
 public class JavaIndexer implements ILangIndexer
 {
+    public static final String JAVA_SRC = Session.getStaticInstance().proyectDirectory + "/src/";
     private static JavaIndexer instance;
 
     public static JavaIndexer getInstance()
@@ -31,7 +33,8 @@ public class JavaIndexer implements ILangIndexer
 
     private JavaIndexer() {}
 
-    // El String es la ruta del paquete + . + Clase dentro de la que se encuentra en caso de ser inner
+    // El String es la ruta del paquete + . + Clase dentro de la que se encuentra en caso de ser inner + . + nombre de la clase
+    // Este identificador se le conocera como JavaFileIdentifier
     private final Map<String, ClassOrInterfaceDeclaration> classesAndInterfaces = new HashMap<>();
     private final Map<String, RecordDeclaration> records = new HashMap<>();
     private final Map<String, EnumDeclaration> enums = new HashMap<>();
@@ -127,31 +130,45 @@ public class JavaIndexer implements ILangIndexer
     public TreeSet<Completation> getCompletations(String word, File file)
     {
         String wordToProcess = Pattern.compile("\\([^()]*\\)").matcher(word).replaceAll("");
-        String substring = wordToProcess;
-        JavaNodeCompletation javaNodeCompletation = null;
         
-        if (wordToProcess.contains(".")) 
+        return wordToProcess.contains(".") ? filterOtherCompletations(wordToProcess, file) : filterDefaultCompletations(wordToProcess, file);
+    }
+
+    private TreeSet<Completation> filterDefaultCompletations(String word, File file)
+    {
+        TreeSet<Completation> completations = filterWord(word);
+        completations.addAll(filterOwnCompletations(word, file));
+
+        return completations;
+    }
+    
+    private TreeSet<Completation> filterOwnCompletations(String word, File file)
+    {
+        JavaNodeCompletation node = findNode(file);
+        
+        return filterWord(word, node.getChildren());
+    }
+    
+    private TreeSet<Completation> filterOtherCompletations(String word, File file)
+    {
+        String wordToProcess = word;
+        JavaNodeCompletation javaNodeCompletation;
+        
+        do
         {
-            substring = wordToProcess.substring(0, wordToProcess.indexOf("."));
+            String substring = wordToProcess.substring(0, wordToProcess.indexOf("."));
             javaNodeCompletation = findNode(substring);
             wordToProcess = wordToProcess.replace(substring, "").substring(1);
-        }
-        
-        while (javaNodeCompletation != null && wordToProcess.contains("."))
-        {
-            substring = wordToProcess.substring(0, wordToProcess.indexOf("."));
-            javaNodeCompletation = findNode(substring, javaNodeCompletation.getChildren());
-            wordToProcess = wordToProcess.replace(substring, "").substring(1);
-        }
-        
-        if (javaNodeCompletation != null) 
+        } while (javaNodeCompletation != null && wordToProcess.contains("."));
+
+        if (javaNodeCompletation != null)
         {
             return filterWord(wordToProcess, javaNodeCompletation.getChildren());
         }
         
-        return filterWord(substring);
+        return new TreeSet<>();
     }
-
+    
     private TreeSet<Completation> filterWord(String word)
     {
         List<Completation> completations = new ArrayList<>();
@@ -182,6 +199,33 @@ public class JavaIndexer implements ILangIndexer
         return new TreeSet<>(completations);
     }
     
+    public JavaNodeCompletation findNode(File file)
+    {
+        String relativePath = getJavaFileIdentifier(file);
+        
+        for (var variable : classesAndInterfaces.keySet())
+        {
+            if (variable.contains(relativePath)) return JavaNodeCompletation.toJavaNode(classesAndInterfaces.get(variable));
+        }
+        
+        for (var variable : records.keySet())
+        {
+            if (variable.contains(relativePath)) return JavaNodeCompletation.toJavaNode(records.get(variable));
+        }
+        
+        for (var variable : enums.keySet())
+        {
+            if (variable.contains(relativePath)) return JavaNodeCompletation.toJavaNode(enums.get(variable));
+        }
+        
+        for (var variable : annotations.keySet())
+        {
+            if (variable.contains(relativePath)) return JavaNodeCompletation.toJavaNode(annotations.get(variable));
+        }
+        
+        return null;
+    }
+    
     public JavaNodeCompletation findNode(String nodeName)
     {
         for (var variable : classesAndInterfaces.keySet())
@@ -201,5 +245,14 @@ public class JavaIndexer implements ILangIndexer
         }
         
         return null;
+    }
+    
+    private String getJavaFileIdentifier(File file)
+    {
+        return file.getAbsolutePath()
+                .replace(JAVA_SRC, "")
+                .replace(".java", "")
+                .replace("/", ".")
+                .replace("\\", ".");
     }
 }

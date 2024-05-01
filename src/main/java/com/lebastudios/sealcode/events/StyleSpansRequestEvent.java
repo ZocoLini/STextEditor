@@ -5,7 +5,7 @@ import org.fxmisc.richtext.model.StyleSpans;
 import java.util.Collection;
 import java.util.List;
 
-public class StyleSpansRequestEvent extends EventHandler<IStyleSpansRequest>
+public abstract class StyleSpansRequestEvent extends EventHandler<IStyleSpansRequest>
 {
     public void invoke(StyleSpans<Collection<String>> styleSpans, String text, String filExtension)
     {
