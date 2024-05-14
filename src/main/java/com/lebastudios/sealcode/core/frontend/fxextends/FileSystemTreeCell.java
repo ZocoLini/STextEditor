@@ -1,9 +1,9 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
-import com.lebastudios.sealcode.controllers.MainStageController;
+import com.lebastudios.sealcode.core.controllers.MainStageController;
 import com.lebastudios.sealcode.core.frontend.dialogs.Dialogs;
-import com.lebastudios.sealcode.util.Indexer;
-import com.lebastudios.sealcode.util.MessageType;
+import com.lebastudios.sealcode.core.logic.Indexer;
+import com.lebastudios.sealcode.global.MessageType;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -212,7 +212,7 @@ public final class FileSystemTreeCell extends TreeCell<String>
             if (removeFile(getRepresentingFile()))
             {
                 treeCell.getTreeItem().getParent().getChildren().remove(treeCell.getTreeItem());
-                Indexer.getIndexer().unindex(getRepresentingFile());
+                Indexer.getIndexer().unIndex(getRepresentingFile());
             }
 
         }

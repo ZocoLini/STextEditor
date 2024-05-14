@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.events;
 
-import com.lebastudios.sealcode.util.Completation;
+import com.lebastudios.sealcode.core.logic.Completation;
 
 import java.io.File;
 import java.util.TreeSet;

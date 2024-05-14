@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
-import com.lebastudios.sealcode.controllers.SettingsStageController;
+import com.lebastudios.sealcode.core.controllers.SettingsStageController;
 import javafx.scene.control.TreeCell;
 
 public class SettingsTreeCell extends TreeCell<String>

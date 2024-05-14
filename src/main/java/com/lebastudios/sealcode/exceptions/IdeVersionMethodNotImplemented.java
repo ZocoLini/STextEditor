@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.exceptions;
 
-import com.lebastudios.sealcode.controllers.MainStageController;
+import com.lebastudios.sealcode.core.controllers.MainStageController;
 import com.lebastudios.sealcode.core.frontend.fxextends.Notification;
 
 public class IdeVersionMethodNotImplemented extends RuntimeException

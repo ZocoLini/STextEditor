@@ -1,8 +1,8 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
-import com.lebastudios.sealcode.util.FileOperation;
-import com.lebastudios.sealcode.config.GlobalConfig;
-import com.lebastudios.sealcode.config.Session;
+import com.lebastudios.sealcode.global.FileOperation;
+import com.lebastudios.sealcode.core.logic.config.GlobalConfig;
+import com.lebastudios.sealcode.core.logic.config.Session;
 import com.lebastudios.sealcode.core.os.OperativeSystem;
 import javafx.scene.control.TreeView;
 

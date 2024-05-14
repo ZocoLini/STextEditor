@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
-import com.lebastudios.sealcode.util.MessageType;
+import com.lebastudios.sealcode.global.MessageType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

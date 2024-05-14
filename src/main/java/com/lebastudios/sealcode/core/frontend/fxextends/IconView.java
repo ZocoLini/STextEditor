@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
-import com.lebastudios.sealcode.config.Resources;
+import com.lebastudios.sealcode.core.logic.config.Resources;
 import com.lebastudios.sealcode.events.AppEvents;
 import javafx.scene.image.ImageView;
 

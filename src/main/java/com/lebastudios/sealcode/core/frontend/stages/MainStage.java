@@ -1,7 +1,7 @@
 package com.lebastudios.sealcode.core.frontend.stages;
 
-import com.lebastudios.sealcode.config.GlobalConfig;
-import com.lebastudios.sealcode.config.Session;
+import com.lebastudios.sealcode.core.logic.config.GlobalConfig;
+import com.lebastudios.sealcode.core.logic.config.Session;
 import com.lebastudios.sealcode.events.AppEvents;
 import javafx.stage.WindowEvent;
 

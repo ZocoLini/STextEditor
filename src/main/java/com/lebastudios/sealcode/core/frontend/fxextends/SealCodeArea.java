@@ -1,8 +1,12 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
-import com.lebastudios.sealcode.config.Resources;
+import com.lebastudios.sealcode.core.logic.config.Resources;
+import com.lebastudios.sealcode.core.logic.Indexer;
+import com.lebastudios.sealcode.core.logic.Inspector;
 import com.lebastudios.sealcode.events.AppEvents;
-import com.lebastudios.sealcode.util.*;
+import com.lebastudios.sealcode.global.DocumentsOperations;
+import com.lebastudios.sealcode.global.FileOperation;
+import com.lebastudios.sealcode.global.TextModInf;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.fxmisc.richtext.CodeArea;
