@@ -1,22 +1,19 @@
 package com.lebastudios.sealcode.core.logic.config;
 
-import com.lebastudios.sealcode.SealCodeApplication;
 import com.lebastudios.sealcode.global.FileOperation;
 import javafx.scene.image.Image;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 
 public final class Resources
 {
     private static final Map<String, Image> loadedIcons = new HashMap<>();
-/*
-    private static boolean existsResource(String path)
-    {
-        return SealCodeApplication.class.getResource(path) != null;
-    }
-*/
+    
     public static Image getIcon(String iconName)
     {
         Image image = loadedIcons.get(GlobalConfig.getStaticInstance().editorConfig.theme + iconName);
@@ -34,23 +31,40 @@ public final class Resources
         Image icon = null;
 
         // Check if the icon is defined in the actual theme
-        String path = FilePaths.getIconDirectory() + iconName;
-        System.out.println(path);
-        if (existsResource(path))
+        File file = new File(FilePaths.getIconDirectory() + iconName);
+        if (file.exists())
         {
-            icon = new Image(SealCodeApplication.class.getResourceAsStream(path));
+            try
+            {
+                icon = new Image(new FileInputStream(file));
+            } catch (FileNotFoundException e)
+            {
+                throw new RuntimeException(e);
+            }
         }
 
         // Check if the icon is defined in the default theme
-        path = FilePaths.getDefaultIconDirectory() + iconName;
-        if (icon == null && existsResource(path))
+        file = new File(FilePaths.getDefaultIconDirectory() + iconName);
+        if (icon == null && file.exists())
         {
-            icon = new Image(SealCodeApplication.class.getResourceAsStream(path));
+            try
+            {
+                icon = new Image(new FileInputStream(file));
+            } catch (FileNotFoundException e)
+            {
+                throw new RuntimeException(e);
+            }
         }
 
         if (icon == null)
         {
-            icon = new Image(SealCodeApplication.class.getResourceAsStream(FilePaths.getDefaultIconFile()));
+            try
+            {
+                icon = new Image(new FileInputStream(FilePaths.getDefaultIconFile()));
+            } catch (FileNotFoundException e)
+            {
+                throw new RuntimeException(e);
+            }
         }
         
         loadedIcons.put(GlobalConfig.getStaticInstance().editorConfig.theme + iconName, icon);
@@ -66,48 +80,91 @@ public final class Resources
     public static String getExtensionStyle(String fileExtension)
     {
         // Check if the extension has a style defined in the actual theme
-        String langStyleFile = FilePaths.getStyleDirectory() + fileExtension + ".css";
-        if (existsResource(langStyleFile))
+        File file = new File(FilePaths.getStyleDirectory() + fileExtension + ".css");
+        if (file.exists())
         {
-            return SealCodeApplication.class.getResource(langStyleFile).toExternalForm();
+            try
+            {
+                return file.toURI().toURL().toExternalForm();
+            } catch (MalformedURLException e)
+            {
+                throw new RuntimeException(e);
+            }
         }
 
         // Check if the equivalent extension has a style defined in the actual theme
-        langStyleFile = FilePaths.getStyleDirectory() + FileOperation.toEquivalentFileExtension(fileExtension) + ".css";
-        if (existsResource(langStyleFile))
+        file = new File(FilePaths.getStyleDirectory() + FileOperation.toEquivalentFileExtension(fileExtension) + ".css");
+        if (file.exists())
         {
-            return SealCodeApplication.class.getResource(langStyleFile).toExternalForm();
+            try
+            {
+                return file.toURI().toURL().toExternalForm();
+            } catch (MalformedURLException e)
+            {
+                throw new RuntimeException(e);
+            }
         }
 
         // Check if the extension has a style defined in the default theme
-        langStyleFile = FilePaths.getDefaultStyleDirectory() + fileExtension + ".css";
-        if (existsResource(langStyleFile))
+        file = new File(FilePaths.getDefaultStyleDirectory() + fileExtension + ".css");
+        if (file.exists())
         {
-            return SealCodeApplication.class.getResource(langStyleFile).toExternalForm();
+            try
+            {
+                return file.toURI().toURL().toExternalForm();
+            } catch (MalformedURLException e)
+            {
+                throw new RuntimeException(e);
+            }
         }
 
         // Check if the equivalent extension has a style defined in the default theme
-        langStyleFile =
-                FilePaths.getDefaultStyleDirectory() + FileOperation.toEquivalentFileExtension(fileExtension) + ".css";
-        if (existsResource(langStyleFile))
+        file = new File(FilePaths.getDefaultStyleDirectory() + FileOperation.toEquivalentFileExtension(fileExtension) + ".css");
+        if (file.exists())
         {
-            return SealCodeApplication.class.getResource(langStyleFile).toExternalForm();
+            try
+            {
+                return file.toURI().toURL().toExternalForm();
+            } catch (MalformedURLException e)
+            {
+                throw new RuntimeException(e);
+            }
         }
 
         // If the extension has no style defined, use the default style
-        return SealCodeApplication.class.getResource(FilePaths.getDefaultLangStyleFile()).toExternalForm();
+        try
+        {
+            return new File(FilePaths.getDefaultLangStyleFile()).toURI().toURL().toExternalForm();
+        } catch (MalformedURLException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 
     public static String getThemeStyle()
     {
-        String themeStylePath = FilePaths.getStyleDirectory() + "theme.css";
-        if (existsResource(themeStylePath))
+        File file = new File(FilePaths.getStyleDirectory() + "theme.css");
+        if (file.exists())
         {
-            return SealCodeApplication.class.getResource(themeStylePath).toExternalForm();
+            try
+            {
+                // TODO: Parece que, cada vez que se cambia de tema, se llama una vez mas a estee metodo.
+                System.out.println(file.toURI().toURL().toExternalForm());
+                return file.toURI().toURL().toExternalForm();
+            } catch (MalformedURLException e)
+            {
+                throw new RuntimeException(e);
+            }
         }
 
-        themeStylePath = FilePaths.getDefaultStyleDirectory() + "theme.css";
-        return SealCodeApplication.class.getResource(themeStylePath).toExternalForm();
+        file = new File(FilePaths.getDefaultStyleDirectory() + "theme.css");
+        try
+        {
+            return file.toURI().toURL().toExternalForm();
+        } catch (MalformedURLException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 
     public static String getHighlightingRules(String extension)

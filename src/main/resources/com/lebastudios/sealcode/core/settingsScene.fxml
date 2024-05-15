@@ -38,14 +38,6 @@
                                                   fxmlSceneName="inspeccionesAnchorPane.fxml"/>
                             </children>
                         </IconTreeItem>
-                        <IconTreeItem value="Cuenta" iconName="error.png">
-                            <children>
-                                <SettingsTreeItem value="Info Cuenta" iconName="error.png"
-                                                  fxmlSceneName="accountAnchorPane.fxml"/>
-                                <SettingsTreeItem value="Settings Sync" iconName="error.png"
-                                                  fxmlSceneName="settingsSyncAnchorPane.fxml"/>
-                            </children>
-                        </IconTreeItem>
                     </children>
                 </IconTreeItem>
             </SettingsTreeView>
