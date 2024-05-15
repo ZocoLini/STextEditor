@@ -11,12 +11,12 @@ import java.util.Map;
 public final class Resources
 {
     private static final Map<String, Image> loadedIcons = new HashMap<>();
-
+/*
     private static boolean existsResource(String path)
     {
         return SealCodeApplication.class.getResource(path) != null;
     }
-
+*/
     public static Image getIcon(String iconName)
     {
         Image image = loadedIcons.get(GlobalConfig.getStaticInstance().editorConfig.theme + iconName);
@@ -35,6 +35,7 @@ public final class Resources
 
         // Check if the icon is defined in the actual theme
         String path = FilePaths.getIconDirectory() + iconName;
+        System.out.println(path);
         if (existsResource(path))
         {
             icon = new Image(SealCodeApplication.class.getResourceAsStream(path));
