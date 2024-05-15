@@ -54,7 +54,7 @@ public class SettingsStageController
         {
             double dividerPosition = mainSplitPane.getDividerPositions()[0];
             
-            FXMLLoader loader = new FXMLLoader(SealCodeApplication.class.getResource("settingsScenePanels/" + paneName));
+            FXMLLoader loader = new FXMLLoader(SealCodeApplication.class.getResource("core/settingsScenePanels/" + paneName));
             
             mainSplitPane.getItems().remove(1);
             mainSplitPane.getItems().add(loader.load());

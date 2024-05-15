@@ -11,7 +11,7 @@ public class MainStage extends StageBuilder
 
     private MainStage()
     {
-        super("sealCodeMainScene.fxml", "Seal Code");
+        super("core/sealCodeMainScene.fxml", "Seal Code");
     }
 
     @Override

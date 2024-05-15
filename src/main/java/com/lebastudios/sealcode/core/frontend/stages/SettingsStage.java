@@ -12,7 +12,7 @@ public class SettingsStage extends StageBuilder
 
     private SettingsStage()
     {
-        super("settingsScene.fxml", "Settings");
+        super("core/settingsScene.fxml", "Settings");
         
         this.initModality(Modality.APPLICATION_MODAL);
     }

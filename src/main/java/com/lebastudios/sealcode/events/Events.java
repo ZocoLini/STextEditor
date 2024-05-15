@@ -2,6 +2,8 @@ package com.lebastudios.sealcode.events;
 
 import com.lebastudios.sealcode.core.frontend.fxextends.SealCodeArea;
 
+// TODO: Hacer un numero limitado de eventos implementables. No un nombre especifico de clase cuando con una llega.
+
 public final class Events
 {
     /*  Seal Code Area  */

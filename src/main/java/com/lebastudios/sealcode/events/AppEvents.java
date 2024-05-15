@@ -27,4 +27,6 @@ public final class AppEvents
     public static final OnThemeChange onThemeChange = new OnThemeChange();
     public static final OnPreferencesUpdate onPreferencesUpdate = new OnPreferencesUpdate();
     public static final OnProfileChange onProfileChange = new OnProfileChange();
+    
+    /* Customice interface */
 }
