@@ -1,12 +1,12 @@
 package com.lebastudios.sealcode.custom.logic.formatting;
 
+import com.lebastudios.sealcode.events.IEventMethod3;
 import com.lebastudios.sealcode.global.TextModInf;
-import com.lebastudios.sealcode.events.ITextMod;
 import com.lebastudios.sealcode.core.frontend.fxextends.SealCodeArea;
 
 import java.util.Map;
 
-public class ParenPairInsert implements ITextMod
+public class ParenPairInsert implements IEventMethod3<String, TextModInf, SealCodeArea>
 {
     private static final Map<String, String> pairs = Map.of(
             "(", ")",

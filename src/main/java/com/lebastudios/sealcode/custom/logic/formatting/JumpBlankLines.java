@@ -1,10 +1,10 @@
 package com.lebastudios.sealcode.custom.logic.formatting;
 
+import com.lebastudios.sealcode.events.IEventMethod3;
 import com.lebastudios.sealcode.global.TextModInf;
-import com.lebastudios.sealcode.events.ITextMod;
 import com.lebastudios.sealcode.core.frontend.fxextends.SealCodeArea;
 
-public class JumpBlankLines implements ITextMod
+public class JumpBlankLines implements IEventMethod3<String, TextModInf, SealCodeArea>
 {
     @Override
     public void invoke(String oldText, TextModInf modInf, SealCodeArea codeArea)

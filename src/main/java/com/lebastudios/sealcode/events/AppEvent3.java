@@ -1,18 +1,16 @@
 package com.lebastudios.sealcode.events;
 
-import org.fxmisc.richtext.model.StyleSpans;
-
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class StyleSpansRequestEvent extends EventHandler<IStyleSpansRequest>
+public class AppEvent3<A, B, C> extends EventHandler<IEventMethod3<A, B, C>>
 {
-    public void invoke(StyleSpans<Collection<String>> styleSpans, String text, String filExtension)
+    public void invoke(A styleSpans, B text, C filExtension)
     {
         // Esta copia permite llamar a todos los listeners aunque se modifique la lista durante una llamada
-        List<IStyleSpansRequest> listaAuxiliar = listeners.stream().toList();
+        List<IEventMethod3<A, B, C>> listaAuxiliar = new ArrayList<>(listeners);
 
-        for (IStyleSpansRequest listener : listaAuxiliar)
+        for (var listener : listaAuxiliar)
         {
             try
             {

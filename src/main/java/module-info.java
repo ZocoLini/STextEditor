@@ -6,6 +6,7 @@ module com.lebastudios.sealcode {
     requires reactfx;
     requires com.github.javaparser.core;
     requires jdk.compiler;
+    requires org.checkerframework.checker.qual;
 
     exports com.lebastudios.sealcode;
     opens com.lebastudios.sealcode to javafx.fxml;

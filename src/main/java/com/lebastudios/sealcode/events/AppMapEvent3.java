@@ -1,22 +1,20 @@
 package com.lebastudios.sealcode.events;
 
-import com.lebastudios.sealcode.global.TextModInf;
-import com.lebastudios.sealcode.core.frontend.fxextends.SealCodeArea;
-
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class TextModEvent extends EventMapHandler<String, ITextMod>
+public class AppMapEvent3<K, A, B, C> extends EventMapHandler<K, IEventMethod3<A, B, C>>
 {
-    public void invoke(String key, String oldText, TextModInf modInf, SealCodeArea codeArea)
+    public void invoke(K key, A a, B b, C c)
     {
         // Esta copia permite llamar a todos los listeners aunque se modifique la lista durante una llamada
-        List<ITextMod> listaAuxiliar = getListenersFromKey(key).stream().toList();
+        List<IEventMethod3<A, B, C>> listaAuxiliar = new ArrayList<>(getListenersFromKey(key));
 
-        for (ITextMod listener : listaAuxiliar)
+        for (var listener : listaAuxiliar)
         {
             try
             {
-                listener.invoke(oldText, modInf, codeArea);
+                listener.invoke(a, b, c);
             }
             catch (Exception e)
             {

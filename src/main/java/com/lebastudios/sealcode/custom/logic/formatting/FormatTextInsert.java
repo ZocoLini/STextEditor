@@ -1,14 +1,14 @@
 package com.lebastudios.sealcode.custom.logic.formatting;
 
-import com.lebastudios.sealcode.core.logic.config.GlobalConfig;
 import com.lebastudios.sealcode.core.frontend.fxextends.SealCodeArea;
-import com.lebastudios.sealcode.events.ITextMod;
+import com.lebastudios.sealcode.core.logic.config.GlobalConfig;
+import com.lebastudios.sealcode.events.IEventMethod3;
 import com.lebastudios.sealcode.global.TextModInf;
 
 import java.util.List;
 import java.util.TreeSet;
 
-public class FormatTextInsert implements ITextMod
+public class FormatTextInsert implements IEventMethod3<String, TextModInf, SealCodeArea>
 {
     TreeSet<Character> charsThatIncreeseInden = new TreeSet<>(List.of(
             '{'

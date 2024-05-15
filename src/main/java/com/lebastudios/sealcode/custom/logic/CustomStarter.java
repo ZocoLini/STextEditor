@@ -27,8 +27,12 @@ public class CustomStarter extends Starter
         GlobalIndexer.startIndexer();
         MainDatabase.startDatabase();
 
-        Indexer.getIndexer().index(new File(Session.getStaticInstance().proyectDirectory + "/src"));
-
+        File filesrc = new File(Session.getStaticInstance().proyectDirectory + "/src");
+        if (filesrc.exists()) 
+        {
+            Indexer.getIndexer().index(new File(Session.getStaticInstance().proyectDirectory + "/src"));
+        }
+        
         setOnTextModificationEvents();
         setOnSealCodeAreaCreatedEvents();
         setOnCompletationsRequestedEvents();

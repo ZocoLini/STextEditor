@@ -1,13 +1,14 @@
 package com.lebastudios.sealcode.events;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AppMapEvent<K> extends EventMapHandler<K, IEventMethod>
+public class AppMapEvent<K> extends EventMapHandler<K, IEventMethod>
 {
     public void invoke(K key)
     {
         // Esta copia permite llamar a todos los listeners aunque se modifique la lista durante una llamada
-        List<IEventMethod> listaAuxiliar = getListenersFromKey(key).stream().toList();
+        List<IEventMethod> listaAuxiliar = new ArrayList<>(getListenersFromKey(key));
 
         for (IEventMethod listener : listaAuxiliar)
         {

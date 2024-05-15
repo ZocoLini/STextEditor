@@ -2,10 +2,10 @@ package com.lebastudios.sealcode.custom.logic.formatting;
 
 import com.lebastudios.sealcode.core.logic.config.GlobalConfig;
 import com.lebastudios.sealcode.core.frontend.fxextends.SealCodeArea;
-import com.lebastudios.sealcode.events.ITextMod;
+import com.lebastudios.sealcode.events.IEventMethod3;
 import com.lebastudios.sealcode.global.TextModInf;
 
-public class IndentNextLineInsert implements ITextMod
+public class IndentNextLineInsert implements IEventMethod3<String, TextModInf, SealCodeArea>
 {
     @Override
     public void invoke(String oldText, TextModInf modInf, SealCodeArea codeArea)
