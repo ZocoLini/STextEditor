@@ -22,4 +22,6 @@ module com.lebastudios.sealcode {
     opens com.lebastudios.sealcode.core.logic to com.google.gson;
     opens com.lebastudios.sealcode.custom.logic to com.google.gson;
     opens com.lebastudios.sealcode.global to com.google.gson;
+    opens com.lebastudios.sealcode.custom to com.google.gson;
+    opens com.lebastudios.sealcode.custom.logic.database to com.google.gson;
 }

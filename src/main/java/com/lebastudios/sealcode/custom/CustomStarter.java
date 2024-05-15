@@ -1,9 +1,12 @@
-package com.lebastudios.sealcode.custom.logic;
+package com.lebastudios.sealcode.custom;
 
 import com.github.javaparser.ParserConfiguration;
 import com.lebastudios.sealcode.core.logic.Indexer;
 import com.lebastudios.sealcode.core.logic.Starter;
 import com.lebastudios.sealcode.core.logic.config.Session;
+import com.lebastudios.sealcode.custom.logic.GlobalIndexer;
+import com.lebastudios.sealcode.custom.logic.GlobalInspector;
+import com.lebastudios.sealcode.custom.logic.database.MainDBConnection;
 import com.lebastudios.sealcode.custom.logic.formatting.*;
 import com.lebastudios.sealcode.custom.logic.java.JavaConfiguration;
 import com.lebastudios.sealcode.custom.logic.java.completations.CompletationsFilter;
@@ -25,7 +28,7 @@ public class CustomStarter extends Starter
 
         GlobalInspector.startInspector();
         GlobalIndexer.startIndexer();
-        MainDatabase.startDatabase();
+        MainDBConnection.startDatabase();
 
         File filesrc = new File(Session.getStaticInstance().proyectDirectory + "/src");
         if (filesrc.exists()) 

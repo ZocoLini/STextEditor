@@ -4,7 +4,7 @@ import com.lebastudios.sealcode.core.logic.config.GlobalConfig;
 import com.lebastudios.sealcode.core.logic.config.Session;
 import com.lebastudios.sealcode.events.AppEvents;
 import com.lebastudios.sealcode.core.frontend.stages.MainStage;
-import com.lebastudios.sealcode.custom.logic.CustomStarter;
+import com.lebastudios.sealcode.custom.CustomStarter;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
