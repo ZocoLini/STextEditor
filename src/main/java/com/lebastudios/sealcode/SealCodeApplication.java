@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class SealCodeApplication extends Application
+public final class SealCodeApplication extends Application
 {
     public static void main(String[] args)
     {

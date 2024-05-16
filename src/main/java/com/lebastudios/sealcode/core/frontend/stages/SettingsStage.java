@@ -9,7 +9,7 @@ import javafx.stage.WindowEvent;
 public class SettingsStage extends StageBuilder
 {
     private static SettingsStage instance;
-
+    
     private SettingsStage()
     {
         super("core/settingsScene.fxml", "Settings");

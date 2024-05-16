@@ -1,6 +1,8 @@
 package com.lebastudios.sealcode.events;
 
+import com.lebastudios.sealcode.core.frontend.fxextends.IconTreeItem;
 import com.lebastudios.sealcode.core.frontend.fxextends.SealCodeArea;
+import com.lebastudios.sealcode.core.frontend.fxextends.SettingsTreeView;
 import com.lebastudios.sealcode.core.logic.Completation;
 import com.lebastudios.sealcode.global.TextModInf;
 
@@ -35,4 +37,7 @@ public final class AppEvents
     public static final AppEvent onProfileChange = new AppEvent();
     
     /* Customice interface */
+        /* Settings TreeView */
+    public static final AppEvent1<SettingsTreeView> onLoadedSettingsTreeView = new AppEvent1<>();
+    public static final AppEvent1<IconTreeItem<String>> onLoadedSettingsIconTreeItem = new AppEvent1<>();
 }

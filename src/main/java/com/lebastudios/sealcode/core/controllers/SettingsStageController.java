@@ -2,18 +2,22 @@ package com.lebastudios.sealcode.core.controllers;
 
 import com.lebastudios.sealcode.SealCodeApplication;
 import com.lebastudios.sealcode.core.controllers.settingsPanels.SettingsPaneController;
+import com.lebastudios.sealcode.core.frontend.fxextends.IconTreeItem;
+import com.lebastudios.sealcode.core.frontend.fxextends.SettingsTreeView;
 import com.lebastudios.sealcode.core.frontend.stages.SettingsStage;
+import com.lebastudios.sealcode.events.AppEvents;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.SplitPane;
 
 import java.io.IOException;
 
-public class SettingsStageController
+public class SettingsStageController implements IStageController
 {
     private static SettingsStageController instance;
 
-    @FXML public SplitPane mainSplitPane;
+    @FXML private SplitPane mainSplitPane;
+    @FXML private SettingsTreeView mainSettingsTreeView;
 
     private SettingsPaneController paneController;
     
@@ -21,7 +25,7 @@ public class SettingsStageController
     {
         instance = this;
     }
-
+    
     @FXML
     public void closeSettingsStage()
     {
@@ -54,7 +58,7 @@ public class SettingsStageController
         {
             double dividerPosition = mainSplitPane.getDividerPositions()[0];
             
-            FXMLLoader loader = new FXMLLoader(SealCodeApplication.class.getResource("core/settingsScenePanels/" + paneName));
+            FXMLLoader loader = new FXMLLoader(SealCodeApplication.class.getResource(paneName));
             
             mainSplitPane.getItems().remove(1);
             mainSplitPane.getItems().add(loader.load());
@@ -73,5 +77,16 @@ public class SettingsStageController
     public static SettingsStageController getInstance()
     {
         return instance;
+    }
+
+    @Override
+    public void customiceStage()
+    {
+        for (var variable : mainSettingsTreeView.getRoot().getChildren())
+        {
+            AppEvents.onLoadedSettingsIconTreeItem.invoke((IconTreeItem<String>) variable);
+        }
+        
+        AppEvents.onLoadedSettingsTreeView.invoke(mainSettingsTreeView);
     }
 }

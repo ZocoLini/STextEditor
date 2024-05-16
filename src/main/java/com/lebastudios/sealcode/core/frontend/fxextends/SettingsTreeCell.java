@@ -14,7 +14,7 @@ public class SettingsTreeCell extends TreeCell<String>
             if (this.getTreeItem() == null) return;
             if (this.getTreeItem().getClass() != SettingsTreeItem.class) return;
 
-            SettingsStageController.getInstance().loadNewSettingsPane(((SettingsTreeItem) this.getTreeItem()).getFxmlSceneName());
+            SettingsStageController.getInstance().loadNewSettingsPane(((SettingsTreeItem) this.getTreeItem()).getFxmlResource());
         });
     }
     

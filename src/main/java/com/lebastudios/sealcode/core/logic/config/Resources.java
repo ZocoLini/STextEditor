@@ -20,56 +20,37 @@ public final class Resources
 
         if (image == null)
         {
-            return loadIcon(iconName);
+            try
+            {
+                image = loadIcon(iconName);
+            } catch (FileNotFoundException e)
+            {
+                throw new RuntimeException(e);
+            }
+            loadedIcons.put(GlobalConfig.getStaticInstance().editorConfig.theme + iconName, image);
+            return image;
         }
 
         return image;
     }
 
-    private static Image loadIcon(String iconName)
+    private static Image loadIcon(String iconName) throws FileNotFoundException
     {
-        Image icon = null;
-
-        // Check if the icon is defined in the actual theme
+        // Check if the image is defined in the actual theme
         File file = new File(FilePaths.getIconDirectory() + iconName);
         if (file.exists())
         {
-            try
-            {
-                icon = new Image(new FileInputStream(file));
-            } catch (FileNotFoundException e)
-            {
-                throw new RuntimeException(e);
-            }
+            return new Image(new FileInputStream(file));
         }
 
-        // Check if the icon is defined in the default theme
+        // Check if the image is defined in the default theme
         file = new File(FilePaths.getDefaultIconDirectory() + iconName);
-        if (icon == null && file.exists())
+        if (file.exists())
         {
-            try
-            {
-                icon = new Image(new FileInputStream(file));
-            } catch (FileNotFoundException e)
-            {
-                throw new RuntimeException(e);
-            }
-        }
-
-        if (icon == null)
-        {
-            try
-            {
-                icon = new Image(new FileInputStream(FilePaths.getDefaultIconFile()));
-            } catch (FileNotFoundException e)
-            {
-                throw new RuntimeException(e);
-            }
+            return new Image(new FileInputStream(file));
         }
         
-        loadedIcons.put(GlobalConfig.getStaticInstance().editorConfig.theme + iconName, icon);
-        
-        return icon;
+        return new Image(new FileInputStream(FilePaths.getDefaultIconFile()));
     }
 
     public static String getLangCommonStyle()

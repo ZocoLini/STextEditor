@@ -1,0 +1,14 @@
+{
+  "extensionFilter": {
+    "extension": "xml",
+    "equivalentExtensions": [
+      {
+        "extension": "xml"
+      },
+      {
+        "extension": "fxml"
+      }
+    ]
+  }
+}
+/* TODO: Im0plementar esto */

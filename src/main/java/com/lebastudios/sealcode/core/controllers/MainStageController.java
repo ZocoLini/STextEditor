@@ -11,7 +11,7 @@ import javafx.scene.layout.StackPane;
 
 import java.io.File;
 
-public class MainStageController
+public class MainStageController implements IStageController
 {
     private static MainStageController instance;
 
@@ -115,5 +115,11 @@ public class MainStageController
         Session.getStaticInstance().reset();
 
         MainStage.getInstance().close();
+    }
+
+    @Override
+    public void customiceStage()
+    {
+        
     }
 }

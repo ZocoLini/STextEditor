@@ -13,29 +13,29 @@
 
     <center>
         <SplitPane fx:id="mainSplitPane" dividerPositions="0.3, 0.5">
-            <SettingsTreeView>
+            <SettingsTreeView fx:id="mainSettingsTreeView">
                 <IconTreeItem value="Settings" iconName="settings.png">
                     <children>
                         <IconTreeItem value="Apariencia" iconName="apariencia.png">
                             <children>
                                 <SettingsTreeItem value="Tema" iconName="tema.png"
-                                                  fxmlSceneName="themeAnchorPane.fxml"/>
+                                                  fxmlResource="core/settingsScenePanels/themeAnchorPane.fxml"/>
                                 <SettingsTreeItem value="Fuente" iconName="fuente.png"
-                                                  fxmlSceneName="fuenteAnchorPane.fxml"/>
+                                                  fxmlResource="core/settingsScenePanels/fuenteAnchorPane.fxml"/>
                             </children>
                         </IconTreeItem>
                         <IconTreeItem value="Editor" iconName="c.png">
                             <children>
                                 <SettingsTreeItem value="General" iconName="general.png"
-                                                  fxmlSceneName="generalAnchorPane.fxml"/>
+                                                  fxmlResource="core/settingsScenePanels/generalAnchorPane.fxml"/>
                                 <SettingsTreeItem value="Preferencias" iconName="preferencias.png"
-                                                  fxmlSceneName="preferenciasAnchorPane.fxml"/>
+                                                  fxmlResource="core/settingsScenePanels/preferenciasAnchorPane.fxml"/>
                             </children>
                         </IconTreeItem>
                         <IconTreeItem value="Proyecto" iconName="fileSystem.png">
                             <children>
                                 <SettingsTreeItem value="Inspecciones" iconName="lupa.png"
-                                                  fxmlSceneName="inspeccionesAnchorPane.fxml"/>
+                                                  fxmlResource="core/settingsScenePanels/inspeccionesAnchorPane.fxml"/>
                             </children>
                         </IconTreeItem>
                     </children>

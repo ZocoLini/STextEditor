@@ -1,6 +1,8 @@
 package com.lebastudios.sealcode.custom;
 
 import com.github.javaparser.ParserConfiguration;
+import com.lebastudios.sealcode.SealCodeApplication;
+import com.lebastudios.sealcode.core.frontend.fxextends.IconTreeItem;
 import com.lebastudios.sealcode.core.logic.Indexer;
 import com.lebastudios.sealcode.core.logic.Starter;
 import com.lebastudios.sealcode.core.logic.config.Session;
@@ -12,8 +14,10 @@ import com.lebastudios.sealcode.custom.logic.java.completations.CompletationsFil
 import com.lebastudios.sealcode.custom.logic.styling.BracketHighlighter;
 import com.lebastudios.sealcode.custom.logic.styling.KeyWordHighlighter;
 import com.lebastudios.sealcode.events.AppEvents;
+import javafx.fxml.FXMLLoader;
 
 import java.io.File;
+import java.io.IOException;
 
 public class CustomStarter extends Starter
 {
@@ -29,14 +33,15 @@ public class CustomStarter extends Starter
         GlobalIndexer.startIndexer();
 
         File filesrc = new File(Session.getStaticInstance().proyectDirectory + "/src");
-        if (filesrc.exists()) 
+        if (filesrc.exists())
         {
             Indexer.getIndexer().index(new File(Session.getStaticInstance().proyectDirectory + "/src"));
         }
-        
+
         setOnTextModificationEvents();
         setOnSealCodeAreaCreatedEvents();
         setOnCompletationsRequestedEvents();
+        customiceSettings();
     }
 
     private static void setOnCompletationsRequestedEvents()
@@ -58,5 +63,23 @@ public class CustomStarter extends Starter
         AppEvents.onTextInserted.addListener("All", new ParenPairInsert());
         AppEvents.onTextDeleted.addListener("java", new JumpBlankLines());
         AppEvents.onTextDeleted.addListener("java", new ParenPairRemove());
+    }
+
+    private static void customiceSettings()
+    {
+        AppEvents.onLoadedSettingsTreeView.addListener(treeView ->
+        {
+            try
+            {
+                IconTreeItem<String> accountMenu = new FXMLLoader(SealCodeApplication.class.getResource(
+                        "custom/settingsAdittion.fxml")
+                ).load();
+                
+                treeView.getRoot().getChildren().add(accountMenu);
+            } catch (IOException e)
+            {
+                System.err.println("Error while configuring custom settings tree view.");
+            }
+        });
     }
 }

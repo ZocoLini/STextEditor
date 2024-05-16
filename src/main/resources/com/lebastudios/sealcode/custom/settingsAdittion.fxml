@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import com.lebastudios.sealcode.core.frontend.fxextends.IconTreeItem?>
+<?import com.lebastudios.sealcode.core.frontend.fxextends.SettingsTreeItem?>
+<IconTreeItem value="Account" iconName="account.png">
+    <children>
+        <SettingsTreeItem value="Account Managment" iconName="managment.png"
+                          fxmlResource="custom/settingsScenePanels/accountAnchorPane.fxml"/>
+        <SettingsTreeItem value="Settings Sync" iconName="settingsSync.png"
+                          fxmlResource="custom/settingsScenePanels/settingsSyncAnchorPane.fxml"/>
+    </children>
+</IconTreeItem>
