@@ -20,6 +20,8 @@ public class MainStageController implements IStageController
         return instance;
     }
 
+    // TODO: Hacerlos privados. No deben interaccionar entre ellos.
+    
     @FXML
     public CodeTabPane codeTabPane;
     @FXML

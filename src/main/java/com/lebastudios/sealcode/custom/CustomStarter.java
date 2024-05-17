@@ -8,6 +8,7 @@ import com.lebastudios.sealcode.core.logic.Starter;
 import com.lebastudios.sealcode.core.logic.config.Session;
 import com.lebastudios.sealcode.custom.logic.GlobalIndexer;
 import com.lebastudios.sealcode.custom.logic.GlobalInspector;
+import com.lebastudios.sealcode.custom.logic.database.MainDBConnection;
 import com.lebastudios.sealcode.custom.logic.formatting.*;
 import com.lebastudios.sealcode.custom.logic.java.JavaConfiguration;
 import com.lebastudios.sealcode.custom.logic.java.completations.CompletationsFilter;
@@ -27,6 +28,8 @@ public class CustomStarter extends Starter
 
     public static void startCustomImplementation()
     {
+        System.out.println(MainDBConnection.getInstance().testConnection());
+        
         JavaConfiguration.getInstance().setLangLvl(ParserConfiguration.LanguageLevel.JAVA_18);
 
         GlobalInspector.startInspector();

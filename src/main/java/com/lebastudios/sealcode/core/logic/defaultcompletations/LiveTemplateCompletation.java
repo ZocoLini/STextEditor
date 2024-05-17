@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.core.logic.config;
+package com.lebastudios.sealcode.core.logic.defaultcompletations;
 
 import com.lebastudios.sealcode.core.logic.Completation;
 

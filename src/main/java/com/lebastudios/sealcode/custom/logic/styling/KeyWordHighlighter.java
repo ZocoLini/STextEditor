@@ -2,8 +2,8 @@ package com.lebastudios.sealcode.custom.logic.styling;
 
 
 import com.google.gson.Gson;
-import com.lebastudios.sealcode.core.logic.config.Resources;
 import com.lebastudios.sealcode.core.frontend.fxextends.SealCodeArea;
+import com.lebastudios.sealcode.core.logic.config.Resources;
 import javafx.concurrent.Task;
 import javafx.stage.WindowEvent;
 import org.fxmisc.richtext.model.StyleSpans;

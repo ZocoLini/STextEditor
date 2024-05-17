@@ -16,6 +16,8 @@ public final class FileOperation
 {
     private static final Map<String, String> extensionMappings = new HashMap<>();
 
+    // TODO: Se debe cambiar esto a un archivo donde se puedan modificar facilmente las equivalencias
+    
     static
     {
         // Definir los mapeos de extensiones

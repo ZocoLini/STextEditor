@@ -1,8 +1,9 @@
-package com.lebastudios.sealcode.core.logic.config;
+package com.lebastudios.sealcode.core.logic.defaultcompletations;
 
 import com.google.gson.Gson;
 import com.lebastudios.sealcode.core.controllers.MainStageController;
 import com.lebastudios.sealcode.core.frontend.fxextends.Notification;
+import com.lebastudios.sealcode.core.logic.config.FilePaths;
 import com.lebastudios.sealcode.events.AppEvents;
 import com.lebastudios.sealcode.core.logic.Completation;
 import com.lebastudios.sealcode.global.FileOperation;
