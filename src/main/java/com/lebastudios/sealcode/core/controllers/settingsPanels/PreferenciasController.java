@@ -7,7 +7,7 @@ import javafx.scene.control.CheckBox;
 
 public class PreferenciasController extends SettingsPaneController
 {
-    @FXML public CheckBox ignoreGitDirCB;
+    @FXML private CheckBox ignoreGitDirCB;
 
     @Override
     public void initialize()

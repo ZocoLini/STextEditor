@@ -104,7 +104,7 @@ public final class CodeTabPane extends TabPane
 
     public void openFile(File file)
     {
-        var fileTreeItem = FileSystemController.getInstance().fileSystemTreeView.getTreeItemByFile(file);
+        var fileTreeItem = FileSystemController.getInstance().getTreeItemByFile(file);
         
         if (fileTreeItem == null)
         {

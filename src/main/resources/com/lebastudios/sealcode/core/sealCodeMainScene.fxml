@@ -43,7 +43,7 @@
     <left>
         <VBox prefWidth="30">
             <IconButton iconName="fileSystem.png" onAction="#alternateFileSystemVisibility" prefHeight="30" prefWidth="30"/>
-            <IconButton iconName="notificaciones.png" onAction="#altrnateNotiVisibility" prefHeight="30" prefWidth="30"/>
+            <IconButton iconName="notificaciones.png" onAction="#alternateNotiVisibility" prefHeight="30" prefWidth="30"/>
             <IconButton iconName="terminal.png" onAction="#altrnateTerminalVisibility" prefHeight="30" prefWidth="30"/>
             <IconButton iconName="compile.png" onAction="#compileCode" prefHeight="30" prefWidth="30"/>
             <IconButton iconName="play.png" onAction="#executeCode" prefHeight="30" prefWidth="30"/>

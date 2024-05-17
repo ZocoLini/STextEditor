@@ -10,7 +10,7 @@ import java.io.File;
 
 public class ThemeController extends SettingsPaneController
 {
-    @FXML public ChoiceBox<String> themeChoiceBox;
+    @FXML private ChoiceBox<String> themeChoiceBox;
     
     @Override
     public void initialize()

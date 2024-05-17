@@ -32,7 +32,7 @@ public final class ConsoleTextArea extends TextArea
         }
         catch (IOException exception)
         {
-            FileSystemController.getInstance().fileSystemTreeView.openNewProjectDirectory();
+            FileSystemController.getInstance().openNewProjectDirectory();
 
             try
             {

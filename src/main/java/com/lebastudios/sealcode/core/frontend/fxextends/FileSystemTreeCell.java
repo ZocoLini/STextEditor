@@ -41,7 +41,7 @@ public final class FileSystemTreeCell extends TreeCell<String>
 
         if (getRepresentingFile().isDirectory()) return;
 
-        MainStageController.getInstance().codeTabPane.openFile((FileSystemTreeItem) this.getTreeItem());
+        MainStageController.getInstance().openFile((FileSystemTreeItem) this.getTreeItem());
     }
 
     public File getRepresentingFile()
@@ -181,7 +181,7 @@ public final class FileSystemTreeCell extends TreeCell<String>
                 }
             } catch (IOException e)
             {
-                MainStageController.getInstance().notificationsContainer.addNotification(
+                MainStageController.getInstance().addNotification(
                         new Notification("Error creating file " + newFile.getName(), MessageType.Error)
                 );
             }
@@ -201,7 +201,7 @@ public final class FileSystemTreeCell extends TreeCell<String>
                 }
             } catch (Exception e)
             {
-                MainStageController.getInstance().notificationsContainer.addNotification(
+                MainStageController.getInstance().addNotification(
                         new Notification("Error creating directory " + newFile.getName(), MessageType.Error)
                 );
             }
@@ -238,7 +238,7 @@ public final class FileSystemTreeCell extends TreeCell<String>
                 return fileToRemove.delete();
             } catch (Exception e)
             {
-                MainStageController.getInstance().notificationsContainer.addNotification(
+                MainStageController.getInstance().addNotification(
                         new Notification("Error removing directory " + fileToRemove.getName() + ". An update is" +
                                 " recomended in te proyect tree view.", MessageType.Error)
                 );

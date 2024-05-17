@@ -6,8 +6,8 @@ import javafx.scene.control.TextField;
 
 public class GeneralController extends SettingsPaneController
 {
-    @FXML public TextField indentationTF;
-    @FXML public TextField tabSizeTF;
+    @FXML private TextField indentationTF;
+    @FXML private TextField tabSizeTF;
 
     @Override
     public void initialize()

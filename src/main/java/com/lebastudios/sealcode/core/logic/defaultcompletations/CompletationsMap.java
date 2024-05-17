@@ -72,7 +72,7 @@ public class CompletationsMap
         }
         catch (Exception e)
         {
-            MainStageController.getInstance().notificationsContainer.addNotification(new Notification(
+            MainStageController.getInstance().addNotification(new Notification(
                     "Error loading completations for " + fileExtension + " language", MessageType.Error)
             );
             e.printStackTrace();

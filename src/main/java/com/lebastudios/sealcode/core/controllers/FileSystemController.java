@@ -1,16 +1,19 @@
 package com.lebastudios.sealcode.core.controllers;
 
-import com.lebastudios.sealcode.events.AppEvents;
+import com.lebastudios.sealcode.core.frontend.fxextends.FileSystemTreeItem;
 import com.lebastudios.sealcode.core.frontend.fxextends.FileSystemTreeView;
+import com.lebastudios.sealcode.events.AppEvents;
 import javafx.fxml.FXML;
 import javafx.scene.control.TreeItem;
+
+import java.io.File;
 
 public class FileSystemController
 {
     private static FileSystemController instance;
     
     @FXML
-    public FileSystemTreeView fileSystemTreeView;
+    private FileSystemTreeView fileSystemTreeView;
 
     public static FileSystemController getInstance()
     {
@@ -46,6 +49,16 @@ public class FileSystemController
     public void expandTree()
     {
         expandItem(fileSystemTreeView.getRoot());
+    }
+    
+    public void openNewProjectDirectory()
+    {
+        fileSystemTreeView.openNewProjectDirectory();
+    }
+    
+    public FileSystemTreeItem getTreeItemByFile(File file)
+    {
+        return fileSystemTreeView.getTreeItemByFile(file);
     }
     
     public void expandItem(TreeItem<?> item)

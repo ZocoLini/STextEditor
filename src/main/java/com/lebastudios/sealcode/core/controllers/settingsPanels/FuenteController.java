@@ -6,8 +6,8 @@ import javafx.scene.control.TextField;
 
 public class FuenteController extends SettingsPaneController
 {
-    @FXML public TextField fontNameTF;
-    @FXML public TextField letterSizeTF;
+    @FXML private TextField fontNameTF;
+    @FXML private TextField letterSizeTF;
 
     @Override
     public void initialize()

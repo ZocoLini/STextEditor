@@ -7,7 +7,5 @@
     <children>
         <SettingsTreeItem value="Account Managment" iconName="managment.png"
                           fxmlResource="custom/settingsScenePanels/accountAnchorPane.fxml"/>
-        <SettingsTreeItem value="Settings Sync" iconName="settingsSync.png"
-                          fxmlResource="custom/settingsScenePanels/settingsSyncAnchorPane.fxml"/>
     </children>
 </IconTreeItem>

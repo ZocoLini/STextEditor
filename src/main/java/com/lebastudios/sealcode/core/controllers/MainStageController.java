@@ -19,23 +19,21 @@ public class MainStageController implements IStageController
     {
         return instance;
     }
-
-    // TODO: Hacerlos privados. No deben interaccionar entre ellos.
     
     @FXML
-    public CodeTabPane codeTabPane;
+    private CodeTabPane codeTabPane;
     @FXML
-    public ConsoleTextArea consoleTextArea;
+    private ConsoleTextArea consoleTextArea;
     @FXML
-    public SplitPane horizontalContainer;
+    private SplitPane horizontalContainer;
     @FXML
-    public SplitPane verticalContainer;
+    private SplitPane verticalContainer;
     @FXML
-    public NotificationsContainer notificationsContainer;
+    private NotificationsContainer notificationsContainer;
     @FXML
-    public BorderPane fileSystemBorderPane;
+    private BorderPane fileSystemBorderPane;
     @FXML
-    public StackPane codeEditorStackPane;
+    private StackPane codeEditorStackPane;
 
     public MainStageController()
     {
@@ -43,10 +41,10 @@ public class MainStageController implements IStageController
     }
 
     @FXML
-    public void altrnateNotiVisibility()
+    public void alternateNotiVisibility()
     {
-        final var notifications = instance.notificationsContainer;
-        SplitPane codeTabPaneContainer = instance.horizontalContainer;
+        final var notifications = notificationsContainer;
+        SplitPane codeTabPaneContainer = horizontalContainer;
         final var items = codeTabPaneContainer.getItems();
 
         if (!items.remove(notifications))
@@ -56,6 +54,19 @@ public class MainStageController implements IStageController
         }
     }
 
+    private void showNotifications()
+    {
+        final var notifications = notificationsContainer;
+        SplitPane codeTabPaneContainer = horizontalContainer;
+        final var items = codeTabPaneContainer.getItems();
+
+        if (!items.contains(notifications))
+        {
+            items.addLast(notifications);
+            codeTabPaneContainer.setDividerPosition(items.indexOf(notifications), 0.80);
+        }
+    }
+    
     @FXML
     public void altrnateTerminalVisibility()
     {
@@ -102,7 +113,7 @@ public class MainStageController implements IStageController
     @FXML
     public void openNewProjectDirectory()
     {
-        FileSystemController.getInstance().fileSystemTreeView.openNewProjectDirectory();
+        FileSystemController.getInstance().openNewProjectDirectory();
     }
     
     @FXML
@@ -110,7 +121,7 @@ public class MainStageController implements IStageController
     {
         SettingsStage.getInstance().showAndWait();
     }
-
+    
     @FXML
     void exit()
     {
@@ -119,6 +130,17 @@ public class MainStageController implements IStageController
         MainStage.getInstance().close();
     }
 
+    public void addNotification(Notification notification)
+    {
+        notificationsContainer.addNotification(notification);
+        showNotifications();
+    }
+
+    public void openFile(FileSystemTreeItem treeItem)
+    {
+        codeTabPane.openFile(treeItem);
+    }
+    
     @Override
     public void customiceStage()
     {
