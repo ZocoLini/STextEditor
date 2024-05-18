@@ -70,7 +70,7 @@ public class MongoDBManager implements IDBManager<MongoClient>
             {
                 if (directory.isFile()) continue;
 
-                pushDesignedDirectories(directory);
+                return connect(mongoClient -> pushDesignedDirectory(directory, mongoClient));
             }
         } catch (Exception exception)
         {
@@ -80,7 +80,7 @@ public class MongoDBManager implements IDBManager<MongoClient>
         return true;
     }
 
-    private boolean pushDesignedDirectories(File file)
+    private boolean pushDesignedDirectory(File file, MongoClient mongoClient)
     {
         if (file.isFile())
         {
@@ -88,28 +88,26 @@ public class MongoDBManager implements IDBManager<MongoClient>
             return false;
         }
 
-        return connect(mongoClient -> {
-            MongoDatabase database = mongoClient.getDatabase(MongoDBManager.database);
+        MongoDatabase database = mongoClient.getDatabase(MongoDBManager.database);
 
-            // Create a gridFSBucket using the default bucket name "fs"
-            GridFSBucket gridFSBucket = GridFSBuckets.create(database, User.Deserialize().userName());
-            
-            // Find the files in the directory delete it
-            GridFSFindIterable gridFSIterator = gridFSBucket.find(
-                    Filters.eq("metadata.directory", file.getName()));
+        // Create a gridFSBucket using the default bucket name "fs"
+        GridFSBucket gridFSBucket = GridFSBuckets.create(database, User.Deserialize().userName());
 
-            for (var gridFSFile : gridFSIterator)
-            {
-                gridFSBucket.delete(gridFSFile.getObjectId());
-            }
+        // Find the files in the directory delete it
+        GridFSFindIterable gridFSIterator = gridFSBucket.find(
+                Filters.eq("metadata.directory", file.getName()));
 
-            for (File f : file.listFiles())
-            {
-                pushFile(f, gridFSBucket);
-            }
-            
-            return true;
-        });
+        for (var gridFSFile : gridFSIterator)
+        {
+            gridFSBucket.delete(gridFSFile.getObjectId());
+        }
+
+        for (File f : file.listFiles())
+        {
+            pushFile(f, gridFSBucket);
+        }
+
+        return true;
     }
 
     private boolean pushFile(File file, GridFSBucket gridFSBucket)
@@ -120,26 +118,22 @@ public class MongoDBManager implements IDBManager<MongoClient>
             return false;
         }
 
-        // Push the file to the db
-        return connect(mongoClient ->
-        {
-            // Create some custom options
-            GridFSUploadOptions options = new GridFSUploadOptions()
-                    .chunkSizeBytes(1024).metadata(new Document("directory", file.getParentFile().getName()));
-            
-            try (InputStream streamToUploadFrom = new FileInputStream(file))
-            {
-                gridFSBucket.uploadFromStream(file.getName(), streamToUploadFrom, options);
-                System.out.println("Succesfuly pushed file: " + file);
-            } catch (IOException e)
-            {
-                System.err.println("Error while uploading file: " + file.getName());
-                e.printStackTrace();
-                return false;
-            }
+        // Create some custom options
+        GridFSUploadOptions options = new GridFSUploadOptions()
+                .chunkSizeBytes(1024).metadata(new Document("directory", file.getParentFile().getName()));
 
-            return true;
-        });
+        try (InputStream streamToUploadFrom = new FileInputStream(file))
+        {
+            gridFSBucket.uploadFromStream(file.getName(), streamToUploadFrom, options);
+            System.out.println("Succesfuly pushed file: " + file);
+        } catch (IOException e)
+        {
+            System.err.println("Error while uploading file: " + file.getName());
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 
     public boolean pullUserFiles()
@@ -155,7 +149,7 @@ public class MongoDBManager implements IDBManager<MongoClient>
             {
                 if (directory.isFile()) continue;
 
-                pullDesignedDirectory(directory, user);
+                return connect(mongoClient -> pullDesignedDirectory(directory, user, mongoClient));
             }
         } catch (Exception exception)
         {
@@ -165,7 +159,7 @@ public class MongoDBManager implements IDBManager<MongoClient>
         return true;
     }
 
-    private boolean pullDesignedDirectory(File directory, User user)
+    private boolean pullDesignedDirectory(File directory, User user, MongoClient mongoClient)
     {
         if (directory.isFile())
         {
@@ -174,36 +168,33 @@ public class MongoDBManager implements IDBManager<MongoClient>
         }
 
         // Pull the directory from the db
-        return connect(mongoClient ->
+        MongoDatabase database = mongoClient.getDatabase(MongoDBManager.database);
+
+        GridFSBucket gridFSBucket = GridFSBuckets.create(database, user.userName());
+
+        // Find the files with the customId and delete it
+        GridFSFindIterable gridFSIterator = gridFSBucket.find(
+                Filters.eq("metadata.directory", directory.getName()));
+
+        if (gridFSIterator.first() == null)
         {
-            MongoDatabase database = mongoClient.getDatabase(MongoDBManager.database);
+            System.out.println("No files found to pull in the directory: " + directory);
+            return false;
+        }
 
-            GridFSBucket gridFSBucket = GridFSBuckets.create(database, user.userName());
+        for (var variable : directory.listFiles())
+        {
+            variable.delete();
+            System.out.println("Deleted directory before pulling in the directory: " + variable);
+        }
 
-            // Find the files with the customId and delete it
-            GridFSFindIterable gridFSIterator = gridFSBucket.find(
-                    Filters.eq("metadata.directory", directory.getName()));
+        for (GridFSFile gridFSFile : gridFSIterator)
+        {
+            File newFile = new File(directory.getAbsolutePath() + "/" + gridFSFile.getFilename());
+            pullFile(newFile, gridFSBucket, gridFSFile.getObjectId());
+        }
 
-            if (gridFSIterator.first() == null) 
-            {
-                System.out.println("No files found to pull in the directory: " + directory);
-                return false;
-            }
-            
-            for (var variable : directory.listFiles())
-            {
-                variable.delete();
-                System.out.println("Deleted directory before pulling in the directory: " + variable);
-            }
-
-            for (GridFSFile gridFSFile : gridFSIterator)
-            {
-                File newFile = new File(directory.getAbsolutePath() + "/" + gridFSFile.getFilename());
-                pullFile(newFile, gridFSBucket, gridFSFile.getObjectId());
-            }
-
-            return true;
-        });
+        return true;
     }
 
     private boolean pullFile(File file, GridFSBucket gridFSBucket, ObjectId fileId)
@@ -232,7 +223,7 @@ public class MongoDBManager implements IDBManager<MongoClient>
             {
                 if (directory.isFile()) continue;
 
-                new Thread(() -> pullDesignedDirectory(directory, user)).start();
+                connect(mongoClient -> pullDesignedDirectory(directory, user, mongoClient));
             }
         } catch (Exception exception)
         {
