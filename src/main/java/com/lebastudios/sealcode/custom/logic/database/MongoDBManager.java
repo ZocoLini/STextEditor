@@ -42,7 +42,8 @@ public class MongoDBManager implements IDBManager<MongoClient>
     private final File[] directoriesToManage = new File[]
             {
                     new File(FilePaths.getProgLangSyntaxDirectory()),
-                    new File(FilePaths.getGlobalConfigDirectory())
+                    new File(FilePaths.getGlobalConfigDirectory()),
+                    new File(FilePaths.getProgLangCompletationsDirectory())
             };
 
     @Override

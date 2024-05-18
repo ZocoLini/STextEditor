@@ -19,8 +19,7 @@ public final class FilePaths
     
     public static String getProgLangSyntaxDirectory() {return getAppDirectory() + "/highlightingRules/";}
 
-    public static String getProgLangCompletationsDirectory() {return getAppDirectory() + "/completations/" 
-            + GlobalConfig.getStaticInstance().userPrefs.profile + "/";}
+    public static String getProgLangCompletationsDirectory() {return getAppDirectory() + "/completations/" ;}
 
     public static String getThemeDirectory() {return getAppDirectory() + "/themes/";}
     

@@ -66,6 +66,5 @@ public class GlobalConfig extends JSONSaveable<GlobalConfig>
     public static class UserPrefs
     {
         public boolean ignoreGitDir = true;
-        public String profile = "default";
     }
 }
