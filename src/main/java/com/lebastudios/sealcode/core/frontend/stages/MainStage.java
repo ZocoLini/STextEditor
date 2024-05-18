@@ -17,9 +17,9 @@ public class MainStage extends StageBuilder
     @Override
     protected void addEventHandlers()
     {
-        this.addEventHandler(WindowEvent.WINDOW_HIDING, event -> GlobalConfig.getStaticInstance().save());
-        this.addEventHandler(WindowEvent.WINDOW_HIDING, event -> Session.getStaticInstance().save());
         this.addEventHandler(WindowEvent.WINDOW_HIDING, event -> AppEvents.onAppExit.invoke());
+        AppEvents.onAppExit.addListener(() -> GlobalConfig.getStaticInstance().save());
+        AppEvents.onAppExit.addListener(() -> Session.getStaticInstance().save());
     }
 
     public static MainStage getInstance()

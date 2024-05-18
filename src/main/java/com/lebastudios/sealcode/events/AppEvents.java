@@ -31,10 +31,7 @@ public final class AppEvents
     public static final AppEvent1<SealCodeArea> onSealCodeAreaDeleted = new AppEvent1<>();
     
     /*  Settings Pane   */
-    public static final AppEvent onSettingsUpdate = new AppEvent();
-    public static final AppEvent onThemeChange = new AppEvent();
-    public static final AppEvent onPreferencesUpdate = new AppEvent();
-    public static final AppEvent onProfileChange = new AppEvent();
+    public static final AppEvent onGlobalConfigUpdate = new AppEvent();
     
     /* Customice interface */
         /* Settings TreeView */

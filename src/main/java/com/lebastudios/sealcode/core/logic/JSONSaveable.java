@@ -23,9 +23,9 @@ public abstract class JSONSaveable<T>
     }
 
     /**
-     * Loads the configuration file.
+     * Loads the file. NOTE: This method doesn't assign the instance to the static instance. It returns the file loaded.
      */
-    protected T load()
+    public T load()
     {
         T instance;
 
@@ -52,14 +52,14 @@ public abstract class JSONSaveable<T>
      *
      * @return The file path.
      */
-    public abstract String getFilePath();
+    protected abstract String getFilePath();
 
     /**
      * Creates a new static instance of the final class.
      *
      * @return The new static instance.
      */
-    public abstract T newInstance();
+    protected abstract T newInstance();
 
     /**
      * Saves the configuration file.

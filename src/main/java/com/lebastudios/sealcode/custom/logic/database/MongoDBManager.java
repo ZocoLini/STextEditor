@@ -1,6 +1,8 @@
 package com.lebastudios.sealcode.custom.logic.database;
 
 import com.lebastudios.sealcode.core.logic.config.FilePaths;
+import com.lebastudios.sealcode.core.logic.config.GlobalConfig;
+import com.lebastudios.sealcode.events.AppEvents;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
@@ -66,18 +68,20 @@ public class MongoDBManager implements IDBManager<MongoClient>
 
         try
         {
-            for (var directory : directoriesToManage)
-            {
-                if (directory.isFile()) continue;
+            return connect(mongoClient -> {
+                for (var directory : directoriesToManage)
+                {
+                    if (directory.isFile()) continue;
 
-                return connect(mongoClient -> pushDesignedDirectory(directory, mongoClient));
-            }
+                    pushDesignedDirectory(directory, mongoClient);
+                }
+
+                return true;
+            });
         } catch (Exception exception)
         {
             return false;
         }
-
-        return true;
     }
 
     private boolean pushDesignedDirectory(File file, MongoClient mongoClient)
@@ -138,25 +142,30 @@ public class MongoDBManager implements IDBManager<MongoClient>
 
     public boolean pullUserFiles()
     {
-        if (!LogInUser.isAnyAccountConnected()) return false;
-
         User user = User.Deserialize();
+        
         if (user == null) return false;
 
         try
         {
-            for (var directory : directoriesToManage)
-            {
-                if (directory.isFile()) continue;
+            return connect(mongoClient -> {
+                for (var directory : directoriesToManage)
+                {
+                    if (directory.isFile()) continue;
 
-                return connect(mongoClient -> pullDesignedDirectory(directory, user, mongoClient));
-            }
+                    pullDesignedDirectory(directory, user, mongoClient);
+                }
+
+                GlobalConfig.getStaticInstance().load();
+                
+                AppEvents.onGlobalConfigUpdate.invoke();
+                
+                return true;
+            });
         } catch (Exception exception)
         {
             return false;
         }
-
-        return true;
     }
 
     private boolean pullDesignedDirectory(File directory, User user, MongoClient mongoClient)
@@ -207,26 +216,6 @@ public class MongoDBManager implements IDBManager<MongoClient>
         {
             System.err.println("Error while downloading file: " + file.getName());
             e.printStackTrace();
-            return false;
-        }
-
-        return true;
-    }
-
-    public boolean pullDefaultFiles()
-    {
-        User user = User.defaultUser();
-
-        try
-        {
-            for (var directory : directoriesToManage)
-            {
-                if (directory.isFile()) continue;
-
-                connect(mongoClient -> pullDesignedDirectory(directory, user, mongoClient));
-            }
-        } catch (Exception exception)
-        {
             return false;
         }
 

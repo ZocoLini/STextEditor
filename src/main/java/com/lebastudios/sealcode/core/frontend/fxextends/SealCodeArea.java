@@ -80,7 +80,7 @@ public final class SealCodeArea extends CodeArea
     private void addEventHandlers()
     {
         // Cambia el estilo de resaltado al cambaiar de tema
-        AppEvents.onThemeChange.addListener(this::updateResources);
+        AppEvents.onGlobalConfigUpdate.addListener(this::updateResources);
 
         // Añade un evento en el que, si se pusa Ctrl + Z, se deshace la última acción
         this.addEventHandler(KeyEvent.KEY_PRESSED, event ->

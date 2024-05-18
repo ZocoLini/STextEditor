@@ -28,7 +28,7 @@ public class SettingsStage extends StageBuilder
             }
         });
         
-        this.addEventHandler(WindowEvent.WINDOW_HIDING, event -> AppEvents.onSettingsUpdate.invoke());
+        this.addEventHandler(WindowEvent.WINDOW_HIDING, event -> AppEvents.onGlobalConfigUpdate.invoke());
     }
 
     public static SettingsStage getInstance()

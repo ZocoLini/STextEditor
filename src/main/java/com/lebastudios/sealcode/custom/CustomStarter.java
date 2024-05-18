@@ -29,8 +29,18 @@ public class CustomStarter extends Starter
 
     public static void startCustomImplementation()
     {
-        System.out.println("MainDBAvailability: " + MainDBManager.getInstance().testConnection());
-        System.out.println("MongoDBAvailability: " + MongoDBManager.getInstance().testConnection());
+        if (MainDBManager.getInstance().isAnyAccountConnected())
+        {
+            MongoDBManager.getInstance().pullUserFiles();
+        }
+        
+        AppEvents.onAppExit.addListener(() -> new Thread(() -> {
+                if (MainDBManager.getInstance().isAnyAccountConnected())
+                {
+                    MongoDBManager.getInstance().pushUserFiles();
+                }
+            }).start()
+        );
         
         JavaConfiguration.getInstance().setLangLvl(ParserConfiguration.LanguageLevel.JAVA_18);
 

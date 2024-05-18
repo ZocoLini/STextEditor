@@ -13,7 +13,7 @@ public class ThemeController extends SettingsPaneController
     @FXML private ChoiceBox<String> themeChoiceBox;
     
     @Override
-    public void initialize()
+    public void start()
     {
         loadAvailableThemes();
     }
@@ -23,7 +23,7 @@ public class ThemeController extends SettingsPaneController
     {
         GlobalConfig.getStaticInstance().editorConfig.theme = themeChoiceBox.getValue();
 
-        AppEvents.onThemeChange.invoke();
+        AppEvents.onGlobalConfigUpdate.invoke();
     }
     
     private void loadAvailableThemes()

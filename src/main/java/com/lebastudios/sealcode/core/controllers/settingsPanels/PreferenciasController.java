@@ -10,7 +10,7 @@ public class PreferenciasController extends SettingsPaneController
     @FXML private CheckBox ignoreGitDirCB;
 
     @Override
-    public void initialize()
+    public void start()
     {
         ignoreGitDirCB.setSelected(GlobalConfig.getStaticInstance().userPrefs.ignoreGitDir);
     }
@@ -20,6 +20,6 @@ public class PreferenciasController extends SettingsPaneController
     {
         GlobalConfig.getStaticInstance().userPrefs.ignoreGitDir = ignoreGitDirCB.isSelected();
 
-        AppEvents.onPreferencesUpdate.invoke();
+        AppEvents.onGlobalConfigUpdate.invoke();
     }
 }

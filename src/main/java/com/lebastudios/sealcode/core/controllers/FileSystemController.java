@@ -24,7 +24,7 @@ public class FileSystemController
     {
         instance = this;
 
-        AppEvents.onPreferencesUpdate.addListener(this::reloadFileSystem);
+        AppEvents.onGlobalConfigUpdate.addListener(this::reloadFileSystem);
     }
 
     @FXML

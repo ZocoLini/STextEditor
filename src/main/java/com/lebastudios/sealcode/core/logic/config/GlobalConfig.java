@@ -1,7 +1,7 @@
 package com.lebastudios.sealcode.core.logic.config;
 
-import com.lebastudios.sealcode.events.AppEvents;
 import com.lebastudios.sealcode.core.logic.JSONSaveable;
+import com.lebastudios.sealcode.events.AppEvents;
 
 public class GlobalConfig extends JSONSaveable<GlobalConfig>
 {
@@ -12,7 +12,7 @@ public class GlobalConfig extends JSONSaveable<GlobalConfig>
 
     private GlobalConfig()
     {
-        AppEvents.onSettingsUpdate.addListener(this::save);
+        AppEvents.onGlobalConfigUpdate.addListener(this::save);
     }
 
     @Override
@@ -34,6 +34,17 @@ public class GlobalConfig extends JSONSaveable<GlobalConfig>
             instance = new GlobalConfig().load();
         }
 
+        return instance;
+    }
+
+    /**
+     * Loads the file. NOTE: This method DOES assign the instance to the static instance.
+     * @return
+     */
+    @Override
+    public GlobalConfig load()
+    {
+        instance = super.load();
         return instance;
     }
 

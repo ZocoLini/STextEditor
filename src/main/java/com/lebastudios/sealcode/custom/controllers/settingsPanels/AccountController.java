@@ -5,6 +5,7 @@ import com.lebastudios.sealcode.core.controllers.SettingsStageController;
 import com.lebastudios.sealcode.core.controllers.settingsPanels.SettingsPaneController;
 import com.lebastudios.sealcode.core.frontend.fxextends.Notification;
 import com.lebastudios.sealcode.custom.logic.database.MainDBManager;
+import com.lebastudios.sealcode.custom.logic.database.MongoDBManager;
 import com.lebastudios.sealcode.global.MessageType;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -15,7 +16,7 @@ public class AccountController extends SettingsPaneController
     @FXML public TextField password;
 
     @Override
-    public void initialize()
+    public void start()
     {
         if (MainDBManager.getInstance().isAnyAccountConnected()) 
         {
@@ -24,10 +25,7 @@ public class AccountController extends SettingsPaneController
     }
 
     @Override
-    public void apply()
-    {
-
-    }
+    public void apply() {}
 
     @FXML
     public void login()
@@ -35,6 +33,8 @@ public class AccountController extends SettingsPaneController
         if (MainDBManager.getInstance().logIn(usernameField.getText(), password.getText()))
         {
             SettingsStageController.getInstance().loadNewSettingsPane("custom/settingsScenePanels/loggedAccountAnchorPane.fxml");
+
+            MongoDBManager.getInstance().pullUserFiles();
         }
         else 
         {

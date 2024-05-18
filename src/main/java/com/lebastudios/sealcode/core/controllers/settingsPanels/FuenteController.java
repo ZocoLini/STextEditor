@@ -10,7 +10,7 @@ public class FuenteController extends SettingsPaneController
     @FXML private TextField letterSizeTF;
 
     @Override
-    public void initialize()
+    public void start()
     {
         fontNameTF.setText(GlobalConfig.getStaticInstance().editorConfig.font);
         letterSizeTF.setText(String.valueOf(GlobalConfig.getStaticInstance().editorConfig.fontSize));

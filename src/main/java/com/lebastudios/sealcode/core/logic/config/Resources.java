@@ -129,8 +129,6 @@ public final class Resources
         {
             try
             {
-                // TODO: Parece que, cada vez que se cambia de tema, se llama una vez mas a estee metodo.
-                System.out.println(file.toURI().toURL().toExternalForm());
                 return file.toURI().toURL().toExternalForm();
             } catch (MalformedURLException e)
             {

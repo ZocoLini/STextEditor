@@ -10,7 +10,7 @@ public class GeneralController extends SettingsPaneController
     @FXML private TextField tabSizeTF;
 
     @Override
-    public void initialize()
+    public void start()
     {
         indentationTF.setText(String.valueOf(GlobalConfig.getStaticInstance().editorConfig.indentation));
         tabSizeTF.setText(String.valueOf(GlobalConfig.getStaticInstance().editorConfig.tabSize));

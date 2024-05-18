@@ -16,25 +16,8 @@ public class LoggedAccountController extends SettingsPaneController
     @FXML public Label username;
 
     @Override
-    public void initialize()
+    public void start()
     {
-        User actualUser = User.Deserialize();
-        
-        if (actualUser == null)
-        {
-            SettingsStageController.getInstance().loadNewSettingsPane("custom/settingsScenePanels/accountAnchorPane.fxml");
-            return;
-        }
-        
-        /*
-        MongoDBManager.getInstance().pullUserFiles();
-        
-        AppEvents.onSettingsUpdate.invoke();
-        AppEvents.onProfileChange.invoke();
-        AppEvents.onPreferencesUpdate.invoke();
-        AppEvents.onThemeChange.invoke();
-        */
-        
         username.setText(User.Deserialize().userName());
     }
 
@@ -47,16 +30,8 @@ public class LoggedAccountController extends SettingsPaneController
     @FXML
     public void logOut()
     {
-        // MongoDBManager.getInstance().pushUserFiles();
+        MongoDBManager.getInstance().pushUserFiles();
         MainDBManager.getInstance().logOut();
-        /*
-        MongoDBManager.getInstance().pullDefaultFiles();
-
-        AppEvents.onSettingsUpdate.invoke();
-        AppEvents.onProfileChange.invoke();
-        AppEvents.onPreferencesUpdate.invoke();
-        AppEvents.onThemeChange.invoke();
-         */
         
         SettingsStageController.getInstance().loadNewSettingsPane("custom/settingsScenePanels/accountAnchorPane.fxml");
     }

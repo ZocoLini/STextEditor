@@ -32,7 +32,7 @@ public abstract class StageBuilder extends Stage
 
         escenaActual.getStylesheets().add(Resources.getThemeStyle());
 
-        AppEvents.onThemeChange.addListener(() ->
+        AppEvents.onGlobalConfigUpdate.addListener(() ->
         {
             escenaActual.getStylesheets().clear();
             escenaActual.getStylesheets().add(Resources.getThemeStyle());

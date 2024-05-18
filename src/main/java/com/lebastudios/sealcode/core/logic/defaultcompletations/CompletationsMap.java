@@ -30,7 +30,7 @@ public class CompletationsMap
 
     private CompletationsMap() 
     {
-        AppEvents.onProfileChange.addListener(() -> 
+        AppEvents.onGlobalConfigUpdate.addListener(() -> 
         {
             final Map<String, TreeSet<Completation>> auxMap = new HashMap<>(loadedCompletations);
             for (var variable : auxMap.keySet())

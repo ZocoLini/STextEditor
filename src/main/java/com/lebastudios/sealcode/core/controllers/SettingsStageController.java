@@ -66,7 +66,7 @@ public class SettingsStageController implements IStageController
 
             paneController = loader.getController();
             
-            paneController.initialize();
+            paneController.start();
             
             mainSplitPane.setDividerPositions(dividerPosition);
         } catch (IOException e)

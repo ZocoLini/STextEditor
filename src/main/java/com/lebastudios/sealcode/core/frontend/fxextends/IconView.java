@@ -22,7 +22,7 @@ public class IconView extends ImageView
         setSize();
         
         this.iconName = iconName;
-        AppEvents.onThemeChange.addListener(this::updateIconOnThemeChange);
+        AppEvents.onGlobalConfigUpdate.addListener(this::updateIconOnThemeChange);
     }
 
     private void setSize()
