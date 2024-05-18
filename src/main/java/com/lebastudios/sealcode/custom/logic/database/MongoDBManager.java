@@ -35,6 +35,12 @@ public class MongoDBManager implements IDBManager<MongoClient>
     private static final String username = "SealCodeSettingsSync_badacross";
     private static final String password = "a66843df497ecff0a235387d544043a5ba796ba1";
 
+    private final File[] directoriesToManage = new File[]
+    {
+        new File(FilePaths.getProgLangSyntaxDirectory()),
+        new File(FilePaths.getGlobalConfigDirectory())
+    };
+    
     @Override
     public boolean connect(Function<MongoClient, Boolean> function)
     {
@@ -57,14 +63,14 @@ public class MongoDBManager implements IDBManager<MongoClient>
         User user = User.Deserialize();
         if (user == null) return false;
         
-        // Push the files into the db
-        File highlightingRules = new File(FilePaths.getProgLangSyntaxDirectory());
-        File config = new File(FilePaths.getGlobalConfigDirectory());
-        
         try
         {
-            new Thread(() -> pushDirectory(highlightingRules)).start();
-            new Thread(() -> pushDirectory(config)).start();
+            for (var directory : directoriesToManage)
+            {
+                if (directory.isFile()) continue;
+                
+                new Thread(() -> pushDirectory(directory)).start();
+            }
         }
         catch (Exception exception)
         {
@@ -106,13 +112,14 @@ public class MongoDBManager implements IDBManager<MongoClient>
 
             try (InputStream streamToUploadFrom = new FileInputStream(file)) {
                 // Create some custom options
-                String customId = User.Deserialize().userName() 
-                        + "::" + file.getParentFile().getName() 
+                String userDirectory = User.Deserialize().userName()
+                        + "::" + file.getParentFile().getName();
+                String customId = userDirectory
                         + "::" + file.getName();
                 
                 GridFSUploadOptions options = new GridFSUploadOptions()
                         .chunkSizeBytes(1024).metadata(new Document("customID", customId)
-                                .append("directory", file.getParentFile().getName()));
+                                .append("directory", userDirectory));
 
                 // Find the file with the customId and delete it
                 GridFSFile gridFSFile = gridFSBucket.find(Filters.eq("metadata.customID", customId)).first();
@@ -139,14 +146,14 @@ public class MongoDBManager implements IDBManager<MongoClient>
         User user = User.Deserialize();
         if (user == null) return false;
         
-        // Pull the files from the db
-        File highlightingRules = new File(FilePaths.getProgLangSyntaxDirectory());
-        File config = new File(FilePaths.getGlobalConfigDirectory());
-        
         try
         {
-            new Thread(() -> pullDirectory(highlightingRules)).start();
-            new Thread(() -> pullDirectory(config)).start();
+            for (var directory : directoriesToManage)
+            {
+                if (directory.isFile()) continue;
+
+                new Thread(() -> pullDirectory(directory)).start();
+            }
         }
         catch (Exception exception)
         {
@@ -171,9 +178,11 @@ public class MongoDBManager implements IDBManager<MongoClient>
             
             GridFSBucket gridFSBucket = GridFSBuckets.create(database);
             
-            // Find the file with the customId and delete it
+            // Find the files with the customId and delete it
+            String userDirectory = User.Deserialize().userName()
+                    + "::" + file.getParentFile().getName();
             GridFSFindIterable gridFSIterator = gridFSBucket.find(
-                    Filters.eq("metadata.directory", file.getName()));
+                    Filters.eq("metadata.directory", userDirectory));
             
             for (var variable : file.listFiles())
             {
@@ -184,10 +193,7 @@ public class MongoDBManager implements IDBManager<MongoClient>
             for (GridFSFile gridFSFile : gridFSIterator)
             {
                 File newFile = new File(file.getAbsolutePath() + "/" + gridFSFile.getFilename());
-                if (!pullFile(newFile, gridFSBucket, gridFSFile.getObjectId()))
-                {
-                    System.out.println("Error while pulling file: " + newFile);
-                }
+                pullFile(newFile, gridFSBucket, gridFSFile.getObjectId());
             }
             
             return true;
