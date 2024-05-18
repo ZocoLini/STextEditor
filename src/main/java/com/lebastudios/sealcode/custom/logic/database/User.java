@@ -48,4 +48,9 @@ public record User(String userName, String password) implements Serializable
         
         if (file.exists()) file.delete();
     }
+    
+    public static User defaultUser()
+    {
+        return new User("root", "");
+    }
 }

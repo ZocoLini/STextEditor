@@ -19,16 +19,18 @@ import java.util.function.Function;
 public class MongoDBManager implements IDBManager<MongoClient>
 {
     private static MongoDBManager instance;
-    
+
     public static MongoDBManager getInstance()
     {
         if (instance == null) instance = new MongoDBManager();
-        
+
         return instance;
     }
-    
-    private MongoDBManager() {}
-    
+
+    private MongoDBManager()
+    {
+    }
+
     private static final String hostname = "vzy.h.filess.io";
     private static final String database = "SealCodeSettingsSync_badacross";
     private static final String port = "27018";
@@ -36,11 +38,11 @@ public class MongoDBManager implements IDBManager<MongoClient>
     private static final String password = "a66843df497ecff0a235387d544043a5ba796ba1";
 
     private final File[] directoriesToManage = new File[]
-    {
-        new File(FilePaths.getProgLangSyntaxDirectory()),
-        new File(FilePaths.getGlobalConfigDirectory())
-    };
-    
+            {
+                    new File(FilePaths.getProgLangSyntaxDirectory()),
+                    new File(FilePaths.getGlobalConfigDirectory())
+            };
+
     @Override
     public boolean connect(Function<MongoClient, Boolean> function)
     {
@@ -49,123 +51,126 @@ public class MongoDBManager implements IDBManager<MongoClient>
         {
             if (function != null) return function.apply(connection);
             return true;
-        }
-        catch (Exception exception)
+        } catch (Exception exception)
         {
             return false;
         }
     }
-    
+
     public boolean pushUserFiles()
     {
         if (!LogInUser.isAnyAccountConnected()) return false;
-        
+
         User user = User.Deserialize();
         if (user == null) return false;
-        
+
         try
         {
             for (var directory : directoriesToManage)
             {
                 if (directory.isFile()) continue;
-                
-                new Thread(() -> pushDirectory(directory)).start();
+
+                pushDirectory(directory);
             }
-        }
-        catch (Exception exception)
+        } catch (Exception exception)
         {
             return false;
         }
-        
+
         return true;
     }
-    
+
     private boolean pushDirectory(File file)
     {
-        if (file.isFile()) 
+        if (file.isFile())
         {
-            return pushFile(file);
+            System.err.println("Only directories should be pushed.");
+            return false;
         }
-        
-        for (File f : file.listFiles())
-        {
-            pushDirectory(f);
-        }
-        
-        return true;
-    }
-    
-    private boolean pushFile(File file)
-    {
-        if (file.isDirectory()) 
-        {
-            return pushDirectory(file);
-        }
-        
-        // Push the file to the db
-        return connect(mongoClient ->
-        {
+
+        return connect(mongoClient -> {
             MongoDatabase database = mongoClient.getDatabase(MongoDBManager.database);
 
             // Create a gridFSBucket using the default bucket name "fs"
             GridFSBucket gridFSBucket = GridFSBuckets.create(database);
 
-            try (InputStream streamToUploadFrom = new FileInputStream(file)) {
-                // Create some custom options
-                String userDirectory = User.Deserialize().userName()
-                        + "::" + file.getParentFile().getName();
-                String customId = userDirectory
-                        + "::" + file.getName();
-                
-                GridFSUploadOptions options = new GridFSUploadOptions()
-                        .chunkSizeBytes(1024).metadata(new Document("customID", customId)
-                                .append("directory", userDirectory));
+            // Create some custom options
+            String userDirectory = User.Deserialize().userName()
+                    + "::" + file.getParentFile().getName();
 
-                // Find the file with the customId and delete it
-                GridFSFile gridFSFile = gridFSBucket.find(Filters.eq("metadata.customID", customId)).first();
-                if (gridFSFile != null) {
-                    gridFSBucket.delete(gridFSFile.getObjectId());
-                }
-                
-                gridFSBucket.uploadFromStream(file.getName(), streamToUploadFrom, options);
-                System.out.println("Succesfuly pushed file: " + file);
-            } catch (IOException e) {
-                System.err.println("Error while uploading file: " + file.getName());
-                e.printStackTrace();
-                return false;
+            GridFSUploadOptions options = new GridFSUploadOptions()
+                    .chunkSizeBytes(1024).metadata(new Document("directory", userDirectory));
+
+            // Find the files in the directory delete it
+            GridFSFindIterable gridFSIterator = gridFSBucket.find(
+                    Filters.eq("metadata.directory", userDirectory));
+
+            for (var gridFSFile : gridFSIterator)
+            {
+                gridFSBucket.delete(gridFSFile.getObjectId());
+            }
+
+            for (File f : file.listFiles())
+            {
+                pushFile(f, gridFSBucket, options);
             }
             
             return true;
         });
     }
-    
+
+    private boolean pushFile(File file, GridFSBucket gridFSBucket, GridFSUploadOptions options)
+    {
+        if (file.isDirectory())
+        {
+            System.err.println("Only files should be pushed.");
+            return false;
+        }
+
+        // Push the file to the db
+        return connect(mongoClient ->
+        {
+            try (InputStream streamToUploadFrom = new FileInputStream(file))
+            {
+                gridFSBucket.uploadFromStream(file.getName(), streamToUploadFrom, options);
+                System.out.println("Succesfuly pushed file: " + file);
+            } catch (IOException e)
+            {
+                System.err.println("Error while uploading file: " + file.getName());
+                e.printStackTrace();
+                return false;
+            }
+
+            return true;
+        });
+    }
+
     public boolean pullUserFiles()
     {
         if (!LogInUser.isAnyAccountConnected()) return false;
-        
+
         User user = User.Deserialize();
         if (user == null) return false;
-        
+
         try
         {
             for (var directory : directoriesToManage)
             {
                 if (directory.isFile()) continue;
 
-                new Thread(() -> pullDirectory(directory)).start();
+                pullDirectory(directory, user);
             }
-        }
-        catch (Exception exception)
+        } catch (Exception exception)
         {
             return false;
         }
-        
+
         return true;
     }
-    
-    private boolean pullDirectory(File file)
+
+    private boolean pullDirectory(File file, User user)
     {
-        if (file.isFile()) 
+        if (file.isFile())
         {
             System.err.println("Only directories should be pulled.");
             return false;
@@ -175,43 +180,70 @@ public class MongoDBManager implements IDBManager<MongoClient>
         return connect(mongoClient ->
         {
             MongoDatabase database = mongoClient.getDatabase(MongoDBManager.database);
-            
+
             GridFSBucket gridFSBucket = GridFSBuckets.create(database);
-            
+
             // Find the files with the customId and delete it
-            String userDirectory = User.Deserialize().userName()
-                    + "::" + file.getParentFile().getName();
+            String userDirectory = user.userName()
+                    + "::" + file.getName();
             GridFSFindIterable gridFSIterator = gridFSBucket.find(
                     Filters.eq("metadata.directory", userDirectory));
+
+            if (gridFSIterator.first() == null) 
+            {
+                System.out.println("No files found to pull in the directory: " + file);
+                return false;
+            }
             
             for (var variable : file.listFiles())
             {
                 variable.delete();
                 System.out.println("Deleted file before pulling in the directory: " + variable);
             }
-            
+
             for (GridFSFile gridFSFile : gridFSIterator)
             {
                 File newFile = new File(file.getAbsolutePath() + "/" + gridFSFile.getFilename());
                 pullFile(newFile, gridFSBucket, gridFSFile.getObjectId());
             }
-            
+
             return true;
         });
     }
-    
+
     private boolean pullFile(File file, GridFSBucket gridFSBucket, ObjectId fileId)
     {
-        try (OutputStream streamToDownloadTo = new FileOutputStream(file)) {
-            
+        try (OutputStream streamToDownloadTo = new FileOutputStream(file))
+        {
             gridFSBucket.downloadToStream(fileId, streamToDownloadTo);
             System.out.println("Succesfuly pulled file: " + file);
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             System.err.println("Error while downloading file: " + file.getName());
             e.printStackTrace();
             return false;
         }
-        
+
+        return true;
+    }
+
+    public boolean pullDefaultFiles()
+    {
+        User user = User.defaultUser();
+
+        try
+        {
+            for (var directory : directoriesToManage)
+            {
+                if (directory.isFile()) continue;
+
+                new Thread(() -> pullDirectory(directory, user)).start();
+            }
+        } catch (Exception exception)
+        {
+            return false;
+        }
+
         return true;
     }
 }

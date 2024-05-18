@@ -7,6 +7,7 @@ import com.lebastudios.sealcode.core.frontend.fxextends.Notification;
 import com.lebastudios.sealcode.custom.logic.database.MainDBManager;
 import com.lebastudios.sealcode.custom.logic.database.MongoDBManager;
 import com.lebastudios.sealcode.custom.logic.database.User;
+import com.lebastudios.sealcode.events.AppEvents;
 import com.lebastudios.sealcode.global.MessageType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -26,6 +27,13 @@ public class LoggedAccountController extends SettingsPaneController
             return;
         }
         
+        MongoDBManager.getInstance().pullUserFiles();
+        
+        AppEvents.onSettingsUpdate.invoke();
+        AppEvents.onProfileChange.invoke();
+        AppEvents.onPreferencesUpdate.invoke();
+        AppEvents.onThemeChange.invoke();
+        
         username.setText(User.Deserialize().userName());
     }
 
@@ -38,7 +46,16 @@ public class LoggedAccountController extends SettingsPaneController
     @FXML
     public void logOut()
     {
+        MongoDBManager.getInstance().pushUserFiles();
         MainDBManager.getInstance().logOut();
+        
+        MongoDBManager.getInstance().pullDefaultFiles();
+
+        AppEvents.onSettingsUpdate.invoke();
+        AppEvents.onProfileChange.invoke();
+        AppEvents.onPreferencesUpdate.invoke();
+        AppEvents.onThemeChange.invoke();
+        
         SettingsStageController.getInstance().loadNewSettingsPane("custom/settingsScenePanels/accountAnchorPane.fxml");
     }
 
