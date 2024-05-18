@@ -8,11 +8,11 @@ import java.io.*;
 
 public record User(String userName, String password) implements Serializable
 {
-    private static final String USER_FILE = MainDBConnection.DATABASE_FOLDER + "/user.dat";
+    private static final String USER_FILE = MainDBManager.DATABASE_FOLDER + "/user.dat";
     
     public void Serialize()
     {
-        File file = new File(MainDBConnection.DATABASE_FOLDER);
+        File file = new File(MainDBManager.DATABASE_FOLDER);
         
         if (!file.exists()) file.mkdirs();
         

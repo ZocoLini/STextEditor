@@ -4,7 +4,7 @@ import com.lebastudios.sealcode.core.controllers.MainStageController;
 import com.lebastudios.sealcode.core.controllers.SettingsStageController;
 import com.lebastudios.sealcode.core.controllers.settingsPanels.SettingsPaneController;
 import com.lebastudios.sealcode.core.frontend.fxextends.Notification;
-import com.lebastudios.sealcode.custom.logic.database.MainDBConnection;
+import com.lebastudios.sealcode.custom.logic.database.MainDBManager;
 import com.lebastudios.sealcode.global.MessageType;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -17,7 +17,7 @@ public class AccountController extends SettingsPaneController
     @Override
     public void initialize()
     {
-        if (MainDBConnection.getInstance().isAnyAccountConnected()) 
+        if (MainDBManager.getInstance().isAnyAccountConnected()) 
         {
             SettingsStageController.getInstance().loadNewSettingsPane("custom/settingsScenePanels/loggedAccountAnchorPane.fxml");
         }
@@ -32,7 +32,7 @@ public class AccountController extends SettingsPaneController
     @FXML
     public void login()
     {
-        if (MainDBConnection.getInstance().logIn(usernameField.getText(), password.getText()))
+        if (MainDBManager.getInstance().logIn(usernameField.getText(), password.getText()))
         {
             SettingsStageController.getInstance().loadNewSettingsPane("custom/settingsScenePanels/loggedAccountAnchorPane.fxml");
         }
@@ -48,7 +48,7 @@ public class AccountController extends SettingsPaneController
     @FXML
     public void createAcc()
     {
-        if (!MainDBConnection.getInstance().register(usernameField.getText(), password.getText())) 
+        if (!MainDBManager.getInstance().register(usernameField.getText(), password.getText())) 
         {
             MainStageController.getInstance().addNotification(new Notification(
                     "Ha ocurrido un error al crear la cuenta, por favor, inténtelo de nuevo más tarde.",

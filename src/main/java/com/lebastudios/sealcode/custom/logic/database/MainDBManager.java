@@ -6,20 +6,20 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.function.Function;
 
-public class MainDBConnection
+public class MainDBManager implements IDBManager<Connection>
 {
     static String DATABASE_FOLDER = FilePaths.getAppDirectory() + "/database"; 
     
-    private static MainDBConnection instance;
+    private static MainDBManager instance;
 
-    public static MainDBConnection getInstance()
+    public static MainDBManager getInstance()
     {
-        if (instance == null) instance = new MainDBConnection();
+        if (instance == null) instance = new MainDBManager();
 
         return instance;
     }
 
-    private MainDBConnection()
+    private MainDBManager()
     {
     }
 
@@ -29,6 +29,7 @@ public class MainDBConnection
     private static final String USER = "LebaStudios_hunterbut";
     private static final String PASSWORD = "f400f8dba0ba4c58db0bcb7f0760ea7fdd1c4e7a";
 
+    @Override
     public boolean connect(Function<Connection, Boolean> function)
     {
         try (Connection connection = DriverManager
@@ -41,11 +42,6 @@ public class MainDBConnection
         {
             return false;
         }
-    }
-    
-    public boolean testConnection()
-    {
-        return connect(null);
     }
     
     public boolean logIn(String user, String passwordNotEncrypted)

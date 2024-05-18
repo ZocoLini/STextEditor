@@ -21,6 +21,7 @@ module com.lebastudios.sealcode {
     requires com.github.javaparser.core;
     requires bcrypt;
     requires mysql.connector.j;
+    requires mongo.java.driver;
     requires reactfx;
     
     opens com.lebastudios.sealcode.custom.controllers to javafx.fxml;

@@ -13,7 +13,7 @@ class LogInUser
         
         if (user == null) return false;
 
-        return MainDBConnection.getInstance().connect(connection ->
+        return MainDBManager.getInstance().connect(connection ->
         {
             String sql = "select userPass from User where userName = ? and userPass = ?";
 
@@ -43,7 +43,7 @@ class LogInUser
     
     public static boolean logIn(String user, String passwordNotEncrypted)
     {
-        return MainDBConnection.getInstance().connect(connection ->
+        return MainDBManager.getInstance().connect(connection ->
         {
             String sql = "select userPass from User where userName = ?";
 
@@ -78,7 +78,7 @@ class LogInUser
 
     public static boolean register(String user, String passwordNotEncrypted)
     {
-        return MainDBConnection.getInstance().connect(connection ->
+        return MainDBManager.getInstance().connect(connection ->
         {
             String sql = "insert into User (userName, userPass) values (?, ?)";
 
