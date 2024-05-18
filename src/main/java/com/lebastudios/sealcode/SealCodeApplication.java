@@ -1,16 +1,16 @@
 package com.lebastudios.sealcode;
 
-import com.lebastudios.sealcode.config.GlobalConfig;
-import com.lebastudios.sealcode.config.Session;
+import com.lebastudios.sealcode.core.logic.config.GlobalConfig;
+import com.lebastudios.sealcode.core.logic.config.Session;
 import com.lebastudios.sealcode.events.AppEvents;
 import com.lebastudios.sealcode.core.frontend.stages.MainStage;
-import com.lebastudios.sealcode.logic.SpecificIDEImplementations;
+import com.lebastudios.sealcode.custom.CustomStarter;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class SealCodeApplication extends Application
+public final class SealCodeApplication extends Application
 {
     public static void main(String[] args)
     {
@@ -20,7 +20,7 @@ public class SealCodeApplication extends Application
     @Override
     public void start(Stage stage) throws IOException
     {
-        SpecificIDEImplementations.implementation();
+        CustomStarter.startCustomImplementation();
         
         Thread hiloPrecargaGlobalConfig = GlobalConfig.getStaticInstance().preload();
         Thread hiloPrecargaSession = Session.getStaticInstance().preload();

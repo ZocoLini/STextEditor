@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
-import com.lebastudios.sealcode.config.Resources;
+import com.lebastudios.sealcode.core.logic.config.Resources;
 import com.lebastudios.sealcode.events.AppEvents;
 import javafx.scene.image.ImageView;
 
@@ -22,7 +22,7 @@ public class IconView extends ImageView
         setSize();
         
         this.iconName = iconName;
-        AppEvents.onThemeChange.addListener(this::updateIconOnThemeChange);
+        AppEvents.onGlobalConfigUpdate.addListener(this::updateIconOnThemeChange);
     }
 
     private void setSize()

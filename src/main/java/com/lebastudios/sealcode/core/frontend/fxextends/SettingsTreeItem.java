@@ -4,7 +4,7 @@ import javafx.scene.control.TreeItem;
 
 public class SettingsTreeItem extends IconTreeItem<String>
 {
-    private String fxmlSceneName = "notasignedscene.fxml";
+    private String fxmlResource = "notasignedscene.fxml";
     
     public SettingsTreeItem()
     {
@@ -16,13 +16,13 @@ public class SettingsTreeItem extends IconTreeItem<String>
         });
     }
     
-    public String getFxmlSceneName()
+    public String getFxmlResource()
     {
-        return fxmlSceneName;
+        return fxmlResource;
     }
     
-    public void setFxmlSceneName(String fxmlSceneName)
+    public void setFxmlResource(String fxmlResource)
     {
-        this.fxmlSceneName = fxmlSceneName;
+        this.fxmlResource = fxmlResource;
     }
 }

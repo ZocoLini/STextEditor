@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
-import com.lebastudios.sealcode.controllers.SettingsStageController;
+import com.lebastudios.sealcode.core.controllers.SettingsStageController;
 import javafx.scene.control.TreeCell;
 
 public class SettingsTreeCell extends TreeCell<String>
@@ -14,7 +14,7 @@ public class SettingsTreeCell extends TreeCell<String>
             if (this.getTreeItem() == null) return;
             if (this.getTreeItem().getClass() != SettingsTreeItem.class) return;
 
-            SettingsStageController.getInstance().loadNewSettingsPane(((SettingsTreeItem) this.getTreeItem()).getFxmlSceneName());
+            SettingsStageController.getInstance().loadNewSettingsPane(((SettingsTreeItem) this.getTreeItem()).getFxmlResource());
         });
     }
     

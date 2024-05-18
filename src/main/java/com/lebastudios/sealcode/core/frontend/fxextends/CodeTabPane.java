@@ -1,8 +1,8 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
-import com.lebastudios.sealcode.util.FileOperation;
-import com.lebastudios.sealcode.config.Session;
-import com.lebastudios.sealcode.controllers.FileSystemController;
+import com.lebastudios.sealcode.global.FileOperation;
+import com.lebastudios.sealcode.core.logic.config.Session;
+import com.lebastudios.sealcode.core.controllers.FileSystemController;
 import com.lebastudios.sealcode.events.AppEvents;
 import com.lebastudios.sealcode.core.frontend.stages.MainStage;
 import javafx.scene.control.Tab;
@@ -104,7 +104,7 @@ public final class CodeTabPane extends TabPane
 
     public void openFile(File file)
     {
-        var fileTreeItem = FileSystemController.getInstance().fileSystemTreeView.getTreeItemByFile(file);
+        var fileTreeItem = FileSystemController.getInstance().getTreeItemByFile(file);
         
         if (fileTreeItem == null)
         {

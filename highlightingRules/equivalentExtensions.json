@@ -1,0 +1,29 @@
+{
+  "filter": [
+    {
+      "extension": "xml",
+      "equivalentExtensions": [
+        {
+          "extension": "xml"
+        },
+        {
+          "extension": "fxml"
+        }
+      ]
+    },
+    {
+      "extension": "c",
+      "equivalentExtensions": [
+        {
+          "extension": "c"
+        },
+        {
+          "extension": "cpp"
+        },
+        {
+          "extension": "h"
+        }
+      ]
+    }
+  ]
+}

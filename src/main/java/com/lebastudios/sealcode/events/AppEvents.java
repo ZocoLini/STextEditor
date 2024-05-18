@@ -1,30 +1,40 @@
 package com.lebastudios.sealcode.events;
 
-import com.lebastudios.sealcode.events.Events.*;
+import com.lebastudios.sealcode.core.frontend.fxextends.IconTreeItem;
+import com.lebastudios.sealcode.core.frontend.fxextends.SealCodeArea;
+import com.lebastudios.sealcode.core.frontend.fxextends.SettingsTreeView;
+import com.lebastudios.sealcode.core.logic.Completation;
+import com.lebastudios.sealcode.global.TextModInf;
+
+import java.io.File;
+import java.util.TreeSet;
 
 public final class AppEvents
 {
     /*  App Life Cicle  */
-    public static final OnAppExit onAppExit = new OnAppExit();
-    public static final OnAppStart onAppStart = new OnAppStart();
+    public static final AppEvent onAppExit = new AppEvent();
+    public static final AppEvent onAppStart = new AppEvent();
     
     /*  IDE Objects  */
         /*  Seal Code Área  */
-            /*  Completations Popup  */
-    public static final OnCompletationsRequest onCompletationsRequest = new OnCompletationsRequest();
-            /*  Modificaciones de Texto  */
-    public static final OnTextModified onTextModifiedBefore = new OnTextModified();
-    public static final OnTextModified onTextModifiedAfter = new OnTextModified();
-    public static final OnTextModified onTextDeleted = new OnTextModified();
-    public static final OnTextModified onTextInserted = new OnTextModified();
-    public static final OnTextModified onTextReplaced = new OnTextModified();
+            /*  Completations Popup  <completationsToShow, file, fileExtension, currentWord, allText> */
+    public static final AppEvent5<TreeSet<Completation>, File, String, String, String> onCompletationsRequest = 
+            new AppEvent5<>();
+            /*  Modificaciones de Texto  <fileExtenssion (key), oldText, newTextInfo, textArea> */
+    public static final AppMapEvent3<String, String, TextModInf, SealCodeArea> onTextModifiedBefore = new AppMapEvent3<>();
+    public static final AppMapEvent3<String, String, TextModInf, SealCodeArea> onTextModifiedAfter = new AppMapEvent3<>();
+    public static final AppMapEvent3<String, String, TextModInf, SealCodeArea> onTextDeleted = new AppMapEvent3<>();
+    public static final AppMapEvent3<String, String, TextModInf, SealCodeArea> onTextInserted = new AppMapEvent3<>();
+    public static final AppMapEvent3<String, String, TextModInf, SealCodeArea> onTextReplaced = new AppMapEvent3<>();
             /*Instanciación de un nuevo Seal Code Area*/
-    public static final OnCodeAreaCreated onSealCodeAreaCreated = new OnCodeAreaCreated();
-    public static final OnCodeAreaDeleted onSealCodeAreaDeleted = new OnCodeAreaDeleted();
+    public static final AppEvent1<SealCodeArea> onSealCodeAreaCreated = new AppEvent1<>();
+    public static final AppEvent1<SealCodeArea> onSealCodeAreaDeleted = new AppEvent1<>();
     
     /*  Settings Pane   */
-    public static final OnSettingsUpdate onSettingsUpdate = new OnSettingsUpdate();
-    public static final OnThemeChange onThemeChange = new OnThemeChange();
-    public static final OnPreferencesUpdate onPreferencesUpdate = new OnPreferencesUpdate();
-    public static final OnProfileChange onProfileChange = new OnProfileChange();
+    public static final AppEvent onGlobalConfigUpdate = new AppEvent();
+    
+    /* Customice interface */
+        /* Settings TreeView */
+    public static final AppEvent1<SettingsTreeView> onLoadedSettingsTreeView = new AppEvent1<>();
+    public static final AppEvent1<IconTreeItem<String>> onLoadedSettingsIconTreeItem = new AppEvent1<>();
 }

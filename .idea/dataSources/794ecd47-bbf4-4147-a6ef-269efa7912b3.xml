@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="SealCodeSettingsSync_badacross@vzy.h.filess.io">
+  <database-model serializer="dbm" dbms="MONGO" family-id="MONGO" format-version="4.52">
+    <root id="1">
+      <ServerVersion>7.0.2</ServerVersion>
+    </root>
+    <schema id="2" parent="1" name="SealCodeSettingsSync_badacross">
+      <Current>1</Current>
+    </schema>
+  </database-model>
+</dataSource>

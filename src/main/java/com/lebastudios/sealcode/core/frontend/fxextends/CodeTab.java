@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
-import com.lebastudios.sealcode.config.Session;
+import com.lebastudios.sealcode.core.logic.config.Session;
 import javafx.scene.control.Tab;
 
 public final class CodeTab extends Tab

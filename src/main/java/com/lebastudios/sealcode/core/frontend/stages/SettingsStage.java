@@ -9,10 +9,10 @@ import javafx.stage.WindowEvent;
 public class SettingsStage extends StageBuilder
 {
     private static SettingsStage instance;
-
+    
     private SettingsStage()
     {
-        super("settingsScene.fxml", "Settings");
+        super("core/settingsScene.fxml", "Settings");
         
         this.initModality(Modality.APPLICATION_MODAL);
     }
@@ -28,7 +28,7 @@ public class SettingsStage extends StageBuilder
             }
         });
         
-        this.addEventHandler(WindowEvent.WINDOW_HIDING, event -> AppEvents.onSettingsUpdate.invoke());
+        this.addEventHandler(WindowEvent.WINDOW_HIDING, event -> AppEvents.onGlobalConfigUpdate.invoke());
     }
 
     public static SettingsStage getInstance()

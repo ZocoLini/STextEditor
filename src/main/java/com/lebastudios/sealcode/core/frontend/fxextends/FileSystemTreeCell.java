@@ -1,8 +1,9 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
-import com.lebastudios.sealcode.controllers.MainStageController;
+import com.lebastudios.sealcode.core.controllers.MainStageController;
 import com.lebastudios.sealcode.core.frontend.dialogs.Dialogs;
-import com.lebastudios.sealcode.util.MessageType;
+import com.lebastudios.sealcode.core.logic.Indexer;
+import com.lebastudios.sealcode.global.MessageType;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -40,7 +41,7 @@ public final class FileSystemTreeCell extends TreeCell<String>
 
         if (getRepresentingFile().isDirectory()) return;
 
-        MainStageController.getInstance().codeTabPane.openFile((FileSystemTreeItem) this.getTreeItem());
+        MainStageController.getInstance().openFile((FileSystemTreeItem) this.getTreeItem());
     }
 
     public File getRepresentingFile()
@@ -176,10 +177,11 @@ public final class FileSystemTreeCell extends TreeCell<String>
                 if (newFile.createNewFile())
                 {
                     treeCell.getTreeItem().getChildren().add(new FileSystemTreeItem(newFile));
+                    Indexer.getIndexer().index(newFile);
                 }
             } catch (IOException e)
             {
-                MainStageController.getInstance().notificationsContainer.addNotification(
+                MainStageController.getInstance().addNotification(
                         new Notification("Error creating file " + newFile.getName(), MessageType.Error)
                 );
             }
@@ -199,7 +201,7 @@ public final class FileSystemTreeCell extends TreeCell<String>
                 }
             } catch (Exception e)
             {
-                MainStageController.getInstance().notificationsContainer.addNotification(
+                MainStageController.getInstance().addNotification(
                         new Notification("Error creating directory " + newFile.getName(), MessageType.Error)
                 );
             }
@@ -207,17 +209,20 @@ public final class FileSystemTreeCell extends TreeCell<String>
 
         private void removeRepresentingFile(ActionEvent event)
         {
-            removeFile(getRepresentingFile());
+            if (removeFile(getRepresentingFile()))
+            {
+                treeCell.getTreeItem().getParent().getChildren().remove(treeCell.getTreeItem());
+                Indexer.getIndexer().unIndex(getRepresentingFile());
+            }
 
-            treeCell.getTreeItem().getParent().getChildren().remove(treeCell.getTreeItem());
         }
 
-        private void removeFile(File fileToRemove)
+        private boolean removeFile(File fileToRemove)
         {
             if (!fileToRemove.exists())
             {
                 System.out.println("File " + fileToRemove + " does not exists.");
-                return;
+                return false;
             }
 
             if (!fileToRemove.isFile())
@@ -230,17 +235,16 @@ public final class FileSystemTreeCell extends TreeCell<String>
 
             try
             {
-                if (!fileToRemove.delete())
-                {
-                    throw new IOException("Error removing directory " + fileToRemove);
-                }
+                return fileToRemove.delete();
             } catch (Exception e)
             {
-                MainStageController.getInstance().notificationsContainer.addNotification(
+                MainStageController.getInstance().addNotification(
                         new Notification("Error removing directory " + fileToRemove.getName() + ". An update is" +
                                 " recomended in te proyect tree view.", MessageType.Error)
                 );
             }
+            
+            return false;
         }
     }
 }

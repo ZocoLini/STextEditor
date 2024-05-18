@@ -1,8 +1,12 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
-import com.lebastudios.sealcode.config.Resources;
+import com.lebastudios.sealcode.core.logic.config.Resources;
+import com.lebastudios.sealcode.core.logic.Indexer;
+import com.lebastudios.sealcode.core.logic.Inspector;
 import com.lebastudios.sealcode.events.AppEvents;
-import com.lebastudios.sealcode.util.*;
+import com.lebastudios.sealcode.global.DocumentsOperations;
+import com.lebastudios.sealcode.global.FileOperation;
+import com.lebastudios.sealcode.global.TextModInf;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.fxmisc.richtext.CodeArea;
@@ -39,13 +43,16 @@ public final class SealCodeArea extends CodeArea
 
         this.textProperty().addListener((observable, oldValue, newValue) ->
         {
-            StyleSpans<Collection<String>> styleSpans = Inspector.getInspector()
-                    .inspect(newValue, FileOperation.getFileExtension(getRepresentingFile()));
-            
-            if (styleSpans == null)
-            {
-                Indexer.getIndexer().index(newValue, FileOperation.getFileExtension(getRepresentingFile()));
-            }
+            new Thread(() -> {
+                StyleSpans<Collection<String>> styleSpans = Inspector.getInspector()
+                        .inspect(newValue, FileOperation.getFileExtension(getRepresentingFile()));
+
+                if (styleSpans == null)
+                {
+                    saveFile();
+                    Indexer.getIndexer().index(getRepresentingFile());
+                }
+            }).start();
         });
         
         new CompletationsPopup(this);
@@ -73,7 +80,7 @@ public final class SealCodeArea extends CodeArea
     private void addEventHandlers()
     {
         // Cambia el estilo de resaltado al cambaiar de tema
-        AppEvents.onThemeChange.addListener(this::updateResources);
+        AppEvents.onGlobalConfigUpdate.addListener(this::updateResources);
 
         // Añade un evento en el que, si se pusa Ctrl + Z, se deshace la última acción
         this.addEventHandler(KeyEvent.KEY_PRESSED, event ->

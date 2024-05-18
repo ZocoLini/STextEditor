@@ -1,0 +1,461 @@
+/*******************************************************************************
+ *                                                                             *
+ * CSS for the DARK theme                                                      *
+ *                                                                             *
+ ******************************************************************************/
+@import "../../themeBase.css";
+
+/*******************************************************************************
+ *                                                                             *
+ * Global constants                                                            *
+ *                                                                             *
+ ******************************************************************************/
+.root {
+    -fx-text-base-color: #fefefe;
+    /* Swatch Colors - Red */
+
+    -swatch-100: hsb(0, 80%, 98%);
+    -swatch-200: hsb(0, 80%, 88%);
+    -swatch-300: hsb(0, 80%, 78%);
+    -swatch-400: hsb(0, 80%, 68%);
+    -swatch-500: hsb(0, 80%, 58%);
+
+    -swatch-dark-gray: #222;
+    -swatch-gray: #333;
+    -swatch-light-gray: #444;
+    -fx-background: -swatch-gray;
+    -fx-color: -swatch-gray;
+    -confirmation-color-confirmed: lime;
+    -confirmation-color-error: red;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Widget pane                                                                 *
+ *                                                                             *
+ ******************************************************************************/
+.widget-pane {
+    -fx-grid-line-color: -swatch-dark-gray;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Menus                                                                       *
+ *                                                                             *
+ ******************************************************************************/
+.menu-bar {
+    -fx-background-color: -swatch-light-gray;
+}
+
+.menu-item {
+    -fx-background-color: -swatch-gray;
+}
+
+.menu:hover, .menu:selected {
+    -fx-background-color: #555555;
+}
+
+.context-menu {
+    -fx-background-color: -swatch-gray;
+}
+
+.menu-item:hover, .menu-item:focused {
+    -fx-background-color: #555555;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Text field, text area                                                       *
+ *                                                                             *
+ ******************************************************************************/
+.text-field, .text-area {
+    -fx-text-fill: -fx-text-base-color;
+    -underline-color: -swatch-gray;
+}
+
+.text-field:focused, .text-area:focused {
+    -fx-border-color: -swatch-200;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Button, toggle button                                                       *
+ *                                                                             *
+ ******************************************************************************/
+.toggle-button, .button {
+    -fx-background-color: rgb(64, 64, 64);
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0.0, 0.0, 0.0, 0.70), 6.0, 0.3, 0, 2);
+}
+
+.toggle-button:selected, .button:selected {
+    -fx-background-color: -swatch-500;
+    -fx-text-fill: white;
+}
+
+.button-raised .button .text, .button-flat .button .text {
+    -fx-text-weight: Bold;
+}
+
+.button:default {
+    -fx-background-color: -swatch-500;
+    -fx-text-fill: white;
+}
+
+.toggle-button:focused, .button:focused, .button:default:focused {
+    -fx-background-color: rgb(48, 48, 48);
+    -fx-text-fill: white;
+}
+
+.toggle-button:focused:selected {
+    -fx-background-color: derive(-swatch-500, -12%);
+    -fx-text-fill: white;
+}
+
+.toggle-button:armed, .toggle-button:selected, .button:armed, .button:default:armed {
+    -fx-background-color: -swatch-500;
+    -fx-text-fill: white;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Toggle switch                                                               *
+ *                                                                             *
+ ******************************************************************************/
+.tile .toggle-switch > .thumb-area {
+    -fx-background-color: -swatch-light-gray, -swatch-gray;
+}
+
+.toggle-switch > .thumb-area {
+    -fx-background-color: -swatch-light-gray, -swatch-dark-gray;
+}
+
+.toggle-switch > .thumb {
+    -fx-background-color: #AAAAAA;
+}
+
+.tile .toggle-switch:selected > .thumb-area,
+.toggle-switch:selected > .thumb-area {
+    -fx-background-color: -swatch-500;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Progress bar                                                                *
+ *                                                                             *
+ ******************************************************************************/
+.progress-bar .track {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Titled pane                                                                 *
+ *                                                                             *
+ ******************************************************************************/
+.titled-pane > .title {
+    -fx-background-color: -swatch-light-gray;
+    -fx-text-fill: #eeeeee;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Tree table, table view                                                      *
+ *                                                                             *
+ ******************************************************************************/
+.tree-table-view *, .table-view * {
+    -fx-border-color: transparent;
+}
+
+.table-row-cell * {
+    -fx-text-fill: white;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: -swatch-light-gray;
+}
+
+.tree-table-view, .table-view {
+    -fx-background-color: -swatch-dark-gray;
+}
+
+.tree-table-view .column-header, .table-view .column-header {
+    -fx-background-color: -swatch-500;
+}
+
+.column-header-background {
+    -fx-background-color: #111111;
+}
+
+.tree-table-row-cell, .table-row-cell {
+    -fx-background-color: -swatch-gray;
+    -fx-border-color: transparent;
+}
+
+.tree-table-row-cell:empty, .tree-table-row-cell:empty:hover,
+.table-row-cell:empty, .table-row-cell:empty:hover {
+    -fx-background-color: transparent;
+}
+
+.tree-table-row-cell:filled:hover,
+.table-row-cell:filled:hover {
+    -fx-background-color: -swatch-200;
+}
+
+.tree-table-row-cell:filled:focused:selected,
+.table-row-cell:filled:hover {
+    -fx-background-color: -swatch-100;
+}
+
+.tree-table-row-cell > .tree-disclosure-node > .arrow,
+.tree-cell > .tree-disclosure-node > .arrow {
+    -fx-background-color: white;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Scroll pane                                                                 *
+ *                                                                             *
+ ******************************************************************************/
+.scroll-pane .corner {
+    -fx-background-color: -swatch-dark-gray;
+}
+
+.scroll-bar .track-background {
+    -fx-background-color: -swatch-dark-gray !important;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: -swatch-light-gray !important;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-background-color: white !important;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Tiles                                                                       *
+ *                                                                             *
+ ******************************************************************************/
+.tile {
+    -fx-background-color: #222;
+    -fx-effect: dropshadow(gaussian, #101010, 6, 0.1, 0, 4);
+}
+
+.tile:selected {
+    -fx-background-color: #101010;
+    -fx-effect: dropshadow(gaussian, derive(yellow, -25%), 8, 0.00005, 0, 4);
+}
+
+.tile:selected .tile-title-bar {
+    -fx-background-color: -swatch-500;
+}
+
+.tile .label {
+    -fx-text-fill: -fx-text-base-color;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Layouts                                                                     *
+ *                                                                             *
+ ******************************************************************************/
+.layout-stack {
+    -fx-background-color: rgba(255, 255, 255, 0.03);
+    -fx-border-color: black;
+}
+
+.layout-label * {
+    -fx-text-fill: #aaa;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * List view                                                                   *
+ *                                                                             *
+ ******************************************************************************/
+.list-view {
+    -fx-background-color: transparent;
+}
+
+.list-view .list-cell {
+    -fx-background-color: -swatch-gray;
+}
+
+.list-view .list-cell:filled:focused:selected {
+    -fx-background-color: -swatch-500;
+    -fx-text-fill: -fx-text-base-color;
+}
+
+.list-view:focused .list-cell:filled:focused:selected {
+    -fx-background-color: -swatch-100;
+}
+
+.list-view:hover .list-cell:filled:hover {
+    -fx-background-color: -swatch-light-gray;
+    -fx-text-fill: -fx-text-base-color;
+}
+
+.list-view:hover .list-cell:hover {
+    -fx-background-color: null;
+    -fx-text-fill: -fx-text-base-color;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Slider, range slider                                                        *
+ *                                                                             *
+ ******************************************************************************/
+.slider .axis, .range-slider .axis {
+    -fx-tick-label-fill: #eee;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Medusa gauges                                                               *
+ *                                                                             *
+ ******************************************************************************/
+.gauge {
+    -fx-needle-color: -swatch-100;
+    -fx-tick-mark-color: white;
+    -fx-major-tick-color: white;
+    -fx-minor-tick-color: #aaa;
+    -fx-medium-tick-color: #aaa;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Tab pane, tabs                                                              *
+ *                                                                             *
+ ******************************************************************************/
+.tab-pane {
+    -fx-border-color: transparent;
+    -fx-background-color: #333333; /* Color de fondo */
+    -fx-text-fill: white; /* Color del texto */
+}
+
+/* Estilo para las pestañas */
+.tab {
+    -fx-background-color: #444444; /* Color de fondo */
+    -fx-text-fill: white; /* Color del texto */
+    -fx-font-size: 14px; /* Tamaño de fuente */
+    -fx-padding: 3px 8px; /* Relleno interno */
+}
+
+/* Estilo para las pestañas seleccionadas */
+.tab:selected {
+    -fx-background-color: #555555; /* Color de fondo */
+    -fx-text-fill: #007bff; /* Color del texto seleccionado */
+    -fx-border-color: #007bff; /* Color del borde */
+    -fx-border-width: 0 0 2px 0; /* Grosor del borde */
+}
+
+/* Estilo para las pestañas cuando se pasa el ratón sobre ellas */
+.tab:hover {
+    -fx-background-color: #666666; /* Cambia el color de fondo al pasar el ratón */
+}
+
+/* Estilo para las pestañas cuando están inactivas */
+.tab:disabled {
+    -fx-opacity: 0.7; /* Opacidad reducida para las pestañas inactivas */
+}
+
+/* Estilo para el contenido de las pestañas */
+.tab-content-area {
+    -fx-background-color: #333333; /* Color de fondo */
+}
+/*******************************************************************************
+ *                                                                             *
+ * Drive bases                                                                 *
+ *                                                                             *
+ ******************************************************************************/
+.robot-drive {
+    -fx-fill: #666;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Settings dialogs                                                            *
+ *                                                                             *
+ ******************************************************************************/
+.settings-pane {
+    -fx-border-color: -swatch-dark-gray;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Graph (axis) labels                                                         *
+ *                                                                             *
+ ******************************************************************************/
+.axis-label {
+    -fx-fill: white;
+}
+
+.axis {
+    -fx-tick-label-fill: white;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Tree View                                                                   *
+ *                                                                             *
+ ******************************************************************************/
+.tree-view {
+    -fx-background-color: #333333; /* Color de fondo */
+    -fx-text-fill: white; /* Color del texto */
+    -fx-padding: 0 5px;
+}
+
+/* Estilo para los elementos del árbol */
+.tree-cell {
+    -fx-background-color: transparent; /* Color de fondo */
+    -fx-border-radius: 5px; /* Relleno interno */
+    -fx-padding: 3px 8px; /* Relleno interno */
+}
+
+/* Estilo para los elementos del árbol al pasar el ratón sobre ellos */
+.tree-cell:hover {
+}
+.tree-cell:selected {
+    -fx-background-color: #007bff; /* Azul elegante */
+    -fx-text-fill: #f0f0f0; /* Blanco o gris claro para el texto */
+}
+
+.v-box {
+    -fx-background-color: -swatch-gray;
+    -fx-border-radius: 5px;
+    -fx-padding: 10;
+}
+.lineno .fold-indicator {
+    -fx-text-fill: black;
+    -fx-background-color: -swatch-dark-gray;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Code Area                                                                   *
+ *                                                                             *
+ ******************************************************************************/
+.match-bracket {
+    -rtfx-background-color: lightgreen;
+}
+
+.code-area {
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-background-color: #333333;
+}
+
+.code-area .line-number {
+    -fx-fill: #808080;
+}
+
+.code-area .caret {
+    -fx-background-color: #007bff;
+}
+
+.code-area .selection {
+    -fx-background-color: rgba(0, 123, 255, 0.3);
+}

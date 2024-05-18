@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
-import com.lebastudios.sealcode.config.Session;
+import com.lebastudios.sealcode.core.logic.config.Session;
 
 import java.io.File;
 
