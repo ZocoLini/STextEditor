@@ -23,7 +23,8 @@ module com.lebastudios.sealcode {
     requires mysql.connector.j;
     requires mongo.java.driver;
     requires reactfx;
-    
+    requires com.google.j2objc.annotations;
+
     opens com.lebastudios.sealcode.custom.controllers to javafx.fxml;
     opens com.lebastudios.sealcode.custom.controllers.settingsPanels to javafx.fxml;
     

@@ -30,6 +30,8 @@
                                                   fxmlResource="core/settingsScenePanels/generalAnchorPane.fxml"/>
                                 <SettingsTreeItem value="Preferencias" iconName="preferencias.png"
                                                   fxmlResource="core/settingsScenePanels/preferenciasAnchorPane.fxml"/>
+                                <SettingsTreeItem value="Completations" iconName="template.png"
+                                                  fxmlResource="core/settingsScenePanels/completationsTabPane.fxml"/>
                             </children>
                         </IconTreeItem>
                         <IconTreeItem value="Proyecto" iconName="fileSystem.png">

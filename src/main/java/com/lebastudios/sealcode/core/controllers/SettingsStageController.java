@@ -35,11 +35,7 @@ public class SettingsStageController implements IStageController
     @FXML
     public void applySettings()
     {
-        if (paneController == null)
-        {
-            System.err.println("No hay ningun panel activo ahora mismo.");
-            return;
-        }
+        if (paneController == null) return;
 
         paneController.apply();
     }
@@ -54,6 +50,8 @@ public class SettingsStageController implements IStageController
     
     public void loadNewSettingsPane(String paneName)
     {
+        applySettings();
+        
         try
         {
             double dividerPosition = mainSplitPane.getDividerPositions()[0];

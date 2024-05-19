@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<?import com.lebastudios.sealcode.core.frontend.fxextends.IconTreeItem?>
+<?import javafx.scene.layout.BorderPane?>
+<?import com.lebastudios.sealcode.core.frontend.fxextends.IconButton?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<SplitPane xmlns="http://javafx.com/javafx" orientation="VERTICAL"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.lebastudios.sealcode.core.controllers.settingsPanels.LiveTemplateController"
+           prefHeight="400.0" prefWidth="600.0">
+
+    <SplitPane>
+        <BorderPane>
+            <top>
+                <ToolBar>
+                    <IconButton iconName="add.png" onAction="#addLanguage"/>
+                    <IconButton iconName="less.png" onAction="#removeLanguage"/>
+                </ToolBar>
+            </top>
+
+            <center>
+                <TreeView fx:id="liveTemplateTreeView">
+                    <IconTreeItem value="Languages" iconName="lang.png"/>
+                </TreeView>
+            </center>
+        </BorderPane>
+
+        <BorderPane>
+            <top>
+                <ToolBar>
+                    <IconButton iconName="add.png" onAction="#addLiveTemplate"/>
+                    <IconButton iconName="less.png" onAction="#removeLiveTemplate"/>
+                </ToolBar>
+            </top>
+
+            <center>
+                <ListView fx:id="liveTemplatesListView"/>
+            </center>
+        </BorderPane>
+    </SplitPane>
+
+    <VBox>
+        <HBox>
+            <Label text="Name:"/>
+            <TextField fx:id="liveTemplateValueTextField"/>
+        </HBox>
+        <HBox>
+            <TextArea fx:id="liveTemplateCompTextArea"/>
+            <TextArea fx:id="liveTemplateDescTextArea"/>
+        </HBox>
+    </VBox>
+</SplitPane>

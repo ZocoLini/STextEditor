@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public abstract class Completation implements Comparable<Completation>
 {
-    private String value;
+    protected String value;
     private String iconName;
 
     public Completation(String value, String iconName)
