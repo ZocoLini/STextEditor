@@ -24,7 +24,7 @@
                                                   fxmlResource="core/settingsScenePanels/fuenteAnchorPane.fxml"/>
                             </children>
                         </IconTreeItem>
-                        <IconTreeItem value="Editor" iconName="c.png">
+                        <IconTreeItem value="Editor" iconName="editor.png">
                             <children>
                                 <SettingsTreeItem value="General" iconName="general.png"
                                                   fxmlResource="core/settingsScenePanels/generalAnchorPane.fxml"/>

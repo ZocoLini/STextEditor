@@ -30,7 +30,7 @@ public class KeywordCompletionsController
         {
             IconTreeItem<String> item = new IconTreeItem<>(
                     FileOperation.getFileName(file),
-                    FileOperation.getFileExtension(file) + ".png"
+                    "ext_" + FileOperation.getFileName(file) + ".png"
             );
 
             keyWordsTreeView.getRoot().getChildren().add(item);
@@ -48,6 +48,7 @@ public class KeywordCompletionsController
     {
         TreeItem<String> selectedItem = keyWordsTreeView.getSelectionModel().getSelectedItem();
 
+        if (selectedItem == null) return;
         if (selectedItem.getParent() == null) return;
 
         actualCompletations = LangCompletations.readCompletationFromFile(selectedItem.getValue());

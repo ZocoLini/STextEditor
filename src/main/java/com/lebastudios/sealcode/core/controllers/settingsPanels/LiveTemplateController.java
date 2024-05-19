@@ -25,12 +25,12 @@ public class LiveTemplateController
     public void initialize()
     {
         File completationsFolder = new File(FilePaths.getProgLangCompletationsDirectory());
-
+        
         for (var file : completationsFolder.listFiles())
         {
             IconTreeItem<String> item = new IconTreeItem<>(
                     FileOperation.getFileName(file),
-                    FileOperation.getFileExtension(file) + ".png"
+                    "ext_" + FileOperation.getFileName(file) + ".png"
             );
 
             liveTemplateTreeView.getRoot().getChildren().add(item);

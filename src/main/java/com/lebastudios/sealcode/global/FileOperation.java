@@ -110,7 +110,12 @@ public final class FileOperation
         writer.write(content);
         writer.close();
     }
-
+    
+    public static String getFileExtensionImg(File file)
+    {
+        return "ext_" + getFileExtension(file) + ".png";
+    }
+    
     public static String getFileExtension(File file)
     {
         if (file == null)

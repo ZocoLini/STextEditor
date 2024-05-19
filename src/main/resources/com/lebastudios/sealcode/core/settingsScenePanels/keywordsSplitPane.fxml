@@ -13,7 +13,7 @@
     <BorderPane>
         <top>
             <ToolBar>
-                <IconButton iconName="add.png" onAction="#addLanguage"/>
+                <IconButton iconName="plus.png" onAction="#addLanguage"/>
                 <IconButton iconName="less.png" onAction="#removeLanguage"/>
             </ToolBar>
         </top>
@@ -28,7 +28,7 @@
     <BorderPane>
         <top>
             <ToolBar>
-                <IconButton iconName="add.png" onAction="#addKeyword"/>
+                <IconButton iconName="plus.png" onAction="#addKeyword"/>
                 <IconButton iconName="less.png" onAction="#removeKeyword"/>
             </ToolBar>    
         </top>

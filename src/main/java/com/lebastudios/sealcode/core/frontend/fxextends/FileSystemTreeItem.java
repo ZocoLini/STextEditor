@@ -1,6 +1,7 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
 import com.lebastudios.sealcode.core.logic.config.Session;
+import com.lebastudios.sealcode.global.FileOperation;
 
 import java.io.File;
 
@@ -13,8 +14,8 @@ public final class FileSystemTreeItem extends IconTreeItem<String>
         this.setValue(file.getName());
         
         String iconName = file.isDirectory()
-                ? "fileDirectory.png"
-                : "file" + file.getName().substring(file.getName().lastIndexOf('.') + 1) + ".png";
+                ? "directory.png"
+                : FileOperation.getFileExtensionImg(file);
         this.setIconName(iconName);
     }
 

@@ -16,7 +16,7 @@
         <BorderPane>
             <top>
                 <ToolBar>
-                    <IconButton iconName="add.png" onAction="#addLanguage"/>
+                    <IconButton iconName="plus.png" onAction="#addLanguage"/>
                     <IconButton iconName="less.png" onAction="#removeLanguage"/>
                 </ToolBar>
             </top>
@@ -31,7 +31,7 @@
         <BorderPane>
             <top>
                 <ToolBar>
-                    <IconButton iconName="add.png" onAction="#addLiveTemplate"/>
+                    <IconButton iconName="plus.png" onAction="#addLiveTemplate"/>
                     <IconButton iconName="less.png" onAction="#removeLiveTemplate"/>
                 </ToolBar>
             </top>
@@ -52,7 +52,7 @@
             <TextArea fx:id="liveTemplateDescTextArea"/>
         </HBox>
         <ToolBar>
-            <Button text="Save" onAction="#saveLiveTemplate"/>
+            <IconButton iconName="save.png" onAction="#saveLiveTemplate"/>
         </ToolBar>
     </VBox>
 </SplitPane>
