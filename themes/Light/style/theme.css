@@ -39,6 +39,7 @@
  ******************************************************************************/
 .text-area, .text-field {
     -underline-color: #eee;
+    -fx-background-color: white;
 }
 
 .jfx-slider .slider-value {

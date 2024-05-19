@@ -5,6 +5,7 @@
 <?import com.lebastudios.sealcode.core.frontend.fxextends.IconTreeItem?>
 <?import javafx.scene.layout.BorderPane?>
 <?import com.lebastudios.sealcode.core.frontend.fxextends.IconButton?>
+<?import javafx.geometry.Insets?>
 <SplitPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.lebastudios.sealcode.core.controllers.settingsPanels.KeywordCompletionsController"

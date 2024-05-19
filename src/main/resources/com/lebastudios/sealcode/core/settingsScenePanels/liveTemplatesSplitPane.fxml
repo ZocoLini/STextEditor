@@ -7,6 +7,7 @@
 <?import com.lebastudios.sealcode.core.frontend.fxextends.IconButton?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
 <SplitPane xmlns="http://javafx.com/javafx" orientation="VERTICAL"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.lebastudios.sealcode.core.controllers.settingsPanels.LiveTemplateController"
@@ -44,12 +45,36 @@
 
     <VBox>
         <HBox>
-            <Label text="Name:"/>
+            <Label text="Name:" alignment="CENTER">
+                <HBox.margin>
+                    <Insets top="5.0" right="5.0" bottom="5.0" left="5.0" />
+                </HBox.margin>
+            </Label>
             <TextField fx:id="liveTemplateValueTextField"/>
         </HBox>
         <HBox>
-            <TextArea fx:id="liveTemplateCompTextArea"/>
-            <TextArea fx:id="liveTemplateDescTextArea"/>
+            <VBox>
+                <VBox.margin>
+                    <Insets top="5.0" right="5.0" bottom="5.0" left="5.0" />
+                </VBox.margin>
+                <Label text="Template:" alignment="CENTER">
+                    <VBox.margin>
+                        <Insets top="5.0" right="5.0" bottom="5.0" left="5.0" />
+                    </VBox.margin>
+                </Label>
+                <TextArea fx:id="liveTemplateCompTextArea"/>
+            </VBox>
+            <VBox>
+                <VBox.margin>
+                    <Insets top="5.0" right="5.0" bottom="5.0" left="5.0" />
+                </VBox.margin>
+                <Label text="Description:" alignment="CENTER">
+                    <VBox.margin>
+                        <Insets top="5.0" right="5.0" bottom="5.0" left="5.0" />
+                    </VBox.margin>
+                </Label>
+                <TextArea fx:id="liveTemplateDescTextArea"/>
+            </VBox>
         </HBox>
         <ToolBar>
             <IconButton iconName="save.png" onAction="#saveLiveTemplate"/>
