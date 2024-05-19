@@ -3,7 +3,7 @@ package com.lebastudios.sealcode.events;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppMapEvent3<K, A, B, C> extends EventMapHandler<K, IEventMethod3<A, B, C>>
+public class MappedEvent3<K, A, B, C> extends MappedEventHandler<K, IEventMethod3<A, B, C>>
 {
     public void invoke(K key, A a, B b, C c)
     {

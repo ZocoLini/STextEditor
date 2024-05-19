@@ -3,20 +3,19 @@ package com.lebastudios.sealcode.events;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppEvent3<A, B, C> extends EventHandler<IEventMethod3<A, B, C>>
+public class Event1<T> extends EventHandler<IEventMethod1<T>>
 {
-    public void invoke(A styleSpans, B text, C filExtension)
+    public void invoke(T t)
     {
         // Esta copia permite llamar a todos los listeners aunque se modifique la lista durante una llamada
-        List<IEventMethod3<A, B, C>> listaAuxiliar = new ArrayList<>(listeners);
+        List<IEventMethod1<T>> listaAuxiliar = new ArrayList<>(listeners);
 
-        for (var listener : listaAuxiliar)
+        for (IEventMethod1<T> listener : listaAuxiliar)
         {
             try
             {
-                listener.invoke(styleSpans, text, filExtension);
-            }
-            catch (Exception e)
+                listener.invoke(t);
+            } catch (Exception e)
             {
                 System.err.println("Error invoking event: " + e.getMessage());
             }

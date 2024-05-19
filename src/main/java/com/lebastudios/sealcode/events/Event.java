@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Abstract class for the event system. This class is used to create events that can be invoked without parameters.
  */
-public class AppEvent extends EventHandler<IEventMethod>
+public class Event extends EventHandler<IEventMethod>
 {
     public void invoke()
     {

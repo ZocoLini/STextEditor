@@ -12,29 +12,29 @@ import java.util.TreeSet;
 public final class AppEvents
 {
     /*  App Life Cicle  */
-    public static final AppEvent onAppExit = new AppEvent();
-    public static final AppEvent onAppStart = new AppEvent();
+    public static final Event onAppExit = new Event();
+    public static final Event onAppStart = new Event();
     
     /*  IDE Objects  */
         /*  Seal Code Área  */
             /*  Completations Popup  <completationsToShow, file, fileExtension, currentWord, allText> */
-    public static final AppEvent5<TreeSet<Completation>, File, String, String, String> onCompletationsRequest = 
-            new AppEvent5<>();
+    public static final Event5<TreeSet<Completation>, File, String, String, String> onCompletationsRequest = 
+            new Event5<>();
             /*  Modificaciones de Texto  <fileExtenssion (key), oldText, newTextInfo, textArea> */
-    public static final AppMapEvent3<String, String, TextModInf, SealCodeArea> onTextModifiedBefore = new AppMapEvent3<>();
-    public static final AppMapEvent3<String, String, TextModInf, SealCodeArea> onTextModifiedAfter = new AppMapEvent3<>();
-    public static final AppMapEvent3<String, String, TextModInf, SealCodeArea> onTextDeleted = new AppMapEvent3<>();
-    public static final AppMapEvent3<String, String, TextModInf, SealCodeArea> onTextInserted = new AppMapEvent3<>();
-    public static final AppMapEvent3<String, String, TextModInf, SealCodeArea> onTextReplaced = new AppMapEvent3<>();
+    public static final MappedEvent3<String, String, TextModInf, SealCodeArea> onTextModifiedBefore = new MappedEvent3<>();
+    public static final MappedEvent3<String, String, TextModInf, SealCodeArea> onTextModifiedAfter = new MappedEvent3<>();
+    public static final MappedEvent3<String, String, TextModInf, SealCodeArea> onTextDeleted = new MappedEvent3<>();
+    public static final MappedEvent3<String, String, TextModInf, SealCodeArea> onTextInserted = new MappedEvent3<>();
+    public static final MappedEvent3<String, String, TextModInf, SealCodeArea> onTextReplaced = new MappedEvent3<>();
             /*Instanciación de un nuevo Seal Code Area*/
-    public static final AppEvent1<SealCodeArea> onSealCodeAreaCreated = new AppEvent1<>();
-    public static final AppEvent1<SealCodeArea> onSealCodeAreaDeleted = new AppEvent1<>();
+    public static final Event1<SealCodeArea> onSealCodeAreaCreated = new Event1<>();
+    public static final Event1<SealCodeArea> onSealCodeAreaDeleted = new Event1<>();
     
     /*  Settings Pane   */
-    public static final AppEvent onGlobalConfigUpdate = new AppEvent();
+    public static final Event onGlobalConfigUpdate = new Event();
     
     /* Customice interface */
         /* Settings TreeView */
-    public static final AppEvent1<SettingsTreeView> onLoadedSettingsTreeView = new AppEvent1<>();
-    public static final AppEvent1<IconTreeItem<String>> onLoadedSettingsIconTreeItem = new AppEvent1<>();
+    public static final Event1<SettingsTreeView> onLoadedSettingsTreeView = new Event1<>();
+    public static final Event1<IconTreeItem<String>> onLoadedSettingsIconTreeItem = new Event1<>();
 }

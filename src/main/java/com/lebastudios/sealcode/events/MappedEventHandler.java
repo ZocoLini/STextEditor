@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class EventMapHandler<K, T>
+public abstract class MappedEventHandler<K, T>
 {
     protected final Map<K, List<T>> listenersMap = new HashMap<>();
 

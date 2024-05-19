@@ -40,7 +40,5 @@ public final class SealCodeApplication extends Application
         stage.show();
 
         AppEvents.onAppStart.invoke();
-        
-        AppLoop.startLoop();
     }
 }
