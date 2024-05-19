@@ -51,5 +51,8 @@
             <TextArea fx:id="liveTemplateCompTextArea"/>
             <TextArea fx:id="liveTemplateDescTextArea"/>
         </HBox>
+        <ToolBar>
+            <Button text="Save" onAction="#saveLiveTemplate"/>
+        </ToolBar>
     </VBox>
 </SplitPane>

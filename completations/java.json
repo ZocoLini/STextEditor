@@ -1,185 +1,237 @@
 {
-  "keywordsCompletations":[
+  "language": "java",
+  "keywordsCompletations": [
     {
-      "value": "public"
+      "value": "public",
+      "iconName": "keyword.png"
     },
     {
-      "value": "private"
+      "value": "private",
+      "iconName": "keyword.png"
     },
     {
-      "value": "abstract"
+      "value": "abstract",
+      "iconName": "keyword.png"
     },
     {
-      "value": "protected"
+      "value": "protected",
+      "iconName": "keyword.png"
     },
     {
-      "value": "static"
+      "value": "static",
+      "iconName": "keyword.png"
     },
     {
-      "value": "final"
+      "value": "final",
+      "iconName": "keyword.png"
     },
     {
-      "value": "void"
+      "value": "void",
+      "iconName": "keyword.png"
     },
     {
-      "value": "int"
+      "value": "int",
+      "iconName": "keyword.png"
     },
     {
-      "value": "boolean"
+      "value": "boolean",
+      "iconName": "keyword.png"
     },
     {
-      "value": "return"
+      "value": "return",
+      "iconName": "keyword.png"
     },
     {
-      "value": "true"
+      "value": "true",
+      "iconName": "keyword.png"
     },
     {
-      "value": "false"
+      "value": "false",
+      "iconName": "keyword.png"
     },
     {
-      "value": "null"
+      "value": "null",
+      "iconName": "keyword.png"
     },
     {
-      "value": "this"
+      "value": "this",
+      "iconName": "keyword.png"
     },
     {
-      "value": "new"
+      "value": "new",
+      "iconName": "keyword.png"
     },
     {
-      "value": "class"
+      "value": "class",
+      "iconName": "keyword.png"
     },
     {
-      "value": "extends"
+      "value": "extends",
+      "iconName": "keyword.png"
     },
     {
-      "value": "implements"
+      "value": "implements",
+      "iconName": "keyword.png"
     },
     {
-      "value": "interface"
+      "value": "interface",
+      "iconName": "keyword.png"
     },
     {
-      "value": "package"
+      "value": "package",
+      "iconName": "keyword.png"
     },
     {
-      "value": "import"
+      "value": "import",
+      "iconName": "keyword.png"
     },
     {
-      "value": "super"
+      "value": "super",
+      "iconName": "keyword.png"
     },
     {
-      "value": "try"
+      "value": "try",
+      "iconName": "keyword.png"
     },
     {
-      "value": "catch"
+      "value": "catch",
+      "iconName": "keyword.png"
     },
     {
-      "value": "finally"
+      "value": "finally",
+      "iconName": "keyword.png"
     },
     {
-      "value": "throw"
+      "value": "throw",
+      "iconName": "keyword.png"
     },
     {
-      "value": "throws"
+      "value": "throws",
+      "iconName": "keyword.png"
     },
     {
-      "value": "assert"
+      "value": "assert",
+      "iconName": "keyword.png"
     },
     {
-      "value": "break"
+      "value": "break",
+      "iconName": "keyword.png"
     },
     {
-      "value": "continue"
+      "value": "continue",
+      "iconName": "keyword.png"
     },
     {
-      "value": "case"
+      "value": "case",
+      "iconName": "keyword.png"
     },
     {
-      "value": "default"
+      "value": "default",
+      "iconName": "keyword.png"
     },
     {
-      "value": "do"
+      "value": "do",
+      "iconName": "keyword.png"
     },
     {
-      "value": "enum"
+      "value": "enum",
+      "iconName": "keyword.png"
     },
     {
-      "value": "goto"
+      "value": "goto",
+      "iconName": "keyword.png"
     },
     {
-      "value": "instanceof"
+      "value": "instanceof",
+      "iconName": "keyword.png"
     },
     {
-      "value": "native"
+      "value": "native",
+      "iconName": "keyword.png"
     },
     {
-      "value": "const"
+      "value": "const",
+      "iconName": "keyword.png"
     }
   ],
   "liveTemplatesCompletations": [
     {
-      "value": "pruebaCaret",
-      "description": "Creates a main method",
-      "completation": "switch ($VAR$)\n{\n\tcase $END$:\n\t\tbreak;\n\tdefault:\n\t\tbreak;\n}"
-    },
-    {
-      "value": "main",
-      "description": "Creates a main method",
-      "completation": "public static void main(String[] args)\n{\n\t$END$\n}"
-    },
-    {
-      "value": "scan",
-      "description": "Creates a Scanner object",
-        "completation": "new Scanner(System.in)"
-    },
-    {
-      "value": "sout",
-      "description": "Creates a System.out.println",
-      "completation": "System.out.println($END$);"
-    },
-    {
-      "value": "for",
-      "description": "Creates a for loop",
-      "completation": "for (int i = 0; i < $END$; i++)\n{\n\t\n}"
-    },
-    {
-      "value": "if",
-      "description": "Creates an if statement",
-      "completation": "if ($END$)\n{\n\t\n}"
-    },
-    {
-      "value": "else",
-      "description": "Creates an else statement",
-      "completation": "else\n{\n\t\n}"
-    },
-    {
-      "value": "while",
-      "description": "Creates a while loop",
-      "completation": "while ($END$)\n{\n\t\n}"
-    },
-    {
-      "value": "do",
       "description": "Creates a do while loop",
-      "completation": "do\n{\n\t\n} while ($END$);"
+      "completation": "do\n{\n\t\n} while ($END$);",
+      "value": "do",
+      "iconName": "template.png"
     },
     {
-      "value": "switch",
       "description": "Creates a switch statement",
-      "completation": "switch ($END$)\n{\n\tcase $END$:\n\t\tbreak;\n\tdefault:\n\t\tbreak;\n}"
+      "completation": "switch ($END$)\n{\n\tcase $END$:\n\t\tbreak;\n\tdefault:\n\t\tbreak;\n}",
+      "value": "switch",
+      "iconName": "template.png"
     },
     {
-      "value": "try",
       "description": "Creates a try catch statement",
-      "completation": "try\n{\n\t$END$\n}\ncatch (Exception e)\n{\n\te.printStackTrace();\n}"
+      "completation": "try\n{\n\t$END$\n}\ncatch (Exception e)\n{\n\te.printStackTrace();\n}",
+      "value": "try",
+      "iconName": "template.png"
     },
     {
-      "value": "class",
       "description": "Creates a class",
-      "completation": "public class $END$\n{\n\t\n}"
+      "completation": "public class $END$\n{\n\t\n}",
+      "value": "class",
+      "iconName": "template.png"
     },
     {
-      "value": "interface",
       "description": "Creates an interface",
-      "completation": "public interface $END$\n{\n\t\n}"
+      "completation": "public interface $END$\n{\n\t\n}",
+      "value": "interface",
+      "iconName": "template.png"
+    },
+    {
+      "description": "Creates a Scanner object",
+      "completation": "new Scanner(System.in)",
+      "value": "scan",
+      "iconName": "template.png"
+    },
+    {
+      "description": "Creates a System.out.println",
+      "completation": "System.out.println($END$);",
+      "value": "sout",
+      "iconName": "template.png"
+    },
+    {
+      "description": "Creates an if statement",
+      "completation": "if ($END$)\n{\n\t\n}",
+      "value": "if",
+      "iconName": "template.png"
+    },
+    {
+      "description": "Creates a main method",
+      "completation": "public static void main(String[] args)\n{\n\t$END$\n}",
+      "value": "main",
+      "iconName": "template.png"
+    },
+    {
+      "description": "Creates a for loop",
+      "completation": "for (int i \u003d 0; i \u003c $END$; i++)\n{\n\t\n}",
+      "value": "for",
+      "iconName": "template.png"
+    },
+    {
+      "description": "Creates a main method",
+      "completation": "switch ($VAR$)\n{\n\tcase $END$:\n\t\tbreak;\n\tdefault:\n\t\tbreak;\n}",
+      "value": "pruebaCaret",
+      "iconName": "template.png"
+    },
+    {
+      "description": "Creates a while loop",
+      "completation": "while ($END$)\n{\n\t\n}",
+      "value": "while",
+      "iconName": "template.png"
+    },
+    {
+      "description": "Creates an else statement",
+      "completation": "else\n{\n\t\n}",
+      "value": "else",
+      "iconName": "template.png"
     }
   ]
 }

@@ -34,13 +34,13 @@ public class KeywordCompletionsController
             );
 
             keyWordsTreeView.getRoot().getChildren().add(item);
-
-            keyWordsTreeView.setOnMouseClicked(event ->
-            {
-                loadKeywords();
-            });
         }
 
+        keyWordsTreeView.setOnMouseClicked(event ->
+        {
+            loadKeywords();
+        });
+        
         keyWordsTreeView.getRoot().setExpanded(true);
     }
 
@@ -60,7 +60,8 @@ public class KeywordCompletionsController
         }
     }
 
-    public void removeLanguage()
+    @FXML
+    private void removeLanguage()
     {
         TreeItem<String> selectedItem = keyWordsTreeView.getSelectionModel().getSelectedItem();
 
@@ -75,8 +76,9 @@ public class KeywordCompletionsController
 
         keyWordsTreeView.getRoot().getChildren().remove(selectedItem);
     }
-    
-    public void addLanguage()
+
+    @FXML
+    private void addLanguage()
     {
         String languageName = Dialogs.insertTextDialog("Insert language name", "Insert the name of the language");
 
@@ -88,8 +90,9 @@ public class KeywordCompletionsController
 
         keyWordsTreeView.getRoot().getChildren().add(item);
     }
-    
-    public void addKeyword()
+
+    @FXML
+    private void addKeyword()
     {
         if (actualCompletations == null) return;
 
@@ -104,7 +107,8 @@ public class KeywordCompletionsController
         loadKeywords();
     }
 
-    public void removeKeyword()
+    @FXML
+    private void removeKeyword()
     {
         if (actualCompletations == null) return;
 

@@ -13,16 +13,14 @@ import java.io.File;
 
 public class LiveTemplateController
 {
-    @FXML public TreeView<String> liveTemplateTreeView;
-    @FXML public ListView<String> liveTemplatesListView;
+    @FXML private TreeView<String> liveTemplateTreeView;
+    @FXML private ListView<String> liveTemplatesListView;
     
-    @FXML public TextArea liveTemplateCompTextArea;
-    @FXML public TextArea liveTemplateDescTextArea;
-    @FXML public TextField liveTemplateValueTextField;
+    @FXML private TextArea liveTemplateCompTextArea;
+    @FXML private TextArea liveTemplateDescTextArea;
+    @FXML private TextField liveTemplateValueTextField;
 
     private LangCompletations actualCompletations;
-    
-    // TODO: Ajustar el guardado. Funciona mal.
     
     public void initialize()
     {
@@ -36,24 +34,25 @@ public class LiveTemplateController
             );
 
             liveTemplateTreeView.getRoot().getChildren().add(item);
-
-            liveTemplateTreeView.setOnMouseClicked(event ->
-            {
-                loadLiveTemplates();
-            });
-            
-            liveTemplatesListView.setOnMouseClicked(event ->
-            {
-                loadLiveTemplate();
-            });
         }
 
+        liveTemplateTreeView.setOnMouseClicked(event ->
+        {
+            clearTextAreas();
+            loadLiveTemplates();
+        });
+
+        liveTemplatesListView.setOnMouseClicked(event ->
+        {
+            clearTextAreas();
+            loadLiveTemplate();
+        });
+        
         liveTemplateTreeView.getRoot().setExpanded(true);
     }
 
     private void loadLiveTemplate()
     {
-        clearAndSaveLiveTemplateEditing();
         String selectedItem = liveTemplatesListView.getSelectionModel().getSelectedItem();
 
         if (selectedItem == null) return;
@@ -70,12 +69,15 @@ public class LiveTemplateController
         liveTemplateCompTextArea.setText(liveTemplateCompletation.getCompletation());
     }
     
-    private void clearAndSaveLiveTemplateEditing()
+    @FXML
+    private void saveLiveTemplate()
     {
         if (actualCompletations == null) return;
         if (liveTemplateValueTextField.getText().isEmpty() || liveTemplateValueTextField.getText().isBlank()) return;
         
-        actualCompletations.getLiveTemplatesCompletations().removeIf(variable -> variable.getValue().equals(liveTemplateValueTextField.getText()));
+        actualCompletations.getLiveTemplatesCompletations().removeIf(
+                variable -> variable.getValue().equals(liveTemplateValueTextField.getText())
+        );
         actualCompletations.getLiveTemplatesCompletations().add(new LiveTemplateCompletation(
                 liveTemplateValueTextField.getText(),
                 liveTemplateDescTextArea.getText(),
@@ -83,13 +85,19 @@ public class LiveTemplateController
         ));
         
         actualCompletations.saveToFile();
+
+        clearTextAreas();
+
         loadLiveTemplates();
-        
+    }
+
+    private void clearTextAreas()
+    {
         liveTemplateValueTextField.setText("");
         liveTemplateDescTextArea.setText("");
         liveTemplateCompTextArea.setText("");
     }
-    
+
     private void loadLiveTemplates()
     {
         TreeItem<String> selectedItem = liveTemplateTreeView.getSelectionModel().getSelectedItem();
@@ -106,26 +114,22 @@ public class LiveTemplateController
         }
     }
 
-    public void addLiveTemplate()
+    @FXML
+    private void addLiveTemplate()
     {
         if (actualCompletations == null) return;
 
-        String selectedItem = Dialogs.insertTextDialog("Insert keyword", "Insert the keyword to add");
-
-        if (selectedItem == null || selectedItem.isEmpty() || selectedItem.isBlank()) return;
-
-        actualCompletations.getLiveTemplatesCompletations().add(new LiveTemplateCompletation(
-                selectedItem, 
-                "", 
-                "completation en proceso"
-        ));
+        liveTemplateValueTextField.setText("<new live template>");
+        liveTemplateDescTextArea.setText("<description>");
+        liveTemplateCompTextArea.setText("<completation>");
 
         actualCompletations.saveToFile();
 
         loadLiveTemplates();
     }
 
-    public void removeLiveTemplate()
+    @FXML
+    private void removeLiveTemplate()
     {
         if (actualCompletations == null) return;
 
@@ -135,12 +139,15 @@ public class LiveTemplateController
 
         actualCompletations.getLiveTemplatesCompletations().removeIf(variable -> variable.getValue().equals(selectedItem));
 
+        clearTextAreas();
+
         actualCompletations.saveToFile();
 
         loadLiveTemplates();
     }
 
-    public void addLanguage()
+    @FXML
+    private void addLanguage()
     {
         String languageName = Dialogs.insertTextDialog("Insert language name", "Insert the name of the language");
 
@@ -153,7 +160,8 @@ public class LiveTemplateController
         liveTemplateTreeView.getRoot().getChildren().add(item);
     }
 
-    public void removeLanguage()
+    @FXML
+    private void removeLanguage()
     {
         TreeItem<String> selectedItem = liveTemplateTreeView.getSelectionModel().getSelectedItem();
 
