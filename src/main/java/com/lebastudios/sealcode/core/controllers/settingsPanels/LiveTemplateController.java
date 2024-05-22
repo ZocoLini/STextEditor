@@ -3,7 +3,8 @@ package com.lebastudios.sealcode.core.controllers.settingsPanels;
 import com.lebastudios.sealcode.core.frontend.dialogs.Dialogs;
 import com.lebastudios.sealcode.core.frontend.fxextends.IconTreeItem;
 import com.lebastudios.sealcode.core.logic.config.FilePaths;
-import com.lebastudios.sealcode.core.logic.completations.LangCompletationsJSON;
+import com.lebastudios.sealcode.core.logic.fileobj.JsonFile;
+import com.lebastudios.sealcode.core.logic.fileobj.LangCompletationsJSON;
 import com.lebastudios.sealcode.global.FileOperation;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -19,7 +20,7 @@ public class LiveTemplateController
     @FXML private TextArea liveTemplateDescTextArea;
     @FXML private TextField liveTemplateValueTextField;
 
-    private LangCompletationsJSON actualCompletations;
+    private JsonFile<LangCompletationsJSON> actualCompletations;
     
     public void initialize()
     {
@@ -56,7 +57,7 @@ public class LiveTemplateController
 
         if (selectedItem == null) return;
 
-        LangCompletationsJSON.LiveTemplateCompletation liveTemplateCompletation = actualCompletations.getLiveTemplatesCompletations().stream()
+        LangCompletationsJSON.LiveTemplateCompletation liveTemplateCompletation = actualCompletations.getInstance().liveTemplatesCompletations.stream()
                 .filter(variable -> variable.getValue().equals(selectedItem))
                 .findFirst()
                 .orElse(null);
@@ -74,16 +75,16 @@ public class LiveTemplateController
         if (actualCompletations == null) return;
         if (liveTemplateValueTextField.getText().isEmpty() || liveTemplateValueTextField.getText().isBlank()) return;
         
-        actualCompletations.getLiveTemplatesCompletations().removeIf(
+        actualCompletations.getInstance().liveTemplatesCompletations.removeIf(
                 variable -> variable.getValue().equals(liveTemplateValueTextField.getText())
         );
-        actualCompletations.getLiveTemplatesCompletations().add(new LangCompletationsJSON.LiveTemplateCompletation(
+        actualCompletations.getInstance().liveTemplatesCompletations.add(new LangCompletationsJSON.LiveTemplateCompletation(
                 liveTemplateValueTextField.getText(),
                 liveTemplateDescTextArea.getText(),
                 liveTemplateCompTextArea.getText()
         ));
         
-        actualCompletations.saveToFile();
+        actualCompletations.writeToFile();
 
         clearTextAreas();
 
@@ -101,13 +102,16 @@ public class LiveTemplateController
     {
         TreeItem<String> selectedItem = liveTemplateTreeView.getSelectionModel().getSelectedItem();
 
+        if (selectedItem == null) return;
         if (selectedItem.getParent() == null) return;
 
-        actualCompletations = LangCompletationsJSON.readCompletationFromFile(selectedItem.getValue());
-
+        actualCompletations = new JsonFile<>(
+                new File(FilePaths.getProgLangCompletationsDirectory() + selectedItem.getValue() + ".json"),
+                new LangCompletationsJSON());
+        
         liveTemplatesListView.getItems().clear();
 
-        for (var liveTemplateCompletation : actualCompletations.getLiveTemplatesCompletations())
+        for (var liveTemplateCompletation : actualCompletations.getInstance().liveTemplatesCompletations)
         {
             liveTemplatesListView.getItems().add(liveTemplateCompletation.getValue());
         }
@@ -122,7 +126,7 @@ public class LiveTemplateController
         liveTemplateDescTextArea.setText("<description>");
         liveTemplateCompTextArea.setText("<completation>");
 
-        actualCompletations.saveToFile();
+        actualCompletations.writeToFile();
 
         loadLiveTemplates();
     }
@@ -136,11 +140,11 @@ public class LiveTemplateController
 
         if (selectedItem == null) return;
 
-        actualCompletations.getLiveTemplatesCompletations().removeIf(variable -> variable.getValue().equals(selectedItem));
+        actualCompletations.getInstance().liveTemplatesCompletations.removeIf(variable -> variable.getValue().equals(selectedItem));
 
         clearTextAreas();
 
-        actualCompletations.saveToFile();
+        actualCompletations.writeToFile();
 
         loadLiveTemplates();
     }
@@ -152,7 +156,10 @@ public class LiveTemplateController
 
         if (languageName == null || languageName.isEmpty() || languageName.isBlank()) return;
 
-        LangCompletationsJSON.createNewLangCompletations(languageName);
+        new JsonFile<>(
+                new File(FilePaths.getProgLangCompletationsDirectory() + "default.json"), 
+                new LangCompletationsJSON()
+        ).createNewFile(new File(FilePaths.getProgLangCompletationsDirectory()), languageName);
 
         IconTreeItem<String> item = new IconTreeItem<>(languageName, languageName + ".png");
 

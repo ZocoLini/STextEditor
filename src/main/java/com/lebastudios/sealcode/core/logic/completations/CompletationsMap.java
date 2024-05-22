@@ -1,7 +1,11 @@
 package com.lebastudios.sealcode.core.logic.completations;
 
+import com.lebastudios.sealcode.core.logic.config.FilePaths;
+import com.lebastudios.sealcode.core.logic.fileobj.JsonFile;
+import com.lebastudios.sealcode.core.logic.fileobj.LangCompletationsJSON;
 import com.lebastudios.sealcode.events.AppEvents;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
@@ -43,12 +47,14 @@ public class CompletationsMap
 
     private TreeSet<Completation> loadCompletations(String fileExtension)
     {
-        LangCompletationsJSON langCompletations = LangCompletationsJSON.readCompletationFromFile(fileExtension);
+        JsonFile<LangCompletationsJSON> langCompletations = new JsonFile<>(
+                new File(FilePaths.getProgLangCompletationsDirectory() + fileExtension + ".json"),
+                new LangCompletationsJSON());
 
         TreeSet<Completation> completationsSet = new TreeSet<>();
 
-        completationsSet.addAll(langCompletations.getKeywordsCompletations());
-        completationsSet.addAll(langCompletations.getLiveTemplatesCompletations());
+        completationsSet.addAll(langCompletations.getInstance().keywordsCompletations);
+        completationsSet.addAll(langCompletations.getInstance().liveTemplatesCompletations);
 
         return completationsSet;
     }

@@ -11,7 +11,11 @@ public abstract class FileObj
         representedFile = file;
     }
     
+    /*
     public abstract FileObj readFromFile();
     
     public abstract void writeToFile();
+    
+    public abstract FileObj createNewFile(File directory, String name);
+    */
 }

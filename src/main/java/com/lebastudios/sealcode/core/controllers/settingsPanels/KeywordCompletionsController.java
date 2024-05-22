@@ -3,7 +3,8 @@ package com.lebastudios.sealcode.core.controllers.settingsPanels;
 import com.lebastudios.sealcode.core.frontend.dialogs.Dialogs;
 import com.lebastudios.sealcode.core.frontend.fxextends.IconTreeItem;
 import com.lebastudios.sealcode.core.logic.config.FilePaths;
-import com.lebastudios.sealcode.core.logic.completations.LangCompletationsJSON;
+import com.lebastudios.sealcode.core.logic.fileobj.JsonFile;
+import com.lebastudios.sealcode.core.logic.fileobj.LangCompletationsJSON;
 import com.lebastudios.sealcode.global.FileOperation;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -19,7 +20,7 @@ public class KeywordCompletionsController
     @FXML
     public ListView<String> keyWordsListView;
 
-    private LangCompletationsJSON actualCompletations;
+    private JsonFile<LangCompletationsJSON> actualCompletations;
     
     public void initialize()
     {
@@ -50,11 +51,14 @@ public class KeywordCompletionsController
         if (selectedItem == null) return;
         if (selectedItem.getParent() == null) return;
 
-        actualCompletations = LangCompletationsJSON.readCompletationFromFile(selectedItem.getValue());
+        actualCompletations = new JsonFile<>(
+                new File(FilePaths.getProgLangCompletationsDirectory() + selectedItem.getValue() + ".json"),
+                new LangCompletationsJSON()
+        );
 
         keyWordsListView.getItems().clear();
 
-        for (var keyWordCompletation : actualCompletations.getKeywordsCompletations())
+        for (var keyWordCompletation : actualCompletations.getInstance().keywordsCompletations)
         {
             keyWordsListView.getItems().add(keyWordCompletation.getValue());
         }
@@ -84,7 +88,10 @@ public class KeywordCompletionsController
 
         if (languageName == null || languageName.isEmpty() || languageName.isBlank()) return;
 
-        LangCompletationsJSON.createNewLangCompletations(languageName);
+        new JsonFile<>(
+                new File(FilePaths.getProgLangCompletationsDirectory() + "default.json"),
+                new LangCompletationsJSON()
+        ).createNewFile(new File(FilePaths.getProgLangCompletationsDirectory()), languageName);
 
         IconTreeItem<String> item = new IconTreeItem<>(languageName, languageName + ".png");
 
@@ -100,9 +107,9 @@ public class KeywordCompletionsController
         
         if (selectedItem == null || selectedItem.isEmpty() || selectedItem.isBlank()) return;
         
-        actualCompletations.getKeywordsCompletations().add(new LangCompletationsJSON.KeyWordCompletation(selectedItem));
+        actualCompletations.getInstance().keywordsCompletations.add(new LangCompletationsJSON.KeyWordCompletation(selectedItem));
         
-        actualCompletations.saveToFile();
+        actualCompletations.writeToFile();
         
         loadKeywords();
     }
@@ -116,9 +123,9 @@ public class KeywordCompletionsController
         
         if (selectedItem == null) return;
         
-        actualCompletations.getKeywordsCompletations().removeIf(variable -> variable.getValue().equals(selectedItem));
+        actualCompletations.getInstance().keywordsCompletations.removeIf(variable -> variable.getValue().equals(selectedItem));
         
-        actualCompletations.saveToFile();
+        actualCompletations.writeToFile();
         
         loadKeywords();
     }

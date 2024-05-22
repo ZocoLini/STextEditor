@@ -16,6 +16,7 @@ module com.lebastudios.sealcode {
     opens com.lebastudios.sealcode.core.logic.config to com.google.gson;
     opens com.lebastudios.sealcode.core.logic.highlighting to com.google.gson;
     opens com.lebastudios.sealcode.core.logic.completations to com.google.gson;
+    opens com.lebastudios.sealcode.core.logic.fileobj to com.google.gson;
     
     /* Custom */
     requires com.github.javaparser.core;
