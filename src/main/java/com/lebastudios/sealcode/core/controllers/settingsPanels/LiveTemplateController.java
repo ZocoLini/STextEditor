@@ -3,8 +3,7 @@ package com.lebastudios.sealcode.core.controllers.settingsPanels;
 import com.lebastudios.sealcode.core.frontend.dialogs.Dialogs;
 import com.lebastudios.sealcode.core.frontend.fxextends.IconTreeItem;
 import com.lebastudios.sealcode.core.logic.config.FilePaths;
-import com.lebastudios.sealcode.core.logic.defaultcompletations.LangCompletations;
-import com.lebastudios.sealcode.core.logic.defaultcompletations.LiveTemplateCompletation;
+import com.lebastudios.sealcode.core.logic.completations.LangCompletationsJSON;
 import com.lebastudios.sealcode.global.FileOperation;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -20,7 +19,7 @@ public class LiveTemplateController
     @FXML private TextArea liveTemplateDescTextArea;
     @FXML private TextField liveTemplateValueTextField;
 
-    private LangCompletations actualCompletations;
+    private LangCompletationsJSON actualCompletations;
     
     public void initialize()
     {
@@ -57,7 +56,7 @@ public class LiveTemplateController
 
         if (selectedItem == null) return;
 
-        LiveTemplateCompletation liveTemplateCompletation = actualCompletations.getLiveTemplatesCompletations().stream()
+        LangCompletationsJSON.LiveTemplateCompletation liveTemplateCompletation = actualCompletations.getLiveTemplatesCompletations().stream()
                 .filter(variable -> variable.getValue().equals(selectedItem))
                 .findFirst()
                 .orElse(null);
@@ -78,7 +77,7 @@ public class LiveTemplateController
         actualCompletations.getLiveTemplatesCompletations().removeIf(
                 variable -> variable.getValue().equals(liveTemplateValueTextField.getText())
         );
-        actualCompletations.getLiveTemplatesCompletations().add(new LiveTemplateCompletation(
+        actualCompletations.getLiveTemplatesCompletations().add(new LangCompletationsJSON.LiveTemplateCompletation(
                 liveTemplateValueTextField.getText(),
                 liveTemplateDescTextArea.getText(),
                 liveTemplateCompTextArea.getText()
@@ -104,7 +103,7 @@ public class LiveTemplateController
 
         if (selectedItem.getParent() == null) return;
 
-        actualCompletations = LangCompletations.readCompletationFromFile(selectedItem.getValue());
+        actualCompletations = LangCompletationsJSON.readCompletationFromFile(selectedItem.getValue());
 
         liveTemplatesListView.getItems().clear();
 
@@ -153,7 +152,7 @@ public class LiveTemplateController
 
         if (languageName == null || languageName.isEmpty() || languageName.isBlank()) return;
 
-        LangCompletations.createNewLangCompletations(languageName);
+        LangCompletationsJSON.createNewLangCompletations(languageName);
 
         IconTreeItem<String> item = new IconTreeItem<>(languageName, languageName + ".png");
 

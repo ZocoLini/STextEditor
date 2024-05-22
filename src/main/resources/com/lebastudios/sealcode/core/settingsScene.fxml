@@ -32,12 +32,8 @@
                                                   fxmlResource="core/settingsScenePanels/preferenciasAnchorPane.fxml"/>
                                 <SettingsTreeItem value="Completations" iconName="template.png"
                                                   fxmlResource="core/settingsScenePanels/completationsTabPane.fxml"/>
-                            </children>
-                        </IconTreeItem>
-                        <IconTreeItem value="Proyecto" iconName="fileSystem.png">
-                            <children>
-                                <SettingsTreeItem value="Inspecciones" iconName="lupa.png"
-                                                  fxmlResource="core/settingsScenePanels/inspeccionesAnchorPane.fxml"/>
+                                <SettingsTreeItem value="Highlighting" iconName="tema.png"
+                                                  fxmlResource="core/settingsScenePanels/highlightingTabPane.fxml"/>
                             </children>
                         </IconTreeItem>
                     </children>

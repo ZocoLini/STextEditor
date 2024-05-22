@@ -3,8 +3,7 @@ package com.lebastudios.sealcode.core.controllers.settingsPanels;
 import com.lebastudios.sealcode.core.frontend.dialogs.Dialogs;
 import com.lebastudios.sealcode.core.frontend.fxextends.IconTreeItem;
 import com.lebastudios.sealcode.core.logic.config.FilePaths;
-import com.lebastudios.sealcode.core.logic.defaultcompletations.KeyWordCompletation;
-import com.lebastudios.sealcode.core.logic.defaultcompletations.LangCompletations;
+import com.lebastudios.sealcode.core.logic.completations.LangCompletationsJSON;
 import com.lebastudios.sealcode.global.FileOperation;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -20,7 +19,7 @@ public class KeywordCompletionsController
     @FXML
     public ListView<String> keyWordsListView;
 
-    private LangCompletations actualCompletations;
+    private LangCompletationsJSON actualCompletations;
     
     public void initialize()
     {
@@ -51,7 +50,7 @@ public class KeywordCompletionsController
         if (selectedItem == null) return;
         if (selectedItem.getParent() == null) return;
 
-        actualCompletations = LangCompletations.readCompletationFromFile(selectedItem.getValue());
+        actualCompletations = LangCompletationsJSON.readCompletationFromFile(selectedItem.getValue());
 
         keyWordsListView.getItems().clear();
 
@@ -85,7 +84,7 @@ public class KeywordCompletionsController
 
         if (languageName == null || languageName.isEmpty() || languageName.isBlank()) return;
 
-        LangCompletations.createNewLangCompletations(languageName);
+        LangCompletationsJSON.createNewLangCompletations(languageName);
 
         IconTreeItem<String> item = new IconTreeItem<>(languageName, languageName + ".png");
 
@@ -101,7 +100,7 @@ public class KeywordCompletionsController
         
         if (selectedItem == null || selectedItem.isEmpty() || selectedItem.isBlank()) return;
         
-        actualCompletations.getKeywordsCompletations().add(new KeyWordCompletation(selectedItem));
+        actualCompletations.getKeywordsCompletations().add(new LangCompletationsJSON.KeyWordCompletation(selectedItem));
         
         actualCompletations.saveToFile();
         

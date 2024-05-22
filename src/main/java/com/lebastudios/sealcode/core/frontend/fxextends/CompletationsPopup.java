@@ -1,8 +1,8 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
-import com.lebastudios.sealcode.core.logic.defaultcompletations.CompletationsMap;
+import com.lebastudios.sealcode.core.logic.completations.CompletationsMap;
 import com.lebastudios.sealcode.events.AppEvents;
-import com.lebastudios.sealcode.core.logic.Completation;
+import com.lebastudios.sealcode.core.logic.completations.Completation;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;

@@ -1,7 +1,7 @@
 package com.lebastudios.sealcode.custom.logic;
 
 import com.lebastudios.sealcode.custom.logic.java.JavaIndexer;
-import com.lebastudios.sealcode.core.logic.Completation;
+import com.lebastudios.sealcode.core.logic.completations.Completation;
 import com.lebastudios.sealcode.global.FileOperation;
 import com.lebastudios.sealcode.core.logic.Indexer;
 

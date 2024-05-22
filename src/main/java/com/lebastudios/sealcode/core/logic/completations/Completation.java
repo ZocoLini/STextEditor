@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.core.logic;
+package com.lebastudios.sealcode.core.logic.completations;
 
 import com.lebastudios.sealcode.core.frontend.fxextends.IconView;
 

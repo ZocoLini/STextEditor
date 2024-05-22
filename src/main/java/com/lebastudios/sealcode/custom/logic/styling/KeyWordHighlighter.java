@@ -4,6 +4,7 @@ package com.lebastudios.sealcode.custom.logic.styling;
 import com.google.gson.Gson;
 import com.lebastudios.sealcode.core.frontend.fxextends.SealCodeArea;
 import com.lebastudios.sealcode.core.logic.config.Resources;
+import com.lebastudios.sealcode.core.logic.highlighting.HighlightingPatternsJSON;
 import javafx.concurrent.Task;
 import javafx.stage.WindowEvent;
 import org.fxmisc.richtext.model.StyleSpans;
@@ -21,14 +22,14 @@ import java.util.regex.Pattern;
 
 public class KeyWordHighlighter
 {
-    public final JSONPatterns patterns;
+    public final HighlightingPatternsJSON patterns;
     private final SealCodeArea codeArea;
     private final ExecutorService executor;
     private Pattern pattern;
 
     public KeyWordHighlighter(SealCodeArea codeArea)
     {
-        this.patterns = new Gson().fromJson(Resources.getHighlightingRules(codeArea.fileExtension), JSONPatterns.class);
+        this.patterns = new Gson().fromJson(Resources.getHighlightingRules(codeArea.fileExtension), HighlightingPatternsJSON.class);
 
         patternsCreator();
 
@@ -47,7 +48,7 @@ public class KeyWordHighlighter
     {
         StringBuilder patternString = new StringBuilder();
 
-        for (var patternInfo : patterns.patternsInfo)
+        for (var patternInfo : patterns.getPatternsInfo())
         {
             patternString.append("(?<").append(patternInfo.name).append(">").
                     append(patternInfo.pattern).append(")").append("|");
@@ -61,7 +62,7 @@ public class KeyWordHighlighter
 
     private String getPatternName(Matcher matcher)
     {
-        for (var variable : patterns.patternsInfo)
+        for (var variable : patterns.getPatternsInfo())
         {
             final var patternName = variable.name;
 
@@ -173,23 +174,5 @@ public class KeyWordHighlighter
         public String name;
         public String pattern;
         public String colourleablePattern;
-    }
-
-    public static class JSONPatterns
-    {
-        public PatternInfo[] patternsInfo;
-
-        public PatternInfo getPatternInfo(String name)
-        {
-            for (var variable : patternsInfo)
-            {
-                if (variable.name.equals(name))
-                {
-                    return variable;
-                }
-            }
-
-            return null;
-        }
     }
 }

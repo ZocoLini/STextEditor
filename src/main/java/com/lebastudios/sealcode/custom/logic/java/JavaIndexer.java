@@ -7,7 +7,7 @@ import com.lebastudios.sealcode.core.logic.config.Session;
 import com.lebastudios.sealcode.exceptions.NotImplementedException;
 import com.lebastudios.sealcode.custom.logic.java.completations.ClassOrInterfceCompletation;
 import com.lebastudios.sealcode.custom.logic.java.completations.JavaNodeCompletation;
-import com.lebastudios.sealcode.core.logic.Completation;
+import com.lebastudios.sealcode.core.logic.completations.Completation;
 import com.lebastudios.sealcode.core.logic.IIndexer;
 
 import java.io.File;

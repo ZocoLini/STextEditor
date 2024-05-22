@@ -1,7 +1,6 @@
-package com.lebastudios.sealcode.core.logic.defaultcompletations;
+package com.lebastudios.sealcode.core.logic.completations;
 
 import com.lebastudios.sealcode.events.AppEvents;
-import com.lebastudios.sealcode.core.logic.Completation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +43,7 @@ public class CompletationsMap
 
     private TreeSet<Completation> loadCompletations(String fileExtension)
     {
-        LangCompletations langCompletations = LangCompletations.readCompletationFromFile(fileExtension);
+        LangCompletationsJSON langCompletations = LangCompletationsJSON.readCompletationFromFile(fileExtension);
 
         TreeSet<Completation> completationsSet = new TreeSet<>();
 

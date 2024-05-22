@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
-import com.lebastudios.sealcode.core.logic.Completation;
+import com.lebastudios.sealcode.core.logic.completations.Completation;
 import javafx.scene.control.ListCell;
 
 public class CompletationListCell extends ListCell<Completation>

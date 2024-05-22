@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.core.controllers.settingsPanels;
 
-public class InspeccionesController extends SettingsPaneController
+public class HighlightingController extends SettingsPaneController
 {
     @Override
     public void start()

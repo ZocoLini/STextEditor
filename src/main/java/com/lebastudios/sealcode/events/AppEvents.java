@@ -3,7 +3,7 @@ package com.lebastudios.sealcode.events;
 import com.lebastudios.sealcode.core.frontend.fxextends.IconTreeItem;
 import com.lebastudios.sealcode.core.frontend.fxextends.SealCodeArea;
 import com.lebastudios.sealcode.core.frontend.fxextends.SettingsTreeView;
-import com.lebastudios.sealcode.core.logic.Completation;
+import com.lebastudios.sealcode.core.logic.completations.Completation;
 import com.lebastudios.sealcode.global.TextModInf;
 
 import java.io.File;

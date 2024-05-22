@@ -1,6 +1,6 @@
 package com.lebastudios.sealcode.custom.logic.java.completations;
 
-import com.lebastudios.sealcode.core.logic.Completation;
+import com.lebastudios.sealcode.core.logic.completations.Completation;
 import com.lebastudios.sealcode.core.logic.Indexer;
 import com.lebastudios.sealcode.events.IEventMethod5;
 
