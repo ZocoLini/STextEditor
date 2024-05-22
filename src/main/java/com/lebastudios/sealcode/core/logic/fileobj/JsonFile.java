@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.lebastudios.sealcode.global.FileOperation;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class JsonFile<T> extends FileObj
@@ -33,10 +34,7 @@ public class JsonFile<T> extends FileObj
         {
             //noinspection unchecked
             instance =  (T) new Gson().fromJson(FileOperation.readFile(representedFile), instance.getClass());
-        } catch (Exception e)
-        {
-            throw new RuntimeException(e);
-        }
+        } catch (Exception e) {}
     }
     
     public void writeToFile()
@@ -51,27 +49,35 @@ public class JsonFile<T> extends FileObj
         }
     }
 
-    public JsonFile<T> createNewFile(File directory, String name)
+    public static File createNewFile(File directory, String name)
     {
         File file = new File(directory, name + ".json");
 
-        JsonFile<T> jsonFile = new JsonFile<>(file, getDefaultInstance());
-
-        jsonFile.writeToFile();
-
-        return jsonFile;
-    }
-    
-    private T getDefaultInstance()
-    {
         try
         {
-            //noinspection unchecked
-            return (T) Arrays.stream(instance.getClass().getConstructors())
-                    .filter(constructor -> constructor.getParameterCount() == 0).findFirst().get().newInstance();
+            file.createNewFile();
+            FileOperation.writeFile(file, "{}");
         } catch (Exception e)
         {
             throw new RuntimeException(e);
         }
+
+        return file;
+    }
+
+    public static File createNewFile(String directory, String name)
+    {
+        File file = new File(directory, name + ".json");
+
+        try
+        {
+            file.createNewFile();
+            FileOperation.writeFile(file, "{}");
+        } catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+
+        return file;
     }
 }

@@ -10,7 +10,7 @@
          prefHeight="400.0" prefWidth="600.0">
 
     <Tab text="Patterns">
-        <fx:include source="highlightingPattersSplitPane.fxml" />
+        <fx:include source="highlightingRulesSplitPane.fxml" />
     </Tab>
 
     <Tab text="Keywords">

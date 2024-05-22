@@ -3,8 +3,6 @@ package com.lebastudios.sealcode.custom.logic.database;
 import com.lebastudios.sealcode.core.logic.config.FilePaths;
 import com.lebastudios.sealcode.core.logic.config.GlobalConfig;
 import com.lebastudios.sealcode.events.AppEvents;
-import com.mongodb.Block;
-import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
@@ -14,7 +12,6 @@ import com.mongodb.client.gridfs.GridFSFindIterable;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import com.mongodb.client.gridfs.model.GridFSUploadOptions;
 import com.mongodb.client.model.Filters;
-import com.mongodb.connection.ServerSettings;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -44,7 +41,7 @@ public class MongoDBManager implements IDBManager<MongoClient>
 
     private final File[] directoriesToManage = new File[]
             {
-                    new File(FilePaths.getProgLangSyntaxDirectory()),
+                    new File(FilePaths.getHighlightingRulesDir()),
                     new File(FilePaths.getGlobalConfigDirectory()),
                     new File(FilePaths.getProgLangCompletationsDirectory())
             };

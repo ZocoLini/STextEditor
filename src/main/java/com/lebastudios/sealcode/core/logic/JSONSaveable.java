@@ -6,6 +6,8 @@ import com.lebastudios.sealcode.global.FileOperation;
 
 import java.io.File;
 
+// TODO: Definir como un JsonFile
+
 public abstract class JSONSaveable<T>
 {
     /**

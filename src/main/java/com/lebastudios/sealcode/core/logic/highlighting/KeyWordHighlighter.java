@@ -48,15 +48,15 @@ public class KeyWordHighlighter
 
     private static File getHighlightingFile(String extension)
     {
-        File file = new File(FilePaths.getProgLangSyntaxDirectory() + extension + ".json");
+        File file = new File(FilePaths.getHighlightingRulesDir() + extension + ".json");
 
         if (file.exists()) return file;
 
-        file = new File(FilePaths.getProgLangSyntaxDirectory() + FileOperation.equivalentExtension(extension) + ".json");
+        file = new File(FilePaths.getHighlightingRulesDir() + FileOperation.equivalentExtension(extension) + ".json");
 
         if (file.exists()) return file;
 
-        return new File(FilePaths.getProgLangSyntaxDirectory() + "default.json");
+        return new File(FilePaths.getHighlightingRulesDir() + "default.json");
     }
 
     /**
@@ -68,7 +68,7 @@ public class KeyWordHighlighter
 
         for (var patternInfo : patterns.getInstance().rules)
         {
-            patternString.append("(?<").append(patternInfo.styleClass).append(">").
+            patternString.append("(?<").append(patternInfo.name).append(">").
                     append(patternInfo.regex).append(")").append("|");
         }
 
@@ -82,11 +82,11 @@ public class KeyWordHighlighter
     {
         for (var variable : patterns.getInstance().rules)
         {
-            final var patternName = variable.styleClass;
+            final var patternName = variable.name;
 
             if (matcher.group(patternName) != null)
             {
-                return patternName;
+                return variable.name;
             }
         }
 
@@ -164,11 +164,12 @@ public class KeyWordHighlighter
     private void computeHighlightingOnColourleable(String patterName, String text,
                                                    StyleSpansBuilder<Collection<String>> spansBuilder)
     {
-        String coloureablePattern = patterns.getInstance().getHighlightingRule(patterName).highlightRegex;
+        final var highlightingRule = patterns.getInstance().getHighlightingRule(patterName);
+        String coloureablePattern = highlightingRule.highlightRegex;
 
         if (coloureablePattern == null || coloureablePattern.isEmpty())
         {
-            spansBuilder.add(Collections.singleton(patterName), text.length());
+            spansBuilder.add(Collections.singleton(highlightingRule.styleClass), text.length());
             return;
         }
 
@@ -178,7 +179,7 @@ public class KeyWordHighlighter
         while (matcher.find())
         {
             spansBuilder.add(Collections.singleton("default"), matcher.start() - innerLatsKwEnd);
-            spansBuilder.add(Collections.singleton(patterName), matcher.end() - matcher.start());
+            spansBuilder.add(Collections.singleton(highlightingRule.styleClass), matcher.end() - matcher.start());
 
             innerLatsKwEnd = matcher.end();
         }

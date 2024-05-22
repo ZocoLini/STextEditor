@@ -1,6 +1,7 @@
 {
   "rules": [
     {
+      "name": "default",
       "styleClass": "default",
       "regex": "",
       "highlightRegex": ""

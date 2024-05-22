@@ -1,24 +1,28 @@
 {
   "rules": [
     {
-      "styleClass": "attribute",
-      "regex": "\\b[a-zA-Z_:]*=",
-      "highlightRegex": "\\b[a-zA-Z_:]*"
+      "name": "tag",
+      "styleClass": "tag",
+      "regex": "\u003c/?[^\u003c\u003e]*/?\u003e",
+      "highlightRegex": "(\u003c/?[a-zA-Z0-9_\\.]*)|(/?\u003e)|(\u003c\\?)|(\\?\u003e)"
     },
     {
+      "name": "comment",
+      "styleClass": "comment",
+      "regex": "\u003c!--(.|\\v)+?--\u003e",
+      "highlightRegex": "\u003c!--(.|\\v)+?--\u003e"
+    },
+    {
+      "name": "string",
       "styleClass": "string",
       "regex": "\"[^\"]*\"",
       "highlightRegex": ""
     },
     {
-      "styleClass": "comment",
-      "regex": "<!--(.|\\v)+?-->",
-      "highlightRegex": "<!--(.|\\v)+?-->"
-    },
-    {
-      "styleClass": "tag",
-      "regex": "</?[^<>]*/?>",
-      "highlightRegex": "(</?[a-zA-Z0-9_\\.]*)|(/?>)|(<\\?)|(\\?>)"
+      "name": "attribute",
+      "styleClass": "attribute",
+      "regex": "\\b[a-zA-Z_:]*\u003d",
+      "highlightRegex": "\\b[a-zA-Z_:]*"
     }
   ]
 }

@@ -17,7 +17,7 @@ public final class FilePaths
 
     public static String getSessionDirectory() {return getAppDirectory() + "/session/";}
     
-    public static String getProgLangSyntaxDirectory() {return getAppDirectory() + "/highlightingRules/";}
+    public static String getHighlightingRulesDir() {return getAppDirectory() + "/highlightingRules/";}
 
     public static String getProgLangCompletationsDirectory() {return getAppDirectory() + "/completations/" ;}
 

@@ -36,14 +36,18 @@ public class LiveTemplateController
             liveTemplateTreeView.getRoot().getChildren().add(item);
         }
 
-        liveTemplateTreeView.setOnMouseClicked(event ->
+        liveTemplateTreeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
         {
+            if (newValue == null) return;
+            
             clearTextAreas();
             loadLiveTemplates();
         });
 
-        liveTemplatesListView.setOnMouseClicked(event ->
+        liveTemplatesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
         {
+            if (newValue == null) return;
+            
             clearTextAreas();
             loadLiveTemplate();
         });
