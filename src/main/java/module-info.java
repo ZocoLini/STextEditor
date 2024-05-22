@@ -14,7 +14,6 @@ module com.lebastudios.sealcode {
     opens com.lebastudios.sealcode.core.controllers.settingsPanels to javafx.fxml;
 
     opens com.lebastudios.sealcode.core.logic.config to com.google.gson;
-    opens com.lebastudios.sealcode.core.logic.highlighting to com.google.gson;
     opens com.lebastudios.sealcode.core.logic.completations to com.google.gson;
     opens com.lebastudios.sealcode.core.logic.fileobj to com.google.gson;
     
@@ -30,5 +29,4 @@ module com.lebastudios.sealcode {
     opens com.lebastudios.sealcode.custom.controllers.settingsPanels to javafx.fxml;
     
     opens com.lebastudios.sealcode.custom.logic.styling to com.google.gson;
-    opens com.lebastudios.sealcode.custom.logic to com.google.gson;
 }

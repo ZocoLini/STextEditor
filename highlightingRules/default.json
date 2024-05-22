@@ -1,9 +1,9 @@
 {
-  "patternsInfo": [
+  "rules": [
     {
-      "name": "default",
-      "pattern": "",
-      "colourleablePattern": ""
+      "styleClass": "default",
+      "regex": "",
+      "highlightRegex": ""
     }
   ]
 }

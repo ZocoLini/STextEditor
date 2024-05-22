@@ -98,7 +98,7 @@ public class MongoDBManager implements IDBManager<MongoClient>
 
         MongoDatabase database = mongoClient.getDatabase(MongoDBManager.database);
 
-        // Create a gridFSBucket using the default bucket name "fs"
+        // Create a gridFSBucket using the default bucket styleClass "fs"
         GridFSBucket gridFSBucket = GridFSBuckets.create(database, User.Deserialize().userName());
 
         // Find the files in the directory delete it

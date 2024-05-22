@@ -149,7 +149,7 @@ public final class FileSystemTreeCell extends TreeCell<String>
         private void renameRepresentingFile(ActionEvent event)
         {
             System.out.println("Se intentará renombrar " + getRepresentingFile());
-            String nuevoNombre = Dialogs.insertTextDialog("Insert new name", treeCell.getItem());
+            String nuevoNombre = Dialogs.insertTextDialog("Insert new styleClass", treeCell.getItem());
 
             if (nuevoNombre.isEmpty()) return;
 
@@ -168,7 +168,7 @@ public final class FileSystemTreeCell extends TreeCell<String>
 
         private void createFile(ActionEvent event)
         {
-            String name = Dialogs.insertTextDialog("Insert new file name");
+            String name = Dialogs.insertTextDialog("Insert new file styleClass");
 
             File newFile = new File(getRepresentingFile().getAbsoluteFile() + "/" + name);
 
@@ -189,7 +189,7 @@ public final class FileSystemTreeCell extends TreeCell<String>
 
         private void createDirectory(ActionEvent event)
         {
-            String name = Dialogs.insertTextDialog("Insert new directory name");
+            String name = Dialogs.insertTextDialog("Insert new directory styleClass");
 
             File newFile = new File(getRepresentingFile().getAbsoluteFile() + "/" + name);
 

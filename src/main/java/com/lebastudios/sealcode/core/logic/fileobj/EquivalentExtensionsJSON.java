@@ -1,4 +1,4 @@
-package com.lebastudios.sealcode.core.logic.highlighting;
+package com.lebastudios.sealcode.core.logic.fileobj;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.List;
 
 public class EquivalentExtensionsJSON
 {
-    private List<EquivalentExtensions> filter = new ArrayList<>();
+    public List<EquivalentExtensions> filter = new ArrayList<>();
 
     public static class EquivalentExtensions
     {

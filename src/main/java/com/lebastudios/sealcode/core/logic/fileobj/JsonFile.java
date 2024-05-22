@@ -25,6 +25,8 @@ public class JsonFile<T> extends FileObj
         return instance;
     }
     
+    // TODO: A lo mejor hacer un evento para cuando se guarde un archivo, si otro tiene el mismo archivo cargado, se actualice
+    
     public void readFromFile()
     {
         try
@@ -33,8 +35,7 @@ public class JsonFile<T> extends FileObj
             instance =  (T) new Gson().fromJson(FileOperation.readFile(representedFile), instance.getClass());
         } catch (Exception e)
         {
-            System.err.println("Error reading " + this.getClass().getName() + " file.");
-            instance = getDefaultInstance();
+            throw new RuntimeException(e);
         }
     }
     

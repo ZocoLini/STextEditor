@@ -1,24 +1,24 @@
 {
-  "patternsInfo": [
+  "rules": [
     {
-      "name": "attribute",
-      "pattern": "\\b[a-zA-Z_:]*=",
-      "colourleablePattern": "\\b[a-zA-Z_:]*"
+      "styleClass": "attribute",
+      "regex": "\\b[a-zA-Z_:]*=",
+      "highlightRegex": "\\b[a-zA-Z_:]*"
     },
     {
-      "name": "string",
-      "pattern": "\"[^\"]*\"",
-      "colourleablePattern": ""
+      "styleClass": "string",
+      "regex": "\"[^\"]*\"",
+      "highlightRegex": ""
     },
     {
-      "name": "comment",
-      "pattern": "<!--(.|\\v)+?-->",
-      "colourleablePattern": "<!--(.|\\v)+?-->"
+      "styleClass": "comment",
+      "regex": "<!--(.|\\v)+?-->",
+      "highlightRegex": "<!--(.|\\v)+?-->"
     },
     {
-      "name": "tag",
-      "pattern": "</?[^<>]*/?>",
-      "colourleablePattern": "(</?[a-zA-Z0-9_\\.]*)|(/?>)|(<\\?)|(\\?>)"
+      "styleClass": "tag",
+      "regex": "</?[^<>]*/?>",
+      "highlightRegex": "(</?[a-zA-Z0-9_\\.]*)|(/?>)|(<\\?)|(\\?>)"
     }
   ]
 }

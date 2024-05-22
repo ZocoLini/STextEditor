@@ -14,7 +14,7 @@ import com.lebastudios.sealcode.custom.logic.formatting.*;
 import com.lebastudios.sealcode.custom.logic.java.JavaConfiguration;
 import com.lebastudios.sealcode.custom.logic.java.completations.CompletationsFilter;
 import com.lebastudios.sealcode.custom.logic.styling.BracketHighlighter;
-import com.lebastudios.sealcode.custom.logic.styling.KeyWordHighlighter;
+import com.lebastudios.sealcode.core.logic.highlighting.KeyWordHighlighter;
 import com.lebastudios.sealcode.events.AppEvents;
 import javafx.fxml.FXMLLoader;
 

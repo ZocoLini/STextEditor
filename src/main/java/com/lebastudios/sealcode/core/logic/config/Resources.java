@@ -74,7 +74,7 @@ public final class Resources
         }
 
         // Check if the equivalent extension has a style defined in the actual theme
-        file = new File(FilePaths.getStyleDirectory() + FileOperation.toEquivalentFileExtension(fileExtension) + ".css");
+        file = new File(FilePaths.getStyleDirectory() + FileOperation.equivalentExtension(fileExtension) + ".css");
         if (file.exists())
         {
             try
@@ -100,7 +100,7 @@ public final class Resources
         }
 
         // Check if the equivalent extension has a style defined in the default theme
-        file = new File(FilePaths.getDefaultStyleDirectory() + FileOperation.toEquivalentFileExtension(fileExtension) + ".css");
+        file = new File(FilePaths.getDefaultStyleDirectory() + FileOperation.equivalentExtension(fileExtension) + ".css");
         if (file.exists())
         {
             try
@@ -144,40 +144,5 @@ public final class Resources
         {
             throw new RuntimeException(e);
         }
-    }
-
-    public static String getHighlightingRules(String extension)
-    {
-        String path = FilePaths.getProgLangSyntaxDirectory() + extension + ".json";
-
-        String rules = "{}";
-
-        File file = new File(path);
-
-        if (!file.exists())
-        {
-            path = FilePaths.getProgLangSyntaxDirectory() + FileOperation.toEquivalentFileExtension(extension) +
-                    ".json";
-        }
-
-        if (!file.exists() && !extension.equals("default"))
-        {
-            System.err.println("Error reading the syntax highlighting pattern file for the extension " +
-                    extension + ". Default syntax highlighting will not be applied.");
-            return getHighlightingRules("default");
-        }
-
-        try
-        {
-            rules = FileOperation.readFile(new File(path));
-        }
-        catch (Exception e)
-        {
-            System.err.println("It couldnt be loaded any syntax highlighting pattern file. " +
-                    "The syntax highlighting will not be applied.");
-
-        }
-
-        return rules;
     }
 }

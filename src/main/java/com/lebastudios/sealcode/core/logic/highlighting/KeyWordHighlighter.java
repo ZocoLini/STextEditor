@@ -1,16 +1,18 @@
-package com.lebastudios.sealcode.custom.logic.styling;
+package com.lebastudios.sealcode.core.logic.highlighting;
 
 
-import com.google.gson.Gson;
 import com.lebastudios.sealcode.core.frontend.fxextends.SealCodeArea;
-import com.lebastudios.sealcode.core.logic.config.Resources;
-import com.lebastudios.sealcode.core.logic.highlighting.HighlightingPatternsJSON;
+import com.lebastudios.sealcode.core.logic.config.FilePaths;
+import com.lebastudios.sealcode.core.logic.fileobj.HighlightingRulesJSON;
+import com.lebastudios.sealcode.core.logic.fileobj.JsonFile;
+import com.lebastudios.sealcode.global.FileOperation;
 import javafx.concurrent.Task;
 import javafx.stage.WindowEvent;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.reactfx.Subscription;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
@@ -22,14 +24,17 @@ import java.util.regex.Pattern;
 
 public class KeyWordHighlighter
 {
-    public final HighlightingPatternsJSON patterns;
+    private final JsonFile<HighlightingRulesJSON> patterns;
     private final SealCodeArea codeArea;
     private final ExecutorService executor;
     private Pattern pattern;
 
     public KeyWordHighlighter(SealCodeArea codeArea)
     {
-        this.patterns = new Gson().fromJson(Resources.getHighlightingRules(codeArea.fileExtension), HighlightingPatternsJSON.class);
+        patterns = new JsonFile<>(
+                getHighlightingFile(codeArea.fileExtension),
+                new HighlightingRulesJSON()
+        );
 
         patternsCreator();
 
@@ -41,6 +46,19 @@ public class KeyWordHighlighter
         applyHighlighting(computeHighlighting(codeArea.getText()));
     }
 
+    private static File getHighlightingFile(String extension)
+    {
+        File file = new File(FilePaths.getProgLangSyntaxDirectory() + extension + ".json");
+
+        if (file.exists()) return file;
+
+        file = new File(FilePaths.getProgLangSyntaxDirectory() + FileOperation.equivalentExtension(extension) + ".json");
+
+        if (file.exists()) return file;
+
+        return new File(FilePaths.getProgLangSyntaxDirectory() + "default.json");
+    }
+
     /**
      * Crea los patrones de resaltado de sintaxis
      */
@@ -48,10 +66,10 @@ public class KeyWordHighlighter
     {
         StringBuilder patternString = new StringBuilder();
 
-        for (var patternInfo : patterns.getPatternsInfo())
+        for (var patternInfo : patterns.getInstance().rules)
         {
-            patternString.append("(?<").append(patternInfo.name).append(">").
-                    append(patternInfo.pattern).append(")").append("|");
+            patternString.append("(?<").append(patternInfo.styleClass).append(">").
+                    append(patternInfo.regex).append(")").append("|");
         }
 
         // Eliminar el último "|"
@@ -62,9 +80,9 @@ public class KeyWordHighlighter
 
     private String getPatternName(Matcher matcher)
     {
-        for (var variable : patterns.getPatternsInfo())
+        for (var variable : patterns.getInstance().rules)
         {
-            final var patternName = variable.name;
+            final var patternName = variable.styleClass;
 
             if (matcher.group(patternName) != null)
             {
@@ -87,8 +105,7 @@ public class KeyWordHighlighter
                     if (t.isSuccess())
                     {
                         return Optional.of(t.get());
-                    }
-                    else
+                    } else
                     {
                         t.getFailure().printStackTrace();
                         return Optional.empty();
@@ -145,9 +162,9 @@ public class KeyWordHighlighter
     }
 
     private void computeHighlightingOnColourleable(String patterName, String text,
-            StyleSpansBuilder<Collection<String>> spansBuilder)
+                                                   StyleSpansBuilder<Collection<String>> spansBuilder)
     {
-        String coloureablePattern = patterns.getPatternInfo(patterName).colourleablePattern;
+        String coloureablePattern = patterns.getInstance().getHighlightingRule(patterName).highlightRegex;
 
         if (coloureablePattern == null || coloureablePattern.isEmpty())
         {
@@ -167,12 +184,5 @@ public class KeyWordHighlighter
         }
 
         spansBuilder.add(Collections.singleton("default"), text.length() - innerLatsKwEnd);
-    }
-
-    public static class PatternInfo
-    {
-        public String name;
-        public String pattern;
-        public String colourleablePattern;
     }
 }

@@ -21,7 +21,7 @@ public class OperativeSystem
     
     private static IOperativeSystem detectOS()
     {
-        String osName = System.getProperty("os.name");
+        String osName = System.getProperty("os.styleClass");
 
         osName = osName.toLowerCase();
 

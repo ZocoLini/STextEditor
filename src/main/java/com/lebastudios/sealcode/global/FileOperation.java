@@ -146,7 +146,7 @@ public final class FileOperation
 
     public static String getEquivalentFileExtension(File file)
     {
-        return toEquivalentFileExtension(getFileExtension(file));
+        return equivalentExtension(getFileExtension(file));
     }
 
     public static String getFileName(File file)
@@ -165,7 +165,7 @@ public final class FileOperation
      * Se encarga de convertir una extensión de archivo a una más común ya definida con la que concuerda en sintaxis
      * para que así pueda ser afectado por el resaltado de sintaxis. Ej.: "xsd" -> "xml"; "iml" -> "xml";
      */
-    public static String toEquivalentFileExtension(String extension)
+    public static String equivalentExtension(String extension)
     {
         return extensionMappings.getOrDefault(extension, extension);
     }

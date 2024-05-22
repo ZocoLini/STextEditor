@@ -16,6 +16,6 @@ public abstract class FileObj
     
     public abstract void writeToFile();
     
-    public abstract FileObj createNewFile(File directory, String name);
+    public abstract FileObj createNewFile(File directory, String styleClass);
     */
 }

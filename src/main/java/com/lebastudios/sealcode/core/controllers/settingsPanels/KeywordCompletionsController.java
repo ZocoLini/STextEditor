@@ -84,7 +84,7 @@ public class KeywordCompletionsController
     @FXML
     private void addLanguage()
     {
-        String languageName = Dialogs.insertTextDialog("Insert language name", "Insert the name of the language");
+        String languageName = Dialogs.insertTextDialog("Insert language styleClass", "Insert the styleClass of the language");
 
         if (languageName == null || languageName.isEmpty() || languageName.isBlank()) return;
 
