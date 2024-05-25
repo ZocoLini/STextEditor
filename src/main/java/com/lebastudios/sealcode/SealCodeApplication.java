@@ -1,5 +1,6 @@
 package com.lebastudios.sealcode;
 
+import com.lebastudios.sealcode.core.logic.PluginLoader;
 import com.lebastudios.sealcode.core.logic.config.GlobalConfig;
 import com.lebastudios.sealcode.core.logic.config.Session;
 import com.lebastudios.sealcode.events.AppEvents;
@@ -20,6 +21,9 @@ public final class SealCodeApplication extends Application
     @Override
     public void start(Stage stage) throws IOException
     {
+        System.setProperty("java.util.jar.disableVerification", "true");
+        PluginLoader.loadPlugins();
+        
         CustomStarter.startCustomImplementation();
         
         Thread hiloPrecargaGlobalConfig = GlobalConfig.getStaticInstance().preload();

@@ -1,4 +1,6 @@
 module com.lebastudios.sealcode {
+    uses com.lebastudios.sealcode.core.logic.IPlugin;
+    
     requires javafx.controls;
     requires javafx.fxml;
     requires com.google.gson;
@@ -6,7 +8,9 @@ module com.lebastudios.sealcode {
 
     /* Core */
     exports com.lebastudios.sealcode;
-    
+    exports com.lebastudios.sealcode.core.logic;
+    exports com.lebastudios.sealcode.events;
+
     opens com.lebastudios.sealcode to javafx.fxml;
     opens com.lebastudios.sealcode.core.frontend.fxextends to javafx.fxml;
     opens com.lebastudios.sealcode.core.frontend.stages to javafx.fxml;
@@ -16,7 +20,7 @@ module com.lebastudios.sealcode {
     opens com.lebastudios.sealcode.core.logic.config to com.google.gson;
     opens com.lebastudios.sealcode.core.logic.completations to com.google.gson;
     opens com.lebastudios.sealcode.core.logic.fileobj to com.google.gson;
-    
+
     /* Custom */
     requires com.github.javaparser.core;
     requires bcrypt;
@@ -24,9 +28,10 @@ module com.lebastudios.sealcode {
     requires mongo.java.driver;
     requires reactfx;
     requires com.google.j2objc.annotations;
+    requires jdk.compiler;
 
     opens com.lebastudios.sealcode.custom.controllers to javafx.fxml;
     opens com.lebastudios.sealcode.custom.controllers.settingsPanels to javafx.fxml;
-    
+
     opens com.lebastudios.sealcode.custom.logic.styling to com.google.gson;
 }
