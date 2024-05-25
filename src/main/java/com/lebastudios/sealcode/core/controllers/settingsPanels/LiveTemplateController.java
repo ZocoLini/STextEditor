@@ -24,7 +24,7 @@ public class LiveTemplateController
     
     public void initialize()
     {
-        File completationsFolder = new File(FilePaths.getProgLangCompletationsDirectory());
+        File completationsFolder = new File(FilePaths.getCompletationsDir());
         
         for (var file : completationsFolder.listFiles())
         {
@@ -110,7 +110,7 @@ public class LiveTemplateController
         if (selectedItem.getParent() == null) return;
 
         actualCompletations = new JsonFile<>(
-                new File(FilePaths.getProgLangCompletationsDirectory() + selectedItem.getValue() + ".json"),
+                new File(FilePaths.getCompletationsDir() + selectedItem.getValue() + ".json"),
                 new LangCompletationsJSON());
         
         liveTemplatesListView.getItems().clear();
@@ -161,9 +161,9 @@ public class LiveTemplateController
         if (languageName == null || languageName.isEmpty() || languageName.isBlank()) return;
 
         new JsonFile<>(
-                new File(FilePaths.getProgLangCompletationsDirectory() + "default.json"), 
+                new File(FilePaths.getCompletationsDir() + "default.json"), 
                 new LangCompletationsJSON()
-        ).createNewFile(new File(FilePaths.getProgLangCompletationsDirectory()), languageName);
+        ).createNewFile(new File(FilePaths.getCompletationsDir()), languageName);
 
         IconTreeItem<String> item = new IconTreeItem<>(languageName, languageName + ".png");
 
@@ -177,7 +177,7 @@ public class LiveTemplateController
 
         if (selectedItem.getParent() == null) return;
 
-        File file = new File(FilePaths.getProgLangCompletationsDirectory() + selectedItem.getValue() + ".json");
+        File file = new File(FilePaths.getCompletationsDir() + selectedItem.getValue() + ".json");
 
         if (file.exists())
         {

@@ -69,6 +69,8 @@ public class HighlightingRulesController
         rulesListView.getItems().clear();
         for (var rule : actualHighlightingRules.getInstance().rules)
         {
+            if (rule.name.equals(HighlightingRulesJSON.KEYWORDS_RULE_NAME)) continue;
+            
             rulesListView.getItems().add(rule.name);
         }
     }

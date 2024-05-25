@@ -74,7 +74,7 @@ public final class Resources
         }
 
         // Check if the equivalent extension has a style defined in the actual theme
-        file = new File(FilePaths.getStyleDirectory() + FileOperation.equivalentExtension(fileExtension) + ".css");
+        file = new File(FilePaths.getStyleDirectory() + FileOperation.getEquivalentFileExtension(fileExtension) + ".css");
         if (file.exists())
         {
             try
@@ -100,7 +100,7 @@ public final class Resources
         }
 
         // Check if the equivalent extension has a style defined in the default theme
-        file = new File(FilePaths.getDefaultStyleDirectory() + FileOperation.equivalentExtension(fileExtension) + ".css");
+        file = new File(FilePaths.getDefaultStyleDirectory() + FileOperation.getEquivalentFileExtension(fileExtension) + ".css");
         if (file.exists())
         {
             try

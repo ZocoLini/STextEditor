@@ -14,11 +14,11 @@
     </Tab>
 
     <Tab text="Keywords">
-
+        <fx:include source="highlightingKeywordsPane.fxml" />
     </Tab>
 
     <Tab text="Equivalent Extensions">
-
+        <fx:include source="equivalentExtensions.fxml" />
     </Tab>
 
 </TabPane>

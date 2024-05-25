@@ -31,9 +31,9 @@
                                 <SettingsTreeItem value="Preferencias" iconName="preferencias.png"
                                                   fxmlResource="core/settingsScenePanels/preferenciasAnchorPane.fxml"/>
                                 <SettingsTreeItem value="Completations" iconName="template.png"
-                                                  fxmlResource="core/settingsScenePanels/completationsTabPane.fxml"/>
+                                                  fxmlResource="core/settingsScenePanels/completations/completationsTabPane.fxml"/>
                                 <SettingsTreeItem value="Highlighting" iconName="tema.png"
-                                                  fxmlResource="core/settingsScenePanels/highlightingTabPane.fxml"/>
+                                                  fxmlResource="core/settingsScenePanels/highlighting/highlightingTabPane.fxml"/>
                             </children>
                         </IconTreeItem>
                     </children>

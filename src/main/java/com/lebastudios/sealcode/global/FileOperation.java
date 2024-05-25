@@ -1,7 +1,11 @@
 package com.lebastudios.sealcode.global;
 
 import com.lebastudios.sealcode.SealCodeApplication;
+import com.lebastudios.sealcode.core.logic.config.FilePaths;
 import com.lebastudios.sealcode.core.logic.config.Session;
+import com.lebastudios.sealcode.core.logic.fileobj.EquivalentExtensionsJSON;
+import com.lebastudios.sealcode.core.logic.fileobj.HighlightingRulesJSON;
+import com.lebastudios.sealcode.core.logic.fileobj.JsonFile;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
@@ -14,48 +18,11 @@ import java.util.Map;
 
 public final class FileOperation
 {
-    private static final Map<String, String> extensionMappings = new HashMap<>();
-
-    // TODO: Se debe cambiar esto a un archivo donde se puedan modificar facilmente las equivalencias
+    private static final JsonFile<EquivalentExtensionsJSON> HIGHLIGHTING_RULES = new JsonFile<>(
+            new File(FilePaths.getEquivalentExtensionsFile()),
+            new EquivalentExtensionsJSON()
+    );
     
-    static
-    {
-        // Definir los mapeos de extensiones
-        extensionMappings.put("xml", "xml");
-        extensionMappings.put("fxml", "xml");
-        extensionMappings.put("xsd", "xml");
-        extensionMappings.put("iml", "xml");
-        extensionMappings.put("xsl", "xml");
-        extensionMappings.put("dtd", "xml");
-
-        extensionMappings.put("json", "json");
-        extensionMappings.put("jsonc", "json");
-
-        extensionMappings.put("java", "java");
-        extensionMappings.put("class", "java");
-
-        extensionMappings.put("c", "c");
-        extensionMappings.put("h", "c");
-
-        extensionMappings.put("cpp", "cpp");
-        extensionMappings.put("hpp", "cpp");
-        extensionMappings.put("cc", "cpp");
-        extensionMappings.put("hh", "cpp");
-        extensionMappings.put("cxx", "cpp");
-        extensionMappings.put("hxx", "cpp");
-
-        extensionMappings.put("py", "py");
-        extensionMappings.put("pyc", "py");
-
-        extensionMappings.put("js", "js");
-        extensionMappings.put("mjs", "js");
-
-        extensionMappings.put("css", "css");
-        extensionMappings.put("scss", "css");
-        extensionMappings.put("sass", "css");
-        extensionMappings.put("less", "css");
-    }
-
     public static FileChooser fileChooser()
     {
         FileChooser fileChooser = new FileChooser();
@@ -144,9 +111,21 @@ public final class FileOperation
         return fileName.substring(index + 1);
     }
 
+
+    /**
+     * Se encarga de convertir una extensión de archivo a una más común ya definida con la que concuerda en sintaxis
+     * para que así pueda ser afectado por el resaltado de sintaxis. Ej.: "xsd" -> "xml"; "iml" -> "xml";
+     */
+    public static String getEquivalentFileExtension(String extension)
+    {
+        HIGHLIGHTING_RULES.readFromFile();
+
+        return HIGHLIGHTING_RULES.getInstance().equivalentExtensionsMap().getOrDefault(extension, extension);
+    }
+    
     public static String getEquivalentFileExtension(File file)
     {
-        return equivalentExtension(getFileExtension(file));
+        return getEquivalentFileExtension(getFileExtension(file));
     }
 
     public static String getFileName(File file)
@@ -159,14 +138,5 @@ public final class FileOperation
         String fileExtension = getFileExtension(file);
         
         return file.getName().replace("." + fileExtension, "");
-    }
-
-    /**
-     * Se encarga de convertir una extensión de archivo a una más común ya definida con la que concuerda en sintaxis
-     * para que así pueda ser afectado por el resaltado de sintaxis. Ej.: "xsd" -> "xml"; "iml" -> "xml";
-     */
-    public static String equivalentExtension(String extension)
-    {
-        return extensionMappings.getOrDefault(extension, extension);
     }
 }

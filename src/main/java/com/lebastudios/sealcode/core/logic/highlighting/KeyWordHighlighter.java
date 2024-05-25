@@ -52,7 +52,7 @@ public class KeyWordHighlighter
 
         if (file.exists()) return file;
 
-        file = new File(FilePaths.getHighlightingRulesDir() + FileOperation.equivalentExtension(extension) + ".json");
+        file = new File(FilePaths.getHighlightingRulesDir() + FileOperation.getEquivalentFileExtension(extension) + ".json");
 
         if (file.exists()) return file;
 

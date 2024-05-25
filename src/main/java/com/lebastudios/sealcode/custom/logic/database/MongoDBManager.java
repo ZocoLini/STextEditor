@@ -43,7 +43,7 @@ public class MongoDBManager implements IDBManager<MongoClient>
             {
                     new File(FilePaths.getHighlightingRulesDir()),
                     new File(FilePaths.getGlobalConfigDirectory()),
-                    new File(FilePaths.getProgLangCompletationsDirectory())
+                    new File(FilePaths.getCompletationsDir())
             };
 
     @Override

@@ -1,0 +1,16 @@
+{
+  "rules": [
+    {
+      "name": "string",
+      "styleClass": "string",
+      "regex": "\u0027[^\u0027]*\u0027",
+      "highlightRegex": ""
+    },
+    {
+      "name": "keywordsList",
+      "styleClass": "keyword",
+      "regex": "\\b(?:if|is|not|null|begin|end)\\b",
+      "highlightRegex": ""
+    }
+  ]
+}

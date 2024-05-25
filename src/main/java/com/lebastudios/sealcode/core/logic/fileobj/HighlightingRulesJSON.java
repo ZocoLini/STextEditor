@@ -1,10 +1,14 @@
 package com.lebastudios.sealcode.core.logic.fileobj;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HighlightingRulesJSON
 {
+    public static final String KEYWORDS_RULE_NAME = "keywordsList";
+    
     public final List<HighlightingRule> rules = new ArrayList<>();
 
     public HighlightingRule getHighlightingRule(String name)
@@ -32,6 +36,42 @@ public class HighlightingRulesJSON
         }
 
         return false;
+    }
+    
+    public List<String> getKeywords()
+    {
+        HighlightingRule keywordsRule = getHighlightingRule(KEYWORDS_RULE_NAME);
+        
+        if (keywordsRule == null) return new ArrayList<>();
+        
+        String[] keywords = keywordsRule.regex.substring(5, keywordsRule.regex.length() - 3).split("\\|");
+        
+        return List.of(keywords);
+    }
+    
+    public void setKeywords(String... keywords)
+    {
+        removeHighlightingRule(KEYWORDS_RULE_NAME);
+     
+        if (keywords.length == 0) return;
+        
+        StringBuilder builder = new StringBuilder("\\b(?:");
+        
+        for (var keyword : keywords)
+        {
+            builder.append(keyword).append("|");
+        }
+        
+        builder.deleteCharAt(builder.length() - 1);
+        
+        builder.append(")\\b");
+        
+        rules.add(new HighlightingRule(
+                KEYWORDS_RULE_NAME,
+                "keyword",
+                builder.toString(),
+                ""
+        ));
     }
     
     public static class HighlightingRule

@@ -48,7 +48,7 @@ public class CompletationsMap
     private TreeSet<Completation> loadCompletations(String fileExtension)
     {
         JsonFile<LangCompletationsJSON> langCompletations = new JsonFile<>(
-                new File(FilePaths.getProgLangCompletationsDirectory() + fileExtension + ".json"),
+                new File(FilePaths.getCompletationsDir() + fileExtension + ".json"),
                 new LangCompletationsJSON());
 
         TreeSet<Completation> completationsSet = new TreeSet<>();

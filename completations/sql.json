@@ -1,0 +1,36 @@
+{
+  "keywordsCompletations": [
+    {
+      "value": "if",
+      "iconName": "keyword.png"
+    },
+    {
+      "value": "is",
+      "iconName": "keyword.png"
+    },
+    {
+      "value": "not",
+      "iconName": "keyword.png"
+    },
+    {
+      "value": "null",
+      "iconName": "keyword.png"
+    },
+    {
+      "value": "begin",
+      "iconName": "keyword.png"
+    },
+    {
+      "value": "end",
+      "iconName": "keyword.png"
+    }
+  ],
+  "liveTemplatesCompletations": [
+    {
+      "description": "",
+      "completation": "if object_id(\u0027name\u0027) is not null\nbegin\n\t$END$\nend",
+      "value": "existence",
+      "iconName": "template.png"
+    }
+  ]
+}

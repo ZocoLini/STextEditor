@@ -19,7 +19,7 @@ public final class FilePaths
     
     public static String getHighlightingRulesDir() {return getAppDirectory() + "/highlightingRules/";}
 
-    public static String getProgLangCompletationsDirectory() {return getAppDirectory() + "/completations/" ;}
+    public static String getCompletationsDir() {return getAppDirectory() + "/completations/" ;}
 
     public static String getThemeDirectory() {return getAppDirectory() + "/themes/";}
     
@@ -46,4 +46,9 @@ public final class FilePaths
     public static String getDefaultIconFile() {return getDefaultIconDirectory() + "unknown.png";}
 
     public static String getDefaulThemeFile() {return getDefaultStyleDirectory() + "theme.css";}
+
+    public static String getEquivalentExtensionsFile()
+    {
+        return getHighlightingRulesDir() + "equivalentExtensions.json";
+    }
 }
