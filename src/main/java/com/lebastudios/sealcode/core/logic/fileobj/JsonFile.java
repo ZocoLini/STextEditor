@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.lebastudios.sealcode.global.FileOperation;
 
 import java.io.File;
+import java.util.Map;
 
 public class JsonFile<T> extends FileObj
 {
@@ -24,7 +25,8 @@ public class JsonFile<T> extends FileObj
         return data;
     }
     
-    public void read()
+    @Override
+    public void readLogic()
     {
         try
         {

@@ -81,17 +81,7 @@ public class HighlightingKeywordsController
 
     public void deleteLangFile()
     {
-        TreeItem<String> selectedItem = langsTreeView.getSelectionModel().getSelectedItem();
-
-        if (selectedItem.getParent() == null) return;
-
-        File file = new File(FilePaths.getHighlightingRulesDir() + selectedItem.getValue() + ".json");
-
-        if (file.exists())
-        {
-            file.delete();
-        }
-
+        actualHighlightingRules.delete();
         loadTreeView();
     }
 

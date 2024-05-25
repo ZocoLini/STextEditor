@@ -1,8 +1,11 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
+import com.lebastudios.sealcode.core.logic.config.FilePaths;
 import com.lebastudios.sealcode.core.logic.config.Resources;
 import com.lebastudios.sealcode.core.logic.Indexer;
 import com.lebastudios.sealcode.core.logic.Inspector;
+import com.lebastudios.sealcode.core.logic.fileobj.HighlightingRulesJSON;
+import com.lebastudios.sealcode.core.logic.fileobj.JsonFile;
 import com.lebastudios.sealcode.events.AppEvents;
 import com.lebastudios.sealcode.global.DocumentsOperations;
 import com.lebastudios.sealcode.global.FileOperation;
@@ -41,6 +44,13 @@ public final class SealCodeArea extends CodeArea
 
         updateResources();
 
+        AppEvents.onFileObjModified.addListener((path, fileObj) ->
+        {
+            if (!path.equals(FilePaths.getEquivalentExtensionsFile())) return;
+
+            updateResources();
+        });
+        
         this.textProperty().addListener((observable, oldValue, newValue) ->
         {
             new Thread(() -> {

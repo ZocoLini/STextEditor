@@ -24,8 +24,30 @@ public class KeywordCompletionsController
     
     public void initialize()
     {
+        loadTreeView();
+        
+        keyWordsTreeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+        {
+            if (newValue == null) return;
+            if (newValue.getParent() == null) return;
+
+            actualCompletations = new JsonFile<>(
+                    new File(FilePaths.getCompletationsDir() + newValue.getValue() + ".json"),
+                    new LangCompletationsJSON()
+            );
+
+            loadListView();
+        });
+        
+        keyWordsTreeView.getRoot().setExpanded(true);
+    }
+
+    private void loadTreeView()
+    {
         File completationsFolder = new File(FilePaths.getCompletationsDir());
 
+        keyWordsTreeView.getRoot().getChildren().clear();
+        
         for (var file : completationsFolder.listFiles())
         {
             IconTreeItem<String> item = new IconTreeItem<>(
@@ -35,27 +57,10 @@ public class KeywordCompletionsController
 
             keyWordsTreeView.getRoot().getChildren().add(item);
         }
-
-        keyWordsTreeView.setOnMouseClicked(event ->
-        {
-            loadKeywords();
-        });
-        
-        keyWordsTreeView.getRoot().setExpanded(true);
     }
-
-    private void loadKeywords()
+    
+    private void loadListView()
     {
-        TreeItem<String> selectedItem = keyWordsTreeView.getSelectionModel().getSelectedItem();
-
-        if (selectedItem == null) return;
-        if (selectedItem.getParent() == null) return;
-
-        actualCompletations = new JsonFile<>(
-                new File(FilePaths.getCompletationsDir() + selectedItem.getValue() + ".json"),
-                new LangCompletationsJSON()
-        );
-
         keyWordsListView.getItems().clear();
 
         for (var keyWordCompletation : actualCompletations.get().keywordsCompletations)
@@ -67,18 +72,8 @@ public class KeywordCompletionsController
     @FXML
     private void removeLanguage()
     {
-        TreeItem<String> selectedItem = keyWordsTreeView.getSelectionModel().getSelectedItem();
-
-        if (selectedItem.getParent() == null) return;
-
-        File file = new File(FilePaths.getCompletationsDir() + selectedItem.getValue() + ".json");
-
-        if (file.exists())
-        {
-            file.delete();
-        }
-
-        keyWordsTreeView.getRoot().getChildren().remove(selectedItem);
+        actualCompletations.delete();
+        loadTreeView();
     }
 
     @FXML
@@ -88,14 +83,9 @@ public class KeywordCompletionsController
 
         if (languageName == null || languageName.isEmpty() || languageName.isBlank()) return;
 
-        new JsonFile<>(
-                new File(FilePaths.getCompletationsDir() + "default.json"),
-                new LangCompletationsJSON()
-        ).createNewFile(new File(FilePaths.getCompletationsDir()), languageName);
+        JsonFile.createNewFile(FilePaths.getCompletationsDir(), languageName);
 
-        IconTreeItem<String> item = new IconTreeItem<>(languageName, languageName + ".png");
-
-        keyWordsTreeView.getRoot().getChildren().add(item);
+        loadTreeView();
     }
 
     @FXML
@@ -111,7 +101,7 @@ public class KeywordCompletionsController
         
         actualCompletations.write();
         
-        loadKeywords();
+        loadListView();
     }
 
     @FXML
@@ -127,6 +117,6 @@ public class KeywordCompletionsController
         
         actualCompletations.write();
         
-        loadKeywords();
+        loadListView();
     }
 }

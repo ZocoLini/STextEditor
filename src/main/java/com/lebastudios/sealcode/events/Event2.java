@@ -18,6 +18,7 @@ public class Event2<T, P> extends EventHandler<IEventMethod2<T, P>>
             } catch (Exception e)
             {
                 System.err.println("Error invoking event: " + e.getMessage());
+                e.printStackTrace();
             }
         }
     }

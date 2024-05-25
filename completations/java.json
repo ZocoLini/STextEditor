@@ -1,5 +1,4 @@
 {
-  "language": "java",
   "keywordsCompletations": [
     {
       "value": "public",
@@ -156,12 +155,6 @@
   ],
   "liveTemplatesCompletations": [
     {
-      "description": "Creates a do while loop",
-      "completation": "do\n{\n\t\n} while ($END$);",
-      "value": "do",
-      "iconName": "template.png"
-    },
-    {
       "description": "Creates a switch statement",
       "completation": "switch ($END$)\n{\n\tcase $END$:\n\t\tbreak;\n\tdefault:\n\t\tbreak;\n}",
       "value": "switch",
@@ -231,6 +224,12 @@
       "description": "Creates an else statement",
       "completation": "else\n{\n\t\n}",
       "value": "else",
+      "iconName": "template.png"
+    },
+    {
+      "description": "Creates a do while loop",
+      "completation": "do\n{\n\t\n} while ($END$);",
+      "value": "do",
       "iconName": "template.png"
     }
   ]

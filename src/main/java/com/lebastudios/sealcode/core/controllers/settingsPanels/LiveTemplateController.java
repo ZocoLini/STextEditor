@@ -24,24 +24,19 @@ public class LiveTemplateController
     
     public void initialize()
     {
-        File completationsFolder = new File(FilePaths.getCompletationsDir());
-        
-        for (var file : completationsFolder.listFiles())
-        {
-            IconTreeItem<String> item = new IconTreeItem<>(
-                    FileOperation.getFileName(file),
-                    "ext_" + FileOperation.getFileName(file) + ".png"
-            );
-
-            liveTemplateTreeView.getRoot().getChildren().add(item);
-        }
+        loadTreeView();
 
         liveTemplateTreeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
         {
             if (newValue == null) return;
+            if (newValue.getParent() == null) return;
+
+            actualCompletations = new JsonFile<>(
+                    new File(FilePaths.getCompletationsDir() + newValue.getValue() + ".json"),
+                    new LangCompletationsJSON());
             
             clearTextAreas();
-            loadLiveTemplates();
+            loadListView();
         });
 
         liveTemplatesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
@@ -55,16 +50,40 @@ public class LiveTemplateController
         liveTemplateTreeView.getRoot().setExpanded(true);
     }
 
+    private void loadTreeView()
+    {
+        File completationsFolder = new File(FilePaths.getCompletationsDir());
+
+        liveTemplateTreeView.getRoot().getChildren().clear();
+        
+        for (var file : completationsFolder.listFiles())
+        {
+            IconTreeItem<String> item = new IconTreeItem<>(
+                    FileOperation.getFileName(file),
+                    "ext_" + FileOperation.getFileName(file) + ".png"
+            );
+
+            liveTemplateTreeView.getRoot().getChildren().add(item);
+        }
+    }
+
+    private void loadListView()
+    {
+        liveTemplatesListView.getItems().clear();
+
+        for (var liveTemplateCompletation : actualCompletations.get().liveTemplatesCompletations)
+        {
+            liveTemplatesListView.getItems().add(liveTemplateCompletation.getValue());
+        }
+    }
+    
     private void loadLiveTemplate()
     {
         String selectedItem = liveTemplatesListView.getSelectionModel().getSelectedItem();
 
         if (selectedItem == null) return;
 
-        LangCompletationsJSON.LiveTemplateCompletation liveTemplateCompletation = actualCompletations.get().liveTemplatesCompletations.stream()
-                .filter(variable -> variable.getValue().equals(selectedItem))
-                .findFirst()
-                .orElse(null);
+        var liveTemplateCompletation = actualCompletations.get().getLiveTemplateCompletation(selectedItem);
         
         if (liveTemplateCompletation == null) return;
 
@@ -92,7 +111,7 @@ public class LiveTemplateController
 
         clearTextAreas();
 
-        loadLiveTemplates();
+        loadListView();
     }
 
     private void clearTextAreas()
@@ -100,25 +119,6 @@ public class LiveTemplateController
         liveTemplateValueTextField.setText("");
         liveTemplateDescTextArea.setText("");
         liveTemplateCompTextArea.setText("");
-    }
-
-    private void loadLiveTemplates()
-    {
-        TreeItem<String> selectedItem = liveTemplateTreeView.getSelectionModel().getSelectedItem();
-
-        if (selectedItem == null) return;
-        if (selectedItem.getParent() == null) return;
-
-        actualCompletations = new JsonFile<>(
-                new File(FilePaths.getCompletationsDir() + selectedItem.getValue() + ".json"),
-                new LangCompletationsJSON());
-        
-        liveTemplatesListView.getItems().clear();
-
-        for (var liveTemplateCompletation : actualCompletations.get().liveTemplatesCompletations)
-        {
-            liveTemplatesListView.getItems().add(liveTemplateCompletation.getValue());
-        }
     }
 
     @FXML
@@ -132,7 +132,7 @@ public class LiveTemplateController
 
         actualCompletations.write();
 
-        loadLiveTemplates();
+        loadListView();
     }
 
     @FXML
@@ -150,7 +150,7 @@ public class LiveTemplateController
 
         actualCompletations.write();
 
-        loadLiveTemplates();
+        loadListView();
     }
 
     @FXML
@@ -160,30 +160,15 @@ public class LiveTemplateController
 
         if (languageName == null || languageName.isEmpty() || languageName.isBlank()) return;
 
-        new JsonFile<>(
-                new File(FilePaths.getCompletationsDir() + "default.json"), 
-                new LangCompletationsJSON()
-        ).createNewFile(new File(FilePaths.getCompletationsDir()), languageName);
+        JsonFile.createNewFile(new File(FilePaths.getCompletationsDir()), languageName);
 
-        IconTreeItem<String> item = new IconTreeItem<>(languageName, languageName + ".png");
-
-        liveTemplateTreeView.getRoot().getChildren().add(item);
+        loadTreeView();
     }
 
     @FXML
     private void removeLanguage()
     {
-        TreeItem<String> selectedItem = liveTemplateTreeView.getSelectionModel().getSelectedItem();
-
-        if (selectedItem.getParent() == null) return;
-
-        File file = new File(FilePaths.getCompletationsDir() + selectedItem.getValue() + ".json");
-
-        if (file.exists())
-        {
-            file.delete();
-        }
-
-        liveTemplateTreeView.getRoot().getChildren().remove(selectedItem);
+        actualCompletations.delete();
+        loadTreeView();
     }
 }

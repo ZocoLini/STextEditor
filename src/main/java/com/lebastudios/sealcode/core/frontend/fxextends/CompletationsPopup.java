@@ -1,6 +1,8 @@
 package com.lebastudios.sealcode.core.frontend.fxextends;
 
-import com.lebastudios.sealcode.core.logic.completations.CompletationsMap;
+import com.lebastudios.sealcode.core.logic.config.FilePaths;
+import com.lebastudios.sealcode.core.logic.fileobj.JsonFile;
+import com.lebastudios.sealcode.core.logic.fileobj.LangCompletationsJSON;
 import com.lebastudios.sealcode.events.AppEvents;
 import com.lebastudios.sealcode.core.logic.completations.Completation;
 import javafx.beans.value.ChangeListener;
@@ -10,22 +12,33 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Popup;
 
+import java.io.File;
 import java.util.TreeSet;
 
 public class CompletationsPopup extends Popup implements ChangeListener<String>
 {
-    private final TreeSet<Completation> completations;
+    private final JsonFile<LangCompletationsJSON> completationsFile;
+    private final TreeSet<Completation> completations = new TreeSet<>();
     
     private final ListView<Completation> completationSListView = new ListView<>();
     private final SealCodeArea sealCodeArea;
     
     private String currentWord = "";
     
+    // TODO: Crear uno para cada codeArea no parece eficiente
+    
     public CompletationsPopup(SealCodeArea sealCodeArea)
     {
         this.sealCodeArea = sealCodeArea;
 
-        completations = CompletationsMap.getInstance().getCompletations(sealCodeArea.fileExtension);
+        completationsFile = new JsonFile<>(
+                new File(FilePaths.getCompletationsDir() + sealCodeArea.fileExtension + ".json"),
+                new LangCompletationsJSON()
+        );
+        
+        completationsFile.onRead.addListener(this::mapCompletations);
+        
+        mapCompletations();
         
         this.getContent().add(completationSListView);
         completationSListView.setMaxHeight(80);
@@ -41,6 +54,12 @@ public class CompletationsPopup extends Popup implements ChangeListener<String>
                 case ENTER -> complete();
             }
         });
+    }
+    
+    private void mapCompletations()
+    {
+        completations.clear();
+        completations.addAll(completationsFile.get().getCompletations());
     }
     
     private void reset()

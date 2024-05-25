@@ -5,12 +5,33 @@ import com.lebastudios.sealcode.core.logic.config.FilePaths;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class LangCompletationsJSON
 {
     public final List<KeyWordCompletation> keywordsCompletations = new ArrayList<>();
     public final List<LiveTemplateCompletation> liveTemplatesCompletations = new ArrayList<>();
+
+    public Collection<? extends Completation> getCompletations()
+    {
+        List<Completation> completations = new ArrayList<>();
+        completations.addAll(keywordsCompletations);
+        completations.addAll(liveTemplatesCompletations);
+        return completations;
+    }
+
+    public LiveTemplateCompletation getLiveTemplateCompletation(String value)
+    {
+        for (var completation : liveTemplatesCompletations)
+        {
+            if (completation.getValue().equals(value))
+            {
+                return completation;
+            }
+        }
+        return null;
+    }
     
     public static class KeyWordCompletation extends Completation
     {

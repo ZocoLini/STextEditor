@@ -18,7 +18,7 @@ public final class AppEvents
     
     /* FileObj */
         /* When a fileobj is saved <filePathSaved> */
-    public static final Event2<String, FileObj> onFileObjSaved = new Event2<>();
+    public static final Event2<String, FileObj> onFileObjModified = new Event2<>();
     
     /*  IDE Interface Events Objects  */
         /*  Seal Code Área  */

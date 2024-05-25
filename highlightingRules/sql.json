@@ -7,9 +7,15 @@
       "highlightRegex": ""
     },
     {
+      "name": "method",
+      "styleClass": "method",
+      "regex": "[a-zA-Z_$][a-zA-Z0-9_$]*\\(",
+      "highlightRegex": "[a-zA-Z_$][a-zA-Z0-9_$]*"
+    },
+    {
       "name": "keywordsList",
       "styleClass": "keyword",
-      "regex": "\\b(?:if|is|not|null|begin|end|select)\\b",
+      "regex": "\\b(?:if|is|not|null|begin|end|having|group by)\\b",
       "highlightRegex": ""
     }
   ]

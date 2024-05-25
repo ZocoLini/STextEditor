@@ -23,6 +23,8 @@ public final class FilePaths
 
     public static String getThemeDirectory() {return getAppDirectory() + "/themes/";}
     
+    public static String getPluginDir() {return getAppDirectory() + "/plugins/";}
+    
     public static String getIconDirectory()
     {
         return getThemeDirectory() + GlobalConfig.getStaticInstance().editorConfig.theme + "/icon/";

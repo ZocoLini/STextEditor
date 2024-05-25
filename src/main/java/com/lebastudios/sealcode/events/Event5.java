@@ -19,6 +19,7 @@ public class Event5<A, B, C, D, E> extends EventHandler<IEventMethod5<A, B, C, D
             catch (Exception exc)
             {
                 System.err.println("Error invoking event: " + exc.getMessage());
+                exc.printStackTrace();
             }
         }
     }

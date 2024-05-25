@@ -1,0 +1,17 @@
+{
+  "keywordsCompletations": [
+    {
+      "value": "int",
+      "iconName": "keyword.png"
+    },
+    {
+      "value": "return",
+      "iconName": "keyword.png"
+    },
+    {
+      "value": "string",
+      "iconName": "keyword.png"
+    }
+  ],
+  "liveTemplatesCompletations": []
+}

@@ -29,16 +29,8 @@ public class HighlightingRulesController
     
     public void initialize()
     {
-        for (var file : new File(FilePaths.getHighlightingRulesDir()).listFiles())
-        {
-            if (file.getName().equals("equivalentExtensions.json")) continue;
-            
-            highlightingRulesFilesTreeView.getRoot().getChildren().add(new IconTreeItem<>(
-                    file.getName().replace(".json", ""),
-                    "ext_" + FileOperation.getFileName(file) + ".png"
-            ));
-        }
-        
+        loadTreeView();
+
         highlightingRulesFilesTreeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
         {
             if (newValue == null) return;
@@ -61,7 +53,22 @@ public class HighlightingRulesController
         
         highlightingRulesFilesTreeView.getRoot().setExpanded(true);
     }
-    
+
+    private void loadTreeView()
+    {
+        highlightingRulesFilesTreeView.getRoot().getChildren().clear();
+        
+        for (var file : new File(FilePaths.getHighlightingRulesDir()).listFiles())
+        {
+            if (file.getName().equals("equivalentExtensions.json")) continue;
+
+            highlightingRulesFilesTreeView.getRoot().getChildren().add(new IconTreeItem<>(
+                    file.getName().replace(".json", ""),
+                    "ext_" + FileOperation.getFileName(file) + ".png"
+            ));
+        }
+    }
+
     private void loadListView()
     {
         rulesListView.getItems().clear();
@@ -71,6 +78,14 @@ public class HighlightingRulesController
             
             rulesListView.getItems().add(rule.name);
         }
+    }
+    
+    private void clear()
+    {
+        name.clear();
+        styleClass.clear();
+        findableRegex.clear();
+        coloureableRegex.clear();
     }
     
     private void loadRule()
@@ -89,25 +104,13 @@ public class HighlightingRulesController
 
         JsonFile.createNewFile(FilePaths.getHighlightingRulesDir(), fileName);
 
-        IconTreeItem<String> item = new IconTreeItem<>(fileName, fileName + ".png");
-
-        highlightingRulesFilesTreeView.getRoot().getChildren().add(item);
+        loadTreeView();
     }
 
     public void deleteRulesFile()
     {
-        TreeItem<String> selectedItem = highlightingRulesFilesTreeView.getSelectionModel().getSelectedItem();
-
-        if (selectedItem.getParent() == null) return;
-
-        File file = new File(FilePaths.getHighlightingRulesDir() + selectedItem.getValue() + ".json");
-
-        if (file.exists())
-        {
-            file.delete();
-        }
-
-        highlightingRulesFilesTreeView.getRoot().getChildren().remove(selectedItem);
+        actualHighlightingRules.delete();
+        loadTreeView();
     }
 
     public void createRule()
@@ -132,7 +135,28 @@ public class HighlightingRulesController
 
     public void saveRule()
     {
+        String invalidPattern = "<[^<>]*>]";
+        if (name.getText().matches(invalidPattern) || styleClass.getText().matches(invalidPattern) 
+                || findableRegex.getText().matches(invalidPattern) 
+                || coloureableRegex.getText().matches(invalidPattern)) 
+        {
+            clear();
+            return;
+        }
+        
         if (actualHighlightingRules == null) return;
+        if (name.getText().isEmpty() || styleClass.getText().isEmpty() || findableRegex.getText().isEmpty())
+        {
+            clear();
+            return;
+        }
+        if (name.getText().isBlank() || styleClass.getText().isBlank() || findableRegex.getText().isBlank()) 
+        {
+            clear();
+            return;
+        }
+        
+        if (findableRegex.getText().isBlank()) findableRegex.setText("");
         
         if (actualRule == null) 
         {

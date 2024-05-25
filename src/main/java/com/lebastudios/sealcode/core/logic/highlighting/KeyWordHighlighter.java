@@ -5,6 +5,7 @@ import com.lebastudios.sealcode.core.frontend.fxextends.SealCodeArea;
 import com.lebastudios.sealcode.core.logic.config.FilePaths;
 import com.lebastudios.sealcode.core.logic.fileobj.HighlightingRulesJSON;
 import com.lebastudios.sealcode.core.logic.fileobj.JsonFile;
+import com.lebastudios.sealcode.events.AppEvents;
 import com.lebastudios.sealcode.global.FileOperation;
 import javafx.concurrent.Task;
 import javafx.stage.WindowEvent;
@@ -24,18 +25,38 @@ import java.util.regex.Pattern;
 
 public class KeyWordHighlighter
 {
-    private final JsonFile<HighlightingRulesJSON> patterns;
+    private JsonFile<HighlightingRulesJSON> patternsFileObj;
     private final SealCodeArea codeArea;
     private final ExecutorService executor;
     private Pattern pattern;
 
+    // TODO: Crear multiples instancias quizas no es lo mejor.
+    
     public KeyWordHighlighter(SealCodeArea codeArea)
     {
-        patterns = new JsonFile<>(
+        patternsFileObj = new JsonFile<>(
                 getHighlightingFile(codeArea.fileExtension),
                 new HighlightingRulesJSON()
         );
 
+        patternsFileObj.onRead.addListener(() -> {
+            patternsCreator();
+            applyHighlighting(computeHighlighting(codeArea.getText()));
+        });
+
+        AppEvents.onFileObjModified.addListener((path, fileObj) ->
+        {
+            if (!path.equals(FilePaths.getEquivalentExtensionsFile())) return;
+
+            patternsFileObj = new JsonFile<>(
+                    getHighlightingFile(codeArea.fileExtension),
+                    new HighlightingRulesJSON()
+            );
+            
+            patternsCreator();
+            applyHighlighting(computeHighlighting(codeArea.getText()));
+        });
+        
         patternsCreator();
 
         this.codeArea = codeArea;
@@ -66,21 +87,27 @@ public class KeyWordHighlighter
     {
         StringBuilder patternString = new StringBuilder();
 
-        for (var patternInfo : patterns.get().rules)
+        for (var patternInfo : patternsFileObj.get().rules)
         {
             patternString.append("(?<").append(patternInfo.name).append(">").
                     append(patternInfo.regex).append(")").append("|");
         }
 
+        if (patternString.isEmpty())
+        {
+            pattern = null;
+            return;
+        }
+        
         // Eliminar el último "|"
         String keywordPattern = patternString.substring(0, patternString.length() - 1);
-
+        
         pattern = Pattern.compile(keywordPattern);
     }
 
     private String getPatternName(Matcher matcher)
     {
-        for (var variable : patterns.get().rules)
+        for (var variable : patternsFileObj.get().rules)
         {
             final var patternName = variable.name;
 
@@ -110,8 +137,7 @@ public class KeyWordHighlighter
                         t.getFailure().printStackTrace();
                         return Optional.empty();
                     }
-                })
-                .subscribe(this::applyHighlighting);
+                }).subscribe(this::applyHighlighting);
 
         codeArea.addEventHandler(WindowEvent.WINDOW_HIDING, e -> cleanupWhenDone.unsubscribe());
         codeArea.addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> cleanupWhenDone.unsubscribe());
@@ -140,10 +166,16 @@ public class KeyWordHighlighter
 
     private StyleSpans<Collection<String>> computeHighlighting(String text)
     {
+        StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
+        
+        if (pattern == null) 
+        {
+            spansBuilder.add(Collections.singleton("default"), text.length());
+            return spansBuilder.create();
+        }
+        
         Matcher matcher = pattern.matcher(text);
         int lastKwEnd = 0;
-
-        StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
 
         while (matcher.find())
         {
@@ -164,7 +196,8 @@ public class KeyWordHighlighter
     private void computeHighlightingOnColourleable(String patterName, String text,
                                                    StyleSpansBuilder<Collection<String>> spansBuilder)
     {
-        final var highlightingRule = patterns.get().getHighlightingRule(patterName);
+        final var highlightingRule = patternsFileObj.get().getHighlightingRule(patterName);
+        
         String coloureablePattern = highlightingRule.highlightRegex;
 
         if (coloureablePattern == null || coloureablePattern.isEmpty())

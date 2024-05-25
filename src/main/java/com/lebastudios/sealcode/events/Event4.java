@@ -18,6 +18,7 @@ public class Event4<A, B, C, D> extends EventHandler<IEventMethod4<A, B, C, D>>
             } catch (Exception e)
             {
                 System.err.println("Error invoking event: " + e.getMessage());
+                e.printStackTrace();
             }
         }
     }
