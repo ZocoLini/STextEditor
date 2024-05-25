@@ -58,7 +58,7 @@ public class KeywordCompletionsController
 
         keyWordsListView.getItems().clear();
 
-        for (var keyWordCompletation : actualCompletations.getInstance().keywordsCompletations)
+        for (var keyWordCompletation : actualCompletations.get().keywordsCompletations)
         {
             keyWordsListView.getItems().add(keyWordCompletation.getValue());
         }
@@ -107,9 +107,9 @@ public class KeywordCompletionsController
         
         if (selectedItem == null || selectedItem.isEmpty() || selectedItem.isBlank()) return;
         
-        actualCompletations.getInstance().keywordsCompletations.add(new LangCompletationsJSON.KeyWordCompletation(selectedItem));
+        actualCompletations.get().keywordsCompletations.add(new LangCompletationsJSON.KeyWordCompletation(selectedItem));
         
-        actualCompletations.writeToFile();
+        actualCompletations.write();
         
         loadKeywords();
     }
@@ -123,9 +123,9 @@ public class KeywordCompletionsController
         
         if (selectedItem == null) return;
         
-        actualCompletations.getInstance().keywordsCompletations.removeIf(variable -> variable.getValue().equals(selectedItem));
+        actualCompletations.get().keywordsCompletations.removeIf(variable -> variable.getValue().equals(selectedItem));
         
-        actualCompletations.writeToFile();
+        actualCompletations.write();
         
         loadKeywords();
     }

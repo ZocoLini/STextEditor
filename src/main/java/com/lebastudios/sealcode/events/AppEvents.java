@@ -4,6 +4,7 @@ import com.lebastudios.sealcode.core.frontend.fxextends.IconTreeItem;
 import com.lebastudios.sealcode.core.frontend.fxextends.SealCodeArea;
 import com.lebastudios.sealcode.core.frontend.fxextends.SettingsTreeView;
 import com.lebastudios.sealcode.core.logic.completations.Completation;
+import com.lebastudios.sealcode.core.logic.fileobj.FileObj;
 import com.lebastudios.sealcode.global.TextModInf;
 
 import java.io.File;
@@ -15,7 +16,11 @@ public final class AppEvents
     public static final Event onAppExit = new Event();
     public static final Event onAppStart = new Event();
     
-    /*  IDE Objects  */
+    /* FileObj */
+        /* When a fileobj is saved <filePathSaved> */
+    public static final Event2<String, FileObj> onFileObjSaved = new Event2<>();
+    
+    /*  IDE Interface Events Objects  */
         /*  Seal Code Área  */
             /*  Completations Popup  <completationsToShow, file, fileExtension, currentWord, allText> */
     public static final Event5<TreeSet<Completation>, File, String, String, String> onCompletationsRequest = 
@@ -31,6 +36,7 @@ public final class AppEvents
     public static final Event1<SealCodeArea> onSealCodeAreaDeleted = new Event1<>();
     
     /*  Settings Pane   */
+        /* Global Config */
     public static final Event onGlobalConfigUpdate = new Event();
     
     /* Customice interface */

@@ -53,8 +53,8 @@ public class CompletationsMap
 
         TreeSet<Completation> completationsSet = new TreeSet<>();
 
-        completationsSet.addAll(langCompletations.getInstance().keywordsCompletations);
-        completationsSet.addAll(langCompletations.getInstance().liveTemplatesCompletations);
+        completationsSet.addAll(langCompletations.get().keywordsCompletations);
+        completationsSet.addAll(langCompletations.get().liveTemplatesCompletations);
 
         return completationsSet;
     }

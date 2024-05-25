@@ -1,5 +1,7 @@
 package com.lebastudios.sealcode.core.logic.fileobj;
 
+import com.lebastudios.sealcode.events.AppEvents;
+
 import java.io.File;
 
 public abstract class FileObj
@@ -9,13 +11,21 @@ public abstract class FileObj
     public FileObj(File file)
     {
         representedFile = file;
+        
+        AppEvents.onFileObjSaved.addListener((path, fileObj) ->
+        {
+            if (path.equals(representedFile.getAbsolutePath()) && fileObj != this) read();
+        });
     }
     
-    /*
-    public abstract FileObj readFromFile();
+    public abstract void read();
     
-    public abstract void writeToFile();
+    public final void write()
+    {
+        saveLogic();
+
+        AppEvents.onFileObjSaved.invoke(representedFile.getAbsolutePath(), this);
+    }
     
-    public abstract FileObj createNewFile(File directory, String styleClass);
-    */
+    public abstract void saveLogic();
 }

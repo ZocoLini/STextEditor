@@ -4,7 +4,6 @@ import com.lebastudios.sealcode.SealCodeApplication;
 import com.lebastudios.sealcode.core.logic.config.FilePaths;
 import com.lebastudios.sealcode.core.logic.config.Session;
 import com.lebastudios.sealcode.core.logic.fileobj.EquivalentExtensionsJSON;
-import com.lebastudios.sealcode.core.logic.fileobj.HighlightingRulesJSON;
 import com.lebastudios.sealcode.core.logic.fileobj.JsonFile;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -13,8 +12,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 public final class FileOperation
 {
@@ -118,9 +115,9 @@ public final class FileOperation
      */
     public static String getEquivalentFileExtension(String extension)
     {
-        HIGHLIGHTING_RULES.readFromFile();
+        HIGHLIGHTING_RULES.read();
 
-        return HIGHLIGHTING_RULES.getInstance().equivalentExtensionsMap().getOrDefault(extension, extension);
+        return HIGHLIGHTING_RULES.get().equivalentExtensionsMap().getOrDefault(extension, extension);
     }
     
     public static String getEquivalentFileExtension(File file)

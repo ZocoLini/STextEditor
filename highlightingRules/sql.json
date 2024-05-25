@@ -9,7 +9,7 @@
     {
       "name": "keywordsList",
       "styleClass": "keyword",
-      "regex": "\\b(?:if|is|not|null|begin|end)\\b",
+      "regex": "\\b(?:if|is|not|null|begin|end|select)\\b",
       "highlightRegex": ""
     }
   ]

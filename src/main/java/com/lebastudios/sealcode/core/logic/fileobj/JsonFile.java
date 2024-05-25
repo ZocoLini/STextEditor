@@ -5,43 +5,40 @@ import com.google.gson.GsonBuilder;
 import com.lebastudios.sealcode.global.FileOperation;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
 
 public class JsonFile<T> extends FileObj
 {
-    protected T instance;
+    protected T data;
     
     public JsonFile(File file, T defaultInstance)
     {
         super(file);
         
-        instance = defaultInstance;
+        data = defaultInstance;
         
-        readFromFile();
+        read();
     }
 
-    public T getInstance()
+    public T get()
     {
-        return instance;
+        return data;
     }
     
-    // TODO: A lo mejor hacer un evento para cuando se guarde un archivo, si otro tiene el mismo archivo cargado, se actualice
-    
-    public void readFromFile()
+    public void read()
     {
         try
         {
             //noinspection unchecked
-            instance =  (T) new Gson().fromJson(FileOperation.readFile(representedFile), instance.getClass());
+            data =  (T) new Gson().fromJson(FileOperation.readFile(representedFile), data.getClass());
         } catch (Exception e) {}
     }
     
-    public void writeToFile()
+    @Override
+    public void saveLogic()
     {
         try
         {
-            FileOperation.writeFile(representedFile, new GsonBuilder().setPrettyPrinting().create().toJson(instance));
+            FileOperation.writeFile(representedFile, new GsonBuilder().setPrettyPrinting().create().toJson(data));
         }
         catch (Exception e)
         {

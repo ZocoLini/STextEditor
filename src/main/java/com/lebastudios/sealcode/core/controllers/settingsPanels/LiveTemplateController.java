@@ -61,7 +61,7 @@ public class LiveTemplateController
 
         if (selectedItem == null) return;
 
-        LangCompletationsJSON.LiveTemplateCompletation liveTemplateCompletation = actualCompletations.getInstance().liveTemplatesCompletations.stream()
+        LangCompletationsJSON.LiveTemplateCompletation liveTemplateCompletation = actualCompletations.get().liveTemplatesCompletations.stream()
                 .filter(variable -> variable.getValue().equals(selectedItem))
                 .findFirst()
                 .orElse(null);
@@ -79,16 +79,16 @@ public class LiveTemplateController
         if (actualCompletations == null) return;
         if (liveTemplateValueTextField.getText().isEmpty() || liveTemplateValueTextField.getText().isBlank()) return;
         
-        actualCompletations.getInstance().liveTemplatesCompletations.removeIf(
+        actualCompletations.get().liveTemplatesCompletations.removeIf(
                 variable -> variable.getValue().equals(liveTemplateValueTextField.getText())
         );
-        actualCompletations.getInstance().liveTemplatesCompletations.add(new LangCompletationsJSON.LiveTemplateCompletation(
+        actualCompletations.get().liveTemplatesCompletations.add(new LangCompletationsJSON.LiveTemplateCompletation(
                 liveTemplateValueTextField.getText(),
                 liveTemplateDescTextArea.getText(),
                 liveTemplateCompTextArea.getText()
         ));
         
-        actualCompletations.writeToFile();
+        actualCompletations.write();
 
         clearTextAreas();
 
@@ -115,7 +115,7 @@ public class LiveTemplateController
         
         liveTemplatesListView.getItems().clear();
 
-        for (var liveTemplateCompletation : actualCompletations.getInstance().liveTemplatesCompletations)
+        for (var liveTemplateCompletation : actualCompletations.get().liveTemplatesCompletations)
         {
             liveTemplatesListView.getItems().add(liveTemplateCompletation.getValue());
         }
@@ -130,7 +130,7 @@ public class LiveTemplateController
         liveTemplateDescTextArea.setText("<description>");
         liveTemplateCompTextArea.setText("<completation>");
 
-        actualCompletations.writeToFile();
+        actualCompletations.write();
 
         loadLiveTemplates();
     }
@@ -144,11 +144,11 @@ public class LiveTemplateController
 
         if (selectedItem == null) return;
 
-        actualCompletations.getInstance().liveTemplatesCompletations.removeIf(variable -> variable.getValue().equals(selectedItem));
+        actualCompletations.get().liveTemplatesCompletations.removeIf(variable -> variable.getValue().equals(selectedItem));
 
         clearTextAreas();
 
-        actualCompletations.writeToFile();
+        actualCompletations.write();
 
         loadLiveTemplates();
     }

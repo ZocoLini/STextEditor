@@ -61,7 +61,7 @@ public class HighlightingKeywordsController
     {
         keywordsListView.getItems().clear();
         
-        List<String> keywords = actualHighlightingRules.getInstance().getKeywords();
+        List<String> keywords = actualHighlightingRules.get().getKeywords();
         
         for (var keyword : keywords)
         {
@@ -99,12 +99,12 @@ public class HighlightingKeywordsController
     {
         String newKeyword = Dialogs.insertTextDialog("New Keyword");
         
-        List<String> keywords = new ArrayList<>(actualHighlightingRules.getInstance().getKeywords());
+        List<String> keywords = new ArrayList<>(actualHighlightingRules.get().getKeywords());
         keywords.add(newKeyword);
         
-        actualHighlightingRules.getInstance().setKeywords(keywords.toArray(new String[0]));
+        actualHighlightingRules.get().setKeywords(keywords.toArray(new String[0]));
         
-        actualHighlightingRules.writeToFile();
+        actualHighlightingRules.write();
         loadListView();
     }
 
@@ -112,12 +112,12 @@ public class HighlightingKeywordsController
     {
         String keywordToRemove = keywordsListView.getSelectionModel().getSelectedItem();
 
-        List<String> keywords = new ArrayList<>(actualHighlightingRules.getInstance().getKeywords());
+        List<String> keywords = new ArrayList<>(actualHighlightingRules.get().getKeywords());
         keywords.removeAll(Collections.singleton(keywordToRemove));
 
-        actualHighlightingRules.getInstance().setKeywords(keywords.toArray(new String[0]));
+        actualHighlightingRules.get().setKeywords(keywords.toArray(new String[0]));
 
-        actualHighlightingRules.writeToFile();
+        actualHighlightingRules.write();
         loadListView();
     }
 
@@ -131,14 +131,14 @@ public class HighlightingKeywordsController
         
         List<String> keywords = new ArrayList<>();
         
-        for (var keyword : completations.getInstance().keywordsCompletations)
+        for (var keyword : completations.get().keywordsCompletations)
         {
             keywords.add(keyword.getValue());
         }
         
-        actualHighlightingRules.getInstance().setKeywords(keywords.toArray(new String[0]));
+        actualHighlightingRules.get().setKeywords(keywords.toArray(new String[0]));
         
-        actualHighlightingRules.writeToFile();
+        actualHighlightingRules.write();
         loadListView();
     }
 }

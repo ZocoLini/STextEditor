@@ -5,9 +5,7 @@ import com.lebastudios.sealcode.core.frontend.fxextends.IconTreeItem;
 import com.lebastudios.sealcode.core.logic.config.FilePaths;
 import com.lebastudios.sealcode.core.logic.fileobj.HighlightingRulesJSON;
 import com.lebastudios.sealcode.core.logic.fileobj.JsonFile;
-import com.lebastudios.sealcode.core.logic.fileobj.LangCompletationsJSON;
 import com.lebastudios.sealcode.global.FileOperation;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -56,7 +54,7 @@ public class HighlightingRulesController
         {
             if (newValue == null) return;
             
-            actualRule = actualHighlightingRules.getInstance().getHighlightingRule(newValue);
+            actualRule = actualHighlightingRules.get().getHighlightingRule(newValue);
             
             loadRule();
         });
@@ -67,7 +65,7 @@ public class HighlightingRulesController
     private void loadListView()
     {
         rulesListView.getItems().clear();
-        for (var rule : actualHighlightingRules.getInstance().rules)
+        for (var rule : actualHighlightingRules.get().rules)
         {
             if (rule.name.equals(HighlightingRulesJSON.KEYWORDS_RULE_NAME)) continue;
             
@@ -77,7 +75,7 @@ public class HighlightingRulesController
     
     private void loadRule()
     {
-        var rule = actualHighlightingRules.getInstance().getHighlightingRule(actualRule.name);
+        var rule = actualHighlightingRules.get().getHighlightingRule(actualRule.name);
         name.setText(rule.name);
         styleClass.setText(rule.styleClass);
         findableRegex.setText(rule.regex);
@@ -122,8 +120,8 @@ public class HighlightingRulesController
 
     private void deleteRule(String name)
     {
-        actualHighlightingRules.getInstance().removeHighlightingRule(name);
-        actualHighlightingRules.writeToFile();
+        actualHighlightingRules.get().removeHighlightingRule(name);
+        actualHighlightingRules.write();
         loadListView();
     }
     
@@ -144,7 +142,7 @@ public class HighlightingRulesController
                     findableRegex.getText(),
                     coloureableRegex.getText()
             );
-            actualHighlightingRules.getInstance().rules.add(rule);
+            actualHighlightingRules.get().rules.add(rule);
         }
         else
         {
@@ -154,7 +152,7 @@ public class HighlightingRulesController
             actualRule.highlightRegex = coloureableRegex.getText();
         }
         
-        actualHighlightingRules.writeToFile();
+        actualHighlightingRules.write();
         loadListView();
     }
 }

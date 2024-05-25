@@ -66,7 +66,7 @@ public class KeyWordHighlighter
     {
         StringBuilder patternString = new StringBuilder();
 
-        for (var patternInfo : patterns.getInstance().rules)
+        for (var patternInfo : patterns.get().rules)
         {
             patternString.append("(?<").append(patternInfo.name).append(">").
                     append(patternInfo.regex).append(")").append("|");
@@ -80,7 +80,7 @@ public class KeyWordHighlighter
 
     private String getPatternName(Matcher matcher)
     {
-        for (var variable : patterns.getInstance().rules)
+        for (var variable : patterns.get().rules)
         {
             final var patternName = variable.name;
 
@@ -164,7 +164,7 @@ public class KeyWordHighlighter
     private void computeHighlightingOnColourleable(String patterName, String text,
                                                    StyleSpansBuilder<Collection<String>> spansBuilder)
     {
-        final var highlightingRule = patterns.getInstance().getHighlightingRule(patterName);
+        final var highlightingRule = patterns.get().getHighlightingRule(patterName);
         String coloureablePattern = highlightingRule.highlightRegex;
 
         if (coloureablePattern == null || coloureablePattern.isEmpty())

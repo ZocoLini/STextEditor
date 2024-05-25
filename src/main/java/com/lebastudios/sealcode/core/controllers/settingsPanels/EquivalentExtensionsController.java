@@ -44,7 +44,7 @@ public class EquivalentExtensionsController
     {
         filtersFilesTreeView.getRoot().getChildren().clear();
         
-        for (var filter : equivalentExtensionsFile.getInstance().filter)
+        for (var filter : equivalentExtensionsFile.get().filter)
         {
             filtersFilesTreeView.getRoot().getChildren().add(new IconTreeItem<>(
                     filter.extension,
@@ -62,16 +62,16 @@ public class EquivalentExtensionsController
         String actualExtension = filtersFilesTreeView.getSelectionModel().getSelectedItem().getValue();
 
         equivalentExtensionsListView.getItems().addAll(
-                equivalentExtensionsFile.getInstance().getEquivalentExtensionsFor(actualExtension)
+                equivalentExtensionsFile.get().getEquivalentExtensionsFor(actualExtension)
         );
     }
 
     public void createNewFilter()
     {
         String nombre = Dialogs.insertTextDialog("New extension filter");
-        equivalentExtensionsFile.getInstance().filter.add(new EquivalentExtensionsJSON.EquivalentExtensions(nombre));
+        equivalentExtensionsFile.get().filter.add(new EquivalentExtensionsJSON.EquivalentExtensions(nombre));
         
-        equivalentExtensionsFile.writeToFile();
+        equivalentExtensionsFile.write();
         loadTreeView();
     }
 
@@ -81,9 +81,9 @@ public class EquivalentExtensionsController
         
         if (selectedItem == null) return; 
         
-        equivalentExtensionsFile.getInstance().filter.removeIf(eqExt -> eqExt.extension.equals(selectedItem.getValue()));
+        equivalentExtensionsFile.get().filter.removeIf(eqExt -> eqExt.extension.equals(selectedItem.getValue()));
 
-        equivalentExtensionsFile.writeToFile();
+        equivalentExtensionsFile.write();
         loadTreeView();
     }
 
@@ -92,9 +92,9 @@ public class EquivalentExtensionsController
         String nombre = Dialogs.insertTextDialog("New equivalent extension");
 
         final var selectedItem = filtersFilesTreeView.getSelectionModel().getSelectedItem();
-        equivalentExtensionsFile.getInstance().getEquivalentExtensionsFor(selectedItem.getValue()).add(nombre);
+        equivalentExtensionsFile.get().getEquivalentExtensionsFor(selectedItem.getValue()).add(nombre);
         
-        equivalentExtensionsFile.writeToFile();
+        equivalentExtensionsFile.write();
         loadListView();
     }
 
@@ -102,9 +102,9 @@ public class EquivalentExtensionsController
     {
         final var selectedItem = filtersFilesTreeView.getSelectionModel().getSelectedItem();
         final var selectedEqExt = equivalentExtensionsListView.getSelectionModel().getSelectedItem();
-        equivalentExtensionsFile.getInstance().getEquivalentExtensionsFor(selectedItem.getValue()).removeIf(value -> value.equals(selectedEqExt));
+        equivalentExtensionsFile.get().getEquivalentExtensionsFor(selectedItem.getValue()).removeIf(value -> value.equals(selectedEqExt));
         
-        equivalentExtensionsFile.writeToFile();
+        equivalentExtensionsFile.write();
         loadListView();
     }
 }

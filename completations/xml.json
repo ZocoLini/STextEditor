@@ -1,0 +1,11 @@
+{
+  "keywordsCompletations": [],
+  "liveTemplatesCompletations": [
+    {
+      "description": "",
+      "completation": "\u003c?xml version\u003d\"1.0\" encoding\u003d\"$END$\" ?\u003e",
+      "value": "xmlFile",
+      "iconName": "template.png"
+    }
+  ]
+}
