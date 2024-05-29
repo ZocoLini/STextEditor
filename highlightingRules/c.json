@@ -1,0 +1,16 @@
+{
+  "rules": [
+    {
+      "name": "string",
+      "styleClass": "string",
+      "regex": "\"[^\"]*\"",
+      "highlightRegex": ""
+    },
+    {
+      "name": "keywordsList",
+      "styleClass": "keyword",
+      "regex": "\\b(?:int)\\b",
+      "highlightRegex": ""
+    }
+  ]
+}

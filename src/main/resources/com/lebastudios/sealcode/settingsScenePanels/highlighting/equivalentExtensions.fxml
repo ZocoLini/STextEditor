@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<?import com.lebastudios.sealcode.frontend.IconTreeItem?>
+<?import javafx.scene.layout.BorderPane?>
+<?import com.lebastudios.sealcode.frontend.IconButton?>
+<SplitPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.lebastudios.sealcode.controllers.settingsPanels.EquivalentExtensionsController"
+           prefHeight="400.0" prefWidth="600.0">
+
+    <BorderPane>
+        <top>
+            <ToolBar>
+                <IconButton iconName="plus.png" onAction="#createNewFilter"/>
+                <IconButton iconName="less.png" onAction="#deleteFilter"/>
+            </ToolBar>
+        </top>
+
+        <center>
+            <TreeView fx:id="filtersFilesTreeView">
+                <IconTreeItem value="Languages" iconName="lang.png"/>
+            </TreeView>
+        </center>
+    </BorderPane>
+
+    <BorderPane>
+        <top>
+            <ToolBar>
+                <IconButton iconName="plus.png" onAction="#addEquivalentExtension"/>
+                <IconButton iconName="less.png" onAction="#deleteEquivalentExtension"/>
+            </ToolBar>
+        </top>
+
+        <center>
+            <ListView fx:id="equivalentExtensionsListView"/>
+        </center>
+    </BorderPane>
+</SplitPane>

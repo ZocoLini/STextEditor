@@ -1,11 +1,11 @@
 package com.lebastudios.sealcode.events;
 
-import com.lebastudios.sealcode.core.frontend.fxextends.IconTreeItem;
-import com.lebastudios.sealcode.core.frontend.fxextends.SealCodeArea;
-import com.lebastudios.sealcode.core.frontend.fxextends.SettingsTreeView;
-import com.lebastudios.sealcode.core.logic.completations.Completation;
-import com.lebastudios.sealcode.core.logic.fileobj.FileObj;
-import com.lebastudios.sealcode.global.TextModInf;
+import com.lebastudios.sealcode.frontend.IconTreeItem;
+import com.lebastudios.sealcode.frontend.SealCodeArea;
+import com.lebastudios.sealcode.frontend.SettingsTreeView;
+import com.lebastudios.sealcode.completations.Completation;
+import com.lebastudios.sealcode.fileobj.FileObj;
+import com.lebastudios.sealcode.TextModInf;
 
 import java.io.File;
 import java.util.TreeSet;

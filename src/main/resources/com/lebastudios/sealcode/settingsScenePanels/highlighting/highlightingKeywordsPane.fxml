@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<?import com.lebastudios.sealcode.frontend.IconTreeItem?>
+<?import javafx.scene.layout.BorderPane?>
+<?import com.lebastudios.sealcode.frontend.IconButton?>
+
+<SplitPane xmlns="http://javafx.com/javafx" orientation="VERTICAL"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.lebastudios.sealcode.controllers.settingsPanels.HighlightingKeywordsController"
+           prefHeight="400.0" prefWidth="600.0">
+
+    <SplitPane>
+        <BorderPane>
+            <top>
+                <ToolBar>
+                    <IconButton iconName="plus.png" onAction="#createLangFile"/>
+                    <IconButton iconName="less.png" onAction="#deleteLangFile"/>
+                </ToolBar>
+            </top>
+
+            <center>
+                <TreeView fx:id="langsTreeView">
+                    <IconTreeItem value="Languages" iconName="lang.png"/>
+                </TreeView>
+            </center>
+        </BorderPane>
+
+        <BorderPane>
+            <top>
+                <ToolBar>
+                    <IconButton iconName="plus.png" onAction="#addKeyword"/>
+                    <IconButton iconName="less.png" onAction="#deleteKeyword"/>
+                    <IconButton iconName="reload.png" onAction="#syncCompletationsKeywords"/>
+                </ToolBar>
+            </top>
+
+            <center>
+                <ListView fx:id="keywordsListView"/>
+            </center>
+        </BorderPane>
+    </SplitPane>
+</SplitPane>

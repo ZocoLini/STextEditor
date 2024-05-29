@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+
+<TabPane tabClosingPolicy="UNAVAILABLE"
+         xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         fx:controller="com.lebastudios.sealcode.controllers.settingsPanels.HighlightingController"
+         prefHeight="400.0" prefWidth="600.0">
+
+    <Tab text="Patterns">
+        <fx:include source="highlightingRulesSplitPane.fxml" />
+    </Tab>
+
+    <Tab text="Keywords">
+        <fx:include source="highlightingKeywordsPane.fxml" />
+    </Tab>
+
+    <Tab text="Equivalent Extensions">
+        <fx:include source="equivalentExtensions.fxml" />
+    </Tab>
+
+</TabPane>

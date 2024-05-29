@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<?import com.lebastudios.sealcode.frontend.IconTreeItem?>
+<?import javafx.scene.layout.BorderPane?>
+<?import com.lebastudios.sealcode.frontend.IconButton?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+<SplitPane xmlns="http://javafx.com/javafx" orientation="VERTICAL"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.lebastudios.sealcode.controllers.settingsPanels.LiveTemplateController"
+           prefHeight="400.0" prefWidth="600.0">
+
+    <SplitPane>
+        <BorderPane>
+            <top>
+                <ToolBar>
+                    <IconButton iconName="plus.png" onAction="#addLanguage"/>
+                    <IconButton iconName="less.png" onAction="#removeLanguage"/>
+                </ToolBar>
+            </top>
+
+            <center>
+                <TreeView fx:id="liveTemplateTreeView">
+                    <IconTreeItem value="Languages" iconName="lang.png"/>
+                </TreeView>
+            </center>
+        </BorderPane>
+
+        <BorderPane>
+            <top>
+                <ToolBar>
+                    <IconButton iconName="plus.png" onAction="#addLiveTemplate"/>
+                    <IconButton iconName="less.png" onAction="#removeLiveTemplate"/>
+                </ToolBar>
+            </top>
+
+            <center>
+                <ListView fx:id="liveTemplatesListView"/>
+            </center>
+        </BorderPane>
+    </SplitPane>
+
+    <VBox>
+        <HBox>
+            <Label text="Name:" alignment="CENTER">
+                <HBox.margin>
+                    <Insets top="5.0" right="5.0" bottom="5.0" left="5.0" />
+                </HBox.margin>
+            </Label>
+            <TextField fx:id="liveTemplateValueTextField"/>
+        </HBox>
+        <HBox>
+            <VBox>
+                <VBox.margin>
+                    <Insets top="5.0" right="5.0" bottom="5.0" left="5.0" />
+                </VBox.margin>
+                <Label text="Template:" alignment="CENTER">
+                    <VBox.margin>
+                        <Insets top="5.0" right="5.0" bottom="5.0" left="5.0" />
+                    </VBox.margin>
+                </Label>
+                <TextArea fx:id="liveTemplateCompTextArea"/>
+            </VBox>
+            <VBox>
+                <VBox.margin>
+                    <Insets top="5.0" right="5.0" bottom="5.0" left="5.0" />
+                </VBox.margin>
+                <Label text="Description:" alignment="CENTER">
+                    <VBox.margin>
+                        <Insets top="5.0" right="5.0" bottom="5.0" left="5.0" />
+                    </VBox.margin>
+                </Label>
+                <TextArea fx:id="liveTemplateDescTextArea"/>
+            </VBox>
+        </HBox>
+        <ToolBar>
+            <IconButton iconName="save.png" onAction="#saveLiveTemplate"/>
+        </ToolBar>
+    </VBox>
+</SplitPane>

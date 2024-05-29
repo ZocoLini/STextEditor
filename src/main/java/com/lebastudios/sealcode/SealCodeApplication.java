@@ -1,11 +1,9 @@
 package com.lebastudios.sealcode;
 
-import com.lebastudios.sealcode.core.logic.PluginLoader;
-import com.lebastudios.sealcode.core.logic.config.GlobalConfig;
-import com.lebastudios.sealcode.core.logic.config.Session;
+import com.lebastudios.sealcode.config.GlobalConfig;
+import com.lebastudios.sealcode.config.Session;
 import com.lebastudios.sealcode.events.AppEvents;
-import com.lebastudios.sealcode.core.frontend.stages.MainStage;
-import com.lebastudios.sealcode.custom.CustomStarter;
+import com.lebastudios.sealcode.frontend.stages.MainStage;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -21,10 +19,9 @@ public final class SealCodeApplication extends Application
     @Override
     public void start(Stage stage) throws IOException
     {
-        System.setProperty("java.util.jar.disableVerification", "true");
         PluginLoader.loadPlugins();
         
-        CustomStarter.startCustomImplementation();
+        AppEvents.onSealCodeAreaCreated.addListener(KeyWordHighlighter::new);
         
         Thread hiloPrecargaGlobalConfig = GlobalConfig.getStaticInstance().preload();
         Thread hiloPrecargaSession = Session.getStaticInstance().preload();

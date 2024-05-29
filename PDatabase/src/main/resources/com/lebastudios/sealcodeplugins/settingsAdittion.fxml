@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.lebastudios.sealcode.frontend.IconTreeItem?>
+<IconTreeItem value="Account" iconName="account.png" xmlns="http://javafx.com/javafx/17.0.2-ea">
+    <children>
+        <IconTreeItem value="Account Managment" iconName="settings.png"/>
+    </children>
+</IconTreeItem>

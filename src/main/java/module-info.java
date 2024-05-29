@@ -1,37 +1,29 @@
+import com.lebastudios.sealcode.IPlugin;
+
 module com.lebastudios.sealcode {
-    uses com.lebastudios.sealcode.core.logic.IPlugin;
+    uses IPlugin;
     
     requires javafx.controls;
     requires javafx.fxml;
     requires com.google.gson;
     requires org.fxmisc.richtext;
+    requires reactfx;
 
-    /* Core */
     exports com.lebastudios.sealcode;
-    exports com.lebastudios.sealcode.core.logic;
+    exports com.lebastudios.sealcode.config;
     exports com.lebastudios.sealcode.events;
+    exports com.lebastudios.sealcode.frontend;
+    exports com.lebastudios.sealcode.controllers;
+    exports com.lebastudios.sealcode.fileobj;
+    exports com.lebastudios.sealcode.completations;
 
     opens com.lebastudios.sealcode to javafx.fxml;
-    opens com.lebastudios.sealcode.core.frontend.fxextends to javafx.fxml;
-    opens com.lebastudios.sealcode.core.frontend.stages to javafx.fxml;
-    opens com.lebastudios.sealcode.core.controllers to javafx.fxml;
-    opens com.lebastudios.sealcode.core.controllers.settingsPanels to javafx.fxml;
+    opens com.lebastudios.sealcode.frontend to javafx.fxml;
+    opens com.lebastudios.sealcode.frontend.stages to javafx.fxml;
+    opens com.lebastudios.sealcode.controllers to javafx.fxml;
+    opens com.lebastudios.sealcode.controllers.settingsPanels to javafx.fxml;
 
-    opens com.lebastudios.sealcode.core.logic.config to com.google.gson;
-    opens com.lebastudios.sealcode.core.logic.completations to com.google.gson;
-    opens com.lebastudios.sealcode.core.logic.fileobj to com.google.gson;
-
-    /* Custom */
-    requires com.github.javaparser.core;
-    requires bcrypt;
-    requires mysql.connector.j;
-    requires mongo.java.driver;
-    requires reactfx;
-    requires com.google.j2objc.annotations;
-    requires jdk.compiler;
-
-    opens com.lebastudios.sealcode.custom.controllers to javafx.fxml;
-    opens com.lebastudios.sealcode.custom.controllers.settingsPanels to javafx.fxml;
-
-    opens com.lebastudios.sealcode.custom.logic.styling to com.google.gson;
+    opens com.lebastudios.sealcode.config to com.google.gson;
+    opens com.lebastudios.sealcode.completations to com.google.gson;
+    opens com.lebastudios.sealcode.fileobj to com.google.gson;
 }

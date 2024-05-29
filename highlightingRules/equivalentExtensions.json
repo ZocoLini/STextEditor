@@ -5,14 +5,8 @@
       "equivalentExtensions": [
         "xml",
         "fxml",
-        "iml"
-      ]
-    },
-    {
-      "extension": "c",
-      "equivalentExtensions": [
-        "c",
-        "h"
+        "iml",
+        "xsl"
       ]
     }
   ]
